@@ -19,7 +19,6 @@ in
     ../../modules/editors/helix.nix
     ../../modules/desktop/fuzzel.nix
     ../../modules/terminals/ghostty.nix
-    ../../modules/terminals/zellij.nix
     ../../modules/cli/bat.nix
     ../../modules/cli/fzf.nix
     ../../modules/cli/lazygit.nix
@@ -80,7 +79,6 @@ in
 
     terminals = {
       ghostty.enable = mkEnableOption "Signal theme for Ghostty terminal";
-      zellij.enable = mkEnableOption "Signal theme for Zellij";
     };
 
     cli = {
