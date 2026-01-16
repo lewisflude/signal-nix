@@ -27,25 +27,43 @@
               stateVersion = "24.11";
             };
 
-            # Enable Signal theme with basic apps
+            # First, enable the programs you want to use
+            programs = {
+              helix.enable = true;
+              # neovim.enable = true;  # Optional
+              ghostty.enable = true;
+              bat.enable = true;
+              # delta.enable = true;  # Optional
+              # eza.enable = true;  # Optional
+              fzf.enable = true;
+              yazi.enable = true;
+              starship.enable = true;
+            };
+
+            # Then apply Signal theme to enabled programs
             theming.signal = {
               enable = true;
               mode = "dark"; # "light", "dark", or "auto"
 
-              # Editor
-              helix.enable = true;
+              # Apply theme to editors
+              editors = {
+                helix.enable = true;
+                # neovim.enable = true;  # Only if programs.neovim.enable = true
+              };
 
-              # Terminal (choose one or more)
+              # Apply theme to terminal
               terminals.ghostty.enable = true;
 
-              # CLI tools
+              # Apply theme to CLI tools
               cli = {
                 bat.enable = true;
+                # delta.enable = true;  # Only if programs.delta.enable = true
+                # eza.enable = true;  # Only if programs.eza.enable = true
                 fzf.enable = true;
                 yazi.enable = true;
               };
 
-              # Shell prompt (recommended)
+              # Apply theme to shell prompt
               prompts.starship.enable = true;
             };
           }

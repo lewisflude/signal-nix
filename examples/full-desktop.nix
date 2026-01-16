@@ -27,7 +27,28 @@
               stateVersion = "24.11";
             };
 
-            # Enable Signal theme for full desktop
+            # First, enable all programs
+            programs = {
+              helix.enable = true;
+              neovim.enable = true;
+              ghostty.enable = true;
+              alacritty.enable = true;
+              kitty.enable = true;
+              wezterm.enable = true;
+              tmux.enable = true;
+              zellij.enable = true;
+              bat.enable = true;
+              delta.enable = true;
+              eza.enable = true;
+              fzf.enable = true;
+              lazygit.enable = true;
+              yazi.enable = true;
+              btop.enable = true;
+              starship.enable = true;
+              zsh.enable = true;
+            };
+
+            # Then apply Signal theme to all enabled programs
             theming.signal = {
               enable = true;
               mode = "dark"; # "light", "dark", or "auto"
@@ -41,7 +62,10 @@
               fuzzel.enable = true;
 
               # Editors
-              helix.enable = true;
+              editors = {
+                helix.enable = true;
+                neovim.enable = true;
+              };
 
               # Terminals (choose your favorite)
               terminals = {
@@ -60,6 +84,8 @@
               # CLI Tools
               cli = {
                 bat.enable = true;
+                delta.enable = true;
+                eza.enable = true;
                 fzf.enable = true;
                 lazygit.enable = true;
                 yazi.enable = true;

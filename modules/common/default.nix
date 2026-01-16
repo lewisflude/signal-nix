@@ -20,6 +20,7 @@ in
 
     # Editors
     ../../modules/editors/helix.nix
+    ../../modules/editors/neovim.nix
 
     # Terminals
     ../../modules/terminals/ghostty.nix
@@ -33,6 +34,8 @@ in
 
     # CLI Tools
     ../../modules/cli/bat.nix
+    ../../modules/cli/delta.nix
+    ../../modules/cli/eza.nix
     ../../modules/cli/fzf.nix
     ../../modules/cli/lazygit.nix
     ../../modules/cli/yazi.nix
@@ -96,7 +99,11 @@ in
       };
     };
 
-    helix.enable = mkEnableOption "Signal theme for Helix editor";
+    editors = {
+      helix.enable = mkEnableOption "Signal theme for Helix editor";
+      neovim.enable = mkEnableOption "Signal theme for Neovim editor";
+    };
+    
     fuzzel.enable = mkEnableOption "Signal theme for Fuzzel launcher";
 
     terminals = {
@@ -113,6 +120,8 @@ in
 
     cli = {
       bat.enable = mkEnableOption "Signal theme for bat";
+      delta.enable = mkEnableOption "Signal theme for delta git diff viewer";
+      eza.enable = mkEnableOption "Signal theme for eza file lister";
       fzf.enable = mkEnableOption "Signal theme for fzf";
       lazygit.enable = mkEnableOption "Signal theme for lazygit";
       yazi.enable = mkEnableOption "Signal theme for yazi";

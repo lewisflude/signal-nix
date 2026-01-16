@@ -35,7 +35,7 @@
               # Enable applications
               ironbar.enable = true;
               gtk.enable = true;
-              helix.enable = true;
+              editors.helix.enable = true;
 
               # Brand governance configuration
               brandGovernance = {

@@ -34,14 +34,20 @@ Complete Nix/Home Manager integration for the Signal Design System - a scientifi
   home-manager.users.yourname = {
     imports = [signal.homeManagerModules.default];
     
+    # First, enable the programs you want to use
+    programs = {
+      helix.enable = true;
+      ghostty.enable = true;
+      # ... other programs
+    };
+    
+    # Then apply Signal theme to enabled programs
     theming.signal = {
       enable = true;
       mode = "dark"; # or "light"
       
-      # Enable applications
-      ironbar.enable = true;
-      gtk.enable = true;
-      helix.enable = true;
+      # Apply theme (requires programs to be enabled first)
+      editors.helix.enable = true;
       fuzzel.enable = true;
       terminals.ghostty.enable = true;
     };
@@ -68,6 +74,7 @@ darwin-rebuild switch # macOS
 ### Editors
 
 - **Helix** - Modern modal editor (comprehensive theme with palette structure)
+- **Neovim** - Extensible Vim-based editor (full Lua colorscheme with Treesitter and LSP support)
 
 ### Terminals
 
@@ -96,18 +103,30 @@ darwin-rebuild switch # macOS
 ### CLI Tools
 
 - **bat** - Cat replacement (custom .tmTheme with Signal colors)
+- **delta** - Git diff viewer (syntax-highlighted diffs with Signal theme)
+- **eza** - Modern ls replacement (comprehensive file type and git status colors)
 - **fzf** - Fuzzy finder (complete color configuration)
 - **lazygit** - Git TUI (comprehensive theme)
 - **yazi** - File manager (complete theme: manager, status, tabs, etc.)
 
 ## Configuration
 
+> **Important**: Signal only applies color themes. You must enable programs separately using `programs.<name>.enable = true` before applying the Signal theme.
+
 ### Basic Configuration
 
 ```nix
+# Enable programs first
+programs.helix.enable = true;
+programs.bat.enable = true;
+
+# Then apply Signal theme
 theming.signal = {
   enable = true;
   mode = "dark"; # "light", "dark", or "auto"
+  
+  editors.helix.enable = true;
+  cli.bat.enable = true;
 };
 ```
 
@@ -174,7 +193,10 @@ theming.signal = {
   fuzzel.enable = true;
   
   # Editors
-  helix.enable = true;
+  editors = {
+    helix.enable = true;
+    neovim.enable = true;
+  };
   
   # Terminals (choose one or more)
   terminals = {
@@ -193,6 +215,8 @@ theming.signal = {
   # CLI Tools
   cli = {
     bat.enable = true;
+    delta.enable = true;
+    eza.enable = true;
     fzf.enable = true;
     lazygit.enable = true;
     yazi.enable = true;

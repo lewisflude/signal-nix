@@ -333,7 +333,7 @@ let
   };
 in
 {
-  config = mkIf (cfg.enable && cfg.helix.enable) {
+  config = mkIf (cfg.enable && cfg.editors.helix.enable) {
     programs.helix = {
       settings = {
         theme = "signal-${themeMode}";
