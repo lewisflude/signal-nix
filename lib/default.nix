@@ -4,6 +4,23 @@
   ...
 }:
 rec {
+  # Resolve theme mode to a concrete value (dark or light)
+  # Converts "auto" to "dark" as the default
+  resolveThemeMode = mode: if mode == "auto" then "dark" else mode;
+
+  # Validate that a theme mode is valid (dark or light, not auto)
+  # Returns true if valid, false otherwise
+  isValidResolvedMode = mode: mode == "dark" || mode == "light";
+
+  # Get the theme name for a module (e.g., "signal-dark", "signal-light")
+  # This ensures consistent theme naming across all modules
+  getThemeName =
+    mode:
+    let
+      resolved = resolveThemeMode mode;
+    in
+    "signal-${resolved}";
+
   # Get colors for a specific mode
   getColors = mode: {
     tonal = if mode == "dark" then palette.tonal.dark else palette.tonal.light;

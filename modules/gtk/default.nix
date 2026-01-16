@@ -3,11 +3,13 @@
   lib,
   pkgs,
   signalColors,
+  signalLib,
   ...
 }:
 let
   inherit (lib) mkIf;
   cfg = config.theming.signal;
+  themeMode = signalLib.resolveThemeMode cfg.mode;
 
   colors = {
     surface-base = signalColors.tonal."surface-Lc05";
@@ -89,7 +91,7 @@ in
       enable = true;
 
       theme = {
-        name = if cfg.mode == "light" then "Adwaita" else "Adwaita-dark";
+        name = if themeMode == "light" then "Adwaita" else "Adwaita-dark";
         package = pkgs.gnome-themes-extra;
       };
 

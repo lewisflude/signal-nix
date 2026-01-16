@@ -2,11 +2,13 @@
   config,
   lib,
   signalColors,
+  signalLib,
   ...
 }:
 let
   inherit (lib) mkIf;
   cfg = config.theming.signal;
+  themeMode = signalLib.resolveThemeMode cfg.mode;
 
   # Map signal colors to theme structure
   colors = {
@@ -334,10 +336,10 @@ in
   config = mkIf (cfg.enable && cfg.helix.enable) {
     programs.helix = {
       settings = {
-        theme = "signal-${cfg.mode}";
+        theme = "signal-${themeMode}";
       };
 
-      themes."signal-${cfg.mode}" = helixTheme;
+      themes."signal-${themeMode}" = helixTheme;
     };
   };
 }

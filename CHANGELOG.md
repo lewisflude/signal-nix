@@ -5,6 +5,19 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [Unreleased]
+
+### Fixed
+- Theme naming inconsistencies when using `mode = "auto"`. Previously, some modules would try to use non-existent themes like "signal-auto" instead of resolving to "signal-dark" or "signal-light", causing warnings like "Unknown theme 'signal-dark'".
+- Added `signalLib.resolveThemeMode` function to standardize theme mode resolution across all modules
+- Updated bat, helix, and GTK modules to use resolved theme modes
+- Updated color getter in common module to properly resolve "auto" mode before fetching colors
+
+### Added
+- Theme resolution validation check in flake checks to prevent future regressions
+- Documentation in testing.md about theme validation and common issues
+- New library functions: `isValidResolvedMode`, `getThemeName` for consistent theme handling
+
 ## [1.0.0] - 2026-01-16
 
 ### Added

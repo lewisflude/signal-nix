@@ -126,6 +126,47 @@
             echo "✓ All required modules and examples exist"
             touch $out
           '';
+
+          # Verify theme resolution is correct
+          theme-resolution = pkgs.runCommand "check-theme-resolution" { } ''
+            echo "Checking theme resolution..."
+
+            # Check that modules use resolveThemeMode for theme names
+            # This prevents issues like "signal-auto" being used as a theme name
+
+            # bat.nix should use themeMode
+            ${pkgs.gnugrep}/bin/grep -q "themeMode = signalLib.resolveThemeMode" ${./modules/cli/bat.nix} || {
+              echo "ERROR: bat.nix should use signalLib.resolveThemeMode"
+              exit 1
+            }
+
+            # helix.nix should use themeMode
+            ${pkgs.gnugrep}/bin/grep -q "themeMode = signalLib.resolveThemeMode" ${./modules/editors/helix.nix} || {
+              echo "ERROR: helix.nix should use signalLib.resolveThemeMode"
+              exit 1
+            }
+
+            # gtk should use themeMode
+            ${pkgs.gnugrep}/bin/grep -q "themeMode = signalLib.resolveThemeMode" ${./modules/gtk/default.nix} || {
+              echo "ERROR: gtk/default.nix should use signalLib.resolveThemeMode"
+              exit 1
+            }
+
+            # Common module should resolve mode when getting colors
+            ${pkgs.gnugrep}/bin/grep -q "resolveThemeMode cfg.mode" ${./modules/common/default.nix} || {
+              echo "ERROR: common/default.nix should resolve theme mode when getting colors"
+              exit 1
+            }
+
+            # Check that lib has resolveThemeMode function
+            ${pkgs.gnugrep}/bin/grep -q "resolveThemeMode = mode:" ${./lib/default.nix} || {
+              echo "ERROR: lib/default.nix should export resolveThemeMode function"
+              exit 1
+            }
+
+            echo "✓ Theme resolution is properly configured"
+            touch $out
+          '';
         }
       );
     };

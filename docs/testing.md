@@ -162,6 +162,71 @@ nix flake check --no-build
 nix flake check
 ```
 
+## Theme Validation
+
+### Verifying Theme Configuration
+
+To ensure themes are properly configured and working:
+
+1. **Check for theme warnings**: Look for warnings in application output about unknown themes:
+   ```bash
+   # For bat
+   bat --list-themes | grep signal
+   
+   # Should show: signal-dark and/or signal-light depending on your mode
+   ```
+
+2. **Test theme mode resolution**: Verify that "auto" mode is properly resolved to a concrete theme:
+   ```bash
+   # This should not produce errors about "signal-auto" theme
+   nix eval .#homeManagerModules.default --apply 'x: "OK"'
+   ```
+
+3. **Verify module theme names**: Check that modules are using resolved theme modes:
+   ```bash
+   # Check bat configuration
+   home-manager generations | head -n1 | awk '{print $NF}' | xargs -I{} cat {}/home-files/.config/bat/config
+   
+   # Check helix theme
+   home-manager generations | head -n1 | awk '{print $NF}' | xargs -I{} cat {}/home-files/.config/helix/config.toml
+   ```
+
+### Common Theme Issues
+
+**Issue**: "Unknown theme 'signal-dark'" or similar warnings
+- **Cause**: Module is using `cfg.mode` directly instead of the resolved theme mode
+- **Solution**: Module should use `signalLib.resolveThemeMode cfg.mode` to convert "auto" to a concrete theme
+
+**Issue**: Theme doesn't match expected mode
+- **Cause**: The `cfg.mode` is set to "auto" but the application expects "dark" or "light"
+- **Solution**: All modules should use the resolved theme mode from `signalLib.resolveThemeMode`
+
+### Theme Naming Convention
+
+All modules should follow this pattern:
+
+```nix
+{
+  config,
+  lib,
+  signalLib,
+  ...
+}:
+let
+  cfg = config.theming.signal;
+  # Always resolve the theme mode
+  themeMode = signalLib.resolveThemeMode cfg.mode;
+in
+{
+  # Use themeMode instead of cfg.mode for theme names
+  config = {
+    programs.example.settings = {
+      theme = "signal-${themeMode}";  # Will be "signal-dark" or "signal-light"
+    };
+  };
+}
+```
+
 ## Troubleshooting
 
 ### "warning: unknown flake output 'homeManagerModules'"

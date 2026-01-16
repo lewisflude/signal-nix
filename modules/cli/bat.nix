@@ -3,6 +3,7 @@
   lib,
   pkgs,
   signalColors,
+  signalLib,
   ...
 }:
 let
@@ -321,7 +322,7 @@ let
     '';
 
   # Actual mode based on config
-  themeMode = if cfg.mode == "auto" then "dark" else cfg.mode;
+  themeMode = signalLib.resolveThemeMode cfg.mode;
   themeFile = generateTmTheme themeMode;
 in
 {

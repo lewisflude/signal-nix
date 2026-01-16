@@ -213,7 +213,7 @@ in
     _module.args = {
       signalPalette = palette;
       inherit signalLib;
-      signalColors = signalLib.getColors cfg.mode;
+      signalColors = signalLib.getColors (signalLib.resolveThemeMode cfg.mode);
     };
   };
 }
