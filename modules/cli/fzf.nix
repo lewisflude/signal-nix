@@ -3,19 +3,20 @@
   lib,
   signalColors,
   ...
-}: let
+}:
+let
   inherit (lib) mkIf mkMerge mkAfter;
   cfg = config.theming.signal;
-  
+
   colors = {
     surface-base = signalColors.tonal."surface-Lc05";
     surface-subtle = signalColors.tonal."divider-Lc15";
     text-primary = signalColors.tonal."text-Lc75";
     text-secondary = signalColors.tonal."text-Lc60";
   };
-  
+
   accent = signalColors.accent;
-  
+
   # fzf requires hex colors WITH # prefix in --color options
   # Home Manager's programs.fzf.colors strips the # prefix, which causes errors
   # Solution: Use defaultOptions to set colors directly with # prefix
@@ -33,7 +34,8 @@
     "--color=spinner:${accent.info.Lc75.hex}"
     "--color=header:${colors.text-secondary.hex}"
   ];
-in {
+in
+{
   config = mkIf (cfg.enable && cfg.cli.fzf.enable) (mkMerge [
     {
       # Set colors via defaultOptions to ensure # prefix is preserved

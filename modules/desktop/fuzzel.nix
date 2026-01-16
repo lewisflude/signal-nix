@@ -3,10 +3,11 @@
   lib,
   signalColors,
   ...
-}: let
+}:
+let
   inherit (lib) mkIf;
   cfg = config.theming.signal;
-  
+
   colors = {
     background = signalColors.tonal."surface-Lc05";
     text = signalColors.tonal."text-Lc75";
@@ -16,7 +17,8 @@
     selection-text = signalColors.tonal."text-Lc75";
     border = signalColors.accent.focus.Lc75;
   };
-in {
+in
+{
   config = mkIf (cfg.enable && cfg.fuzzel.enable) {
     programs.fuzzel = {
       enable = true;
@@ -31,7 +33,7 @@ in {
           vertical-pad = 20;
           inner-pad = 10;
         };
-        
+
         colors = {
           background = "${colors.background.hexRaw}f2"; # ~95% opacity
           text = "${colors.text.hexRaw}ff";
@@ -41,7 +43,7 @@ in {
           selection-match = "${colors.match.hexRaw}ff";
           border = "${colors.border.hexRaw}ff";
         };
-        
+
         border = {
           width = 2;
           radius = 12;

@@ -3,10 +3,11 @@
   lib,
   signalColors,
   ...
-}: let
+}:
+let
   inherit (lib) mkIf removePrefix;
   cfg = config.theming.signal;
-  
+
   colors = {
     surface-base = signalColors.tonal."surface-Lc05";
     surface-subtle = signalColors.tonal."divider-Lc15";
@@ -16,12 +17,13 @@
     divider-primary = signalColors.tonal."divider-Lc15";
     divider-secondary = signalColors.tonal."divider-Lc30";
   };
-  
+
   accent = signalColors.accent;
-  
+
   # Helper to get hex without # prefix
   hexRaw = color: removePrefix "#" color.hex;
-in {
+in
+{
   config = mkIf (cfg.enable && cfg.cli.yazi.enable) {
     programs.yazi.theme = {
       # Manager (file list) colors
@@ -134,7 +136,7 @@ in {
         border = {
           fg = hexRaw accent.focus.Lc75;
         };
-        title = {};
+        title = { };
         value = {
           fg = hexRaw colors.text-primary;
         };
@@ -162,7 +164,7 @@ in {
         border = {
           fg = hexRaw accent.focus.Lc75;
         };
-        title = {};
+        title = { };
         hovered = {
           fg = hexRaw accent.success.Lc75;
           underline = true;

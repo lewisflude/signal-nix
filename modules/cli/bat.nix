@@ -2,10 +2,12 @@
   config,
   lib,
   ...
-}: let
+}:
+let
   inherit (lib) mkIf;
   cfg = config.theming.signal;
-in {
+in
+{
   config = mkIf (cfg.enable && cfg.cli.bat.enable) {
     programs.bat = {
       config = {

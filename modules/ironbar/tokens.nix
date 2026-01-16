@@ -1,7 +1,8 @@
 # Ironbar Design Tokens - Relaxed Profile (1440p+)
 # Complete design token system for the Signal theme
 # Based on formal design specification v1.0
-{signalColors}: rec {
+{ signalColors }:
+rec {
   # Profile: Relaxed (optimized for 1440p+ displays)
   profile = "relaxed";
 

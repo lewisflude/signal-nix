@@ -6,19 +6,21 @@
   pkgs,
   signalColors,
   ...
-}: let
+}:
+let
   inherit (lib) mkIf;
   cfg = config.theming.signal;
-  
+
   # Import design tokens with signal colors
-  tokens = import ./tokens.nix {inherit signalColors;};
-  
+  tokens = import ./tokens.nix { inherit signalColors; };
+
   # Import configuration generator
-  configModule = import ./config.nix {inherit pkgs lib;};
-  
+  configModule = import ./config.nix { inherit pkgs lib; };
+
   # Style file path
   styleFile = ./style.css;
-in {
+in
+{
   config = mkIf (cfg.enable && cfg.ironbar.enable) {
     programs.ironbar = {
       enable = true;

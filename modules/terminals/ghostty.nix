@@ -3,22 +3,23 @@
   lib,
   signalColors,
   ...
-}: let
+}:
+let
   inherit (lib) mkIf removePrefix;
   cfg = config.theming.signal;
-  
+
   colors = {
     surface-base = signalColors.tonal."surface-Lc05";
     text-primary = signalColors.tonal."text-Lc75";
     divider-primary = signalColors.tonal."divider-Lc15";
   };
-  
+
   accent = signalColors.accent;
   categorical = signalColors.categorical;
-  
+
   # Helper to get hex without # prefix
   hexRaw = color: removePrefix "#" color.hex;
-  
+
   # ANSI color mapping using Signal palette
   ansiColors = {
     # Normal colors
@@ -30,7 +31,7 @@
     magenta = accent.special.Lc75;
     cyan = accent.info.Lc75;
     white = signalColors.tonal."text-Lc60";
-    
+
     # Bright colors
     bright-black = signalColors.tonal."text-Lc45";
     bright-red = accent.danger.Lc75;
@@ -41,25 +42,26 @@
     bright-cyan = accent.info.Lc75;
     bright-white = signalColors.tonal."text-Lc75";
   };
-in {
+in
+{
   config = mkIf (cfg.enable && cfg.terminals.ghostty.enable) {
     programs.ghostty = {
       settings = {
         # Background and foreground
         background = hexRaw colors.surface-base;
         foreground = hexRaw colors.text-primary;
-        
+
         # Cursor colors
         "cursor-color" = hexRaw accent.focus.Lc75;
         "cursor-text" = hexRaw colors.surface-base;
-        
+
         # Selection colors
         "selection-background" = hexRaw colors.divider-primary;
         "selection-foreground" = hexRaw colors.text-primary;
-        
+
         # Split divider color
         "split-divider-color" = hexRaw colors.divider-primary;
-        
+
         # ANSI color palette
         palette = [
           "0=${ansiColors.black.hex}"

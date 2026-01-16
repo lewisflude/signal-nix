@@ -8,53 +8,55 @@
     signal.url = "github:lewisflude/signal-nix";
   };
 
-  outputs = {
-    nixpkgs,
-    home-manager,
-    signal,
-    ...
-  }: {
-    homeConfigurations.user = home-manager.lib.homeManagerConfiguration {
-      pkgs = nixpkgs.legacyPackages.x86_64-linux;
-      modules = [
-        signal.homeManagerModules.default
-        {
-          home.username = "user";
-          home.homeDirectory = "/home/user";
-          home.stateVersion = "24.11";
+  outputs =
+    {
+      nixpkgs,
+      home-manager,
+      signal,
+      ...
+    }:
+    {
+      homeConfigurations.user = home-manager.lib.homeManagerConfiguration {
+        pkgs = nixpkgs.legacyPackages.x86_64-linux;
+        modules = [
+          signal.homeManagerModules.default
+          {
+            home.username = "user";
+            home.homeDirectory = "/home/user";
+            home.stateVersion = "24.11";
 
-          # Enable Signal theme for full desktop
-          theming.signal = {
-            enable = true;
-            mode = "dark";
-
-            # Desktop
-            ironbar = {
+            # Enable Signal theme for full desktop
+            theming.signal = {
               enable = true;
-              profile = "relaxed"; # 1440p+ optimized
-            };
-            gtk.enable = true;
-            fuzzel.enable = true;
+              mode = "dark";
 
-            # Editors
-            helix.enable = true;
+              # Desktop
+              ironbar = {
+                enable = true;
+                profile = "relaxed"; # 1440p+ optimized
+              };
+              gtk.enable = true;
+              fuzzel.enable = true;
 
-            # Terminals
-            terminals = {
-              ghostty.enable = true;
-              zellij.enable = true;
-            };
+              # Editors
+              helix.enable = true;
 
-            # CLI Tools
-            cli = {
-              bat.enable = true;
-              fzf.enable = true;
-              lazygit.enable = true;
-              yazi.enable = true;
+              # Terminals
+              terminals = {
+                ghostty.enable = true;
+                zellij.enable = true;
+              };
+
+              # CLI Tools
+              cli = {
+                bat.enable = true;
+                fzf.enable = true;
+                lazygit.enable = true;
+                yazi.enable = true;
+              };
             };
-          };
-        }
-      ];
+          }
+        ];
+      };
     };
-  };
 }
