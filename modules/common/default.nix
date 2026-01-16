@@ -11,9 +11,9 @@ let
   signalLib = import ../../lib { inherit lib palette; };
 in
 {
-  # Conditional imports must be at top level, not inside config
-  # Use optionals instead of mkIf - imports expects a flat list
-  imports = lib.optionals (config.theming.signal.enable or false) [
+  # Import all application modules unconditionally
+  # Each module uses mkIf internally to control its effect based on enable flags
+  imports = [
     ../../modules/ironbar
     ../../modules/gtk
     ../../modules/editors/helix.nix
