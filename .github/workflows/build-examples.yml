@@ -37,13 +37,17 @@ jobs:
         run: |
           nix-instantiate --parse examples/${{ matrix.example }}.nix > /dev/null
 
-      - name: Verify example imports
+      - name: Verify example structure
         run: |
-          nix eval --expr '
+          nix eval --impure --expr '
             let
               example = import ./examples/${{ matrix.example }}.nix;
             in
-              if builtins.isAttrs example then "OK" else throw "Invalid example"
+              if builtins.isAttrs example 
+                && example ? inputs 
+                && example ? outputs
+              then "OK" 
+              else throw "Invalid flake structure"
           '
 
   validate-modules:
