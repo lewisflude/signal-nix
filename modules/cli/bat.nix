@@ -334,9 +334,12 @@ let
 
   # Resolved mode for static theme selection
   themeMode = signalLib.resolveThemeMode cfg.mode;
+
+  # Check if bat should be themed
+  shouldTheme = cfg.cli.bat.enable || (cfg.autoEnable && (config.programs.bat.enable or false));
 in
 {
-  config = mkIf (cfg.enable && cfg.cli.bat.enable) {
+  config = mkIf (cfg.enable && shouldTheme) {
     programs.bat = {
       themes = {
         signal-dark = {

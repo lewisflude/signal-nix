@@ -130,6 +130,49 @@ theming.signal = {
 };
 ```
 
+### Auto-Enable Mode
+
+Signal can automatically detect and theme all enabled programs:
+
+```nix
+# Enable your programs as usual
+programs = {
+  helix.enable = true;
+  bat.enable = true;
+  kitty.enable = true;
+  starship.enable = true;
+};
+
+# Signal will auto-detect and theme them all
+theming.signal = {
+  enable = true;
+  autoEnable = true;  # Auto-theme all enabled programs
+  mode = "dark";
+};
+```
+
+With `autoEnable = true`, Signal automatically applies theming to any program that is enabled in your configuration. You can still explicitly enable/disable theming for specific programs:
+
+```nix
+theming.signal = {
+  enable = true;
+  autoEnable = true;
+  mode = "dark";
+  
+  # Explicitly disable theming for specific programs
+  cli.bat.enable = false;  # Don't theme bat, even though it's enabled
+  
+  # Or explicitly enable (redundant with autoEnable, but clearer)
+  editors.helix.enable = true;
+};
+```
+
+**Precedence rules:**
+1. Explicit `theming.signal.<category>.<app>.enable = true` always applies theming
+2. Explicit `theming.signal.<category>.<app>.enable = false` never applies theming
+3. If not explicitly set, `autoEnable = true` themes the app if `programs.<app>.enable = true`
+4. If `autoEnable = false` (default), theming must be explicitly enabled per-app
+
 ### Ironbar Display Profiles
 
 Ironbar includes 3 optimized display profiles:
@@ -237,7 +280,8 @@ theming.signal = {
 
 See the `examples/` directory for complete configurations:
 
-- [`basic.nix`](examples/basic.nix) - Minimal setup
+- [`basic.nix`](examples/basic.nix) - Minimal setup with explicit theming
+- [`auto-enable.nix`](examples/auto-enable.nix) - Auto-detect and theme all enabled programs
 - [`full-desktop.nix`](examples/full-desktop.nix) - All applications enabled
 - [`custom-brand.nix`](examples/custom-brand.nix) - Brand color customization
 

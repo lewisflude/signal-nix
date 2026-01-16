@@ -41,9 +41,13 @@ let
     bright-cyan = accent.info.Lc75;
     bright-white = signalColors.tonal."text-Lc75";
   };
+
+  # Check if ghostty should be themed
+  shouldTheme =
+    cfg.terminals.ghostty.enable || (cfg.autoEnable && (config.programs.ghostty.enable or false));
 in
 {
-  config = mkIf (cfg.enable && cfg.terminals.ghostty.enable) {
+  config = mkIf (cfg.enable && shouldTheme) {
     programs.ghostty = {
       settings = {
         # Background and foreground

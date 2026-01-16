@@ -16,9 +16,13 @@ let
   };
 
   inherit (signalColors) accent categorical;
+
+  # Check if starship should be themed
+  shouldTheme =
+    cfg.prompts.starship.enable || (cfg.autoEnable && (config.programs.starship.enable or false));
 in
 {
-  config = mkIf (cfg.enable && cfg.prompts.starship.enable) {
+  config = mkIf (cfg.enable && shouldTheme) {
     programs.starship = {
       settings = {
         # Use Signal palette

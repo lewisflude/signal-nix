@@ -40,9 +40,13 @@ let
     bright-cyan = accent.info.Lc75;
     bright-white = signalColors.tonal."text-Lc75";
   };
+
+  # Check if alacritty should be themed
+  shouldTheme =
+    cfg.terminals.alacritty.enable || (cfg.autoEnable && (config.programs.alacritty.enable or false));
 in
 {
-  config = mkIf (cfg.enable && cfg.terminals.alacritty.enable) {
+  config = mkIf (cfg.enable && shouldTheme) {
     programs.alacritty = {
       settings = {
         colors = {

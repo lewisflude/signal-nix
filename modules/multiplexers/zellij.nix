@@ -27,9 +27,13 @@ let
       b = builtins.fromTOML "x=0x${builtins.substring 4 2 hex}";
     in
     "${toString r.x} ${toString g.x} ${toString b.x}";
+
+  # Check if zellij should be themed
+  shouldTheme =
+    cfg.multiplexers.zellij.enable || (cfg.autoEnable && (config.programs.zellij.enable or false));
 in
 {
-  config = mkIf (cfg.enable && cfg.multiplexers.zellij.enable) {
+  config = mkIf (cfg.enable && shouldTheme) {
     programs.zellij = {
       # Zellij theme in KDL format
       settings = {

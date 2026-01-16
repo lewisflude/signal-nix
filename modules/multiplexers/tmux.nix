@@ -18,9 +18,13 @@ let
   };
 
   inherit (signalColors) accent;
+
+  # Check if tmux should be themed
+  shouldTheme =
+    cfg.multiplexers.tmux.enable || (cfg.autoEnable && (config.programs.tmux.enable or false));
 in
 {
-  config = mkIf (cfg.enable && cfg.multiplexers.tmux.enable) {
+  config = mkIf (cfg.enable && shouldTheme) {
     programs.tmux = {
       extraConfig = ''
         # Signal Theme for tmux

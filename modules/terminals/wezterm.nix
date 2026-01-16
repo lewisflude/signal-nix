@@ -39,9 +39,13 @@ let
     bright-cyan = accent.info.Lc75;
     bright-white = signalColors.tonal."text-Lc75";
   };
+
+  # Check if wezterm should be themed
+  shouldTheme =
+    cfg.terminals.wezterm.enable || (cfg.autoEnable && (config.programs.wezterm.enable or false));
 in
 {
-  config = mkIf (cfg.enable && cfg.terminals.wezterm.enable) {
+  config = mkIf (cfg.enable && shouldTheme) {
     programs.wezterm = {
       # Wezterm config in Lua
       extraConfig = ''

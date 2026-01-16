@@ -17,9 +17,13 @@ let
   };
 
   inherit (signalColors) accent;
+
+  # Check if lazygit should be themed
+  shouldTheme =
+    cfg.cli.lazygit.enable || (cfg.autoEnable && (config.programs.lazygit.enable or false));
 in
 {
-  config = mkIf (cfg.enable && cfg.cli.lazygit.enable) {
+  config = mkIf (cfg.enable && shouldTheme) {
     programs.lazygit.settings = {
       gui = {
         theme = {

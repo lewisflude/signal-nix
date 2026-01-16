@@ -98,9 +98,12 @@ let
         merge-conflict-ours-diff-header-style = "#c97719 bold";
         merge-conflict-theirs-diff-header-style = "#3570a8 bold";
       };
+
+  # Check if delta should be themed
+  shouldTheme = cfg.cli.delta.enable || (cfg.autoEnable && (config.programs.delta.enable or false));
 in
 {
-  config = mkIf (cfg.enable && cfg.cli.delta.enable) {
+  config = mkIf (cfg.enable && shouldTheme) {
     # Assumes user has already set programs.delta.enable = true
     programs.delta.options = {
       # Syntax highlighting theme

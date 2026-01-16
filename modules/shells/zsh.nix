@@ -15,9 +15,12 @@ let
   };
 
   inherit (signalColors) accent categorical;
+
+  # Check if zsh should be themed
+  shouldTheme = cfg.shells.zsh.enable || (cfg.autoEnable && (config.programs.zsh.enable or false));
 in
 {
-  config = mkIf (cfg.enable && cfg.shells.zsh.enable) {
+  config = mkIf (cfg.enable && shouldTheme) {
     programs.zsh = {
       # Syntax highlighting colors for zsh-syntax-highlighting plugin
       initExtra = ''

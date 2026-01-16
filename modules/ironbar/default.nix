@@ -185,11 +185,13 @@ let
       margin-left: 16px;
     }
   '';
+
+  # Check if ironbar should be themed
+  shouldTheme = cfg.ironbar.enable || (cfg.autoEnable && (config.programs.ironbar.enable or false));
 in
 {
-  config = mkIf (cfg.enable && cfg.ironbar.enable) {
+  config = mkIf (cfg.enable && shouldTheme) {
     programs.ironbar = {
-      enable = true;
 
       # Systemd Integration
       systemd = true;

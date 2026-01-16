@@ -53,6 +53,22 @@ in
   options.theming.signal = {
     enable = mkEnableOption "Signal Design System";
 
+    autoEnable = mkOption {
+      type = types.bool;
+      default = false;
+      description = ''
+        Automatically enable Signal theming for all programs/services
+        that are already enabled in your configuration.
+
+        When enabled, Signal will detect if a program is enabled
+        (e.g., programs.helix.enable = true) and automatically apply
+        Signal colors to it.
+
+        You can still explicitly enable/disable theming for specific
+        programs using the per-application enable options.
+      '';
+    };
+
     mode = mkOption {
       type = types.enum [
         "light"

@@ -108,9 +108,13 @@ let
     theme[process_mid]="${hexRaw accent.warning.Lc75}"
     theme[process_end]="${hexRaw accent.danger.Lc75}"
   '';
+
+  # Check if btop should be themed
+  shouldTheme =
+    cfg.monitors.btop.enable || (cfg.autoEnable && (config.programs.btop.enable or false));
 in
 {
-  config = mkIf (cfg.enable && cfg.monitors.btop.enable) {
+  config = mkIf (cfg.enable && shouldTheme) {
     programs.btop = {
       settings = {
         # Set theme name

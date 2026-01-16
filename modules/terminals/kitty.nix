@@ -39,9 +39,13 @@ let
     bright-cyan = accent.info.Lc75;
     bright-white = signalColors.tonal."text-Lc75";
   };
+
+  # Check if kitty should be themed
+  shouldTheme =
+    cfg.terminals.kitty.enable || (cfg.autoEnable && (config.programs.kitty.enable or false));
 in
 {
-  config = mkIf (cfg.enable && cfg.terminals.kitty.enable) {
+  config = mkIf (cfg.enable && shouldTheme) {
     programs.kitty = {
       settings = {
         # Basic colors

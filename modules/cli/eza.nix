@@ -167,9 +167,12 @@ let
       colorPairs = lib.attrsets.mapAttrsToList (k: v: "${k}=${v}") colors;
     in
     concatStringsSep ":" colorPairs;
+
+  # Check if eza should be themed
+  shouldTheme = cfg.cli.eza.enable || (cfg.autoEnable && (config.programs.eza.enable or false));
 in
 {
-  config = mkIf (cfg.enable && cfg.cli.eza.enable) {
+  config = mkIf (cfg.enable && shouldTheme) {
     # Assumes user has already set programs.eza.enable = true
     # Only set the color theme via environment variable
     home.sessionVariables = {

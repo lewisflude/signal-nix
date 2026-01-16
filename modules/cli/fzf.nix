@@ -34,9 +34,12 @@ let
     "--color=spinner:${accent.info.Lc75.hex}"
     "--color=header:${colors.text-secondary.hex}"
   ];
+
+  # Check if fzf should be themed
+  shouldTheme = cfg.cli.fzf.enable || (cfg.autoEnable && (config.programs.fzf.enable or false));
 in
 {
-  config = mkIf (cfg.enable && cfg.cli.fzf.enable) (mkMerge [
+  config = mkIf (cfg.enable && shouldTheme) (mkMerge [
     {
       # Set colors via defaultOptions to ensure # prefix is preserved
       programs.fzf.defaultOptions = mkAfter fzfColorOptions;

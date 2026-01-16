@@ -331,9 +331,12 @@ let
       variable-param = accent.danger.Lc60.hex;
     };
   };
+  # Check if helix should be themed
+  shouldTheme =
+    cfg.editors.helix.enable || (cfg.autoEnable && (config.programs.helix.enable or false));
 in
 {
-  config = mkIf (cfg.enable && cfg.editors.helix.enable) {
+  config = mkIf (cfg.enable && shouldTheme) {
     programs.helix = {
       settings = {
         theme = "signal-${themeMode}";

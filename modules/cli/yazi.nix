@@ -22,9 +22,12 @@ let
 
   # Helper to get hex without # prefix
   hexRaw = color: removePrefix "#" color.hex;
+
+  # Check if yazi should be themed
+  shouldTheme = cfg.cli.yazi.enable || (cfg.autoEnable && (config.programs.yazi.enable or false));
 in
 {
-  config = mkIf (cfg.enable && cfg.cli.yazi.enable) {
+  config = mkIf (cfg.enable && shouldTheme) {
     programs.yazi.theme = {
       # App - Overall terminal background
       app = {

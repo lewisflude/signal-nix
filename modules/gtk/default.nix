@@ -84,12 +84,14 @@ let
     @define-color popover_bg_color ${colors.surface-subtle.hex};
     @define-color popover_fg_color ${colors.text-primary.hex};
   '';
+
+  # Check if gtk should be themed
+  # For GTK, we check config.gtk.enable instead of programs.gtk.enable
+  shouldTheme = cfg.gtk.enable || (cfg.autoEnable && (config.gtk.enable or false));
 in
 {
-  config = mkIf (cfg.enable && cfg.gtk.enable) {
+  config = mkIf (cfg.enable && shouldTheme) {
     gtk = {
-      enable = true;
-
       theme = {
         name = if themeMode == "light" then "Adwaita" else "Adwaita-dark";
         package = pkgs.gnome-themes-extra;

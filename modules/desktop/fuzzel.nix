@@ -17,11 +17,13 @@ let
     selection-text = signalColors.tonal."text-Lc75";
     border = signalColors.accent.focus.Lc75;
   };
+
+  # Check if fuzzel should be themed
+  shouldTheme = cfg.fuzzel.enable || (cfg.autoEnable && (config.programs.fuzzel.enable or false));
 in
 {
-  config = mkIf (cfg.enable && cfg.fuzzel.enable) {
+  config = mkIf (cfg.enable && shouldTheme) {
     programs.fuzzel = {
-      enable = true;
       settings = {
         main = {
           font = "monospace:size=14";

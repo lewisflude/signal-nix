@@ -332,9 +332,13 @@ let
 
   # Resolved mode for static theme selection
   themeMode = signalLib.resolveThemeMode cfg.mode;
+
+  # Check if neovim should be themed
+  shouldTheme =
+    cfg.editors.neovim.enable || (cfg.autoEnable && (config.programs.neovim.enable or false));
 in
 {
-  config = mkIf (cfg.enable && cfg.editors.neovim.enable) {
+  config = mkIf (cfg.enable && shouldTheme) {
     # Assumes user has already set programs.neovim.enable = true
     # Only apply the color theme via extraLuaConfig
     programs.neovim.extraLuaConfig = ''

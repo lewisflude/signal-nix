@@ -56,6 +56,45 @@ theming.signal.mode = "light";  # Light theme
 theming.signal.mode = "auto";   # Follow system preference (planned)
 ```
 
+### Auto-Enable
+
+Signal can automatically detect and theme all enabled programs:
+
+```nix
+# Enable your programs as usual
+programs = {
+  helix.enable = true;
+  bat.enable = true;
+  kitty.enable = true;
+};
+
+# Signal automatically themes them all
+theming.signal = {
+  enable = true;
+  autoEnable = true;  # Auto-detect and theme enabled programs
+  mode = "dark";
+};
+```
+
+With `autoEnable = true`, you don't need to explicitly enable theming for each program. Signal will detect which programs are enabled and apply theming automatically.
+
+**Explicit control still works:**
+```nix
+theming.signal = {
+  enable = true;
+  autoEnable = true;
+  
+  # Explicitly disable theming for specific programs
+  cli.bat.enable = false;  # Don't theme bat
+};
+```
+
+**Precedence:**
+1. Explicit `enable = true` → always themes
+2. Explicit `enable = false` → never themes  
+3. Not set + `autoEnable = true` → auto-themes if program is enabled
+4. Not set + `autoEnable = false` → no theming
+
 ### Brand Governance
 
 Control how brand colors interact with functional colors:
@@ -173,7 +212,7 @@ Complete example configurations are available in the [`examples/`](../examples/)
 
 ### Basic Configuration
 
-[`examples/basic.nix`](../examples/basic.nix) - Minimal setup with essential applications:
+[`examples/basic.nix`](../examples/basic.nix) - Minimal setup with explicit theming:
 
 ```nix
 {
