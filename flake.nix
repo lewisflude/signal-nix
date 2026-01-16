@@ -5,7 +5,7 @@
     nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable";
     
     signal-palette = {
-      url = "path:../signal-palette";
+      url = "github:lewisflude/signal-palette";
       flake = true;
     };
     
