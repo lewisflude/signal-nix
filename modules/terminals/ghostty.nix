@@ -1,0 +1,86 @@
+{
+  config,
+  lib,
+  signalColors,
+  ...
+}: let
+  inherit (lib) mkIf removePrefix;
+  cfg = config.theming.signal;
+  
+  colors = {
+    surface-base = signalColors.tonal."surface-Lc05";
+    text-primary = signalColors.tonal."text-Lc75";
+    divider-primary = signalColors.tonal."divider-Lc15";
+  };
+  
+  accent = signalColors.accent;
+  categorical = signalColors.categorical;
+  
+  # Helper to get hex without # prefix
+  hexRaw = color: removePrefix "#" color.hex;
+  
+  # ANSI color mapping using Signal palette
+  ansiColors = {
+    # Normal colors
+    black = signalColors.tonal."base-L015";
+    red = accent.danger.Lc75;
+    green = accent.success.Lc75;
+    yellow = accent.warning.Lc75;
+    blue = accent.focus.Lc75;
+    magenta = accent.special.Lc75;
+    cyan = accent.info.Lc75;
+    white = signalColors.tonal."text-Lc60";
+    
+    # Bright colors
+    bright-black = signalColors.tonal."text-Lc45";
+    bright-red = accent.danger.Lc75;
+    bright-green = accent.success.Lc75;
+    bright-yellow = accent.warning.Lc75;
+    bright-blue = accent.focus.Lc75;
+    bright-magenta = accent.special.Lc75;
+    bright-cyan = accent.info.Lc75;
+    bright-white = signalColors.tonal."text-Lc75";
+  };
+in {
+  config = mkIf (cfg.enable && cfg.terminals.ghostty.enable) {
+    programs.ghostty = {
+      settings = {
+        # Background and foreground
+        background = hexRaw colors.surface-base;
+        foreground = hexRaw colors.text-primary;
+        
+        # Cursor colors
+        "cursor-color" = hexRaw accent.focus.Lc75;
+        "cursor-text" = hexRaw colors.surface-base;
+        
+        # Selection colors
+        "selection-background" = hexRaw colors.divider-primary;
+        "selection-foreground" = hexRaw colors.text-primary;
+        
+        # Split divider color
+        "split-divider-color" = hexRaw colors.divider-primary;
+        
+        # ANSI color palette
+        palette = [
+          "0=${ansiColors.black.hex}"
+          "1=${ansiColors.red.hex}"
+          "2=${ansiColors.green.hex}"
+          "3=${ansiColors.yellow.hex}"
+          "4=${ansiColors.blue.hex}"
+          "5=${ansiColors.magenta.hex}"
+          "6=${ansiColors.cyan.hex}"
+          "7=${ansiColors.white.hex}"
+          # Bright colors (8-15)
+          "8=${ansiColors.bright-black.hex}"
+          "9=${ansiColors.bright-red.hex}"
+          "10=${ansiColors.bright-green.hex}"
+          "11=${ansiColors.bright-yellow.hex}"
+          "12=${ansiColors.bright-blue.hex}"
+          "13=${ansiColors.bright-magenta.hex}"
+          "14=${ansiColors.bright-cyan.hex}"
+          "15=${ansiColors.bright-white.hex}"
+        ];
+      };
+    };
+  };
+}
