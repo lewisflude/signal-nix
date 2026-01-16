@@ -324,14 +324,14 @@ let
   # Generate both dark and light themes
   darkThemeFile = generateTmTheme "dark";
   lightThemeFile = generateTmTheme "light";
-  
+
   # Package both theme files in a directory structure bat expects
-  themePackage = pkgs.runCommand "bat-signal-themes" {} ''
+  themePackage = pkgs.runCommand "bat-signal-themes" { } ''
     mkdir -p $out
     cp ${darkThemeFile} "$out/signal-dark.tmTheme"
     cp ${lightThemeFile} "$out/signal-light.tmTheme"
   '';
-  
+
   # Resolved mode for static theme selection
   themeMode = signalLib.resolveThemeMode cfg.mode;
 in

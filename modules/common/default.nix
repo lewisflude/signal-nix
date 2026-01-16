@@ -103,7 +103,7 @@ in
       helix.enable = mkEnableOption "Signal theme for Helix editor";
       neovim.enable = mkEnableOption "Signal theme for Neovim editor";
     };
-    
+
     fuzzel.enable = mkEnableOption "Signal theme for Fuzzel launcher";
 
     terminals = {
