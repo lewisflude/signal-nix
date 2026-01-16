@@ -12,17 +12,18 @@ let
 in
 {
   # Conditional imports must be at top level, not inside config
-  imports = lib.mkIf (config.theming.signal.enable or false) [
-    (lib.mkIf cfg.ironbar.enable ../../modules/ironbar)
-    (lib.mkIf cfg.gtk.enable ../../modules/gtk)
-    (lib.mkIf cfg.helix.enable ../../modules/editors/helix.nix)
-    (lib.mkIf cfg.fuzzel.enable ../../modules/desktop/fuzzel.nix)
-    (lib.mkIf cfg.terminals.ghostty.enable ../../modules/terminals/ghostty.nix)
-    (lib.mkIf cfg.terminals.zellij.enable ../../modules/terminals/zellij.nix)
-    (lib.mkIf cfg.cli.bat.enable ../../modules/cli/bat.nix)
-    (lib.mkIf cfg.cli.fzf.enable ../../modules/cli/fzf.nix)
-    (lib.mkIf cfg.cli.lazygit.enable ../../modules/cli/lazygit.nix)
-    (lib.mkIf cfg.cli.yazi.enable ../../modules/cli/yazi.nix)
+  # Use optionals instead of mkIf - imports expects a flat list
+  imports = lib.optionals (config.theming.signal.enable or false) [
+    ../../modules/ironbar
+    ../../modules/gtk
+    ../../modules/editors/helix.nix
+    ../../modules/desktop/fuzzel.nix
+    ../../modules/terminals/ghostty.nix
+    ../../modules/terminals/zellij.nix
+    ../../modules/cli/bat.nix
+    ../../modules/cli/fzf.nix
+    ../../modules/cli/lazygit.nix
+    ../../modules/cli/yazi.nix
   ];
 
   options.theming.signal = {
