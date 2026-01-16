@@ -261,6 +261,7 @@ This separation allows:
 ## Documentation
 
 - [Documentation Index](docs/README.md) - Complete documentation overview
+- [Theming Reference](docs/theming-reference.md) - Complete theming guide for 70+ applications
 - [Troubleshooting Guide](docs/troubleshooting.md) - Common issues and solutions
 - [Contributing Guide](CONTRIBUTING.md) - How to contribute
 - [Philosophy](https://github.com/lewisflude/signal-palette/blob/main/docs/philosophy.md) - Design principles

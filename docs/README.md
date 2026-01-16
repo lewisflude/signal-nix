@@ -7,6 +7,7 @@ Welcome to the Signal Design System documentation!
 - **[Installation & Quick Start](../README.md#quick-start)** - Get started in 5 minutes
 - **[Configuration Guide](#configuration)** - Detailed configuration options
 - **[Application Guide](#applications)** - Per-application setup
+- **[Theming Reference](theming-reference.md)** - Complete theming documentation for all applications
 - **[Troubleshooting](troubleshooting.md)** - Common issues and solutions
 - **[Contributing](../CONTRIBUTING.md)** - How to contribute
 - **[Launch Announcement](launch-announcement.md)** - Announcement materials
@@ -373,6 +374,9 @@ See **[CONTRIBUTING.md](../CONTRIBUTING.md)** for guidelines on:
 - Testing procedures
 - Application integration guide
 - Submitting changes
+
+**For application integration contributors:**
+- **[Theming Reference](theming-reference.md)** - Comprehensive documentation for 70+ applications with official theming links
 
 **Priority areas:**
 - Additional application integrations
