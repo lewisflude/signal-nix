@@ -1,0 +1,64 @@
+{
+  "nodes": {
+    "home-manager": {
+      "inputs": {
+        "nixpkgs": [
+          "nixpkgs"
+        ]
+      },
+      "locked": {
+        "lastModified": 1768530555,
+        "narHash": "sha256-EBXKDho4t1YSgodAL6C8M3UTm8MGMZNQ9rQnceR5+6c=",
+        "owner": "nix-community",
+        "repo": "home-manager",
+        "rev": "d21bee5abf9fb4a42b2fa7728bf671f8bb246ba6",
+        "type": "github"
+      },
+      "original": {
+        "owner": "nix-community",
+        "repo": "home-manager",
+        "type": "github"
+      }
+    },
+    "nixpkgs": {
+      "locked": {
+        "lastModified": 1768305791,
+        "narHash": "sha256-AIdl6WAn9aymeaH/NvBj0H9qM+XuAuYbGMZaP0zcXAQ=",
+        "owner": "nixos",
+        "repo": "nixpkgs",
+        "rev": "1412caf7bf9e660f2f962917c14b1ea1c3bc695e",
+        "type": "github"
+      },
+      "original": {
+        "owner": "nixos",
+        "ref": "nixos-unstable",
+        "repo": "nixpkgs",
+        "type": "github"
+      }
+    },
+    "root": {
+      "inputs": {
+        "home-manager": "home-manager",
+        "nixpkgs": "nixpkgs",
+        "signal-palette": "signal-palette"
+      }
+    },
+    "signal-palette": {
+      "locked": {
+        "lastModified": 1768577269,
+        "narHash": "sha256-rxpU87t6nK4fVOx9QP1YafBjrxEKFo3o0DEETh2Hoyk=",
+        "owner": "lewisflude",
+        "repo": "signal-palette",
+        "rev": "e566a406056d0475737e99a4d24bb84d2c7ef740",
+        "type": "github"
+      },
+      "original": {
+        "owner": "lewisflude",
+        "repo": "signal-palette",
+        "type": "github"
+      }
+    }
+  },
+  "root": "root",
+  "version": 7
+}

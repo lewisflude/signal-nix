@@ -208,13 +208,12 @@ This separation allows:
 
 ## Documentation
 
-- [Installation Guide](docs/installation.md)
-- [Configuration Reference](docs/configuration.md)
-- [Application Guide](docs/applications.md)
-- [Troubleshooting](docs/troubleshooting.md)
-- [Philosophy](https://github.com/lewisflude/signal-palette/blob/main/docs/philosophy.md)
-- [OKLCH Explained](https://github.com/lewisflude/signal-palette/blob/main/docs/oklch-explained.md)
-- [Accessibility](https://github.com/lewisflude/signal-palette/blob/main/docs/accessibility.md)
+- [Documentation Index](docs/README.md) - Complete documentation overview
+- [Troubleshooting Guide](docs/troubleshooting.md) - Common issues and solutions
+- [Contributing Guide](CONTRIBUTING.md) - How to contribute
+- [Philosophy](https://github.com/lewisflude/signal-palette/blob/main/docs/philosophy.md) - Design principles
+- [OKLCH Explained](https://github.com/lewisflude/signal-palette/blob/main/docs/oklch-explained.md) - Color space overview
+- [Accessibility](https://github.com/lewisflude/signal-palette/blob/main/docs/accessibility.md) - APCA standards
 
 ## Contributing
 
