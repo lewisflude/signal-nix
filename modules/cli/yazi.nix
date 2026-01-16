@@ -26,6 +26,82 @@ in
 {
   config = mkIf (cfg.enable && cfg.cli.yazi.enable) {
     programs.yazi.theme = {
+      # App - Overall terminal background
+      app = {
+        overall = {
+          bg = hexRaw colors.surface-base;
+        };
+      };
+
+      # Indicator - Indicator bars for different panes
+      indicator = {
+        parent = {
+          fg = hexRaw colors.divider-primary;
+        };
+        current = {
+          fg = hexRaw accent.focus.Lc75;
+        };
+        preview = {
+          fg = hexRaw colors.divider-secondary;
+        };
+        padding = {
+          open = "█";
+          close = "█";
+        };
+      };
+
+      # Tabs - Tab styling
+      tabs = {
+        active = {
+          fg = hexRaw colors.text-primary;
+          bg = hexRaw colors.surface-base;
+          bold = true;
+        };
+        inactive = {
+          fg = hexRaw colors.text-secondary;
+          bg = hexRaw colors.surface-subtle;
+        };
+        sep_inner = {
+          open = "[";
+          close = "]";
+        };
+        sep_outer = {
+          open = "";
+          close = "";
+        };
+      };
+
+      # Mode - Mode indicators (normal, select, unset)
+      mode = {
+        normal_main = {
+          fg = hexRaw colors.surface-base;
+          bg = hexRaw accent.focus.Lc75;
+          bold = true;
+        };
+        normal_alt = {
+          fg = hexRaw accent.focus.Lc75;
+          bg = hexRaw colors.surface-emphasis;
+        };
+        select_main = {
+          fg = hexRaw colors.surface-base;
+          bg = hexRaw accent.success.Lc75;
+          bold = true;
+        };
+        select_alt = {
+          fg = hexRaw accent.success.Lc75;
+          bg = hexRaw colors.surface-emphasis;
+        };
+        unset_main = {
+          fg = hexRaw colors.surface-base;
+          bg = hexRaw accent.warning.Lc75;
+          bold = true;
+        };
+        unset_alt = {
+          fg = hexRaw accent.warning.Lc75;
+          bg = hexRaw colors.surface-emphasis;
+        };
+      };
+
       # Manager (file list) colors
       manager = {
         cwd = {
@@ -210,6 +286,104 @@ in
           fg = hexRaw colors.text-secondary;
           bg = hexRaw colors.surface-base;
         };
+      };
+
+      # Confirm - Confirmation dialogs
+      confirm = {
+        border = {
+          fg = hexRaw accent.focus.Lc75;
+        };
+        title = {
+          fg = hexRaw colors.text-primary;
+          bold = true;
+        };
+        body = {
+          fg = hexRaw colors.text-primary;
+        };
+        list = {
+          fg = hexRaw colors.text-secondary;
+        };
+        btn_yes = {
+          fg = hexRaw colors.surface-base;
+          bg = hexRaw accent.success.Lc75;
+          bold = true;
+        };
+        btn_no = {
+          fg = hexRaw colors.surface-base;
+          bg = hexRaw accent.danger.Lc75;
+          bold = true;
+        };
+        btn_labels = [
+          "Yes"
+          "No"
+        ];
+      };
+
+      # Spot - Spotlight/table view
+      spot = {
+        border = {
+          fg = hexRaw accent.focus.Lc75;
+        };
+        title = {
+          fg = hexRaw colors.text-primary;
+          bold = true;
+        };
+        tbl_col = {
+          fg = hexRaw accent.focus.Lc75;
+          bg = hexRaw colors.surface-emphasis;
+        };
+        tbl_cell = {
+          fg = hexRaw colors.text-primary;
+          bg = hexRaw colors.surface-subtle;
+        };
+      };
+
+      # Notify - Notification styling
+      notify = {
+        title_info = {
+          fg = hexRaw accent.info.Lc75;
+          bold = true;
+        };
+        title_warn = {
+          fg = hexRaw accent.warning.Lc75;
+          bold = true;
+        };
+        title_error = {
+          fg = hexRaw accent.danger.Lc75;
+          bold = true;
+        };
+      };
+
+      # Pick - Picker/selection UI
+      pick = {
+        border = {
+          fg = hexRaw accent.focus.Lc75;
+        };
+        active = {
+          fg = hexRaw accent.success.Lc75;
+          bold = true;
+        };
+        inactive = {
+          fg = hexRaw colors.text-secondary;
+        };
+      };
+
+      # Cmp - Completion menu
+      cmp = {
+        border = {
+          fg = hexRaw accent.focus.Lc75;
+        };
+        active = {
+          fg = hexRaw colors.text-primary;
+          bg = hexRaw colors.surface-emphasis;
+          bold = true;
+        };
+        inactive = {
+          fg = hexRaw colors.text-secondary;
+        };
+        icon_file = "";
+        icon_folder = "";
+        icon_command = "";
       };
 
       # File-specific colors

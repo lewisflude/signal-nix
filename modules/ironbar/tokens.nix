@@ -1,7 +1,10 @@
 # Ironbar Design Tokens - Relaxed Profile (1440p+)
 # Complete design token system for the Signal theme
 # Based on formal design specification v1.0
-{ signalColors }:
+{
+  signalColors,
+  pkgs,
+}:
 rec {
   # Profile: Relaxed (optimized for 1440p+ displays)
   profile = "relaxed";
@@ -74,33 +77,21 @@ rec {
     };
   };
 
-  # Semantic Text Colors (Signal Theme - Dark Mode, OKLCH)
+  # Semantic Colors from Signal Theme
   colors = {
     text = {
-      primary = signalColors.tonal."text-Lc75".hex; # L:0.80 - Primary readable text
-      secondary = signalColors.tonal."text-Lc60".hex; # L:0.65 - Secondary information
-      tertiary = signalColors.tonal."text-Lc45".hex; # L:0.50 - Subtle/inactive text
+      primary = signalColors.tonal."text-Lc75".hex;
+      secondary = signalColors.tonal."text-Lc60".hex;
+      tertiary = signalColors.tonal."text-Lc45".hex;
     };
-
-    # Semantic Surface Colors
     surface = {
-      base = signalColors.tonal."surface-Lc05".hex; # L:0.19 - Island backgrounds, popups
-      emphasis = signalColors.tonal."surface-Lc10".hex; # L:0.23 - Borders, hover backgrounds
+      base = signalColors.tonal."surface-Lc05".hex;
+      emphasis = signalColors.tonal."surface-Lc10".hex;
     };
-
-    # Semantic Accent Colors
     accent = {
-      focus = signalColors.accent.focus.Lc75.hex; # Active state indicator
-      warning = signalColors.accent.warning.Lc75.hex; # Warning states (battery low)
-      danger = signalColors.accent.danger.Lc75.hex; # Critical/destructive actions
-    };
-
-    # Derived Interaction Colors (for hover states)
-    # Note: GTK CSS does not support rgba() with variables, use explicit values
-    hover = {
-      subtle = "rgba(45, 46, 57, 0.12)"; # surface-emphasis @ 0.12
-      standard = "rgba(45, 46, 57, 0.15)"; # surface-emphasis @ 0.15
-      active = "rgba(45, 46, 57, 0.25)"; # surface-emphasis @ 0.25
+      focus = signalColors.accent.focus.Lc75.hex;
+      warning = signalColors.accent.warning.Lc75.hex;
+      danger = signalColors.accent.danger.Lc75.hex;
     };
   };
 

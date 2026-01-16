@@ -22,268 +22,262 @@ let
 
   inherit (signalColors) accent categorical;
 
-  # Generate Helix theme
+  # Generate Helix theme with palette structure
   helixTheme = {
-    # Syntax highlighting
-    "attribute" = categorical.GA06.hex;
-    "type" = categorical.GA06.hex;
-    "type.enum.variant" = categorical.GA02.hex;
+    # Syntax highlighting - using palette colors
+    "attribute" = "type";
+    "type" = "type";
+    "type.enum.variant" = "string";
 
-    "constructor" = accent.focus.Lc75.hex;
+    "constructor" = "function";
 
-    "constant" = categorical.GA06.hex;
-    "constant.character" = categorical.GA02.hex;
-    "constant.character.escape" = categorical.GA08.hex;
+    "constant" = "constant";
+    "constant.character" = "string";
+    "constant.character.escape" = "escape";
 
-    "string" = categorical.GA02.hex;
-    "string.regexp" = categorical.GA08.hex;
-    "string.special" = accent.focus.Lc75.hex;
-    "string.special.symbol" = accent.danger.Lc75.hex;
+    "string" = "string";
+    "string.regexp" = "escape";
+    "string.special" = "function";
+    "string.special.symbol" = "danger";
 
     "comment" = {
-      fg = colors.text-tertiary.hex;
+      fg = "comment";
       modifiers = [ "italic" ];
     };
 
-    "variable" = colors.text-primary.hex;
+    "variable" = "text-primary";
     "variable.parameter" = {
-      fg = accent.danger.Lc60.hex;
+      fg = "variable-param";
       modifiers = [ "italic" ];
     };
-    "variable.builtin" = accent.danger.Lc75.hex;
-    "variable.other.member" = accent.focus.Lc75.hex;
+    "variable.builtin" = "danger";
+    "variable.other.member" = "function";
 
-    "label" = accent.focus.Lc75.hex;
+    "label" = "function";
 
-    "punctuation" = colors.text-tertiary.hex;
-    "punctuation.special" = accent.info.Lc75.hex;
+    "punctuation" = "comment";
+    "punctuation.special" = "info";
 
-    "keyword" = accent.special.Lc75.hex;
+    "keyword" = "keyword";
     "keyword.control.conditional" = {
-      fg = accent.special.Lc75.hex;
+      fg = "keyword";
       modifiers = [ "italic" ];
     };
 
-    "operator" = accent.info.Lc75.hex;
+    "operator" = "info";
 
-    "function" = accent.focus.Lc75.hex;
-    "function.macro" = categorical.GA08.hex;
+    "function" = "function";
+    "function.macro" = "escape";
 
-    "tag" = accent.focus.Lc75.hex;
+    "tag" = "function";
 
     "namespace" = {
-      fg = categorical.GA06.hex;
+      fg = "type";
       modifiers = [ "italic" ];
     };
 
-    "special" = accent.focus.Lc75.hex;
+    "special" = "function";
 
     # Markup
-    "markup.heading.1" = accent.danger.Lc75.hex;
-    "markup.heading.2" = categorical.GA06.hex;
-    "markup.heading.3" = categorical.GA06.hex;
-    "markup.heading.4" = categorical.GA02.hex;
-    "markup.heading.5" = accent.focus.Lc75.hex;
-    "markup.heading.6" = accent.special.Lc75.hex;
-    "markup.list" = categorical.GA02.hex;
-    "markup.list.unchecked" = colors.text-tertiary.hex;
-    "markup.list.checked" = categorical.GA02.hex;
+    "markup.heading.1" = "danger";
+    "markup.heading.2" = "type";
+    "markup.heading.3" = "type";
+    "markup.heading.4" = "string";
+    "markup.heading.5" = "function";
+    "markup.heading.6" = "keyword";
+    "markup.list" = "string";
+    "markup.list.unchecked" = "comment";
+    "markup.list.checked" = "string";
     "markup.bold" = {
-      fg = accent.danger.Lc75.hex;
+      fg = "danger";
       modifiers = [ "bold" ];
     };
     "markup.italic" = {
-      fg = accent.danger.Lc75.hex;
+      fg = "danger";
       modifiers = [ "italic" ];
     };
     "markup.link.url" = {
-      fg = accent.focus.Lc75.hex;
+      fg = "function";
       modifiers = [
         "italic"
         "underlined"
       ];
     };
-    "markup.link.text" = accent.special.Lc75.hex;
-    "markup.link.label" = accent.focus.Lc75.hex;
-    "markup.raw" = categorical.GA02.hex;
-    "markup.quote" = categorical.GA08.hex;
+    "markup.link.text" = "keyword";
+    "markup.link.label" = "function";
+    "markup.raw" = "string";
+    "markup.quote" = "escape";
 
     # Diff
-    "diff.plus" = categorical.GA02.hex;
-    "diff.minus" = accent.danger.Lc75.hex;
-    "diff.delta" = accent.focus.Lc75.hex;
+    "diff.plus" = "string";
+    "diff.minus" = "danger";
+    "diff.delta" = "function";
 
     # User Interface
     "ui.background" = {
-      fg = colors.text-primary.hex;
-      bg = colors.surface-base.hex;
+      fg = "text-primary";
+      bg = "surface-base";
     };
 
-    "ui.linenr" = {
-      fg = colors.divider-secondary.hex;
-    };
-    "ui.linenr.selected" = {
-      fg = accent.special.Lc75.hex;
-    };
+    "ui.linenr" = "divider-secondary";
+    "ui.linenr.selected" = "keyword";
 
     "ui.statusline" = {
-      fg = colors.text-secondary.hex;
-      bg = colors.surface-emphasis.hex;
+      fg = "text-secondary";
+      bg = "surface-emphasis";
     };
     "ui.statusline.inactive" = {
-      fg = colors.divider-secondary.hex;
-      bg = colors.surface-emphasis.hex;
+      fg = "divider-secondary";
+      bg = "surface-emphasis";
     };
     "ui.statusline.normal" = {
-      fg = colors.surface-base.hex;
-      bg = categorical.GA08.hex;
+      fg = "surface-base";
+      bg = "escape";
       modifiers = [ "bold" ];
     };
     "ui.statusline.insert" = {
-      fg = colors.surface-base.hex;
-      bg = categorical.GA02.hex;
+      fg = "surface-base";
+      bg = "string";
       modifiers = [ "bold" ];
     };
     "ui.statusline.select" = {
-      fg = colors.surface-base.hex;
-      bg = accent.special.Lc75.hex;
+      fg = "surface-base";
+      bg = "keyword";
       modifiers = [ "bold" ];
     };
 
     "ui.popup" = {
-      fg = colors.text-primary.hex;
-      bg = colors.surface-subtle.hex;
+      fg = "text-primary";
+      bg = "surface-subtle";
     };
-    "ui.window" = {
-      fg = colors.surface-base.hex;
-    };
+    "ui.window" = "surface-base";
     "ui.help" = {
-      fg = colors.text-tertiary.hex;
-      bg = colors.surface-subtle.hex;
+      fg = "comment";
+      bg = "surface-subtle";
     };
 
     "ui.bufferline" = {
-      fg = colors.text-secondary.hex;
-      bg = colors.surface-emphasis.hex;
+      fg = "text-secondary";
+      bg = "surface-emphasis";
     };
     "ui.bufferline.active" = {
-      fg = accent.special.Lc75.hex;
-      bg = colors.surface-base.hex;
+      fg = "keyword";
+      bg = "surface-base";
       underline = {
-        color = accent.special.Lc75.hex;
+        color = "keyword";
         style = "line";
       };
     };
     "ui.bufferline.background" = {
-      bg = colors.surface-base.hex;
+      bg = "surface-base";
     };
 
-    "ui.text" = colors.text-primary.hex;
+    "ui.text" = "text-primary";
     "ui.text.focus" = {
-      fg = colors.text-primary.hex;
-      bg = colors.surface-subtle.hex;
+      fg = "text-primary";
+      bg = "surface-subtle";
       modifiers = [ "bold" ];
     };
-    "ui.text.inactive" = colors.text-tertiary.hex;
-    "ui.text.directory" = accent.focus.Lc75.hex;
+    "ui.text.inactive" = "comment";
+    "ui.text.directory" = "function";
 
-    "ui.virtual" = colors.text-tertiary.hex;
+    "ui.virtual" = "comment";
     "ui.virtual.ruler" = {
-      bg = colors.surface-subtle.hex;
+      bg = "surface-subtle";
     };
-    "ui.virtual.indent-guide" = colors.surface-subtle.hex;
+    "ui.virtual.indent-guide" = "surface-subtle";
     "ui.virtual.inlay-hint" = {
-      fg = colors.divider-secondary.hex;
-      bg = colors.surface-emphasis.hex;
+      fg = "divider-secondary";
+      bg = "surface-emphasis";
     };
     "ui.virtual.jump-label" = {
-      fg = categorical.GA08.hex;
+      fg = "escape";
       modifiers = [ "bold" ];
     };
 
     "ui.selection" = {
-      bg = colors.divider-secondary.hex;
+      bg = "divider-secondary";
     };
 
     "ui.cursor" = {
-      fg = colors.surface-base.hex;
-      bg = colors.text-tertiary.hex;
+      fg = "surface-base";
+      bg = "comment";
     };
     "ui.cursor.primary" = {
-      fg = colors.surface-base.hex;
-      bg = categorical.GA08.hex;
+      fg = "surface-base";
+      bg = "escape";
     };
     "ui.cursor.match" = {
-      fg = categorical.GA06.hex;
+      fg = "type";
       modifiers = [ "bold" ];
     };
 
     "ui.cursor.primary.normal" = {
-      fg = colors.surface-base.hex;
-      bg = categorical.GA08.hex;
+      fg = "surface-base";
+      bg = "escape";
     };
     "ui.cursor.primary.insert" = {
-      fg = colors.surface-base.hex;
-      bg = categorical.GA02.hex;
+      fg = "surface-base";
+      bg = "string";
     };
     "ui.cursor.primary.select" = {
-      fg = colors.surface-base.hex;
-      bg = accent.special.Lc75.hex;
+      fg = "surface-base";
+      bg = "keyword";
     };
 
     "ui.cursor.normal" = {
-      fg = colors.surface-base.hex;
-      bg = colors.text-tertiary.hex;
+      fg = "surface-base";
+      bg = "comment";
     };
     "ui.cursor.insert" = {
-      fg = colors.surface-base.hex;
-      bg = categorical.GA02.hex;
+      fg = "surface-base";
+      bg = "string";
     };
     "ui.cursor.select" = {
-      fg = colors.surface-base.hex;
-      bg = accent.special.Lc75.hex;
+      fg = "surface-base";
+      bg = "keyword";
     };
 
     "ui.cursorline.primary" = {
-      bg = colors.surface-subtle.hex;
+      bg = "surface-subtle";
     };
 
     "ui.highlight" = {
-      bg = colors.divider-secondary.hex;
+      bg = "divider-secondary";
       modifiers = [ "bold" ];
     };
 
     "ui.menu" = {
-      fg = colors.text-tertiary.hex;
-      bg = colors.surface-subtle.hex;
+      fg = "comment";
+      bg = "surface-subtle";
     };
     "ui.menu.selected" = {
-      fg = colors.text-primary.hex;
-      bg = colors.divider-secondary.hex;
+      fg = "text-primary";
+      bg = "divider-secondary";
       modifiers = [ "bold" ];
     };
 
     "diagnostic.error" = {
       underline = {
-        color = accent.danger.Lc75.hex;
+        color = "danger";
         style = "curl";
       };
     };
     "diagnostic.warning" = {
       underline = {
-        color = categorical.GA06.hex;
+        color = "type";
         style = "curl";
       };
     };
     "diagnostic.info" = {
       underline = {
-        color = accent.info.Lc75.hex;
+        color = "info";
         style = "curl";
       };
     };
     "diagnostic.hint" = {
       underline = {
-        color = categorical.GA02.hex;
+        color = "string";
         style = "curl";
       };
     };
@@ -291,19 +285,49 @@ let
       modifiers = [ "dim" ];
     };
 
-    error = accent.danger.Lc75.hex;
-    warning = categorical.GA06.hex;
-    info = accent.info.Lc75.hex;
-    hint = categorical.GA02.hex;
+    error = "danger";
+    warning = "type";
+    info = "info";
+    hint = "string";
 
     rainbow = [
-      accent.danger.Lc75.hex
-      categorical.GA06.hex
-      categorical.GA06.hex
-      categorical.GA02.hex
-      accent.focus.Lc75.hex
-      accent.special.Lc75.hex
+      "danger"
+      "type"
+      "type"
+      "string"
+      "function"
+      "keyword"
     ];
+
+    # Palette - Define all colors used in the theme
+    palette = {
+      # Surface colors
+      surface-base = colors.surface-base.hex;
+      surface-emphasis = colors.surface-emphasis.hex;
+      surface-subtle = colors.surface-subtle.hex;
+
+      # Text colors
+      text-primary = colors.text-primary.hex;
+      text-secondary = colors.text-secondary.hex;
+      comment = colors.text-tertiary.hex;
+
+      # Divider colors
+      divider-primary = colors.divider-primary.hex;
+      divider-secondary = colors.divider-secondary.hex;
+
+      # Accent colors (semantic)
+      function = accent.focus.Lc75.hex;
+      danger = accent.danger.Lc75.hex;
+      info = accent.info.Lc75.hex;
+      keyword = accent.special.Lc75.hex;
+
+      # Categorical colors (syntax)
+      string = categorical.GA02.hex;
+      type = categorical.GA06.hex;
+      escape = categorical.GA08.hex;
+      constant = categorical.GA06.hex;
+      variable-param = accent.danger.Lc60.hex;
+    };
   };
 in
 {

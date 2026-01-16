@@ -13,15 +13,38 @@ in
   # Import all application modules unconditionally
   # Each module uses mkIf internally to control its effect based on enable flags
   imports = [
+    # Desktop
     ../../modules/ironbar
     ../../modules/gtk
-    ../../modules/editors/helix.nix
     ../../modules/desktop/fuzzel.nix
+
+    # Editors
+    ../../modules/editors/helix.nix
+
+    # Terminals
     ../../modules/terminals/ghostty.nix
+    ../../modules/terminals/alacritty.nix
+    ../../modules/terminals/kitty.nix
+    ../../modules/terminals/wezterm.nix
+
+    # Multiplexers
+    ../../modules/multiplexers/tmux.nix
+    ../../modules/multiplexers/zellij.nix
+
+    # CLI Tools
     ../../modules/cli/bat.nix
     ../../modules/cli/fzf.nix
     ../../modules/cli/lazygit.nix
     ../../modules/cli/yazi.nix
+
+    # Monitors
+    ../../modules/monitors/btop.nix
+
+    # Prompts
+    ../../modules/prompts/starship.nix
+
+    # Shells
+    ../../modules/shells/zsh.nix
   ];
 
   options.theming.signal = {
@@ -78,6 +101,14 @@ in
 
     terminals = {
       ghostty.enable = mkEnableOption "Signal theme for Ghostty terminal";
+      alacritty.enable = mkEnableOption "Signal theme for Alacritty terminal";
+      kitty.enable = mkEnableOption "Signal theme for Kitty terminal";
+      wezterm.enable = mkEnableOption "Signal theme for WezTerm terminal";
+    };
+
+    multiplexers = {
+      tmux.enable = mkEnableOption "Signal theme for tmux";
+      zellij.enable = mkEnableOption "Signal theme for zellij";
     };
 
     cli = {
@@ -85,6 +116,18 @@ in
       fzf.enable = mkEnableOption "Signal theme for fzf";
       lazygit.enable = mkEnableOption "Signal theme for lazygit";
       yazi.enable = mkEnableOption "Signal theme for yazi";
+    };
+
+    monitors = {
+      btop.enable = mkEnableOption "Signal theme for btop";
+    };
+
+    prompts = {
+      starship.enable = mkEnableOption "Signal theme for starship prompt";
+    };
+
+    shells = {
+      zsh.enable = mkEnableOption "Signal theme for zsh syntax highlighting";
     };
 
     # Brand governance

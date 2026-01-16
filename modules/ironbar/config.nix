@@ -1,8 +1,8 @@
 # Ironbar Configuration Generator
 # Generates config.json structure with all widgets from design spec
-{ pkgs, lib, ... }:
+{ pkgs, lib, signalColors, ... }:
 let
-  tokens = import ./tokens.nix { };
+  tokens = import ./tokens.nix { inherit signalColors pkgs; };
   commands = tokens.commands pkgs;
   widgets = import ./widgets.nix { inherit lib pkgs tokens; };
 

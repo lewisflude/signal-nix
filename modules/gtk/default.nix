@@ -89,7 +89,7 @@ in
       enable = true;
 
       theme = {
-        name = "Adwaita-dark";
+        name = if cfg.mode == "light" then "Adwaita" else "Adwaita-dark";
         package = pkgs.gnome-themes-extra;
       };
 
