@@ -321,22 +321,39 @@ let
       </plist>
     '';
 
-  # Actual mode based on config
+  # Generate both dark and light themes
+  darkThemeFile = generateTmTheme "dark";
+  lightThemeFile = generateTmTheme "light";
+  
+  # Package both theme files in a directory structure bat expects
+  themePackage = pkgs.runCommand "bat-signal-themes" {} ''
+    mkdir -p $out
+    cp ${darkThemeFile} "$out/signal-dark.tmTheme"
+    cp ${lightThemeFile} "$out/signal-light.tmTheme"
+  '';
+  
+  # Resolved mode for static theme selection
   themeMode = signalLib.resolveThemeMode cfg.mode;
-  themeFile = generateTmTheme themeMode;
 in
 {
   config = mkIf (cfg.enable && cfg.cli.bat.enable) {
     programs.bat = {
       themes = {
-        "signal-${themeMode}" = {
-          src = themeFile;
-          file = "signal-${themeMode}.tmTheme";
+        signal-dark = {
+          src = themePackage;
+          file = "signal-dark.tmTheme";
+        };
+        signal-light = {
+          src = themePackage;
+          file = "signal-light.tmTheme";
         };
       };
 
       config = {
-        theme = "signal-${themeMode}";
+        # Use bat's auto-detection if mode is "auto", otherwise use resolved mode
+        theme = if cfg.mode == "auto" then "auto" else "signal-${themeMode}";
+        theme-dark = "signal-dark";
+        theme-light = "signal-light";
         italic-text = "always";
         style = "numbers,changes,header";
         pager = "less -FR";
