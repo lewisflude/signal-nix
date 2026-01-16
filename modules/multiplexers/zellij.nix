@@ -18,7 +18,8 @@ let
   inherit (signalColors) accent;
 
   # Helper to convert hex to RGB values (space-separated, no #)
-  hexToRgb = color:
+  hexToRgb =
+    color:
     let
       hex = removePrefix "#" color.hex;
       r = builtins.fromTOML "x=0x${builtins.substring 0 2 hex}";

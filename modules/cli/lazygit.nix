@@ -24,9 +24,15 @@ in
       gui = {
         theme = {
           # Border colors
-          activeBorderColor = [ accent.focus.Lc75.hex "bold" ];
+          activeBorderColor = [
+            accent.focus.Lc75.hex
+            "bold"
+          ];
           inactiveBorderColor = [ colors.divider-primary.hex ];
-          searchingActiveBorderColor = [ accent.focus.Lc75.hex "bold" ];
+          searchingActiveBorderColor = [
+            accent.focus.Lc75.hex
+            "bold"
+          ];
 
           # Options/help text
           optionsTextColor = [ accent.info.Lc75.hex ];

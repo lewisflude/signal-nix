@@ -30,12 +30,12 @@
             # Enable Signal theme for full desktop
             theming.signal = {
               enable = true;
-              mode = "dark";
+              mode = "dark"; # "light", "dark", or "auto"
 
-              # Desktop
+              # Desktop Environment
               ironbar = {
                 enable = true;
-                profile = "relaxed"; # 1440p+ optimized
+                profile = "relaxed"; # "compact" (1080p), "relaxed" (1440p+), "spacious" (4K)
               };
               gtk.enable = true;
               fuzzel.enable = true;
@@ -43,9 +43,17 @@
               # Editors
               helix.enable = true;
 
-              # Terminals
+              # Terminals (choose your favorite)
               terminals = {
                 ghostty.enable = true;
+                alacritty.enable = true;
+                kitty.enable = true;
+                wezterm.enable = true;
+              };
+
+              # Terminal Multiplexers
+              multiplexers = {
+                tmux.enable = true;
                 zellij.enable = true;
               };
 
@@ -55,6 +63,21 @@
                 fzf.enable = true;
                 lazygit.enable = true;
                 yazi.enable = true;
+              };
+
+              # System Monitors
+              monitors = {
+                btop.enable = true;
+              };
+
+              # Shell Prompts
+              prompts = {
+                starship.enable = true;
+              };
+
+              # Shells
+              shells = {
+                zsh.enable = true;
               };
             };
           }

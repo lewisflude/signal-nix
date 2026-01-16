@@ -11,7 +11,8 @@ let
 
   # Generate tmTheme XML for bat using Signal colors
   # This creates a Sublime Text theme file that bat can use
-  generateTmTheme = mode:
+  generateTmTheme =
+    mode:
     let
       colors =
         if mode == "dark" then
@@ -70,7 +71,9 @@ let
       <plist version="1.0">
       <dict>
         <key>name</key>
-        <string>Signal ${lib.toUpper (builtins.substring 0 1 mode)}${builtins.substring 1 (-1) mode}</string>
+        <string>Signal ${
+          lib.toUpper (builtins.substring 0 1 mode)
+        }${builtins.substring 1 (-1) mode}</string>
         <key>settings</key>
         <array>
           <dict>

@@ -40,7 +40,7 @@ let
     theme[hi_fg]="${hexRaw accent.focus.Lc75}"
 
     # Background color of selected items
-    theme[selected_bg]="${hexRaw divider-primary}"
+    theme[selected_bg]="${hexRaw colors.divider-primary}"
 
     # Foreground color of selected items
     theme[selected_fg]="${hexRaw colors.text-primary}"

@@ -30,19 +30,23 @@
             # Enable Signal theme with basic apps
             theming.signal = {
               enable = true;
-              mode = "dark";
+              mode = "dark"; # "light", "dark", or "auto"
 
               # Editor
               helix.enable = true;
 
-              # Terminal
+              # Terminal (choose one or more)
               terminals.ghostty.enable = true;
 
               # CLI tools
               cli = {
                 bat.enable = true;
                 fzf.enable = true;
+                yazi.enable = true;
               };
+
+              # Shell prompt (recommended)
+              prompts.starship.enable = true;
             };
           }
         ];
