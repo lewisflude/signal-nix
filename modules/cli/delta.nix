@@ -109,42 +109,44 @@ in
         if cfg.mode == "auto" then "auto" else "signal-${signalLib.resolveThemeMode cfg.mode}";
 
       # Apply Signal colors
-      minus-style = deltaColors.minus-style;
-      minus-emph-style = deltaColors.minus-emph-style;
-      minus-non-emph-style = deltaColors.minus-non-emph-style;
-      plus-style = deltaColors.plus-style;
-      plus-emph-style = deltaColors.plus-emph-style;
-      plus-non-emph-style = deltaColors.plus-non-emph-style;
+      inherit (deltaColors)
+        minus-style
+        minus-emph-style
+        minus-non-emph-style
+        plus-style
+        plus-emph-style
+        plus-non-emph-style
 
-      # Line numbers
-      line-numbers-minus-style = deltaColors.line-numbers-minus-style;
-      line-numbers-plus-style = deltaColors.line-numbers-plus-style;
-      line-numbers-zero-style = deltaColors.line-numbers-zero-style;
-      line-numbers-left-style = deltaColors.line-numbers-left-style;
-      line-numbers-right-style = deltaColors.line-numbers-right-style;
+        # Line numbers
+        line-numbers-minus-style
+        line-numbers-plus-style
+        line-numbers-zero-style
+        line-numbers-left-style
+        line-numbers-right-style
 
-      # File decoration
-      file-style = deltaColors.file-style;
-      file-decoration-style = deltaColors.file-decoration-style;
+        # File decoration
+        file-style
+        file-decoration-style
 
-      # Commit decoration
-      commit-decoration-style = deltaColors.commit-decoration-style;
-      commit-style = deltaColors.commit-style;
+        # Commit decoration
+        commit-decoration-style
+        commit-style
 
-      # Hunk header
-      hunk-header-style = deltaColors.hunk-header-style;
-      hunk-header-decoration-style = deltaColors.hunk-header-decoration-style;
-      hunk-header-file-style = deltaColors.hunk-header-file-style;
-      hunk-header-line-number-style = deltaColors.hunk-header-line-number-style;
+        # Hunk header
+        hunk-header-style
+        hunk-header-decoration-style
+        hunk-header-file-style
+        hunk-header-line-number-style
 
-      # Blame
-      blame-palette = deltaColors.blame-palette;
+        # Blame
+        blame-palette
 
-      # Merge conflict
-      merge-conflict-begin-symbol = deltaColors.merge-conflict-begin-symbol;
-      merge-conflict-end-symbol = deltaColors.merge-conflict-end-symbol;
-      merge-conflict-ours-diff-header-style = deltaColors.merge-conflict-ours-diff-header-style;
-      merge-conflict-theirs-diff-header-style = deltaColors.merge-conflict-theirs-diff-header-style;
+        # Merge conflict
+        merge-conflict-begin-symbol
+        merge-conflict-end-symbol
+        merge-conflict-ours-diff-header-style
+        merge-conflict-theirs-diff-header-style
+        ;
     };
   };
 }
