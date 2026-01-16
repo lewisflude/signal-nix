@@ -5,7 +5,7 @@
   ...
 }:
 let
-  inherit (lib) mkIf removePrefix;
+  inherit (lib) mkIf;
   cfg = config.theming.signal;
 
   colors = {
@@ -16,9 +16,6 @@ let
   };
 
   inherit (signalColors) accent;
-
-  # Helper to get hex without # prefix
-  hexRaw = color: removePrefix "#" color.hex;
 
   # ANSI color mapping using Signal palette
   ansiColors = {

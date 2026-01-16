@@ -5,7 +5,7 @@
   ...
 }:
 let
-  inherit (lib) mkIf removePrefix;
+  inherit (lib) mkIf;
   cfg = config.theming.signal;
 
   colors = {
@@ -18,9 +18,6 @@ let
   };
 
   inherit (signalColors) accent;
-
-  # Helper to get hex without # prefix
-  hexRaw = color: removePrefix "#" color.hex;
 in
 {
   config = mkIf (cfg.enable && cfg.multiplexers.tmux.enable) {
