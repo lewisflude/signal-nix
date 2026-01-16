@@ -6,12 +6,6 @@
 
     signal-palette = {
       url = "github:lewisflude/signal-palette";
-      flake = true;
-    };
-
-    home-manager = {
-      url = "github:nix-community/home-manager";
-      inputs.nixpkgs.follows = "nixpkgs";
     };
   };
 
@@ -61,7 +55,7 @@
         {
           default = pkgs.mkShell {
             packages = [
-              pkgs.nixfmt-rfc-style
+              pkgs.nixfmt
               pkgs.statix
               pkgs.deadnix
               pkgs.nil
@@ -71,7 +65,7 @@
       );
 
       # Formatter
-      formatter = forAllSystems (system: nixpkgs.legacyPackages.${system}.nixfmt-rfc-style);
+      formatter = forAllSystems (system: nixpkgs.legacyPackages.${system}.nixfmt);
 
       # Checks
       checks = forAllSystems (
@@ -81,7 +75,7 @@
         in
         {
           format = pkgs.runCommand "check-format" { } ''
-            ${pkgs.nixfmt-rfc-style}/bin/nixfmt --check ${./.}
+            ${pkgs.nixfmt}/bin/nixfmt --check ${./.}
             touch $out
           '';
         }

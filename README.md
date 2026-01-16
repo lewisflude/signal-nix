@@ -64,26 +64,41 @@ darwin-rebuild switch # macOS
 - **Ironbar** - Wayland status bar (with 3 display profiles)
 - **GTK 3/4** - GTK application theming
 - **Fuzzel** - Application launcher
-- **Mako** - Notification daemon (coming soon)
-- **SwayNC** - Notification center (coming soon)
 
 ### Editors
 
-- **Helix** - Modern modal editor (full theme)
-- **Zed** - Code editor (coming soon)
-- **Cursor** - AI code editor (coming soon)
+- **Helix** - Modern modal editor (comprehensive theme with palette structure)
 
 ### Terminals
 
-- **Ghostty** - Fast terminal emulator
-- **Zellij** - Terminal multiplexer (coming soon)
+- **Ghostty** - Fast terminal emulator (full ANSI palette)
+- **Alacritty** - GPU-accelerated terminal (complete color scheme)
+- **Kitty** - Feature-rich terminal (16 colors + tab bar)
+- **WezTerm** - Lua-based terminal (full theme with tab bar)
+
+### Terminal Multiplexers
+
+- **tmux** - Terminal multiplexer (status bar, panes, windows)
+- **Zellij** - Modern multiplexer (comprehensive KDL theme)
+
+### System Monitors
+
+- **btop++** - Resource monitor (complete theme with gradients)
+
+### Shell Prompts
+
+- **Starship** - Cross-shell prompt (custom palette with git integration)
+
+### Shells
+
+- **zsh** - Z shell (syntax highlighting colors)
 
 ### CLI Tools
 
-- **bat** - Cat replacement with syntax highlighting
-- **fzf** - Fuzzy finder
-- **lazygit** - Git TUI
-- **yazi** - File manager
+- **bat** - Cat replacement (custom .tmTheme with Signal colors)
+- **fzf** - Fuzzy finder (complete color configuration)
+- **lazygit** - Git TUI (comprehensive theme)
+- **yazi** - File manager (complete theme: manager, status, tabs, etc.)
 
 ## Configuration
 
@@ -144,16 +159,53 @@ theming.signal.gtk = {
 };
 ```
 
-### CLI Tools
+### All Applications
 
-Enable individual CLI tools:
+Enable all theming categories:
 
 ```nix
-theming.signal.cli = {
-  bat.enable = true;
-  fzf.enable = true;
-  lazygit.enable = true;
-  yazi.enable = true;
+theming.signal = {
+  enable = true;
+  mode = "dark"; # "light", "dark", or "auto"
+  
+  # Desktop
+  ironbar.enable = true;
+  gtk.enable = true;
+  fuzzel.enable = true;
+  
+  # Editors
+  helix.enable = true;
+  
+  # Terminals (choose one or more)
+  terminals = {
+    ghostty.enable = true;
+    alacritty.enable = true;
+    kitty.enable = true;
+    wezterm.enable = true;
+  };
+  
+  # Multiplexers
+  multiplexers = {
+    tmux.enable = true;
+    zellij.enable = true;
+  };
+  
+  # CLI Tools
+  cli = {
+    bat.enable = true;
+    fzf.enable = true;
+    lazygit.enable = true;
+    yazi.enable = true;
+  };
+  
+  # Monitors
+  monitors.btop.enable = true;
+  
+  # Prompts
+  prompts.starship.enable = true;
+  
+  # Shells
+  shells.zsh.enable = true;
 };
 ```
 
