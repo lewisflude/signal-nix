@@ -15,7 +15,7 @@ let
     text-secondary = signalColors.tonal."text-Lc60";
   };
 
-  accent = signalColors.accent;
+  inherit (signalColors) accent;
 
   # fzf requires hex colors WITH # prefix in --color options
   # Home Manager's programs.fzf.colors strips the # prefix, which causes errors

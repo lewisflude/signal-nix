@@ -14,8 +14,7 @@ let
     divider-primary = signalColors.tonal."divider-Lc15";
   };
 
-  accent = signalColors.accent;
-  categorical = signalColors.categorical;
+  inherit (signalColors) accent;
 
   # Helper to get hex without # prefix
   hexRaw = color: removePrefix "#" color.hex;

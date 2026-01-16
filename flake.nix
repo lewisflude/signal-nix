@@ -20,7 +20,6 @@
       self,
       nixpkgs,
       signal-palette,
-      home-manager,
       ...
     }:
     let
@@ -37,9 +36,7 @@
       homeManagerModules = {
         default = self.homeManagerModules.signal;
 
-        signal = import ./modules/common {
-          palette = signal-palette.palette;
-        };
+        signal = import ./modules/common { inherit (signal-palette) palette; };
 
         # Per-app modules for advanced users
         ironbar = import ./modules/ironbar;
@@ -52,7 +49,7 @@
       # Library functions
       lib = import ./lib {
         inherit (nixpkgs) lib;
-        palette = signal-palette.palette;
+        inherit (signal-palette) palette;
       };
 
       # Development shell

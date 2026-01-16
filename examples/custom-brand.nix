@@ -21,9 +21,11 @@
         modules = [
           signal.homeManagerModules.default
           {
-            home.username = "user";
-            home.homeDirectory = "/home/user";
-            home.stateVersion = "24.11";
+            home = {
+              username = "user";
+              homeDirectory = "/home/user";
+              stateVersion = "24.11";
+            };
 
             # Enable Signal theme with custom brand colors
             theming.signal = {

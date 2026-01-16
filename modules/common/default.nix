@@ -2,7 +2,6 @@
 {
   config,
   lib,
-  pkgs,
   ...
 }:
 let
@@ -170,7 +169,7 @@ in
     # Make palette and lib available to all modules
     _module.args = {
       signalPalette = palette;
-      signalLib = signalLib;
+      inherit signalLib;
       signalColors = signalLib.getColors cfg.mode;
     };
   };

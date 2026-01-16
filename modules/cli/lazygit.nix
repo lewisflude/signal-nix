@@ -16,7 +16,7 @@ let
     divider-primary = signalColors.tonal."divider-Lc15";
   };
 
-  accent = signalColors.accent;
+  inherit (signalColors) accent;
 in
 {
   config = mkIf (cfg.enable && cfg.cli.lazygit.enable) {

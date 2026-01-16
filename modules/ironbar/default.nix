@@ -4,15 +4,11 @@
   config,
   lib,
   pkgs,
-  signalColors,
   ...
 }:
 let
   inherit (lib) mkIf;
   cfg = config.theming.signal;
-
-  # Import design tokens with signal colors
-  tokens = import ./tokens.nix { inherit signalColors; };
 
   # Import configuration generator
   configModule = import ./config.nix { inherit pkgs lib; };
@@ -32,7 +28,7 @@ in
       style = styleFile;
 
       # Configuration
-      config = configModule.config;
+      inherit (configModule) config;
     };
   };
 }

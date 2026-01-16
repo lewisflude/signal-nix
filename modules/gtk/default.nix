@@ -20,7 +20,7 @@ let
     divider-secondary = signalColors.tonal."divider-Lc30";
   };
 
-  accent = signalColors.accent;
+  inherit (signalColors) accent;
 
   # Generate GTK CSS
   gtkCss = ''

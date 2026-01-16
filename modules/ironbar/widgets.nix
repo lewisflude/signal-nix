@@ -1,11 +1,7 @@
 # Widget builder helpers for Ironbar configuration
 # Reduces boilerplate and ensures consistency across widget definitions
 # Based on Ironbar module options: https://github.com/JakeStanger/ironbar/blob/master/nix/module.nix
-{
-  lib,
-  pkgs,
-  tokens,
-}:
+{ lib }:
 let
   inherit (lib) mkMerge filterAttrs;
 

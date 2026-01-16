@@ -20,8 +20,7 @@ let
     divider-secondary = signalColors.tonal."divider-Lc30";
   };
 
-  accent = signalColors.accent;
-  categorical = signalColors.categorical;
+  inherit (signalColors) accent categorical;
 
   # Generate Helix theme
   helixTheme = {

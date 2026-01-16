@@ -8,7 +8,7 @@ rec {
   getColors = mode: {
     tonal = if mode == "dark" then palette.tonal.dark else palette.tonal.light;
 
-    accent = palette.accent;
+    inherit (palette) accent;
 
     categorical = if mode == "dark" then palette.categorical.dark else palette.categorical.light;
   };
@@ -77,11 +77,14 @@ rec {
       }:
       {
         l = lib.max 0.0 (lib.min 1.0 (color.l + delta));
-        c = color.c;
-        h = color.h;
-        hex = color.hex; # Note: hex should be recalculated in real implementation
-        hexRaw = color.hexRaw;
-        rgb = color.rgb;
+        inherit (color)
+          c
+          h
+          hex
+          hexRaw
+          rgb
+          ;
+        # Note: hex should be recalculated in real implementation
       };
 
     # Adjust chroma while preserving lightness and hue
@@ -91,12 +94,14 @@ rec {
         delta,
       }:
       {
-        l = color.l;
+        inherit (color)
+          l
+          h
+          hex
+          hexRaw
+          rgb
+          ;
         c = lib.max 0.0 (color.c + delta);
-        h = color.h;
-        hex = color.hex;
-        hexRaw = color.hexRaw;
-        rgb = color.rgb;
       };
   };
 }

@@ -41,11 +41,13 @@ let
         on_scroll_down = commands.volume.decreaseBy "2%";
       };
       extraConfig = {
-        icons = {
-          volume_high = tokens.icons.glyphs.volume.high;
-          volume_medium = tokens.icons.glyphs.volume.medium;
-          volume_low = tokens.icons.glyphs.volume.low;
-          muted = tokens.icons.glyphs.volume.muted;
+        icons = with tokens.icons.glyphs.volume; {
+          inherit
+            volume_high
+            volume_medium
+            volume_low
+            muted
+            ;
         };
         max_volume = 100;
       };
@@ -116,7 +118,7 @@ in
   config = {
     # Bar dimensions and positioning
     position = "top";
-    height = tokens.bar.height;
+    inherit (tokens.bar) height;
     anchor_to_edges = true;
 
     # Margin synchronized with Niri layout gaps
