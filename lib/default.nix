@@ -57,7 +57,7 @@
       background,
       minimum,
     }: let
-      contrast = estimateContrast {inherit foreground background;};
+      contrast = accessibility.estimateContrast {inherit foreground background;};
     in
       contrast >= minimum;
   };
