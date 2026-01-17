@@ -5,7 +5,7 @@
   ...
 }:
 let
-  inherit (lib) mkIf mkMerge mkAfter;
+  inherit (lib) mkIf mkAfter mapAttrsToList;
   cfg = config.theming.signal;
 
   colors = {
@@ -17,49 +17,33 @@ let
 
   inherit (signalColors) accent;
 
+  # Define color mappings once
+  colorMap = {
+    fg = colors.text-primary.hex;
+    bg = colors.surface-base.hex;
+    hl = accent.focus.Lc75.hex;
+    "fg+" = colors.text-primary.hex;
+    "bg+" = colors.surface-subtle.hex;
+    "hl+" = accent.focus.Lc75.hex;
+    info = accent.info.Lc75.hex;
+    prompt = accent.focus.Lc75.hex;
+    pointer = accent.focus.Lc75.hex;
+    marker = accent.success.Lc75.hex;
+    spinner = accent.info.Lc75.hex;
+    header = colors.text-secondary.hex;
+  };
+
   # fzf requires hex colors WITH # prefix in --color options
   # Home Manager's programs.fzf.colors strips the # prefix, which causes errors
-  # Solution: Use defaultOptions to set colors directly with # prefix
-  fzfColorOptions = [
-    "--color=fg:${colors.text-primary.hex}"
-    "--color=bg:${colors.surface-base.hex}"
-    "--color=hl:${accent.focus.Lc75.hex}"
-    "--color=fg+:${colors.text-primary.hex}"
-    "--color=bg+:${colors.surface-subtle.hex}"
-    "--color=hl+:${accent.focus.Lc75.hex}"
-    "--color=info:${accent.info.Lc75.hex}"
-    "--color=prompt:${accent.focus.Lc75.hex}"
-    "--color=pointer:${accent.focus.Lc75.hex}"
-    "--color=marker:${accent.success.Lc75.hex}"
-    "--color=spinner:${accent.info.Lc75.hex}"
-    "--color=header:${colors.text-secondary.hex}"
-  ];
+  # Solution: Use defaultOptions to set colors directly with # prefix preserved
+  fzfColorOptions = mapAttrsToList (key: value: "--color=${key}:${value}") colorMap;
 
   # Check if fzf should be themed
   shouldTheme = cfg.cli.fzf.enable || (cfg.autoEnable && (config.programs.fzf.enable or false));
 in
 {
-  config = mkIf (cfg.enable && shouldTheme) (mkMerge [
-    {
-      # Set colors via defaultOptions to ensure # prefix is preserved
-      programs.fzf.defaultOptions = mkAfter fzfColorOptions;
-    }
-    {
-      # Also set programs.fzf.colors for consistency
-      programs.fzf.colors = {
-        fg = colors.text-primary.hex;
-        bg = colors.surface-base.hex;
-        hl = accent.focus.Lc75.hex;
-        "fg+" = colors.text-primary.hex;
-        "bg+" = colors.surface-subtle.hex;
-        "hl+" = accent.focus.Lc75.hex;
-        info = accent.info.Lc75.hex;
-        prompt = accent.focus.Lc75.hex;
-        pointer = accent.focus.Lc75.hex;
-        marker = accent.success.Lc75.hex;
-        spinner = accent.info.Lc75.hex;
-        header = colors.text-secondary.hex;
-      };
-    }
-  ]);
+  config = mkIf (cfg.enable && shouldTheme) {
+    # Use defaultOptions to preserve # prefix (programs.fzf.colors strips it)
+    programs.fzf.defaultOptions = mkAfter fzfColorOptions;
+  };
 }

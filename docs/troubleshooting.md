@@ -2,6 +2,52 @@
 
 This guide covers common issues and solutions when using Signal with NixOS and Home Manager.
 
+## Quick Diagnostic Flowchart
+
+```
+Is Signal enabled?
+├─ No → Set theming.signal.enable = true
+└─ Yes ↓
+
+Are programs enabled?
+├─ No → Set programs.<app>.enable = true
+└─ Yes ↓
+
+Is autoEnable true OR app explicitly enabled?
+├─ No → Set autoEnable = true or <category>.<app>.enable = true
+└─ Yes ↓
+
+Did you rebuild?
+├─ No → Run: home-manager switch
+└─ Yes ↓
+
+Does Signal support this program?
+├─ No → Check Supported Applications list
+└─ Yes ↓
+
+Is config file generated?
+├─ No → Check evaluation errors (see below)
+└─ Yes ↓
+
+Did you restart the application?
+├─ No → Restart application or reload config
+└─ Yes ↓
+
+Still not working?
+└─ See detailed troubleshooting sections below
+```
+
+## Common Issues at a Glance
+
+| Issue | Quick Fix |
+|-------|-----------|
+| Program not themed | Enable both program AND Signal theming |
+| Colors not showing | Restart application, check true color support |
+| Flake not found | Enable flakes: `nix.settings.experimental-features = ["flakes"]` |
+| Evaluation error | Run with `--show-trace` to see exact error |
+| Config not updated | Run `home-manager switch` |
+| Ironbar not changing | Run `ironbar reload` or restart service |
+
 ## Table of Contents
 
 - [Installation Issues](#installation-issues)
@@ -178,6 +224,35 @@ theming.signal.brandGovernance = {
 ```
 
 ## Application-Specific Issues
+
+### Quick Application Checklist
+
+Before diving into specific issues, verify these basics:
+
+```
+✓ Program enabled: programs.<app>.enable = true
+✓ Signal enabled: theming.signal.enable = true
+✓ Theming enabled: theming.signal.<category>.<app>.enable = true
+  OR autoEnable = true
+✓ System rebuilt: home-manager switch completed
+✓ Application restarted: Closed and reopened
+```
+
+### Diagnostic Commands
+
+```bash
+# Check if Signal thinks it should theme the app
+nix eval .#homeConfigurations.user.config.theming.signal.<category>.<app>.enable
+
+# Check if program is enabled
+nix eval .#homeConfigurations.user.config.programs.<app>.enable
+
+# Check generated config location
+ls -la ~/.config/<app>/
+
+# View Home Manager generation
+home-manager generations | head -n 1
+```
 
 ### Ironbar not reflecting Signal colors
 

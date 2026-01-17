@@ -72,8 +72,24 @@
         system:
         let
           pkgs = nixpkgs.legacyPackages.${system};
+
+          # Import comprehensive test suite
+          allTests = import ./tests {
+            inherit
+              pkgs
+              self
+              signal-palette
+              system
+              ;
+            inherit (nixpkgs) lib;
+            home-manager = nixpkgs.legacyPackages.${system}.home-manager;
+          };
         in
         {
+          # ============================================================================
+          # Static Checks (existing)
+          # ============================================================================
+
           format = pkgs.runCommand "check-format" { } ''
             ${pkgs.nixfmt}/bin/nixfmt --check ${./.}
             touch $out
@@ -167,6 +183,83 @@
             echo "✓ Theme resolution is properly configured"
             touch $out
           '';
+
+          # ============================================================================
+          # Unit Tests - Library Functions
+          # ============================================================================
+
+          inherit (allTests)
+            unit-lib-resolveThemeMode
+            unit-lib-isValidResolvedMode
+            unit-lib-getThemeName
+            unit-lib-getColors
+            unit-lib-getSyntaxColors
+            ;
+
+          # ============================================================================
+          # Integration Tests - Example Configurations
+          # ============================================================================
+
+          inherit (allTests)
+            integration-example-basic
+            integration-example-auto-enable
+            integration-example-full-desktop
+            integration-example-custom-brand
+            integration-example-migrating
+            integration-example-multi-machine
+            ;
+
+          # ============================================================================
+          # Module Tests - Individual Module Evaluation
+          # ============================================================================
+
+          inherit (allTests)
+            module-common-evaluates
+            module-helix-dark
+            module-helix-light
+            module-ghostty-evaluates
+            module-bat-evaluates
+            module-fzf-evaluates
+            module-gtk-evaluates
+            module-ironbar-evaluates
+            ;
+
+          # ============================================================================
+          # Edge Case Tests - Option Combinations and Conflicts
+          # ============================================================================
+
+          inherit (allTests)
+            edge-case-all-disabled
+            edge-case-multiple-terminals
+            edge-case-brand-governance
+            edge-case-ironbar-profiles
+            ;
+
+          # ============================================================================
+          # Validation Tests - Theme Resolution Consistency
+          # ============================================================================
+
+          inherit (allTests)
+            validation-theme-names
+            validation-no-auto-theme-names
+            ;
+
+          # ============================================================================
+          # Accessibility Tests
+          # ============================================================================
+
+          inherit (allTests)
+            accessibility-contrast-estimation
+            ;
+
+          # ============================================================================
+          # Color Manipulation Tests
+          # ============================================================================
+
+          inherit (allTests)
+            color-manipulation-lightness
+            color-manipulation-chroma
+            ;
         }
       );
     };

@@ -1,0 +1,199 @@
+/**
+ * COMPLETE IRONBAR CONFIGURATION
+ * This example shows how to combine Signal colors with your own layout preferences.
+ * 
+ * Usage:
+ * 1. Enable Signal theme: theming.signal.ironbar.enable = true;
+ * 2. Signal applies colors automatically via its generated CSS
+ * 3. Add this file to override layout/typography in your own configuration:
+ *    programs.ironbar.style = ./ironbar-complete.css;
+ * 
+ * Note: Import Signal's colors by including the generated theme file first,
+ * or use the @define-color tokens that Signal provides.
+ */
+
+/* =============================================================================
+   TYPOGRAPHY (User Preference)
+   Signal doesn't set these - they're your choice
+   ============================================================================= */
+
+* {
+  font-family: "JetBrains Mono", monospace;  /* Your font choice */
+  font-size: 14px;                            /* Your size preference */
+}
+
+.battery {
+  font-family: monospace;  /* Override for specific widgets */
+}
+
+.clock {
+  font-family: monospace;
+}
+
+/* =============================================================================
+   LAYOUT & SPACING (User Preference)
+   Signal doesn't set these - adjust for your screen size and preferences
+   ============================================================================= */
+
+#bar {
+  margin: 12px;  /* Distance from screen edge - adjust for your display */
+}
+
+#bar #start,
+#bar #center,
+#bar #end {
+  border-width: 2px;           /* Border thickness */
+  border-style: solid;         /* Border style */
+  border-radius: 16px;         /* Corner rounding */
+  padding: 4px 16px;           /* Internal spacing */
+}
+
+#bar #start {
+  margin-right: 16px;          /* Spacing between sections */
+}
+
+#bar #center {
+  margin: 0 8px;               /* Spacing around center section */
+}
+
+#bar #end {
+  margin-left: 16px;           /* Spacing before end section */
+}
+
+/* =============================================================================
+   WIDGET LAYOUT (User Preference)
+   Signal doesn't set these - customize to your liking
+   ============================================================================= */
+
+/* Workspaces */
+.workspaces button {
+  padding: 4px 8px;            /* Button padding */
+  margin: 0 4px;               /* Space between workspace buttons */
+  border-radius: 12px;         /* Button corner rounding */
+}
+
+.workspaces button.focused {
+  border-left-width: 3px;      /* Indicator width */
+  border-left-style: solid;    /* Indicator style */
+  border-top-left-radius: 0;   /* Remove left rounding for indicator */
+  border-bottom-left-radius: 0;
+}
+
+/* Window Title */
+.focused {
+  padding: 4px 20px;           /* Padding around window title */
+}
+
+.focused.active {
+  border-left-width: 3px;      /* Active window indicator width */
+  border-left-style: solid;    /* Active window indicator style */
+  border-top-left-radius: 0;   /* Remove left rounding for indicator */
+  border-bottom-left-radius: 0;
+}
+
+/* Control Buttons */
+button {
+  border: none;                /* Remove default button borders */
+}
+
+button:hover {
+  opacity: 1.0;                /* Full opacity on hover */
+}
+
+/* System Tray */
+.tray .item {
+  padding: 4px;                /* Padding around tray icons */
+  margin: 0 3px;               /* Space between tray items */
+  border-radius: 10px;         /* Corner rounding for tray items */
+}
+
+/* Battery */
+.battery.warning,
+.battery.critical {
+  border-left-width: 3px;      /* Warning/critical indicator width */
+  border-left-style: solid;    /* Warning/critical indicator style */
+}
+
+/* Clock */
+.clock {
+  padding: 0 16px;             /* Padding around clock text */
+}
+
+/* Notifications */
+.notifications {
+  padding: 0 8px;              /* Padding around notification indicator */
+}
+
+/* =============================================================================
+   COLORS
+   Signal theme provides these automatically via @define-color tokens:
+   - @text_primary, @text_secondary, @text_tertiary
+   - @surface_base, @surface_emphasis
+   - @accent_focus, @accent_success, @accent_warning, @accent_danger
+   
+   They're already applied to the right elements in Signal's generated CSS.
+   You can override specific color choices here if needed, but typically
+   you should let Signal handle all colors.
+   ============================================================================= */
+
+/* Example: Override a specific color if needed (generally not recommended)
+.workspaces button.focused {
+  border-left-color: #your-custom-color;
+}
+*/
+
+/* =============================================================================
+   DISPLAY PROFILE EXAMPLES
+   Signal provides three profiles: compact (1080p), relaxed (1440p), spacious (4K)
+   These examples show different spacing approaches for different screen sizes
+   ============================================================================= */
+
+/*
+ * Compact Profile (1080p displays)
+ * Tighter spacing, smaller elements
+ 
+* {
+  font-size: 12px;
+}
+
+#bar {
+  margin: 8px;
+}
+
+#bar #start,
+#bar #center,
+#bar #end {
+  padding: 3px 12px;
+  border-radius: 12px;
+}
+
+.workspaces button {
+  padding: 3px 6px;
+  margin: 0 2px;
+}
+*/
+
+/*
+ * Spacious Profile (4K displays)
+ * More generous spacing, larger elements
+
+* {
+  font-size: 16px;
+}
+
+#bar {
+  margin: 16px;
+}
+
+#bar #start,
+#bar #center,
+#bar #end {
+  padding: 6px 20px;
+  border-radius: 20px;
+}
+
+.workspaces button {
+  padding: 6px 10px;
+  margin: 0 6px;
+}
+*/

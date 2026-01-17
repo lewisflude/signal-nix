@@ -1,8 +1,25 @@
+# Nix build outputs
 result
 result-*
+
+# Development
+.direnv/
+.envrc
+
+# Archive of working notes
+.archive/
+
+# Editor files
 *.swp
 *.swo
 *~
+.vscode/
+.idea/
+
+# OS files
 .DS_Store
+Thumbs.db
+
+# Logs
 logs/
-*.log
+logs/

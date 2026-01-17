@@ -2,6 +2,7 @@
   config,
   lib,
   signalColors,
+  signalLib,
   ...
 }:
 let
@@ -23,8 +24,32 @@ let
   # Helper to get hex without # prefix
   hexRaw = color: removePrefix "#" color.hex;
 
-  # Check if yazi should be themed
-  shouldTheme = cfg.cli.yazi.enable || (cfg.autoEnable && (config.programs.yazi.enable or false));
+  # Helper functions to reduce repetitive color mappings
+  # These create consistent attribute structures for yazi theme
+  mkColorPair = fg: bg: {
+    fg = hexRaw fg;
+    bg = hexRaw bg;
+  };
+
+  mkSingleColor = attr: color: {
+    ${attr} = hexRaw color;
+  };
+
+  mkMarker = color: mkColorPair color color;
+
+  mkModeStyle =
+    fg: bg:
+    {
+      fg = hexRaw fg;
+      bg = hexRaw bg;
+      bold = true;
+    };
+
+  # Check if yazi should be themed - using centralized helper
+  shouldTheme = signalLib.shouldThemeApp "yazi" [
+    "cli"
+    "yazi"
+  ] cfg config;
 in
 {
   config = mkIf (cfg.enable && shouldTheme) {
@@ -76,33 +101,12 @@ in
 
       # Mode - Mode indicators (normal, select, unset)
       mode = {
-        normal_main = {
-          fg = hexRaw colors.surface-base;
-          bg = hexRaw accent.focus.Lc75;
-          bold = true;
-        };
-        normal_alt = {
-          fg = hexRaw accent.focus.Lc75;
-          bg = hexRaw colors.surface-emphasis;
-        };
-        select_main = {
-          fg = hexRaw colors.surface-base;
-          bg = hexRaw accent.success.Lc75;
-          bold = true;
-        };
-        select_alt = {
-          fg = hexRaw accent.success.Lc75;
-          bg = hexRaw colors.surface-emphasis;
-        };
-        unset_main = {
-          fg = hexRaw colors.surface-base;
-          bg = hexRaw accent.warning.Lc75;
-          bold = true;
-        };
-        unset_alt = {
-          fg = hexRaw accent.warning.Lc75;
-          bg = hexRaw colors.surface-emphasis;
-        };
+        normal_main = mkModeStyle colors.surface-base accent.focus.Lc75;
+        normal_alt = mkColorPair accent.focus.Lc75 colors.surface-emphasis;
+        select_main = mkModeStyle colors.surface-base accent.success.Lc75;
+        select_alt = mkColorPair accent.success.Lc75 colors.surface-emphasis;
+        unset_main = mkModeStyle colors.surface-base accent.warning.Lc75;
+        unset_alt = mkColorPair accent.warning.Lc75 colors.surface-emphasis;
       };
 
       # Manager (file list) colors
@@ -127,22 +131,10 @@ in
           bg = "reset";
           italic = true;
         };
-        marker_copied = {
-          fg = hexRaw accent.success.Lc75;
-          bg = hexRaw accent.success.Lc75;
-        };
-        marker_cut = {
-          fg = hexRaw accent.danger.Lc75;
-          bg = hexRaw accent.danger.Lc75;
-        };
-        marker_marked = {
-          fg = hexRaw accent.focus.Lc75;
-          bg = hexRaw accent.focus.Lc75;
-        };
-        marker_selected = {
-          fg = hexRaw accent.warning.Lc75;
-          bg = hexRaw accent.warning.Lc75;
-        };
+        marker_copied = mkMarker accent.success.Lc75;
+        marker_cut = mkMarker accent.danger.Lc75;
+        marker_marked = mkMarker accent.focus.Lc75;
+        marker_selected = mkMarker accent.warning.Lc75;
         tab_active = {
           fg = hexRaw colors.text-primary;
           bg = hexRaw colors.surface-base;
@@ -166,21 +158,9 @@ in
           fg = hexRaw colors.surface-emphasis;
           bg = hexRaw colors.surface-emphasis;
         };
-        mode_normal = {
-          fg = hexRaw colors.surface-base;
-          bg = hexRaw accent.focus.Lc75;
-          bold = true;
-        };
-        mode_select = {
-          fg = hexRaw colors.surface-base;
-          bg = hexRaw accent.success.Lc75;
-          bold = true;
-        };
-        mode_unset = {
-          fg = hexRaw colors.surface-base;
-          bg = hexRaw accent.warning.Lc75;
-          bold = true;
-        };
+        mode_normal = mkModeStyle colors.surface-base accent.focus.Lc75;
+        mode_select = mkModeStyle colors.surface-base accent.success.Lc75;
+        mode_unset = mkModeStyle colors.surface-base accent.warning.Lc75;
         progress_label = {
           fg = hexRaw colors.text-primary;
           bold = true;

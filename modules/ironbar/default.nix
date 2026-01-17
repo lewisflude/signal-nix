@@ -17,16 +17,19 @@ let
   # Import tokens
   tokens = import ./tokens.nix { inherit signalColors pkgs; };
 
-  # Generate dynamic style.css with Signal colors
+  # Generate minimal color-only style.css with Signal colors
   styleFile = pkgs.writeText "ironbar-signal-style.css" ''
     /**
-     * IRONBAR STYLESHEET - SIGNAL THEME
-     * Simplified color-focused theme
-     * Colors are dynamically generated from Signal design system
+     * IRONBAR SIGNAL THEME - COLORS ONLY
+     * Generated from Signal Design System
+     * 
+     * This file ONLY contains color definitions.
+     * For layout, spacing, and typography, create your own CSS file.
+     * See: examples/ironbar-complete.css for a complete example
      */
 
     /* =============================================================================
-       COLOR TOKENS
+       SIGNAL COLOR TOKENS
        ============================================================================= */
 
     /* Text Colors */
@@ -40,17 +43,14 @@ let
 
     /* Accent Colors */
     @define-color accent_focus ${tokens.colors.accent.focus};
+    @define-color accent_success ${tokens.colors.accent.success};
     @define-color accent_warning ${tokens.colors.accent.warning};
     @define-color accent_danger ${tokens.colors.accent.danger};
 
     /* =============================================================================
-       BASE STYLES
+       APPLY COLORS TO ELEMENTS
+       Apply Signal colors while respecting your layout
        ============================================================================= */
-
-    * {
-      font-family: monospace;
-      font-size: 14px;
-    }
 
     .background {
       background-color: transparent;
@@ -58,14 +58,9 @@ let
 
     #bar {
       background-color: transparent;
-      margin: 12px;
     }
 
-    /* =============================================================================
-       WIDGETS & COMPONENTS
-       ============================================================================= */
-
-    /* Text Styling */
+    /* Text */
     label {
       color: @text_primary;
     }
@@ -74,17 +69,11 @@ let
     .workspaces button {
       color: @text_tertiary;
       background-color: transparent;
-      border: none;
-      padding: 4px 8px;
-      margin: 0 4px;
-      border-radius: 12px;
     }
 
     .workspaces button.focused {
       color: @text_primary;
-      border-left: 3px solid @accent_focus;
-      border-top-left-radius: 0;
-      border-bottom-left-radius: 0;
+      border-left-color: @accent_focus;
     }
 
     .workspaces button:hover {
@@ -92,18 +81,12 @@ let
     }
 
     /* Window Title */
-    .focused {
-      padding: 4px 20px;
-    }
-
     .focused label {
       color: @text_secondary;
     }
 
     .focused.active {
-      border-left: 3px solid @accent_focus;
-      border-top-left-radius: 0;
-      border-bottom-left-radius: 0;
+      border-left-color: @accent_focus;
     }
 
     .focused.active label {
@@ -113,41 +96,23 @@ let
     /* Control Buttons */
     button {
       background-color: transparent;
-      border: none;
       color: @text_primary;
     }
 
-    button:hover {
-      opacity: 1.0;
-    }
-
-    /* System Tray */
-    .tray .item {
-      padding: 4px;
-      margin: 0 3px;
-      border-radius: 10px;
-    }
-
-    /* Battery */
-    .battery {
-      font-family: monospace;
-    }
-
+    /* Battery States */
     .battery.warning {
       color: @accent_warning;
-      border-left: 3px solid @accent_warning;
+      border-left-color: @accent_warning;
     }
 
     .battery.critical {
       color: @accent_danger;
-      border-left: 3px solid @accent_danger;
+      border-left-color: @accent_danger;
     }
 
     /* Clock */
     .clock {
-      font-family: monospace;
       color: @text_primary;
-      padding: 0 16px;
     }
 
     /* Power Button */
@@ -155,34 +120,12 @@ let
       color: @accent_danger;
     }
 
-    /* Notifications */
-    .notifications {
-      padding: 0 8px;
-    }
-
-    /* =============================================================================
-       LAYOUT (Islands)
-       ============================================================================= */
-
+    /* Layout Islands */
     #bar #start,
     #bar #center,
     #bar #end {
       background-color: @surface_base;
-      border: 2px solid @surface_emphasis;
-      border-radius: 16px;
-      padding: 4px 16px;
-    }
-
-    #bar #start {
-      margin-right: 16px;
-    }
-
-    #bar #center {
-      margin: 0 8px;
-    }
-
-    #bar #end {
-      margin-left: 16px;
+      border-color: @surface_emphasis;
     }
   '';
 
@@ -192,11 +135,10 @@ in
 {
   config = mkIf (cfg.enable && shouldTheme) {
     programs.ironbar = {
+      # Note: Signal only provides colors via CSS. Enable ironbar and configure
+      # systemd integration in your own programs.ironbar configuration.
 
-      # Systemd Integration
-      systemd = true;
-
-      # Styling - dynamically generated
+      # Styling - dynamically generated with Signal colors
       style = styleFile;
 
       # Configuration
