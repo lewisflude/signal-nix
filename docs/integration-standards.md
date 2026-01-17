@@ -52,7 +52,7 @@ This document tracks all programs that should be themed by Signal, organized by 
 - yazi (Tier 3) ✅
 - less (Tier 5) ✅ NEW
 - ripgrep (Tier 5) ✅ NEW
-- **TODO**: bottom, glow, lazydocker, more...
+- **TODO**: bottom, more...
 
 ### ✅ Desktop Apps (9/20+) 🎉 NEW
 - GTK 3/4 (Tier 4) ✅
@@ -137,9 +137,9 @@ This document tracks all programs that should be themed by Signal, organized by 
 - [ ] **glances** - Cross-platform system monitor
 
 ### Development (Home Manager)
-- [ ] **lazydocker** - Docker TUI (like lazygit)
+- [x] **lazydocker** - Docker TUI (like lazygit) ✅ RE-ENABLED
+- [x] **glow** - Markdown viewer ✅
 - [ ] **gdb** - GNU debugger with colors
-- [ ] **glow** - Markdown viewer
 - [ ] **jq** - JSON processor with colors
 
 ### Browsers (Home Manager)

@@ -229,7 +229,7 @@ theming.signal.autoEnable = true;  # Themes your installed kitty
 - **eza** - Modern ls replacement (comprehensive file type and git status colors)
 - **fzf** - Fuzzy finder (complete color configuration)
 - **lazygit** - Git TUI (comprehensive theme)
-- **lazydocker** - Docker TUI (complete YAML theme) ✨
+- **lazydocker** - Docker TUI (complete YAML theme)
 - **less** - Pager (man page colors via LESS_TERMCAP) ✨
 - **ripgrep** - Fast search tool (color output configuration) ✨
 - **glow** - Markdown viewer (JSON glamour theme) ✨

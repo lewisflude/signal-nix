@@ -65,6 +65,7 @@ in
     ../../modules/cli/eza.nix
     ../../modules/cli/fzf.nix
     ../../modules/cli/lazygit.nix
+    ../../modules/cli/lazydocker.nix
     ../../modules/cli/yazi.nix
     ../../modules/cli/less.nix
     ../../modules/cli/ripgrep.nix
