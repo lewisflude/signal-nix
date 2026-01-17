@@ -120,7 +120,7 @@
 #     enable = true;
 #     autoEnable = true;  # Auto-theme all enabled programs
 #     mode = "dark";
-#     
+#
 #     # Brand colors consistent across all machines
 #     brandGovernance = {
 #       policy = "functional-override";
@@ -148,12 +148,12 @@
 #         # Shared helix settings
 #       };
 #     };
-#     
+#
 #     # CLI tools (all machines)
 #     bat.enable = true;
 #     fzf.enable = true;
 #     starship.enable = true;
-#     
+#
 #     # Git (all machines)
 #     git = {
 #       enable = true;
@@ -179,21 +179,21 @@
 #         font_size = 12; # Larger font for 4K
 #       };
 #     };
-#     
+#
 #     # GUI apps
 #     firefox.enable = true;
 #   };
-#   
+#
 #   # GTK theming
 #   gtk.enable = true;
-#   
+#
 #   # Wayland compositor
 #   wayland.windowManager.hyprland.enable = true;
-#   
+#
 #   # Desktop programs
 #   programs.ironbar.enable = true;
 #   programs.fuzzel.enable = true;
-#   
+#
 #   # Desktop-specific Signal settings
 #   theming.signal = {
 #     ironbar = {
@@ -225,13 +225,13 @@
 #         font.size = 10; # Smaller for 1080p
 #       };
 #     };
-#     
+#
 #     # Minimal GUI
 #     firefox.enable = true;
 #   };
-#   
+#
 #   gtk.enable = true;
-#   
+#
 #   # Laptop-specific Signal settings
 #   theming.signal = {
 #     ironbar = {
@@ -258,17 +258,17 @@
 #         font-size = 11;
 #       };
 #     };
-#     
+#
 #     # Work-specific tools
 #     slack.enable = true;
 #     teams.enable = true;
-#     
+#
 #     # Development tools
 #     vscode.enable = true;
 #   };
-#   
+#
 #   gtk.enable = true;
-#   
+#
 #   # Work-specific Signal settings
 #   theming.signal = {
 #     ironbar = {
@@ -294,19 +294,19 @@
 #       enable = true;
 #       # Tmux config
 #     };
-#     
+#
 #     # Server monitoring
 #     btop.enable = true;
-#     
+#
 #     # No GUI applications
 #   };
-#   
+#
 #   # Server-specific Signal settings
 #   theming.signal = {
 #     # Theme CLI tools only
 #     multiplexers.tmux.enable = true;
 #     monitors.btop.enable = true;
-#     
+#
 #     # No GUI theming
 #     ironbar.enable = false;
 #     gtk.enable = false;
@@ -325,11 +325,11 @@
 #   programs = {
 #     # Terminal
 #     alacritty.enable = true;
-#     
+#
 #     # macOS apps
 #     # ...
 #   };
-#   
+#
 #   # macOS-specific Signal settings
 #   theming.signal = {
 #     # Most programs work the same on macOS
@@ -364,13 +364,13 @@
 #
 # let
 #   hostname = builtins.readFile /etc/hostname;
-#   
+#
 #   isDesktop = hostname == "desktop\n";
 #   isLaptop = hostname == "laptop\n";
 #   isWork = hostname == "work\n";
-#   
+#
 #   # Automatic ironbar profile based on hostname
-#   ironbarProfile = 
+#   ironbarProfile =
 #     if isDesktop then "spacious"
 #     else if isWork then "relaxed"
 #     else "compact";
@@ -410,10 +410,10 @@
 #   # Detect machine characteristics
 #   isLinux = config.home.os == "linux";
 #   isDarwin = config.home.os == "darwin";
-#   
+#
 #   # Detect if running on server (no display)
 #   hasDisplay = builtins.getEnv "DISPLAY" != "";
-#   
+#
 #   # Enable GUI only on machines with displays
 #   enableGUI = hasDisplay && isLinux;
 # in
@@ -421,7 +421,7 @@
 #   theming.signal = {
 #     enable = true;
 #     autoEnable = true;
-#     
+#
 #     # GUI theming only on machines with displays
 #     ironbar.enable = enableGUI;
 #     gtk.enable = enableGUI;

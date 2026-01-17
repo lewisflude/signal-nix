@@ -37,13 +37,11 @@ let
 
   mkMarker = color: mkColorPair color color;
 
-  mkModeStyle =
-    fg: bg:
-    {
-      fg = hexRaw fg;
-      bg = hexRaw bg;
-      bold = true;
-    };
+  mkModeStyle = fg: bg: {
+    fg = hexRaw fg;
+    bg = hexRaw bg;
+    bold = true;
+  };
 
   # Check if yazi should be themed - using centralized helper
   shouldTheme = signalLib.shouldThemeApp "yazi" [

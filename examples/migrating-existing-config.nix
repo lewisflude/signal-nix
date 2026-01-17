@@ -57,15 +57,15 @@
 # ============================================================================
 #
 # Create: ~/.config/home-manager/theming.nix
-# 
+#
 # { config, ... }:
-# 
+#
 # {
 #   theming.signal = {
 #     enable = true;
 #     autoEnable = true;  # Themes all your existing enabled programs
 #     mode = "dark";
-#     
+#
 #     # Optional: Disable specific programs if needed
 #     # cli.bat.enable = false;  # Keep my custom bat theme
 #   };
@@ -147,7 +147,7 @@
 #     bat.enable = true;
 #     fzf.enable = true;
 #     starship.enable = true;
-#     
+#
 #     # You might have custom configs here
 #     helix.settings = {
 #       # Your custom keybindings, etc.
@@ -172,13 +172,13 @@
 #     bat.enable = true;
 #     fzf.enable = true;
 #     starship.enable = true;
-#     
+#
 #     # Your custom configs are preserved
 #     helix.settings = {
 #       # Your custom keybindings work alongside Signal colors
 #     };
 #   };
-#   
+#
 #   # Just add this block - Signal handles the rest
 #   theming.signal = {
 #     enable = true;
@@ -216,13 +216,13 @@
 # {
 #   # Keep your existing theme initially
 #   catppuccin.enable = true;
-#   
+#
 #   # Add Signal for specific programs
 #   theming.signal = {
 #     enable = true;
 #     editors.helix.enable = true;  # Try Signal on helix
 #   };
-#   
+#
 #   # Disable Catppuccin for helix to avoid conflict
 #   catppuccin.helix.enable = false;
 # }
@@ -235,12 +235,12 @@
 #     enable = true;
 #     image = ./wallpaper.jpg;
 #   };
-#   
+#
 #   # Signal handles application-specific colors
 #   theming.signal = {
 #     enable = true;
 #     mode = "dark";
-#     
+#
 #     # Be selective to avoid conflicts
 #     editors.helix.enable = true;
 #     cli.bat.enable = true;
@@ -253,15 +253,15 @@
 #   programs = {
 #     helix.enable = true;
 #     kitty.enable = true;
-#     
+#
 #     # You have a custom kitty theme you want to keep
 #     kitty.theme = "MyCustomTheme";
 #   };
-#   
+#
 #   theming.signal = {
 #     enable = true;
 #     autoEnable = true;
-#     
+#
 #     # Exclude kitty from Signal theming
 #     terminals.kitty.enable = false;
 #   };

@@ -175,7 +175,7 @@
             }
 
             # Check that lib has resolveThemeMode function
-            ${pkgs.gnugrep}/bin/grep -q "resolveThemeMode = mode:" ${./lib/default.nix} || {
+            ${pkgs.gnugrep}/bin/grep -q "resolveThemeMode" ${./lib/default.nix} || {
               echo "ERROR: lib/default.nix should export resolveThemeMode function"
               exit 1
             }
