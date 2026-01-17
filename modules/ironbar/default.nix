@@ -48,6 +48,17 @@ let
     @define-color accent_success ${tokens.colors.accent.success};
     @define-color accent_warning ${tokens.colors.accent.warning};
     @define-color accent_danger ${tokens.colors.accent.danger};
+
+    /* GTK Theme Color Overrides */
+    /* These prevent GTK from using default brown/tan colors */
+    @define-color theme_bg_color ${tokens.colors.surface.base};
+    @define-color theme_fg_color ${tokens.colors.text.primary};
+    @define-color theme_base_color ${tokens.colors.surface.base};
+    @define-color theme_text_color ${tokens.colors.text.primary};
+    @define-color theme_selected_bg_color ${tokens.colors.accent.focus};
+    @define-color theme_selected_fg_color ${tokens.colors.surface.base};
+    @define-color insensitive_bg_color ${tokens.colors.surface.emphasis};
+    @define-color insensitive_fg_color ${tokens.colors.text.tertiary};
   '';
 in
 {
