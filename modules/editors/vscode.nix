@@ -24,7 +24,7 @@ let
     text-secondary = signalColors.tonal."text-Lc60";
     text-dim = signalColors.tonal."text-Lc45";
     divider-primary = signalColors.tonal."divider-Lc15";
-    divider-secondary = signalColors.tonal."divider-Lc20";
+    divider-secondary = signalColors.tonal."divider-Lc30";
   };
 
   inherit (signalColors) accent;
