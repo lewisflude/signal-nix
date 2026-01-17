@@ -22,71 +22,71 @@ let
   # Color mappings based on theme mode
   # Light mode uses lighter surfaces, dark mode uses darker surfaces
   colors = if themeMode == "light" then {
-    # Light mode colors
+    # Light mode colors - using available Signal palette colors
     window-bg = signalColors.tonal."surface-Lc05";
-    window-fg = signalColors.tonal."text-Lc80";
-    view-bg = signalColors.tonal."surface-Lc02";
-    view-fg = signalColors.tonal."text-Lc80";
-    headerbar-bg = signalColors.tonal."surface-Lc02";
-    headerbar-fg = signalColors.tonal."text-Lc80";
-    headerbar-border = signalColors.tonal."text-Lc80";
+    window-fg = signalColors.tonal."text-Lc75";
+    view-bg = signalColors.tonal."surface-Lc05";
+    view-fg = signalColors.tonal."text-Lc75";
+    headerbar-bg = signalColors.tonal."surface-Lc05";
+    headerbar-fg = signalColors.tonal."text-Lc75";
+    headerbar-border = signalColors.tonal."text-Lc75";
     headerbar-backdrop = signalColors.tonal."surface-Lc05";
     headerbar-shade = signalColors.tonal."divider-Lc12";
     headerbar-darker-shade = signalColors.tonal."divider-Lc12";
-    sidebar-bg = signalColors.tonal."surface-Lc12";
-    sidebar-fg = signalColors.tonal."text-Lc80";
-    sidebar-backdrop = signalColors.tonal."surface-Lc08";
+    sidebar-bg = signalColors.tonal."surface-Lc10";
+    sidebar-fg = signalColors.tonal."text-Lc75";
+    sidebar-backdrop = signalColors.tonal."surface-Lc05";
     sidebar-shade = signalColors.tonal."divider-Lc07";
     sidebar-border = signalColors.tonal."divider-Lc07";
     secondary-sidebar-bg = signalColors.tonal."surface-Lc10";
-    secondary-sidebar-fg = signalColors.tonal."text-Lc80";
-    secondary-sidebar-backdrop = signalColors.tonal."surface-Lc06";
+    secondary-sidebar-fg = signalColors.tonal."text-Lc75";
+    secondary-sidebar-backdrop = signalColors.tonal."surface-Lc05";
     secondary-sidebar-shade = signalColors.tonal."divider-Lc07";
     secondary-sidebar-border = signalColors.tonal."divider-Lc07";
-    card-bg = signalColors.tonal."surface-Lc02";
-    card-fg = signalColors.tonal."text-Lc80";
+    card-bg = signalColors.tonal."surface-Lc05";
+    card-fg = signalColors.tonal."text-Lc75";
     card-shade = signalColors.tonal."divider-Lc07";
     dialog-bg = signalColors.tonal."surface-Lc05";
-    dialog-fg = signalColors.tonal."text-Lc80";
-    popover-bg = signalColors.tonal."surface-Lc02";
-    popover-fg = signalColors.tonal."text-Lc80";
+    dialog-fg = signalColors.tonal."text-Lc75";
+    popover-bg = signalColors.tonal."surface-Lc05";
+    popover-fg = signalColors.tonal."text-Lc75";
     popover-shade = signalColors.tonal."divider-Lc07";
-    thumbnail-bg = signalColors.tonal."surface-Lc02";
-    thumbnail-fg = signalColors.tonal."text-Lc80";
+    thumbnail-bg = signalColors.tonal."surface-Lc05";
+    thumbnail-fg = signalColors.tonal."text-Lc75";
     shade = signalColors.tonal."divider-Lc07";
-    scrollbar-outline = signalColors.tonal."surface-Lc02";
+    scrollbar-outline = signalColors.tonal."surface-Lc05";
   } else {
     # Dark mode colors - using available Signal palette colors
     window-bg = signalColors.tonal."surface-Lc10";
-    window-fg = signalColors.tonal."text-Lc80";
+    window-fg = signalColors.tonal."text-Lc75";
     view-bg = signalColors.tonal."surface-Lc10";
-    view-fg = signalColors.tonal."text-Lc80";
+    view-fg = signalColors.tonal."text-Lc75";
     headerbar-bg = signalColors.tonal."surface-Lc10";
-    headerbar-fg = signalColors.tonal."text-Lc80";
-    headerbar-border = signalColors.tonal."text-Lc80";
+    headerbar-fg = signalColors.tonal."text-Lc75";
+    headerbar-border = signalColors.tonal."text-Lc75";
     headerbar-backdrop = signalColors.tonal."surface-Lc10";
     headerbar-shade = signalColors.tonal."divider-Lc12";
     headerbar-darker-shade = signalColors.tonal."divider-Lc12";
     sidebar-bg = signalColors.tonal."surface-Lc10";
-    sidebar-fg = signalColors.tonal."text-Lc80";
+    sidebar-fg = signalColors.tonal."text-Lc75";
     sidebar-backdrop = signalColors.tonal."surface-Lc05";
     sidebar-shade = signalColors.tonal."divider-Lc07";
     sidebar-border = signalColors.tonal."divider-Lc12";
     secondary-sidebar-bg = signalColors.tonal."surface-Lc05";
-    secondary-sidebar-fg = signalColors.tonal."text-Lc80";
+    secondary-sidebar-fg = signalColors.tonal."text-Lc75";
     secondary-sidebar-backdrop = signalColors.tonal."surface-Lc05";
     secondary-sidebar-shade = signalColors.tonal."divider-Lc07";
     secondary-sidebar-border = signalColors.tonal."divider-Lc12";
     card-bg = signalColors.tonal."surface-Lc10";
-    card-fg = signalColors.tonal."text-Lc80";
+    card-fg = signalColors.tonal."text-Lc75";
     card-shade = signalColors.tonal."divider-Lc12";
     dialog-bg = signalColors.tonal."surface-Lc10";
-    dialog-fg = signalColors.tonal."text-Lc80";
+    dialog-fg = signalColors.tonal."text-Lc75";
     popover-bg = signalColors.tonal."surface-Lc10";
-    popover-fg = signalColors.tonal."text-Lc80";
+    popover-fg = signalColors.tonal."text-Lc75";
     popover-shade = signalColors.tonal."divider-Lc07";
     thumbnail-bg = signalColors.tonal."surface-Lc10";
-    thumbnail-fg = signalColors.tonal."text-Lc80";
+    thumbnail-fg = signalColors.tonal."text-Lc75";
     shade = signalColors.tonal."divider-Lc07";
     scrollbar-outline = signalColors.tonal."surface-Lc05";
   };
@@ -136,7 +136,7 @@ let
 
     /* Warning states */
     @define-color warning_bg_color ${accent.warning.Lc60.hex};
-    @define-color warning_fg_color ${if themeMode == "light" then signalColors.tonal."text-Lc80" else colors.view-bg}.hex;
+    @define-color warning_fg_color ${if themeMode == "light" then signalColors.tonal."text-Lc75" else colors.view-bg}.hex;
     @define-color warning_color ${accent.warning.Lc50.hex};
 
     /* Error states */
