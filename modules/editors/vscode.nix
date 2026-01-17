@@ -20,7 +20,6 @@ let
   colors = {
     surface-base = signalColors.tonal."surface-Lc05";
     surface-raised = signalColors.tonal."surface-Lc10";
-    surface-hover = signalColors.tonal."surface-Lc15";
     text-primary = signalColors.tonal."text-Lc75";
     text-secondary = signalColors.tonal."text-Lc60";
     text-dim = signalColors.tonal."text-Lc45";
@@ -56,7 +55,7 @@ let
       "editor.wordHighlightStrongBackground" = "${colors.divider-primary.hex}80";
       "editor.findMatchBackground" = "${accent.warning.Lc75.hex}60";
       "editor.findMatchHighlightBackground" = "${accent.warning.Lc75.hex}40";
-      "editor.hoverHighlightBackground" = colors.surface-hover.hex;
+      "editor.hoverHighlightBackground" = colors.surface-raised.hex;
       "editor.lineHighlightBorder" = colors.divider-primary.hex;
 
       # Cursor
@@ -142,7 +141,7 @@ let
       "list.activeSelectionForeground" = colors.text-primary.hex;
       "list.inactiveSelectionBackground" = colors.divider-primary.hex;
       "list.inactiveSelectionForeground" = colors.text-primary.hex;
-      "list.hoverBackground" = colors.surface-hover.hex;
+      "list.hoverBackground" = colors.surface-raised.hex;
       "list.hoverForeground" = colors.text-primary.hex;
       "list.focusBackground" = colors.divider-secondary.hex;
       "list.focusForeground" = colors.text-primary.hex;
