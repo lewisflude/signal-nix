@@ -9,7 +9,7 @@
   ...
 }:
 let
-  inherit (lib) mkIf mkEnableOption;
+  inherit (lib) mkIf;
   cfg = config.theming.signal;
 
   # Import color tokens
@@ -51,9 +51,8 @@ let
   '';
 in
 {
-  options.theming.signal.ironbar = {
-    enable = mkEnableOption "Signal color palette for ironbar";
-  };
+  # Don't define options here - they're defined in common/default.nix
+  # This module only provides the implementation
 
   config = mkIf (cfg.enable && cfg.ironbar.enable) {
     # Expose colors for consumers to use

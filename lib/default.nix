@@ -37,6 +37,22 @@ rec {
     in
     "${toString r} ${toString g} ${toString b}";
 
+  # Convert hex color to comma-separated RGB string (0-255 range)
+  # Required for KDE/Qt color scheme format
+  # Input: color object with .hex attribute (e.g., "#6b87c8")
+  # Output: comma-separated RGB string (e.g., "107,135,200")
+  # Uses nix-colorizer for accurate hex -> sRGB conversion
+  hexToRgbCommaSeparated =
+    color:
+    let
+      srgb = nix-colorizer.hex.to.srgb color.hex;
+      # Convert from [0, 1] range to [0, 255] range and round
+      r = builtins.floor (srgb.r * 255.0 + 0.5);
+      g = builtins.floor (srgb.g * 255.0 + 0.5);
+      b = builtins.floor (srgb.b * 255.0 + 0.5);
+    in
+    "${toString r},${toString g},${toString b}";
+
   # Add alpha channel to hex color in RRGGBBAA format (no # prefix)
   # Required for Fuzzel color format
   # Input: color object with .hex attribute, alpha value [0.0, 1.0]
