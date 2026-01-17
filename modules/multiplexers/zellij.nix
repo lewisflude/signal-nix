@@ -2,6 +2,7 @@
   config,
   lib,
   signalColors,
+  signalLib,
   ...
 }:
 let
@@ -29,8 +30,11 @@ let
     "${toString r.x} ${toString g.x} ${toString b.x}";
 
   # Check if zellij should be themed
-  shouldTheme =
-    cfg.multiplexers.zellij.enable || (cfg.autoEnable && (config.programs.zellij.enable or false));
+  # Check if zellij should be themed - using centralized helper
+  shouldTheme = signalLib.shouldThemeApp "zellij" [
+    "multiplexers"
+    "zellij"
+  ] cfg config;
 in
 {
   config = mkIf (cfg.enable && shouldTheme) {

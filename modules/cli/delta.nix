@@ -100,7 +100,11 @@ let
       };
 
   # Check if delta should be themed
-  shouldTheme = cfg.cli.delta.enable || (cfg.autoEnable && (config.programs.delta.enable or false));
+  # Check if delta should be themed - using centralized helper
+  shouldTheme = signalLib.shouldThemeApp "delta" [
+    "cli"
+    "delta"
+  ] cfg config;
 in
 {
   config = mkIf (cfg.enable && shouldTheme) {

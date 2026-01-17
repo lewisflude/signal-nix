@@ -2,6 +2,7 @@
   config,
   lib,
   signalColors,
+  signalLib,
   ...
 }:
 let
@@ -19,9 +20,11 @@ let
 
   inherit (signalColors) accent;
 
-  # Check if tmux should be themed
-  shouldTheme =
-    cfg.multiplexers.tmux.enable || (cfg.autoEnable && (config.programs.tmux.enable or false));
+  # Check if tmux should be themed - using centralized helper
+  shouldTheme = signalLib.shouldThemeApp "tmux" [
+    "multiplexers"
+    "tmux"
+  ] cfg config;
 in
 {
   config = mkIf (cfg.enable && shouldTheme) {

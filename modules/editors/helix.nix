@@ -332,8 +332,11 @@ let
     };
   };
   # Check if helix should be themed
-  shouldTheme =
-    cfg.editors.helix.enable || (cfg.autoEnable && (config.programs.helix.enable or false));
+  # Check if helix should be themed - using centralized helper
+  shouldTheme = signalLib.shouldThemeApp "helix" [
+    "editors"
+    "helix"
+  ] cfg config;
 in
 {
   config = mkIf (cfg.enable && shouldTheme) {

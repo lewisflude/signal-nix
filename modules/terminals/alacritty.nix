@@ -2,6 +2,7 @@
   config,
   lib,
   signalColors,
+  signalLib,
   ...
 }:
 let
@@ -41,9 +42,11 @@ let
     bright-white = signalColors.tonal."text-Lc75";
   };
 
-  # Check if alacritty should be themed
-  shouldTheme =
-    cfg.terminals.alacritty.enable || (cfg.autoEnable && (config.programs.alacritty.enable or false));
+  # Check if alacritty should be themed - using centralized helper
+  shouldTheme = signalLib.shouldThemeApp "alacritty" [
+    "terminals"
+    "alacritty"
+  ] cfg config;
 in
 {
   config = mkIf (cfg.enable && shouldTheme) {

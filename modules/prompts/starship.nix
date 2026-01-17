@@ -2,6 +2,7 @@
   config,
   lib,
   signalColors,
+  signalLib,
   ...
 }:
 let
@@ -18,8 +19,11 @@ let
   inherit (signalColors) accent categorical;
 
   # Check if starship should be themed
-  shouldTheme =
-    cfg.prompts.starship.enable || (cfg.autoEnable && (config.programs.starship.enable or false));
+  # Check if starship should be themed - using centralized helper
+  shouldTheme = signalLib.shouldThemeApp "starship" [
+    "prompts"
+    "starship"
+  ] cfg config;
 in
 {
   config = mkIf (cfg.enable && shouldTheme) {

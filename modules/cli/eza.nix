@@ -169,7 +169,11 @@ let
     concatStringsSep ":" colorPairs;
 
   # Check if eza should be themed
-  shouldTheme = cfg.cli.eza.enable || (cfg.autoEnable && (config.programs.eza.enable or false));
+  # Check if eza should be themed - using centralized helper
+  shouldTheme = signalLib.shouldThemeApp "eza" [
+    "cli"
+    "eza"
+  ] cfg config;
 in
 {
   config = mkIf (cfg.enable && shouldTheme) {

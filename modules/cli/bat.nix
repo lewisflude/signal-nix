@@ -287,8 +287,11 @@ let
   # Resolved mode for static theme selection
   themeMode = signalLib.resolveThemeMode cfg.mode;
 
-  # Check if bat should be themed
-  shouldTheme = cfg.cli.bat.enable || (cfg.autoEnable && (config.programs.bat.enable or false));
+  # Check if bat should be themed - using centralized helper
+  shouldTheme = signalLib.shouldThemeApp "bat" [
+    "cli"
+    "bat"
+  ] cfg config;
 in
 {
   config = mkIf (cfg.enable && shouldTheme) {

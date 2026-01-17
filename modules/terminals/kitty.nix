@@ -2,6 +2,7 @@
   config,
   lib,
   signalColors,
+  signalLib,
   ...
 }:
 let
@@ -40,9 +41,11 @@ let
     bright-white = signalColors.tonal."text-Lc75";
   };
 
-  # Check if kitty should be themed
-  shouldTheme =
-    cfg.terminals.kitty.enable || (cfg.autoEnable && (config.programs.kitty.enable or false));
+  # Check if kitty should be themed - using centralized helper
+  shouldTheme = signalLib.shouldThemeApp "kitty" [
+    "terminals"
+    "kitty"
+  ] cfg config;
 in
 {
   config = mkIf (cfg.enable && shouldTheme) {

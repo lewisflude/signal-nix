@@ -2,6 +2,7 @@
   config,
   lib,
   signalColors,
+  signalLib,
   ...
 }:
 let
@@ -40,9 +41,11 @@ let
     bright-white = signalColors.tonal."text-Lc75";
   };
 
-  # Check if wezterm should be themed
-  shouldTheme =
-    cfg.terminals.wezterm.enable || (cfg.autoEnable && (config.programs.wezterm.enable or false));
+  # Check if wezterm should be themed - using centralized helper
+  shouldTheme = signalLib.shouldThemeApp "wezterm" [
+    "terminals"
+    "wezterm"
+  ] cfg config;
 in
 {
   config = mkIf (cfg.enable && shouldTheme) {

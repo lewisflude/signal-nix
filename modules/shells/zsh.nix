@@ -2,6 +2,7 @@
   config,
   lib,
   signalColors,
+  signalLib,
   ...
 }:
 let
@@ -17,7 +18,11 @@ let
   inherit (signalColors) accent categorical;
 
   # Check if zsh should be themed
-  shouldTheme = cfg.shells.zsh.enable || (cfg.autoEnable && (config.programs.zsh.enable or false));
+  # Check if zsh should be themed - using centralized helper
+  shouldTheme = signalLib.shouldThemeApp "zsh" [
+    "shells"
+    "zsh"
+  ] cfg config;
 in
 {
   config = mkIf (cfg.enable && shouldTheme) {

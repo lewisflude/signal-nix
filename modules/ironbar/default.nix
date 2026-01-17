@@ -5,6 +5,7 @@
   lib,
   pkgs,
   signalColors,
+  signalLib,
   ...
 }:
 let
@@ -129,8 +130,8 @@ let
     }
   '';
 
-  # Check if ironbar should be themed
-  shouldTheme = cfg.ironbar.enable || (cfg.autoEnable && (config.programs.ironbar.enable or false));
+  # Check if ironbar should be themed - using centralized helper
+  shouldTheme = signalLib.shouldThemeApp "ironbar" [ "ironbar" ] cfg config;
 in
 {
   config = mkIf (cfg.enable && shouldTheme) {

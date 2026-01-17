@@ -86,7 +86,7 @@ let
   '';
 
   # Check if gtk should be themed
-  # For GTK, we check config.gtk.enable instead of programs.gtk.enable
+  # Note: GTK uses config.gtk.enable (not programs.gtk.enable) so we keep custom logic
   shouldTheme = cfg.gtk.enable || (cfg.autoEnable && (config.gtk.enable or false));
 in
 {

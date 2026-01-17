@@ -2,6 +2,7 @@
   config,
   lib,
   signalColors,
+  signalLib,
   ...
 }:
 let
@@ -19,7 +20,8 @@ let
   };
 
   # Check if fuzzel should be themed
-  shouldTheme = cfg.fuzzel.enable || (cfg.autoEnable && (config.programs.fuzzel.enable or false));
+  # Check if fuzzel should be themed - using centralized helper
+  shouldTheme = signalLib.shouldThemeApp "fuzzel" [ "fuzzel" ] cfg config;
 in
 {
   config = mkIf (cfg.enable && shouldTheme) {

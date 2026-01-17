@@ -3,6 +3,7 @@
   lib,
   pkgs,
   signalColors,
+  signalLib,
   ...
 }:
 let
@@ -110,8 +111,11 @@ let
   '';
 
   # Check if btop should be themed
-  shouldTheme =
-    cfg.monitors.btop.enable || (cfg.autoEnable && (config.programs.btop.enable or false));
+  # Check if btop should be themed - using centralized helper
+  shouldTheme = signalLib.shouldThemeApp "btop" [
+    "monitors"
+    "btop"
+  ] cfg config;
 in
 {
   config = mkIf (cfg.enable && shouldTheme) {

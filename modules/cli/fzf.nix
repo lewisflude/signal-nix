@@ -2,6 +2,7 @@
   config,
   lib,
   signalColors,
+  signalLib,
   ...
 }:
 let
@@ -38,8 +39,11 @@ let
   # Solution: Use defaultOptions to set colors directly with # prefix preserved
   fzfColorOptions = mapAttrsToList (key: value: "--color=${key}:${value}") colorMap;
 
-  # Check if fzf should be themed
-  shouldTheme = cfg.cli.fzf.enable || (cfg.autoEnable && (config.programs.fzf.enable or false));
+  # Check if fzf should be themed - using centralized helper
+  shouldTheme = signalLib.shouldThemeApp "fzf" [
+    "cli"
+    "fzf"
+  ] cfg config;
 in
 {
   config = mkIf (cfg.enable && shouldTheme) {

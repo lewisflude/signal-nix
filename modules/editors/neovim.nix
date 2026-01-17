@@ -334,8 +334,11 @@ let
   themeMode = signalLib.resolveThemeMode cfg.mode;
 
   # Check if neovim should be themed
-  shouldTheme =
-    cfg.editors.neovim.enable || (cfg.autoEnable && (config.programs.neovim.enable or false));
+  # Check if neovim should be themed - using centralized helper
+  shouldTheme = signalLib.shouldThemeApp "neovim" [
+    "editors"
+    "neovim"
+  ] cfg config;
 in
 {
   config = mkIf (cfg.enable && shouldTheme) {

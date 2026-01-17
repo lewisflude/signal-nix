@@ -2,6 +2,7 @@
   config,
   lib,
   signalColors,
+  signalLib,
   ...
 }:
 let
@@ -42,9 +43,11 @@ let
     bright-white = signalColors.tonal."text-Lc75";
   };
 
-  # Check if ghostty should be themed
-  shouldTheme =
-    cfg.terminals.ghostty.enable || (cfg.autoEnable && (config.programs.ghostty.enable or false));
+  # Check if ghostty should be themed - using centralized helper
+  shouldTheme = signalLib.shouldThemeApp "ghostty" [
+    "terminals"
+    "ghostty"
+  ] cfg config;
 in
 {
   config = mkIf (cfg.enable && shouldTheme) {

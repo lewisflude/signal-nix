@@ -2,6 +2,7 @@
   config,
   lib,
   signalColors,
+  signalLib,
   ...
 }:
 let
@@ -18,9 +19,11 @@ let
 
   inherit (signalColors) accent;
 
-  # Check if lazygit should be themed
-  shouldTheme =
-    cfg.cli.lazygit.enable || (cfg.autoEnable && (config.programs.lazygit.enable or false));
+  # Check if lazygit should be themed - using centralized helper
+  shouldTheme = signalLib.shouldThemeApp "lazygit" [
+    "cli"
+    "lazygit"
+  ] cfg config;
 in
 {
   config = mkIf (cfg.enable && shouldTheme) {
