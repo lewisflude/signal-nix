@@ -6,12 +6,12 @@
   ...
 }:
 # CONFIGURATION METHOD: raw-config (Tier 4)
-# HOME-MANAGER MODULE: programs.tig.extraConfig
+# HOME-MANAGER MODULE: xdg.configFile (programs.tig doesn't exist)
 # UPSTREAM SCHEMA: https://github.com/jonas/tig
 # SCHEMA VERSION: 2.5.8
 # LAST VALIDATED: 2026-01-17
-# NOTES: tig uses custom config format. Home-Manager provides settings and
-#        extraConfig. We use extraConfig for color definitions.
+# NOTES: tig uses custom config format stored in ~/.config/tig/config.
+#        home-manager doesn't have a programs.tig module, so we use xdg.configFile.
 let
   inherit (lib) mkIf;
   cfg = config.theming.signal;
@@ -93,6 +93,8 @@ let
 in
 {
   config = mkIf (cfg.enable && shouldTheme) {
-    programs.tig.extraConfig = tigConfig;
+    # tig configuration is stored in ~/.config/tig/config
+    # home-manager doesn't have a programs.tig module, so we use xdg.configFile
+    xdg.configFile."tig/config".text = tigConfig;
   };
 }
