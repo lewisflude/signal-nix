@@ -16,7 +16,7 @@ let
   configModule = import ./config.nix { inherit pkgs lib signalColors; };
 
   # Import tokens
-  tokens = import ./tokens.nix { inherit signalColors pkgs; };
+  tokens = import ./tokens.nix { inherit signalColors; };
 
   # Generate minimal color-only style.css with Signal colors
   styleFile = pkgs.writeText "ironbar-signal-style.css" ''

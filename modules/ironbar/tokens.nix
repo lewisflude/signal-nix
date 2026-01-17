@@ -52,9 +52,9 @@ rec {
 
       # Volume icons (dynamic based on level)
       volume = {
-        high = "󰕾"; # > 66%
-        medium = "󰖀"; # 33-66%
-        low = "󰕿"; # 1-32%
+        volume_high = "󰕾"; # > 66%
+        volume_medium = "󰖀"; # 33-66%
+        volume_low = "󰕿"; # 1-32%
         muted = "󰝟"; # 0% or muted
       };
 
@@ -89,6 +89,7 @@ rec {
       focus = signalColors.accent.focus.Lc75.hex;
       warning = signalColors.accent.warning.Lc75.hex;
       danger = signalColors.accent.danger.Lc75.hex;
+      success = signalColors.accent.success.Lc75.hex;
     };
   };
 
@@ -119,7 +120,11 @@ rec {
   };
 
   # Border Radius Scale
-
+  radius = {
+    sm = 12; # Small radius for compact elements (px)
+    md = 14; # Medium radius (px)
+    lg = 16; # Large radius for islands/windows (px)
+  };
   # Border Widths
   borders = {
     standard = 2; # Standard border width (px)

@@ -7,7 +7,7 @@
   ...
 }:
 let
-  tokens = import ./tokens.nix { inherit signalColors pkgs; };
+  tokens = import ./tokens.nix { inherit signalColors; };
   commands = tokens.commands pkgs;
   widgets = import ./widgets.nix { inherit lib pkgs tokens; };
 
