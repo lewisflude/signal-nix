@@ -149,12 +149,17 @@ This reference organizes theming documentation by application category, making i
 - Supports syntax highlighting, UI elements, diagnostics
 - Modifiers for bold, italic, underline
 
-### 🔴 Neovim
-**Status:** ❌ Not implemented  
+### 🟢 Neovim
+**Status:** ✅ Implemented  
 **Category:** Vim-based editor  
 **Documentation:** [Neovim Syntax](https://neovim.io/doc/user/syntax.html)  
 **Format:** Vimscript/Lua  
-**Notes:** Extensive highlight groups, Treesitter support
+**Notes:** 
+- Full Lua colorscheme with Signal colors
+- Comprehensive Treesitter support
+- LSP semantic tokens
+- Git integration (GitSigns)
+- Diagnostics styling
 
 ### 🔴 Micro
 **Status:** ❌ Not implemented  
@@ -352,12 +357,18 @@ This reference organizes theming documentation by application category, making i
 - Complete color configuration via FZF_DEFAULT_OPTS
 - Prompt, cursor, selection, match colors
 
-### 🔴 Delta
-**Status:** ❌ Not implemented  
+### 🟢 Delta
+**Status:** ✅ Implemented  
 **Category:** Git diff viewer  
 **Documentation:** [Delta Custom Themes](https://dandavison.github.io/delta/custom-themes.html)  
 **Format:** Git config  
-**Notes:** Syntax-highlighted diffs with themes
+**Notes:** 
+- Syntax-highlighted diffs with Signal theme
+- Line numbers with Signal accent colors
+- File and commit decorations
+- Hunk headers with Signal styling
+- Merge conflict visualization
+- Blame palette with categorical colors
 
 ### 🔴 Ripgrep
 **Status:** ❌ Not implemented  
@@ -366,12 +377,18 @@ This reference organizes theming documentation by application category, making i
 **Format:** Environment variables  
 **Notes:** Fast search with color customization
 
-### 🔴 Eza
-**Status:** ❌ Not implemented  
+### 🟢 Eza
+**Status:** ✅ Implemented  
 **Category:** Modern ls  
 **Documentation:** [Eza Colors](https://github.com/eza-community/eza/blob/main/man/eza_colors.5.md)  
 **Format:** Environment variables  
-**Notes:** Colorful ls replacement
+**Notes:** 
+- Comprehensive file type colors
+- Permission colors (user/group/other)
+- Git status indicators with Signal accent colors
+- Git repo status (clean/dirty, branches)
+- File categories with Signal categorical colors
+- Size and date styling
 
 ### 🔴 Broot
 **Status:** ❌ Not implemented  
@@ -718,10 +735,8 @@ When implementing new application modules, consider this priority based on Signa
 
 **High Priority** (Core desktop/development tools):
 1. Waybar (Ironbar alternative)
-2. Neovim (Major editor)
-3. Delta (Git integration)
-4. Rofi/Wofi (Fuzzel alternatives)
-5. Hyprland (Compositor integration)
+2. Rofi/Wofi (Fuzzel alternatives)
+3. Hyprland (Compositor integration)
 
 **Medium Priority** (Extended tooling):
 1. GitUI/Tig (Git workflow)

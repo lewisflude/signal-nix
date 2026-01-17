@@ -17,6 +17,7 @@ let
   signalLib = import ../lib {
     inherit lib;
     palette = signal-palette.palette;
+    nix-colorizer = self.inputs.nix-colorizer;
   };
 
   # ============================================================================
@@ -670,4 +671,68 @@ in
       expected = true;
     };
   };
+
+  # ============================================================================
+  # Import Comprehensive Test Suite
+  # ============================================================================
+
+  inherit
+    (import ./comprehensive-test-suite.nix {
+      inherit
+        pkgs
+        lib
+        self
+        home-manager
+        signal-palette
+        system
+        ;
+    })
+
+    # Happy Path Tests
+    happy-basic-dark-mode
+    happy-basic-light-mode
+    happy-auto-mode-defaults-dark
+    happy-color-structure
+    happy-syntax-colors-complete
+    happy-brand-governance-functional-override
+
+    # Edge Case Tests
+    edge-empty-brand-colors
+    edge-lightness-boundaries
+    edge-chroma-boundaries
+    edge-contrast-extreme-values
+    edge-all-modules-disabled
+    edge-ironbar-profiles
+
+    # Error Handling Tests
+    error-invalid-theme-mode
+    error-brand-governance-invalid-policy
+    error-color-manipulation-throws
+
+    # Integration Tests
+    integration-module-lib-interaction
+    integration-colors-and-syntax
+    integration-brand-with-colors
+    integration-theme-resolution-consistency
+    integration-auto-enable-logic
+    integration-helix-builds
+    integration-ghostty-builds
+
+    # Performance Tests
+    performance-color-lookups
+    performance-theme-resolution-cached
+    performance-large-brand-colors
+    performance-module-evaluation
+
+    # Security Tests
+    security-color-hex-validation
+    security-no-code-injection
+    security-mode-enum-validation
+    security-brand-policy-enum-validation
+    security-no-path-traversal
+
+    # Documentation Tests
+    documentation-examples-valid-nix
+    documentation-readme-references
+    ;
 }

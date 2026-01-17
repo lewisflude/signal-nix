@@ -32,6 +32,7 @@ A scientific color scheme for Nix/Home Manager that themes 20+ applications with
 - 🔬 **Scientific Foundation**: OKLCH color space + APCA accessibility standards
 - 🌓 **Dual Themes**: Light and dark modes with consistent semantics
 - ⚡ **Zero Configuration**: Three lines to get started
+- ✅ **Comprehensive Testing**: 55+ tests ensuring reliability and quality
 
 ## Quick Start (5 Minutes)
 
@@ -112,7 +113,7 @@ theming.signal.autoEnable = true;  # Themes your installed kitty
 ### Editors
 
 - **Helix** - Modern modal editor (comprehensive theme with palette structure)
-- **Neovim** - Extensible Vim-based editor (full Lua colorscheme with Treesitter and LSP support)
+- **Neovim** - Extensible Vim-based editor (full Lua colorscheme with Treesitter and LSP support) ✨
 
 ### Terminals
 
@@ -141,8 +142,8 @@ theming.signal.autoEnable = true;  # Themes your installed kitty
 ### CLI Tools
 
 - **bat** - Cat replacement (custom .tmTheme with Signal colors)
-- **delta** - Git diff viewer (syntax-highlighted diffs with Signal theme)
-- **eza** - Modern ls replacement (comprehensive file type and git status colors)
+- **delta** - Git diff viewer (syntax-highlighted diffs with Signal theme) ✨
+- **eza** - Modern ls replacement (comprehensive file type and git status colors) ✨
 - **fzf** - Fuzzy finder (complete color configuration)
 - **lazygit** - Git TUI (comprehensive theme)
 - **yazi** - File manager (complete theme: manager, status, tabs, etc.)
@@ -291,6 +292,13 @@ This separation enables stable color versioning, platform-agnostic usage, and si
 - **[Getting Started Guide](docs/getting-started.md)** - Detailed setup for new and existing configs
 - **[Configuration Guide](docs/configuration-guide.md)** - All configuration options explained
 - **[Architecture Overview](docs/architecture.md)** - How Signal works internally
+
+### Testing
+
+- **[Test Suite Overview](TEST_INDEX.md)** - Complete index of test resources
+- **[Test Summary](TEST_SUMMARY.md)** - Quick reference and statistics
+- **[Running Tests](TEST_SUITE.md)** - Comprehensive testing documentation
+- **[Test Directory Guide](tests/README.md)** - Working with test files
 
 ### Reference
 

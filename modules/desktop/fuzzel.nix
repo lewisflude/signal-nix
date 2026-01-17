@@ -19,7 +19,10 @@ let
     border = signalColors.accent.focus.Lc75;
   };
 
-  # Check if fuzzel should be themed
+  # Use high-fidelity alpha channel handling from signalLib
+  # Converts hex to RRGGBBAA format (no # prefix) for Fuzzel
+  withAlpha = color: alpha: signalLib.hexWithAlpha color alpha;
+
   # Check if fuzzel should be themed - using centralized helper
   shouldTheme = signalLib.shouldThemeApp "fuzzel" [ "fuzzel" ] cfg config;
 in
@@ -39,13 +42,14 @@ in
         };
 
         colors = {
-          background = "${colors.background.hexRaw}f2"; # ~95% opacity
-          text = "${colors.text.hexRaw}ff";
-          match = "${colors.match.hexRaw}ff";
-          selection-background = "${colors.selection-background.hexRaw}ff";
-          selection-text = "${colors.selection-text.hexRaw}ff";
-          selection-match = "${colors.match.hexRaw}ff";
-          border = "${colors.border.hexRaw}ff";
+          # High-fidelity color conversion with proper alpha channel handling
+          background = withAlpha colors.background 0.949; # ~95% opacity (f2 in hex)
+          text = withAlpha colors.text 1.0;
+          match = withAlpha colors.match 1.0;
+          selection-background = withAlpha colors.selection-background 1.0;
+          selection-text = withAlpha colors.selection-text 1.0;
+          selection-match = withAlpha colors.match 1.0;
+          border = withAlpha colors.border 1.0;
         };
 
         border = {

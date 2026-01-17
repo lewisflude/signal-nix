@@ -7,6 +7,10 @@
     signal-palette = {
       url = "github:lewisflude/signal-palette";
     };
+
+    nix-colorizer = {
+      url = "github:nutsalhan87/nix-colorizer";
+    };
   };
 
   outputs =
@@ -14,6 +18,7 @@
       self,
       nixpkgs,
       signal-palette,
+      nix-colorizer,
       ...
     }:
     let
@@ -30,7 +35,10 @@
       homeManagerModules = {
         default = self.homeManagerModules.signal;
 
-        signal = import ./modules/common { inherit (signal-palette) palette; };
+        signal = import ./modules/common {
+          inherit (signal-palette) palette;
+          inherit nix-colorizer;
+        };
 
         # Per-app modules for advanced users
         ironbar = import ./modules/ironbar;
@@ -44,6 +52,7 @@
       lib = import ./lib {
         inherit (nixpkgs) lib;
         inherit (signal-palette) palette;
+        inherit nix-colorizer;
       };
 
       # Development shell
@@ -259,6 +268,88 @@
           inherit (allTests)
             color-manipulation-lightness
             color-manipulation-chroma
+            ;
+
+          # ============================================================================
+          # Comprehensive Test Suite - Happy Path
+          # ============================================================================
+
+          inherit (allTests)
+            happy-basic-dark-mode
+            happy-basic-light-mode
+            happy-auto-mode-defaults-dark
+            happy-color-structure
+            happy-syntax-colors-complete
+            happy-brand-governance-functional-override
+            ;
+
+          # ============================================================================
+          # Comprehensive Test Suite - Edge Cases
+          # ============================================================================
+
+          inherit (allTests)
+            edge-empty-brand-colors
+            edge-lightness-boundaries
+            edge-chroma-boundaries
+            edge-contrast-extreme-values
+            edge-all-modules-disabled
+            edge-ironbar-profiles
+            ;
+
+          # ============================================================================
+          # Comprehensive Test Suite - Error Handling
+          # ============================================================================
+
+          inherit (allTests)
+            error-invalid-theme-mode
+            error-brand-governance-invalid-policy
+            error-color-manipulation-throws
+            ;
+
+          # ============================================================================
+          # Comprehensive Test Suite - Integration
+          # ============================================================================
+
+          inherit (allTests)
+            integration-module-lib-interaction
+            integration-colors-and-syntax
+            integration-brand-with-colors
+            integration-theme-resolution-consistency
+            integration-auto-enable-logic
+            integration-helix-builds
+            integration-ghostty-builds
+            ;
+
+          # ============================================================================
+          # Comprehensive Test Suite - Performance
+          # ============================================================================
+
+          inherit (allTests)
+            performance-color-lookups
+            performance-theme-resolution-cached
+            performance-large-brand-colors
+            performance-module-evaluation
+            ;
+
+          # ============================================================================
+          # Comprehensive Test Suite - Security
+          # ============================================================================
+
+          inherit (allTests)
+            security-color-hex-validation
+            security-no-code-injection
+            security-mode-enum-validation
+            security-brand-policy-enum-validation
+            security-no-path-traversal
+            ;
+
+          # ============================================================================
+          # Comprehensive Test Suite - Documentation
+          # ============================================================================
+
+          inherit (allTests)
+            documentation-examples-valid-nix
+            documentation-readme-references
             ;
         }
       );

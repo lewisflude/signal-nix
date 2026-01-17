@@ -1,6 +1,7 @@
 {
   lib,
   palette,
+  nix-colorizer,
   ...
 }:
 rec {
@@ -15,6 +16,57 @@ rec {
       "light"
     ]) "Invalid theme mode '${mode}'. Must be 'auto', 'dark', or 'light'.";
     if mode == "auto" then "dark" else mode;
+
+  # ============================================================================
+  # Color Conversion Utilities (using nix-colorizer for high-fidelity)
+  # ============================================================================
+
+  # Convert hex color to space-separated RGB string (0-255 range)
+  # Required for Zellij theme format
+  # Input: color object with .hex attribute (e.g., "#6b87c8")
+  # Output: space-separated RGB string (e.g., "107 135 200")
+  # Uses nix-colorizer for accurate hex -> sRGB conversion
+  hexToRgbSpaceSeparated =
+    color:
+    let
+      srgb = nix-colorizer.hex.to.srgb color.hex;
+      # Convert from [0, 1] range to [0, 255] range and round
+      r = builtins.floor (srgb.r * 255.0 + 0.5);
+      g = builtins.floor (srgb.g * 255.0 + 0.5);
+      b = builtins.floor (srgb.b * 255.0 + 0.5);
+    in
+    "${toString r} ${toString g} ${toString b}";
+
+  # Add alpha channel to hex color in RRGGBBAA format (no # prefix)
+  # Required for Fuzzel color format
+  # Input: color object with .hex attribute, alpha value [0.0, 1.0]
+  # Output: 8-character hex string without # (e.g., "6b87c8ff")
+  # Uses nix-colorizer for proper alpha channel handling
+  hexWithAlpha =
+    color: alpha:
+    let
+      # Use nix-colorizer's setAlpha function for accurate conversion
+      hexWithAlphaChannel = nix-colorizer.hex.setAlpha color.hex alpha;
+      # Remove the # prefix for Fuzzel format
+    in
+    lib.removePrefix "#" hexWithAlphaChannel;
+
+  # Validate hex color format
+  # Returns: true if valid hex color (#RRGGBB or #RRGGBBAA format)
+  isValidHexColor =
+    str:
+    let
+      stripped = lib.removePrefix "#" str;
+      len = builtins.stringLength stripped;
+      validLength = len == 6 || len == 8;
+      isHexChar = c: builtins.match "[0-9a-fA-F]" c != null;
+      allHex = lib.all isHexChar (lib.stringToCharacters stripped);
+    in
+    (lib.hasPrefix "#" str) && validLength && allHex;
+
+  # ============================================================================
+  # Existing functions
+  # ============================================================================
 
   # Centralized logic to determine if an application should be themed
   # Reduces boilerplate across all module files

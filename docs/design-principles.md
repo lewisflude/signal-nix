@@ -4,6 +4,8 @@
 
 **Signal-nix is a color theme system, not a program configuration framework.**
 
+Signal focuses exclusively on applying colors with maximum fidelity and accuracy, using professional-grade color conversion tools to ensure colors maintain their intended appearance across all applications.
+
 ### What Signal Does ✅
 
 - Applies Signal Design System colors to your programs
@@ -12,6 +14,11 @@
 - Generates syntax highlighting themes
 - Sets UI element colors (backgrounds, foregrounds, borders, selections)
 - Ensures color consistency across your entire system
+- **Converts colors with high fidelity using [nix-colorizer](https://github.com/nutsalhan87/nix-colorizer)**
+  - OKLCh color space for perceptual accuracy
+  - Proper hex ↔ sRGB ↔ OKLCh conversions
+  - Alpha channel support for transparency
+  - Maintains color precision for professional design systems
 
 ### What Signal Does NOT Do ❌
 

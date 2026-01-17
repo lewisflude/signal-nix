@@ -1,0 +1,155 @@
+name: Test Suite
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+  workflow_dispatch:
+  schedule:
+    # Run daily at 2am UTC to catch upstream breakages
+    - cron: '0 2 * * *'
+
+jobs:
+  # Quick smoke test to fail fast on basic issues
+  smoke-test:
+    name: Smoke Test
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Install Nix
+        uses: DeterminateSystems/nix-installer-action@v9
+
+      - name: Setup Nix cache
+        uses: DeterminateSystems/magic-nix-cache-action@v2
+
+      - name: Check flake structure
+        run: |
+          nix flake metadata
+          nix flake show
+
+      - name: Run unit tests
+        run: |
+          nix build .#checks.x86_64-linux.unit-lib-resolveThemeMode
+          nix build .#checks.x86_64-linux.unit-lib-getColors
+
+  # Main test suite
+  test-suite:
+    name: Test Suite (${{ matrix.category }}) - ${{ matrix.system }}
+    runs-on: ${{ matrix.os }}
+    needs: smoke-test
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          # Linux x86_64 - Run all categories
+          - system: x86_64-linux
+            os: ubuntu-latest
+            category: happy
+          - system: x86_64-linux
+            os: ubuntu-latest
+            category: edge
+          - system: x86_64-linux
+            os: ubuntu-latest
+            category: error
+          - system: x86_64-linux
+            os: ubuntu-latest
+            category: integration
+          - system: x86_64-linux
+            os: ubuntu-latest
+            category: performance
+          - system: x86_64-linux
+            os: ubuntu-latest
+            category: security
+          - system: x86_64-linux
+            os: ubuntu-latest
+            category: unit
+          - system: x86_64-linux
+            os: ubuntu-latest
+            category: module
+          - system: x86_64-linux
+            os: ubuntu-latest
+            category: validation
+          - system: x86_64-linux
+            os: ubuntu-latest
+            category: documentation
+
+          # macOS - Run subset of important tests
+          - system: aarch64-darwin
+            os: macos-latest
+            category: happy
+          - system: aarch64-darwin
+            os: macos-latest
+            category: integration
+          - system: aarch64-darwin
+            os: macos-latest
+            category: unit
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Install Nix
+        uses: DeterminateSystems/nix-installer-action@v9
+        with:
+          extra-conf: |
+            extra-platforms = ${{ matrix.system }}
+
+      - name: Setup Nix cache
+        uses: DeterminateSystems/magic-nix-cache-action@v2
+
+      - name: Run tests - ${{ matrix.category }}
+        run: |
+          chmod +x ./run-tests.sh
+          ./run-tests.sh --category ${{ matrix.category }} --system ${{ matrix.system }} --verbose
+
+  # Full integration test on primary platform
+  full-check:
+    name: Full Flake Check (x86_64-linux)
+    runs-on: ubuntu-latest
+    needs: test-suite
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Install Nix
+        uses: DeterminateSystems/nix-installer-action@v9
+
+      - name: Setup Nix cache
+        uses: DeterminateSystems/magic-nix-cache-action@v2
+
+      - name: Run full flake check
+        run: |
+          nix flake check --system x86_64-linux --show-trace --print-build-logs
+
+  # Report test results
+  report:
+    name: Test Report
+    runs-on: ubuntu-latest
+    needs: [smoke-test, test-suite, full-check]
+    if: always()
+    steps:
+      - name: Check results
+        run: |
+          echo "## Test Suite Results" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          
+          if [ "${{ needs.smoke-test.result }}" == "success" ] && \
+             [ "${{ needs.test-suite.result }}" == "success" ] && \
+             [ "${{ needs.full-check.result }}" == "success" ]; then
+            echo "✅ All tests passed!" >> $GITHUB_STEP_SUMMARY
+            echo "" >> $GITHUB_STEP_SUMMARY
+            echo "- Smoke tests: ✅ Passed" >> $GITHUB_STEP_SUMMARY
+            echo "- Test suite: ✅ Passed" >> $GITHUB_STEP_SUMMARY
+            echo "- Full check: ✅ Passed" >> $GITHUB_STEP_SUMMARY
+            exit 0
+          else
+            echo "❌ Some tests failed" >> $GITHUB_STEP_SUMMARY
+            echo "" >> $GITHUB_STEP_SUMMARY
+            echo "- Smoke tests: ${{ needs.smoke-test.result == 'success' && '✅' || '❌' }} ${{ needs.smoke-test.result }}" >> $GITHUB_STEP_SUMMARY
+            echo "- Test suite: ${{ needs.test-suite.result == 'success' && '✅' || '❌' }} ${{ needs.test-suite.result }}" >> $GITHUB_STEP_SUMMARY
+            echo "- Full check: ${{ needs.full-check.result == 'success' && '✅' || '❌' }} ${{ needs.full-check.result }}" >> $GITHUB_STEP_SUMMARY
+            exit 1
+          fi

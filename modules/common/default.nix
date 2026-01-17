@@ -1,4 +1,4 @@
-{ palette }:
+{ palette, nix-colorizer }:
 {
   config,
   lib,
@@ -7,7 +7,9 @@
 let
   inherit (lib) mkOption mkEnableOption types;
   cfg = config.theming.signal;
-  signalLib = import ../../lib { inherit lib palette; };
+  signalLib = import ../../lib {
+    inherit lib palette nix-colorizer;
+  };
 in
 {
   # Import all application modules unconditionally

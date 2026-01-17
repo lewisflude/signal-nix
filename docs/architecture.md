@@ -58,6 +58,9 @@ signal-nix/
 │     ├─ resolveThemeMode       # Convert "auto" to "dark" or "light"
 │     ├─ getThemeName           # Generate theme names
 │     ├─ getColors              # Get colors for a mode
+│     ├─ hexToRgbSpaceSeparated # Convert hex to RGB (for Zellij)
+│     ├─ hexWithAlpha           # Add alpha channel (for Fuzzel)
+│     ├─ isValidHexColor        # Validate hex color format
 │     └─ brandGovernance        # Brand color helpers
 │
 ├─ modules/
@@ -338,6 +341,79 @@ signalColors.categorical.GA02.hex            # "#6ba875"
 - `surface-Lc05` = Surface color, Lightness/Chroma level 05
 - `text-Lc75` = Text color, Lightness/Chroma level 75  
 - `GA02` = Categorical color, Group A, slot 02
+
+### High-Fidelity Color Conversion
+
+Signal uses [nix-colorizer](https://github.com/nutsalhan87/nix-colorizer) for accurate color format conversions. This ensures colors maintain maximum fidelity across different application formats.
+
+**Why nix-colorizer?**
+
+- **OKLCh Color Space**: Uses perceptually uniform OKLCh instead of RGB for color math
+- **Accurate Conversions**: Proper hex ↔ sRGB ↔ OKLCh conversion with alpha channel support
+- **Pure Nix**: No external dependencies, fully evaluated at build time
+- **High Precision**: Maintains color accuracy for professional design systems
+
+**Available conversion utilities** (in `lib/default.nix`):
+
+```nix
+# Convert hex to space-separated RGB (0-255 range)
+# Used by: Zellij
+signalLib.hexToRgbSpaceSeparated color
+# Example: "#6b87c8" → "107 135 200"
+
+# Add alpha channel in RRGGBBAA format (no # prefix)
+# Used by: Fuzzel
+signalLib.hexWithAlpha color alpha
+# Example: color="#6b87c8" alpha=0.949 → "6b87c8f2"
+
+# Validate hex color format
+signalLib.isValidHexColor str
+# Example: "#6b87c8" → true, "invalid" → false
+```
+
+**Example usage in application modules:**
+
+```nix
+# Zellij: requires RGB space-separated
+let
+  toZellijColor = signalLib.hexToRgbSpaceSeparated;
+in {
+  themes.signal = {
+    text_unselected.base = toZellijColor colors.text-primary;
+    # Result: "197 205 216"
+  };
+}
+
+# Fuzzel: requires RRGGBBAA format
+let
+  withAlpha = color: alpha: signalLib.hexWithAlpha color alpha;
+in {
+  colors = {
+    background = withAlpha colors.background 0.949;  # 95% opacity
+    text = withAlpha colors.text 1.0;                # Fully opaque
+    # Results: "1a1c22f2", "c5cdd8ff"
+  };
+}
+```
+
+**Color conversion flow:**
+
+```
+Signal Palette (LCH)
+        ↓
+    Color Object
+    { l, c, h, hex, hexRaw, rgb }
+        ↓
+ nix-colorizer conversion
+    hex → OKLCh → sRGB
+        ↓
+Application-specific format
+    - Zellij: "R G B"
+    - Fuzzel: "RRGGBBAA"
+    - Others: "#RRGGBB"
+```
+
+This architecture ensures that colors maintain their intended appearance across all applications, regardless of the target format requirements.
 
 ## Integration Points
 
