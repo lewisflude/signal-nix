@@ -12,6 +12,7 @@
 # LAST VALIDATED: 2026-01-17
 # NOTES: Home-Manager provides freeform settings that serialize to INI format.
 #        Fuzzel requires RRGGBBAA format (no # prefix) for colors with alpha.
+#        This module ONLY sets colors - layout/fonts/sizing are user's responsibility.
 let
   inherit (lib) mkIf;
   cfg = config.theming.signal;
@@ -37,17 +38,6 @@ in
   config = mkIf (cfg.enable && shouldTheme) {
     programs.fuzzel = {
       settings = {
-        main = {
-          font = "monospace:size=14";
-          dpi-aware = true;
-          icon-theme = "Adwaita";
-          layer = "overlay";
-          width = 50;
-          horizontal-pad = 40;
-          vertical-pad = 20;
-          inner-pad = 10;
-        };
-
         colors = {
           # High-fidelity color conversion with proper alpha channel handling
           background = withAlpha colors.background 0.949; # ~95% opacity (f2 in hex)
@@ -57,11 +47,6 @@ in
           selection-text = withAlpha colors.selection-text 1.0;
           selection-match = withAlpha colors.match 1.0;
           border = withAlpha colors.border 1.0;
-        };
-
-        border = {
-          width = 2;
-          radius = 12;
         };
       };
     };
