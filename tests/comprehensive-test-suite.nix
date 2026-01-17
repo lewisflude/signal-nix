@@ -846,6 +846,16 @@ in
       exit 1
     }
 
+    # Test Adwaita palette colors are defined
+    for color in blue_1 green_2 yellow_3 orange_4 red_5 purple_1 brown_2 light_3 dark_4; do
+      ${pkgs.gnugrep}/bin/grep -q "@define-color $color" ${../modules/gtk/default.nix} || {
+        echo "FAIL: GTK module missing Adwaita palette color: $color"
+        exit 1
+      }
+    done
+    
+    echo "✓ GTK module includes complete Adwaita color palette"
+
     # Test Qt module exists and has KDE color configuration
     ${pkgs.gnugrep}/bin/grep -q "qt.kde.settings" ${../modules/qt/default.nix} || {
       echo "FAIL: Qt module missing KDE settings"

@@ -9,6 +9,13 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Added
 
+#### GTK Theming Enhancement
+- **Complete Adwaita Color Palette**: GTK module now defines all 45 Adwaita palette variables (`blue_1` through `dark_5`)
+  - Maps Signal accent colors to Adwaita blue, green, yellow, orange, red, and purple palettes
+  - Properly themed light and dark grays using Signal tonal colors
+  - Fixes GTK applications (like Thunar file manager) that rely on these standard palette colors
+  - Ensures consistent theming across all GTK applications, not just modern GTK4 apps
+
 #### Documentation Overhaul
 - **New comprehensive guides**:
   - `docs/getting-started.md` - Complete setup guide covering new configs, migration, NixOS, nix-darwin, and non-flake setups
