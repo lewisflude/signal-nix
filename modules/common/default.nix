@@ -15,20 +15,45 @@ in
   # Import all application modules unconditionally
   # Each module uses mkIf internally to control its effect based on enable flags
   imports = [
-    # Desktop
-    ../../modules/ironbar
-    ../../modules/gtk
+    # Desktop - Window Managers & Compositors
+    ../../modules/desktop/compositors/hyprland.nix
+    ../../modules/desktop/compositors/sway.nix
+    ../../modules/desktop/wm/i3.nix
+    ../../modules/desktop/wm/bspwm.nix
+    ../../modules/desktop/wm/awesome.nix
+
+    # Desktop - Launchers
+    ../../modules/desktop/launchers/rofi.nix
+    ../../modules/desktop/launchers/wofi.nix
+    ../../modules/desktop/launchers/tofi.nix
+    ../../modules/desktop/launchers/dmenu.nix
     ../../modules/desktop/fuzzel.nix
+
+    # Desktop - Status Bars
+    ../../modules/desktop/bars/waybar.nix
+    ../../modules/desktop/bars/polybar.nix
+    ../../modules/ironbar
+
+    # Desktop - Notifications
+    ../../modules/desktop/notifications/dunst.nix
+    ../../modules/desktop/notifications/mako.nix
+
+    # Desktop - Themes
+    ../../modules/gtk
 
     # Editors
     ../../modules/editors/helix.nix
     ../../modules/editors/neovim.nix
+    ../../modules/editors/vim.nix
+    ../../modules/editors/vscode.nix
+    ../../modules/editors/emacs.nix
 
     # Terminals
     ../../modules/terminals/ghostty.nix
     ../../modules/terminals/alacritty.nix
     ../../modules/terminals/kitty.nix
     ../../modules/terminals/wezterm.nix
+    ../../modules/terminals/foot.nix
 
     # Multiplexers
     ../../modules/multiplexers/tmux.nix
@@ -40,16 +65,35 @@ in
     ../../modules/cli/eza.nix
     ../../modules/cli/fzf.nix
     ../../modules/cli/lazygit.nix
+    ../../modules/cli/lazydocker.nix
     ../../modules/cli/yazi.nix
+    ../../modules/cli/less.nix
+    ../../modules/cli/ripgrep.nix
+    ../../modules/cli/glow.nix
+    ../../modules/cli/tig.nix
+
+    # File Managers
+    ../../modules/fileManagers/ranger.nix
+    ../../modules/fileManagers/lf.nix
+    ../../modules/fileManagers/nnn.nix
 
     # Monitors
     ../../modules/monitors/btop.nix
+    ../../modules/monitors/htop.nix
+    ../../modules/monitors/bottom.nix
+
+    # Browsers
+    ../../modules/browsers/firefox.nix
+    ../../modules/browsers/qutebrowser.nix
 
     # Prompts
     ../../modules/prompts/starship.nix
 
     # Shells
     ../../modules/shells/zsh.nix
+    ../../modules/shells/fish.nix
+    ../../modules/shells/bash.nix
+    ../../modules/shells/nushell.nix
   ];
 
   options.theming.signal = {
@@ -117,18 +161,53 @@ in
       };
     };
 
-    editors = {
-      helix.enable = mkEnableOption "Signal theme for Helix editor";
-      neovim.enable = mkEnableOption "Signal theme for Neovim editor";
+    # Desktop options
+    desktop = {
+      compositors = {
+        hyprland.enable = mkEnableOption "Signal theme for Hyprland compositor";
+        sway.enable = mkEnableOption "Signal theme for Sway compositor";
+      };
+      
+      wm = {
+        i3.enable = mkEnableOption "Signal theme for i3 window manager";
+        bspwm.enable = mkEnableOption "Signal theme for bspwm window manager";
+        awesome.enable = mkEnableOption "Signal theme for awesome window manager";
+      };
+      
+      launchers = {
+        rofi.enable = mkEnableOption "Signal theme for rofi launcher";
+        wofi.enable = mkEnableOption "Signal theme for wofi launcher";
+        tofi.enable = mkEnableOption "Signal theme for tofi launcher";
+        dmenu.enable = mkEnableOption "Signal theme for dmenu launcher";
+      };
+      
+      bars = {
+        waybar.enable = mkEnableOption "Signal theme for waybar status bar";
+        polybar.enable = mkEnableOption "Signal theme for polybar status bar";
+      };
+      
+      notifications = {
+        dunst.enable = mkEnableOption "Signal theme for dunst notification daemon";
+        mako.enable = mkEnableOption "Signal theme for mako notification daemon";
+      };
     };
 
     fuzzel.enable = mkEnableOption "Signal theme for Fuzzel launcher";
+
+    editors = {
+      helix.enable = mkEnableOption "Signal theme for Helix editor";
+      neovim.enable = mkEnableOption "Signal theme for Neovim editor";
+      vim.enable = mkEnableOption "Signal theme for Vim editor";
+      vscode.enable = mkEnableOption "Signal theme for VS Code/VSCodium";
+      emacs.enable = mkEnableOption "Signal theme for Emacs";
+    };
 
     terminals = {
       ghostty.enable = mkEnableOption "Signal theme for Ghostty terminal";
       alacritty.enable = mkEnableOption "Signal theme for Alacritty terminal";
       kitty.enable = mkEnableOption "Signal theme for Kitty terminal";
       wezterm.enable = mkEnableOption "Signal theme for WezTerm terminal";
+      foot.enable = mkEnableOption "Signal theme for Foot terminal";
     };
 
     multiplexers = {
@@ -142,11 +221,29 @@ in
       eza.enable = mkEnableOption "Signal theme for eza file lister";
       fzf.enable = mkEnableOption "Signal theme for fzf";
       lazygit.enable = mkEnableOption "Signal theme for lazygit";
+      lazydocker.enable = mkEnableOption "Signal theme for lazydocker";
       yazi.enable = mkEnableOption "Signal theme for yazi";
+      less.enable = mkEnableOption "Signal theme for less pager";
+      ripgrep.enable = mkEnableOption "Signal theme for ripgrep";
+      glow.enable = mkEnableOption "Signal theme for glow markdown viewer";
+      tig.enable = mkEnableOption "Signal theme for tig git interface";
+    };
+
+    fileManagers = {
+      ranger.enable = mkEnableOption "Signal theme for ranger file manager";
+      lf.enable = mkEnableOption "Signal theme for lf file manager";
+      nnn.enable = mkEnableOption "Signal theme for nnn file manager";
     };
 
     monitors = {
       btop.enable = mkEnableOption "Signal theme for btop";
+      htop.enable = mkEnableOption "Signal theme for htop";
+      bottom.enable = mkEnableOption "Signal theme for bottom";
+    };
+
+    browsers = {
+      firefox.enable = mkEnableOption "Signal theme for Firefox (userChrome.css)";
+      qutebrowser.enable = mkEnableOption "Signal theme for Qutebrowser";
     };
 
     prompts = {
@@ -155,6 +252,9 @@ in
 
     shells = {
       zsh.enable = mkEnableOption "Signal theme for zsh syntax highlighting";
+      fish.enable = mkEnableOption "Signal theme for fish shell";
+      bash.enable = mkEnableOption "Signal theme for bash shell";
+      nushell.enable = mkEnableOption "Signal theme for nushell";
     };
 
     # Brand governance
@@ -252,8 +352,17 @@ in
           || cfg.ironbar.enable
           || cfg.gtk.enable
           || cfg.fuzzel.enable
+          || cfg.desktop.compositors.hyprland.enable
+          || cfg.desktop.compositors.sway.enable
+          || cfg.desktop.wm.i3.enable
+          || cfg.desktop.launchers.rofi.enable
+          || cfg.desktop.bars.waybar.enable
+          || cfg.desktop.notifications.dunst.enable
           || cfg.editors.helix.enable
           || cfg.editors.neovim.enable
+          || cfg.editors.vim.enable
+          || cfg.editors.vscode.enable
+          || cfg.editors.emacs.enable
           || cfg.terminals.ghostty.enable
           || cfg.terminals.alacritty.enable
           || cfg.terminals.kitty.enable
@@ -266,9 +375,14 @@ in
           || cfg.cli.fzf.enable
           || cfg.cli.lazygit.enable
           || cfg.cli.yazi.enable
+          || cfg.cli.less.enable
+          || cfg.cli.ripgrep.enable
           || cfg.monitors.btop.enable
+          || cfg.monitors.htop.enable
           || cfg.prompts.starship.enable
-          || cfg.shells.zsh.enable;
+          || cfg.shells.zsh.enable
+          || cfg.shells.fish.enable
+          || cfg.shells.bash.enable;
         message = ''
           Signal is enabled but no applications are selected for theming.
 

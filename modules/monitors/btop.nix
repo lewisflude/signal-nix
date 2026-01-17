@@ -6,6 +6,14 @@
   signalLib,
   ...
 }:
+# CONFIGURATION METHOD: raw-config (Tier 4)
+# HOME-MANAGER MODULE: xdg.configFile (custom theme file)
+# UPSTREAM SCHEMA: https://github.com/aristocratos/btop#themes
+# SCHEMA VERSION: 1.3.0
+# LAST VALIDATED: 2026-01-17
+# NOTES: Btop requires theme files in custom format at ~/.config/btop/themes/.
+#        Home-Manager's programs.btop.settings doesn't support inline theme definition.
+#        We generate theme file and link it via xdg.configFile.
 let
   inherit (lib) mkIf removePrefix;
   cfg = config.theming.signal;

@@ -5,6 +5,13 @@
   signalLib,
   ...
 }:
+# CONFIGURATION METHOD: freeform-settings (Tier 3)
+# HOME-MANAGER MODULE: programs.lazygit.settings
+# UPSTREAM SCHEMA: https://github.com/jesseduffield/lazygit/blob/master/docs/Config.md
+# SCHEMA VERSION: 0.40.2
+# LAST VALIDATED: 2026-01-17
+# NOTES: Home-Manager provides freeform settings that serialize to YAML config.
+#        Theme colors go under gui.theme attrset. Must match lazygit schema.
 let
   inherit (lib) mkIf;
   cfg = config.theming.signal;

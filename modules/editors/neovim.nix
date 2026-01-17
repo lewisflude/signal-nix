@@ -17,6 +17,14 @@
   signalLib,
   ...
 }:
+# CONFIGURATION METHOD: raw-config (Tier 4)
+# HOME-MANAGER MODULE: programs.neovim.extraLuaConfig
+# UPSTREAM SCHEMA: https://neovim.io/doc/user/syntax.html
+# SCHEMA VERSION: 0.9.0
+# LAST VALIDATED: 2026-01-17
+# NOTES: Neovim requires Lua code for colorscheme definition. Home-Manager provides
+#        extraLuaConfig for custom Lua. We generate complete colorscheme using
+#        vim.api.nvim_set_hl. No structured options exist for custom themes.
 let
   inherit (lib) mkIf;
   cfg = config.theming.signal;

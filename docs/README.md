@@ -57,10 +57,6 @@ Technical documentation:
   - Application-specific issues
   - Performance tips
   - Getting help
-- **[Contributing Guide](../CONTRIBUTING.md)** - How to contribute
-  - Development setup
-  - Application integration guide
-  - Coding standards
 - **[Testing Guide](testing.md)** - Test suite documentation
   - Running tests
   - Writing new tests
@@ -69,6 +65,18 @@ Technical documentation:
   - What Signal does and doesn't do
   - Color-only scope
   - Integration patterns
+
+## Contributing
+
+Help make Signal better:
+
+- **[Integration Roadmap](integration-standards.md)** - Programs to integrate and their priority
+- **[Tier System](tier-system.md)** - Configuration method standards and hierarchy
+- **[Contributing Guide](../CONTRIBUTING.md)** - Complete contributor guide
+  - Development setup
+  - Integration checklist
+  - Coding standards
+  - Submission process
 
 ## Philosophy & Design
 

@@ -28,8 +28,8 @@ A scientific color scheme for Nix/Home Manager and NixOS that themes 20+ applica
 
 ## Features
 
-- 🎨 **20+ Applications**: Terminals, editors, CLI tools, GTK, Ironbar, and more
-- 🖥️ **System-Level Theming**: Boot screens, TTY, GRUB (NixOS modules) - **NEW**
+- 🎨 **60+ Applications**: Window managers, compositors, editors, terminals, file managers, browsers, and more
+- 🖥️ **System-Level Theming**: Boot screens, TTY, GRUB (NixOS modules)
 - 🤖 **Automatic Detection**: Set `autoEnable = true` and Signal themes all your enabled programs
 - 🔬 **Scientific Foundation**: OKLCH color space + APCA accessibility standards
 - 🌓 **Dual Themes**: Light and dark modes with consistent semantics
@@ -129,10 +129,11 @@ Signal now supports system-level theming for NixOS components!
 
 - ✅ **Virtual Console (TTY)** - Colored text in Ctrl+Alt+F1-F6
 - ✅ **GRUB Bootloader** - Themed boot menu
-- ✅ **SDDM Display Manager** - KDE/Qt login screen (NEW)
-- 🚧 **Plymouth** - Boot splash (coming soon)
-- 🚧 **GDM** - GNOME display manager (planned)
-- 🚧 **LightDM** - Alternative display manager (planned)
+- ✅ **SDDM Display Manager** - KDE/Qt login screen
+- ✅ **Plymouth Boot Splash** - Animated boot screen (NEW)
+- ✅ **GDM Display Manager** - GNOME login screen (NEW)
+- ✅ **LightDM Display Manager** - GTK greeter login (NEW)
+- 🚧 **System-wide GTK/Qt** - Desktop application themes (planned)
 
 See [NixOS Module Documentation](docs/nixos-modules.md) for complete guide.
 
@@ -159,6 +160,19 @@ theming.signal.autoEnable = true;  # Themes your installed kitty
 
 ### Desktop
 
+- **Hyprland** - Modern Wayland compositor (complete color scheme) ✨
+- **Sway** - i3-compatible Wayland compositor (full i3-style colors) ✨
+- **i3** - Popular X11 window manager (complete color config) ✨
+- **bspwm** - Binary space partitioning WM (border colors) ✨
+- **awesome** - Lua-based WM (comprehensive theme.lua) ✨
+- **rofi** - Universal application launcher (comprehensive .rasi theme) ✨
+- **wofi** - Wayland launcher (CSS styling) ✨
+- **tofi** - Minimal launcher (INI config) ✨
+- **dmenu** - Classic X11 launcher (wrapper script) ✨
+- **waybar** - Wayland status bar (full CSS styling) ✨
+- **polybar** - X11 status bar (complete INI config) ✨
+- **dunst** - Notification daemon (urgency-based colors) ✨
+- **mako** - Wayland notifications (INI config) ✨
 - **Ironbar** - Wayland status bar (with 3 display profiles)
 - **GTK 3/4** - GTK application theming
 - **Fuzzel** - Application launcher
@@ -166,7 +180,10 @@ theming.signal.autoEnable = true;  # Themes your installed kitty
 ### Editors
 
 - **Helix** - Modern modal editor (comprehensive theme with palette structure)
-- **Neovim** - Extensible Vim-based editor (full Lua colorscheme with Treesitter and LSP support) ✨
+- **Neovim** - Extensible Vim-based editor (full Lua colorscheme with Treesitter and LSP support)
+- **Vim** - Classic modal editor (complete Vimscript colorscheme) ✨
+- **VS Code/VSCodium** - Popular GUI editor (workbench + token colors) ✨
+- **Emacs** - Extensible editor (complete Elisp theme with Org, Magit, and more) ✨
 
 ### Terminals
 
@@ -174,15 +191,25 @@ theming.signal.autoEnable = true;  # Themes your installed kitty
 - **Alacritty** - GPU-accelerated terminal (complete color scheme)
 - **Kitty** - Feature-rich terminal (16 colors + tab bar)
 - **WezTerm** - Lua-based terminal (full theme with tab bar)
+- **Foot** - Minimal Wayland terminal (complete INI config) ✨
 
 ### Terminal Multiplexers
 
 - **tmux** - Terminal multiplexer (status bar, panes, windows)
 - **Zellij** - Modern multiplexer (comprehensive KDL theme)
 
+### File Managers
+
+- **ranger** - Vim-like file manager (Python colorscheme) ✨
+- **lf** - Fast minimal file manager (LS_COLORS) ✨
+- **nnn** - Super fast file manager (NNN_FCOLORS) ✨
+- **yazi** - Modern file manager (complete theme: manager, status, tabs, etc.)
+
 ### System Monitors
 
 - **btop++** - Resource monitor (complete theme with gradients)
+- **htop** - Classic system monitor (color configuration) ✨
+- **bottom** - Modern resource monitor (complete TOML theme) ✨
 
 ### Shell Prompts
 
@@ -191,15 +218,27 @@ theming.signal.autoEnable = true;  # Themes your installed kitty
 ### Shells
 
 - **zsh** - Z shell (syntax highlighting colors)
+- **fish** - Friendly shell (comprehensive color variables) ✨
+- **bash** - Bourne Again Shell (LS_COLORS, prompt, less/grep) ✨
+- **nushell** - Structured data shell (color_config) ✨
 
 ### CLI Tools
 
 - **bat** - Cat replacement (custom .tmTheme with Signal colors)
-- **delta** - Git diff viewer (syntax-highlighted diffs with Signal theme) ✨
-- **eza** - Modern ls replacement (comprehensive file type and git status colors) ✨
+- **delta** - Git diff viewer (syntax-highlighted diffs with Signal theme)
+- **eza** - Modern ls replacement (comprehensive file type and git status colors)
 - **fzf** - Fuzzy finder (complete color configuration)
 - **lazygit** - Git TUI (comprehensive theme)
-- **yazi** - File manager (complete theme: manager, status, tabs, etc.)
+- **lazydocker** - Docker TUI (complete YAML theme) ✨
+- **less** - Pager (man page colors via LESS_TERMCAP) ✨
+- **ripgrep** - Fast search tool (color output configuration) ✨
+- **glow** - Markdown viewer (JSON glamour theme) ✨
+- **tig** - Text-mode git interface (comprehensive color config) ✨
+
+### Browsers
+
+- **Firefox** - userChrome.css UI theming (advanced) ✨
+- **Qutebrowser** - Vim-like browser (complete Python config) ✨
 
 ## Configuration
 

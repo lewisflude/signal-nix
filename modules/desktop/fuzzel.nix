@@ -5,6 +5,13 @@
   signalLib,
   ...
 }:
+# CONFIGURATION METHOD: freeform-settings (Tier 3)
+# HOME-MANAGER MODULE: programs.fuzzel.settings
+# UPSTREAM SCHEMA: https://codeberg.org/dnkl/fuzzel/src/branch/master/doc/fuzzel.ini.5.scd
+# SCHEMA VERSION: 1.9.2
+# LAST VALIDATED: 2026-01-17
+# NOTES: Home-Manager provides freeform settings that serialize to INI format.
+#        Fuzzel requires RRGGBBAA format (no # prefix) for colors with alpha.
 let
   inherit (lib) mkIf;
   cfg = config.theming.signal;

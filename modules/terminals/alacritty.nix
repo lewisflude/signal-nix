@@ -5,6 +5,13 @@
   signalLib,
   ...
 }:
+# CONFIGURATION METHOD: structured-colors (Tier 2)
+# HOME-MANAGER MODULE: programs.alacritty.settings.colors
+# UPSTREAM SCHEMA: https://alacritty.org/config-alacritty.html
+# SCHEMA VERSION: 0.13.0
+# LAST VALIDATED: 2026-01-17
+# NOTES: Home-Manager provides structured color options within settings.colors.
+#        This is well-typed and validates the color structure properly.
 let
   inherit (lib) mkIf;
   cfg = config.theming.signal;

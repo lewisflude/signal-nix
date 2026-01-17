@@ -52,15 +52,17 @@
 
                 # Theme boot components
                 boot = {
-                  console.enable = true; # TTY colors
+                  console.enable = true; # TTY colors (Ctrl+Alt+F1-F6)
                   grub.enable = true; # GRUB bootloader theme
-                  # plymouth.enable = true;  # Coming soon: boot splash
+                  plymouth.enable = true; # Boot splash animation
                 };
 
-                # Theme display manager (coming soon)
-                # login = {
-                #   sddm.enable = true;  # or gdm, lightdm
-                # };
+                # Theme display manager (login screen)
+                login = {
+                  sddm.enable = true; # SDDM (KDE/Qt login)
+                  # gdm.enable = true;     # Alternative: GDM (GNOME login)
+                  # lightdm.enable = true; # Alternative: LightDM (GTK login)
+                };
               };
 
               # ====================================================================
@@ -170,12 +172,15 @@
               sound.enable = true;
               hardware.pulseaudio.enable = true;
 
-              # Display server
+              # Display server and display manager
               services.xserver = {
                 enable = true;
-                displayManager.sddm.enable = true;
+                displayManager.sddm.enable = true; # Signal will theme this
                 desktopManager.plasma5.enable = true;
               };
+
+              # Enable Plymouth for boot splash
+              boot.plymouth.enable = true;
 
               system.stateVersion = "24.11";
             }

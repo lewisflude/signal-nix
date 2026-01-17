@@ -93,7 +93,7 @@ theming.signal.nixos.boot.grub.enable = true;
 
 **Result**: GRUB menu styled with Signal colors (background, text, selection)
 
-#### ✅ SDDM Display Manager (NEW)
+#### ✅ SDDM Display Manager
 - **What**: Login screen theme for KDE/Qt systems
 - **Why**: Professional, consistent login experience
 - **Option**: `theming.signal.nixos.login.sddm.enable`
@@ -104,14 +104,52 @@ theming.signal.nixos.login.sddm.enable = true;
 
 **Result**: Complete SDDM theme with Signal colors, custom QML UI
 
+#### ✅ Plymouth Boot Splash (NEW)
+- **What**: Animated boot splash screen
+- **Why**: Beautiful visual feedback during system startup
+- **Option**: `theming.signal.nixos.boot.plymouth.enable`
+
+```nix
+theming.signal.nixos.boot.plymouth.enable = true;
+# Also enable Plymouth in your boot config:
+boot.plymouth.enable = true;
+```
+
+**Result**: Animated boot screen with Signal colors, progress bar, and spinner
+
+#### ✅ GDM Display Manager (NEW)
+- **What**: Login screen for GNOME desktop
+- **Why**: Consistent theming for GNOME users
+- **Option**: `theming.signal.nixos.login.gdm.enable`
+
+```nix
+theming.signal.nixos.login.gdm.enable = true;
+# Also enable GDM:
+services.xserver.displayManager.gdm.enable = true;
+```
+
+**Result**: GDM login screen themed with Signal GTK theme
+
+#### ✅ LightDM Display Manager (NEW)
+- **What**: Lightweight login screen with GTK greeter
+- **Why**: Fast, minimal display manager with Signal colors
+- **Option**: `theming.signal.nixos.login.lightdm.enable`
+
+```nix
+theming.signal.nixos.login.lightdm.enable = true;
+# Also enable LightDM:
+services.xserver.displayManager.lightdm.enable = true;
+services.xserver.displayManager.lightdm.greeters.gtk.enable = true;
+```
+
+**Result**: LightDM GTK greeter themed with Signal colors
+
 ### Coming Soon
 
 See [NIXOS_MODULE_PLAN.md](../NIXOS_MODULE_PLAN.md) for the full roadmap:
-- GDM display manager (GNOME)
-- LightDM display manager
-- Plymouth boot splash
 - System-wide GTK/Qt themes
 - System tools (dmenu, rofi, nano, vim)
+- Advanced components (OpenRGB, journald colors)
 
 ## Configuration
 
@@ -126,12 +164,19 @@ See [NIXOS_MODULE_PLAN.md](../NIXOS_MODULE_PLAN.md) for the full roadmap:
     boot = {
       console.enable = true;
       grub.enable = true;
+      plymouth.enable = true;
     };
     
     login = {
-      sddm.enable = true;  # KDE/Qt display manager
+      sddm.enable = true;     # KDE/Qt display manager
+      # gdm.enable = true;    # Alternative: GNOME display manager
+      # lightdm.enable = true; # Alternative: LightDM
     };
   };
+  
+  # Don't forget to also enable the services:
+  boot.plymouth.enable = true;
+  services.xserver.displayManager.sddm.enable = true;
 }
 ```
 
@@ -190,6 +235,98 @@ Override the default background:
   };
 }
 ```
+
+### Plymouth Configuration
+
+```nix
+{
+  theming.signal.nixos.boot.plymouth = {
+    enable = true;
+    # Optional: Custom logo image
+    logo = ./logo.png;  # PNG, 256x256 recommended
+  };
+  
+  # Required: Enable Plymouth service
+  boot.plymouth.enable = true;
+  
+  # Optional: Boot parameters (Signal sets these automatically)
+  # boot.kernelParams = [ "quiet" "splash" ];
+}
+```
+
+### GDM Custom Background
+
+```nix
+{
+  theming.signal.nixos.login.gdm = {
+    enable = true;
+    # Optional: Custom background for login screen
+    backgroundImage = ./background.png;
+  };
+  
+  # Required: Enable GDM
+  services.xserver.displayManager.gdm.enable = true;
+}
+```
+
+### LightDM Custom Background
+
+```nix
+{
+  theming.signal.nixos.login.lightdm = {
+    enable = true;
+    # Optional: Custom background
+    backgroundImage = ./background.jpg;
+  };
+  
+  # Required: Enable LightDM with GTK greeter
+  services.xserver.displayManager.lightdm = {
+    enable = true;
+    greeters.gtk.enable = true;
+  };
+}
+```
+
+## Component Details
+
+### Plymouth Boot Splash
+
+Signal's Plymouth theme features:
+- **Animated Progress Bar**: Shows boot progress with Signal accent color
+- **Spinner Animation**: Pulsing dots indicating activity
+- **Text Branding**: "Signal" logo in text form
+- **Password Prompts**: Themed unlock screens for encrypted drives
+- **Status Messages**: Boot status updates in Signal colors
+
+The theme is fully scriptable and generates all graphics programmatically, ensuring consistent colors without image files.
+
+### GDM Theming
+
+Signal themes GDM through:
+- **System-wide GTK Theme**: Custom GTK3/GTK4 theme package
+- **GSettings Overrides**: Applies theme to GDM user session
+- **dconf Configuration**: Ensures theme persists across updates
+
+Themed elements:
+- Login screen background
+- Input fields and buttons
+- User selection UI
+- Password prompts
+- Power/session controls
+
+### LightDM Theming
+
+Signal themes LightDM's GTK greeter with:
+- **GTK Theme**: Same Signal GTK theme as GDM
+- **Greeter Configuration**: LightDM-specific color settings
+- **Background**: Solid Signal colors or custom image
+
+Themed elements:
+- Login panel background
+- Text input fields
+- User list
+- Session selector
+- Clock and indicators
 
 ## Examples
 
@@ -362,6 +499,86 @@ Signal NixOS modules use `theming.signal.nixos.*` namespace, separate from Home 
 If you see conflicts:
 - Check you're not importing the same module twice
 - Ensure you're using `nixosModules.default` for NixOS and `homeManagerModules.default` for Home Manager
+
+### Plymouth Not Showing
+
+**Problem**: Boot splash doesn't appear
+
+**Solution**:
+1. Ensure both Signal module and Plymouth service are enabled:
+   ```nix
+   theming.signal.nixos.boot.plymouth.enable = true;
+   boot.plymouth.enable = true;
+   ```
+
+2. Check kernel parameters include `quiet` and `splash`:
+   ```bash
+   cat /proc/cmdline
+   ```
+
+3. Rebuild and reboot:
+   ```bash
+   sudo nixos-rebuild switch
+   sudo reboot
+   ```
+
+4. Verify theme is installed:
+   ```bash
+   ls /run/current-system/sw/share/plymouth/themes/
+   ```
+
+### GDM Not Themed
+
+**Problem**: GDM login screen shows default theme
+
+**Solution**:
+1. Verify both GDM and Signal are enabled:
+   ```nix
+   services.xserver.displayManager.gdm.enable = true;
+   theming.signal.nixos.login.gdm.enable = true;
+   ```
+
+2. Check GTK theme is installed:
+   ```bash
+   ls /run/current-system/sw/share/themes/ | grep Signal
+   ```
+
+3. Verify dconf settings:
+   ```bash
+   sudo dconf dump /org/gnome/desktop/interface/
+   ```
+
+4. Restart display manager:
+   ```bash
+   sudo systemctl restart display-manager
+   ```
+
+### LightDM Not Themed
+
+**Problem**: LightDM shows default greeter theme
+
+**Solution**:
+1. Ensure LightDM and GTK greeter are both enabled:
+   ```nix
+   services.xserver.displayManager.lightdm.enable = true;
+   services.xserver.displayManager.lightdm.greeters.gtk.enable = true;
+   theming.signal.nixos.login.lightdm.enable = true;
+   ```
+
+2. Check LightDM configuration:
+   ```bash
+   cat /etc/lightdm/lightdm-gtk-greeter.conf
+   ```
+
+3. Verify theme name:
+   ```bash
+   grep "theme-name" /etc/lightdm/lightdm-gtk-greeter.conf
+   ```
+
+4. Restart LightDM:
+   ```bash
+   sudo systemctl restart display-manager
+   ```
 
 ### Testing in VM
 

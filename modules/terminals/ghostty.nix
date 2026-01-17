@@ -5,6 +5,13 @@
   signalLib,
   ...
 }:
+# CONFIGURATION METHOD: freeform-settings (Tier 3)
+# HOME-MANAGER MODULE: programs.ghostty.settings
+# UPSTREAM SCHEMA: https://ghostty.org/docs/config
+# SCHEMA VERSION: 1.0.0
+# LAST VALIDATED: 2026-01-17
+# NOTES: Ghostty is a newer terminal. Home-Manager provides freeform settings
+#        that serialize to Ghostty's config format. Keys must match schema exactly.
 let
   inherit (lib) mkIf removePrefix;
   cfg = config.theming.signal;

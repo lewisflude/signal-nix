@@ -1,6 +1,6 @@
 # NixOS Module Implementation Status
 
-> **Current Status**: Phase 1 Complete (Foundation & Boot)
+> **Current Status**: Phase 2 Complete (Display Managers + Boot)
 
 This document tracks the implementation progress of Signal's NixOS system-level theming modules.
 
@@ -9,10 +9,10 @@ This document tracks the implementation progress of Signal's NixOS system-level 
 | Phase | Status | Components | Priority |
 |-------|--------|------------|----------|
 | Phase 1: Foundation | ✅ **Complete** | Console, GRUB | P0 |
-| Phase 2: Display Managers | 📋 Planned | GDM, SDDM, LightDM | P0 |
+| Phase 2: Display Managers | ✅ **Complete** | SDDM, GDM, LightDM, Plymouth | P0-P1 |
 | Phase 3: Desktop | 📋 Planned | GTK, Qt, Cursors | P1 |
 | Phase 4: System Tools | 📋 Planned | dmenu, rofi, nano, vim | P2 |
-| Phase 5: Advanced | 📋 Planned | Plymouth, OpenRGB | P3 |
+| Phase 5: Advanced | 📋 Planned | OpenRGB, journald | P3 |
 
 ## Completed Components ✅
 
@@ -35,7 +35,7 @@ This document tracks the implementation progress of Signal's NixOS system-level 
 - **What it does**: Themes GRUB boot menu with Signal colors
 - **Documentation**: [docs/nixos-modules.md](docs/nixos-modules.md#grub-bootloader)
 
-### SDDM Display Manager Theme (NEW)
+### SDDM Display Manager Theme
 - **Module**: `modules/nixos/login/sddm.nix`
 - **Package**: `pkgs/sddm-theme/default.nix`
 - **Status**: ✅ Complete
@@ -52,6 +52,73 @@ This document tracks the implementation progress of Signal's NixOS system-level 
   - Error message display
   - Fully themed buttons and inputs
 
+### Plymouth Boot Splash (NEW v1.2)
+- **Module**: `modules/nixos/boot/plymouth.nix`
+- **Package**: `pkgs/plymouth-theme/default.nix`
+- **Status**: ✅ Complete
+- **Options**: 
+  - `theming.signal.nixos.boot.plymouth.enable`
+  - `theming.signal.nixos.boot.plymouth.logo` (optional)
+- **Outputs**: `packages.signal-plymouth-theme-dark`, `packages.signal-plymouth-theme-light`
+- **Tests**: 2 tests passing
+- **What it does**: Animated boot splash with Signal branding and colors
+- **Documentation**: [docs/nixos-modules.md](docs/nixos-modules.md#plymouth-boot-splash)
+- **Features**:
+  - Animated progress bar
+  - Pulsing spinner dots
+  - Text-based Signal logo
+  - Password prompt support
+  - Status message display
+  - Smooth fade animations
+
+### GDM Display Manager Theme (NEW v1.2)
+- **Module**: `modules/nixos/login/gdm.nix`
+- **Package**: `pkgs/gtk-theme/default.nix` (shared)
+- **Status**: ✅ Complete
+- **Options**:
+  - `theming.signal.nixos.login.gdm.enable`
+  - `theming.signal.nixos.login.gdm.backgroundImage` (optional)
+- **Tests**: 1 test passing
+- **What it does**: Themes GNOME Display Manager with Signal GTK theme
+- **Documentation**: [docs/nixos-modules.md](docs/nixos-modules.md#gdm-display-manager)
+- **Features**:
+  - System-wide GTK3/GTK4 theme
+  - GSettings integration
+  - dconf configuration
+  - Custom background support
+  - Complete login UI theming
+
+### LightDM Display Manager Theme (NEW v1.2)
+- **Module**: `modules/nixos/login/lightdm.nix`
+- **Package**: `pkgs/gtk-theme/default.nix` (shared)
+- **Status**: ✅ Complete
+- **Options**:
+  - `theming.signal.nixos.login.lightdm.enable`
+  - `theming.signal.nixos.login.lightdm.backgroundImage` (optional)
+- **Tests**: 1 test passing
+- **What it does**: Themes LightDM GTK greeter with Signal colors
+- **Documentation**: [docs/nixos-modules.md](docs/nixos-modules.md#lightdm-display-manager)
+- **Features**:
+  - GTK greeter integration
+  - Custom background support
+  - Full UI theming
+  - Minimal, fast login screen
+
+### System-Wide GTK Theme (NEW v1.2)
+- **Package**: `pkgs/gtk-theme/default.nix`
+- **Status**: ✅ Complete
+- **Outputs**: `packages.signal-gtk-theme-dark`, `packages.signal-gtk-theme-light`
+- **Tests**: 1 test passing
+- **What it does**: Comprehensive GTK3/GTK4 theme package
+- **Features**:
+  - Full GTK3 CSS
+  - Full GTK4 CSS
+  - All semantic color variables
+  - index.theme descriptor
+  - Button, input, menu, dialog theming
+  - Focus indicators and state colors
+  - Accessible contrast
+
 ### Core Infrastructure
 - **Module**: `modules/nixos/common/default.nix`
 - **Status**: ✅ Complete
@@ -60,63 +127,21 @@ This document tracks the implementation progress of Signal's NixOS system-level 
   - Color resolution (mode: dark/light/auto)
   - Assertions and validation
   - Module arguments (`signalColors`, `signalLib`)
-- **Tests**: NixOS test suite created (7 tests total)
+- **Tests**: NixOS test suite created (12 tests total)
 
 ## In Progress 🚧
 
-None currently. Phase 1 + SDDM complete, ready to begin GDM implementation.
+None currently. Phase 2 complete!
 
 ## Planned Components 📋
 
-### Phase 2: Display Managers (P0)
-
-#### GDM (GNOME Display Manager)
-- **Priority**: P0 (High impact)
-- **Complexity**: High
-- **Approach**: Generate GTK4 theme, apply via GSettings
-- **Research needed**:
-  - [ ] GDM GTK4 theming system
-  - [ ] GResource compilation
-  - [ ] GSettings override paths
-  - [ ] CSS for login screen
-
-#### SDDM (KDE Display Manager)
-- **Priority**: P0 (High impact)
-- **Complexity**: Medium
-- **Approach**: Generate QML theme package
-- **Research needed**:
-  - [ ] SDDM theme structure
-  - [ ] QML components for login
-  - [ ] Qt color properties
-  - [ ] Theme installation paths
-
-#### LightDM
-- **Priority**: P1 (Medium impact)
-- **Complexity**: Medium
-- **Approach**: Configure GTK greeter theme
-- **Research needed**:
-  - [ ] LightDM greeter options
-  - [ ] GTK theme configuration
-  - [ ] Background settings
-
-### Phase 3: Plymouth Boot Splash (P1)
-
-- **Priority**: P1 (Visual polish)
-- **Complexity**: High
-- **Approach**: Create Plymouth theme package
-- **Research needed**:
-  - [ ] Plymouth `.script` format
-  - [ ] Animation capabilities
-  - [ ] Logo and progress bar design
-  - [ ] Color interpolation
-
-### Phase 4: System-Wide Desktop (P1)
+### Phase 3: System-Wide Desktop (P1)
 
 #### System GTK Theme
 - **Priority**: P1 (Affects all GTK apps)
-- **Complexity**: High
-- **Approach**: Package GTK theme system-wide
-- **Note**: Can reuse Home Manager GTK theme colors
+- **Status**: ✅ Package created, needs desktop module integration
+- **Complexity**: Medium
+- **Approach**: Package is complete, needs system-wide application module
 
 #### System Qt Theme
 - **Priority**: P1 (KDE users)
@@ -124,7 +149,7 @@ None currently. Phase 1 + SDDM complete, ready to begin GDM implementation.
 - **Approach**: Generate QSS stylesheet or Qt theme
 - **Research needed**: Qt theming system
 
-### Phase 5: System Tools (P2)
+### Phase 4: System Tools (P2)
 
 - dmenu (P2)
 - rofi (P2)
@@ -135,7 +160,7 @@ None currently. Phase 1 + SDDM complete, ready to begin GDM implementation.
 
 ### Test Suite
 - **Location**: `tests/nixos.nix`
-- **Tests**: 7 passing
+- **Tests**: 12 passing
   - ✅ `nixos-console-colors-basic` - Basic console colors
   - ✅ `nixos-console-disabled` - Disable flag respected
   - ✅ `nixos-console-light-mode` - Light mode colors
@@ -143,11 +168,19 @@ None currently. Phase 1 + SDDM complete, ready to begin GDM implementation.
   - ✅ `nixos-sddm-theme-basic` - Basic SDDM theme
   - ✅ `nixos-sddm-disabled` - SDDM disable flag
   - ✅ `nixos-sddm-light-mode` - SDDM light mode
+  - ✅ `nixos-plymouth-theme-basic` - Plymouth theme
+  - ✅ `nixos-plymouth-light-mode` - Plymouth light mode
+  - ✅ `nixos-gdm-theme-basic` - GDM theme configuration
+  - ✅ `nixos-lightdm-theme-basic` - LightDM theme
+  - ✅ `nixos-gtk-theme-package` - GTK theme package structure
 
 ### Manual Testing Needed
 - [ ] Test on real hardware (not just VM)
 - [ ] Verify TTY colors on actual console
 - [ ] Test GRUB theme on actual boot
+- [ ] Test Plymouth animations on real boot
+- [ ] Test GDM on GNOME desktop
+- [ ] Test LightDM on various window managers
 - [ ] Screenshot documentation
 
 ## Documentation Status
@@ -157,13 +190,15 @@ None currently. Phase 1 + SDDM complete, ready to begin GDM implementation.
 - ✅ [Implementation Plan](NIXOS_MODULE_PLAN.md)
 - ✅ Example: [nixos-boot.nix](examples/nixos-boot.nix)
 - ✅ Example: [nixos-complete.nix](examples/nixos-complete.nix)
-- ✅ Example: [nixos-sddm.nix](examples/nixos-sddm.nix) - NEW
+- ✅ Example: [nixos-sddm.nix](examples/nixos-sddm.nix)
+- ✅ Example: [nixos-plymouth.nix](examples/nixos-plymouth.nix) - NEW
+- ✅ Example: [nixos-gdm.nix](examples/nixos-gdm.nix) - NEW
+- ✅ Example: [nixos-lightdm.nix](examples/nixos-lightdm.nix) - NEW
 - ✅ README updates
 
 ### Needed
-- [ ] Screenshots of console colors
-- [ ] Screenshots of GRUB theme
-- [ ] Video walkthrough
+- [ ] Screenshots of all display managers
+- [ ] Video walkthrough of complete boot-to-desktop
 - [ ] Migration guide for existing users
 
 ## Architecture Notes
@@ -190,9 +225,9 @@ modules/nixos/
 ```
 pkgs/
 ├── grub-theme/             ✅ GRUB theme generator
-├── sddm-theme/             ✅ SDDM QML theme - NEW
-├── plymouth-theme/         📋 Planned
-└── gtk-theme/              📋 Planned (reuse from HM)
+├── sddm-theme/             ✅ SDDM QML theme
+├── plymouth-theme/         ✅ Plymouth boot splash - NEW
+└── gtk-theme/              ✅ GTK3/GTK4 theme - NEW
 ```
 
 ### Flake Outputs
@@ -203,14 +238,21 @@ pkgs/
     signal           # ✅ Alias for default
     boot             # ✅ Console only
     grub             # ✅ GRUB only
-    sddm             # ✅ SDDM only - NEW
+    plymouth         # ✅ Plymouth only - NEW
+    sddm             # ✅ SDDM only
+    gdm              # ✅ GDM only - NEW
+    lightdm          # ✅ LightDM only - NEW
   };
   
   packages.${system} = {
-    signal-grub-theme-dark   # ✅ Dark GRUB theme
-    signal-grub-theme-light  # ✅ Light GRUB theme
-    signal-sddm-theme-dark   # ✅ Dark SDDM theme - NEW
-    signal-sddm-theme-light  # ✅ Light SDDM theme - NEW
+    signal-grub-theme-dark       # ✅ Dark GRUB theme
+    signal-grub-theme-light      # ✅ Light GRUB theme
+    signal-sddm-theme-dark       # ✅ Dark SDDM theme
+    signal-sddm-theme-light      # ✅ Light SDDM theme
+    signal-plymouth-theme-dark   # ✅ Dark Plymouth theme - NEW
+    signal-plymouth-theme-light  # ✅ Light Plymouth theme - NEW
+    signal-gtk-theme-dark        # ✅ Dark GTK theme - NEW
+    signal-gtk-theme-light       # ✅ Light GTK theme - NEW
   };
 }
 ```
@@ -226,24 +268,23 @@ pkgs/
 
 ## Next Steps
 
-### Immediate (Next PR)
+### Immediate
 1. Manual testing on real hardware
 2. Screenshot documentation
-3. Announce NixOS module support
+3. Announce v1.2 release with complete display manager support
 
-### Short Term (v1.1)
-1. Implement SDDM theme (easier than GDM)
-2. Test on KDE systems
-3. Create video walkthrough
+### Short Term (v1.3)
+1. Desktop module integration (system-wide GTK/Qt application)
+2. Test on more hardware configurations
+3. Community feedback and refinement
 
-### Medium Term (v1.2)
-1. Implement GDM theme
-2. Test on GNOME systems
-3. Plymouth boot splash
+### Medium Term (v1.4)
+1. System tools (dmenu, rofi, nano, vim)
+2. Additional desktop components
 
 ### Long Term (v2.0)
 1. Complete all P1 components
-2. System-wide GTK/Qt themes
+2. Advanced system integration
 3. Comprehensive screenshot gallery
 
 ## Known Issues
@@ -266,6 +307,15 @@ See [CONTRIBUTING.md](CONTRIBUTING.md) for guidelines.
 
 ## Version History
 
+- **v1.2.0** (2026-01-17): Complete Display Manager Support
+  - Plymouth boot splash theme (animated, scriptable)
+  - GDM display manager theme (GTK-based)
+  - LightDM display manager theme (GTK greeter)
+  - System-wide GTK3/GTK4 theme package
+  - 5 new tests (total: 12 passing)
+  - 3 new example configurations
+  - Comprehensive documentation updates
+
 - **v1.1.0** (2026-01-17): SDDM Display Manager Support
   - SDDM login screen theme (QML-based)
   - Complete UI with Signal colors
@@ -283,5 +333,5 @@ See [CONTRIBUTING.md](CONTRIBUTING.md) for guidelines.
 ---
 
 **Last Updated**: 2026-01-17  
-**Status**: Phase 2 Started ✅  
-**Next Milestone**: GDM Display Manager
+**Status**: Phase 2 Complete ✅  
+**Next Milestone**: System Desktop Integration (P1)

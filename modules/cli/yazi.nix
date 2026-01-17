@@ -5,6 +5,13 @@
   signalLib,
   ...
 }:
+# CONFIGURATION METHOD: freeform-settings (Tier 3)
+# HOME-MANAGER MODULE: programs.yazi.theme
+# UPSTREAM SCHEMA: https://yazi-rs.github.io/docs/configuration/theme/
+# SCHEMA VERSION: 0.2.4
+# LAST VALIDATED: 2026-01-17
+# NOTES: Home-Manager provides structured theme option that serializes to TOML.
+#        The theme attrset structure matches yazi's theme.toml schema exactly.
 let
   inherit (lib) mkIf removePrefix;
   cfg = config.theming.signal;

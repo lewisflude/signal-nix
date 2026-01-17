@@ -5,6 +5,13 @@
   signalLib,
   ...
 }:
+# CONFIGURATION METHOD: freeform-settings (Tier 3)
+# HOME-MANAGER MODULE: programs.kitty.settings
+# UPSTREAM SCHEMA: https://sw.kovidgoyal.net/kitty/conf/
+# SCHEMA VERSION: 0.32.0
+# LAST VALIDATED: 2026-01-17
+# NOTES: No native theme option available. Home-Manager serializes the settings
+#        attrset to kitty.conf format. All keys must match kitty schema exactly.
 let
   inherit (lib) mkIf;
   cfg = config.theming.signal;

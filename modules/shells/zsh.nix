@@ -5,6 +5,14 @@
   signalLib,
   ...
 }:
+# CONFIGURATION METHOD: raw-config (Tier 4)
+# HOME-MANAGER MODULE: programs.zsh.initExtra
+# UPSTREAM SCHEMA: https://github.com/zsh-users/zsh-syntax-highlighting/blob/master/docs/highlighters.md
+# SCHEMA VERSION: 0.8.0 (zsh-syntax-highlighting)
+# LAST VALIDATED: 2026-01-17
+# NOTES: Zsh syntax highlighting colors must be set via shell variables in initExtra.
+#        No structured Home-Manager options exist for zsh-syntax-highlighting plugin.
+#        Colors use ZSH_HIGHLIGHT_STYLES array with specific key names.
 let
   inherit (lib) mkIf;
   cfg = config.theming.signal;

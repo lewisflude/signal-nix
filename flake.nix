@@ -60,7 +60,10 @@
         # Granular module exports for advanced users
         boot = import ./modules/nixos/boot/console.nix;
         grub = import ./modules/nixos/boot/grub.nix;
+        plymouth = import ./modules/nixos/boot/plymouth.nix;
         sddm = import ./modules/nixos/login/sddm.nix;
+        gdm = import ./modules/nixos/login/gdm.nix;
+        lightdm = import ./modules/nixos/login/lightdm.nix;
       };
 
       # Theme packages
@@ -88,6 +91,26 @@
             mode = "dark";
           };
           signal-sddm-theme-light = pkgs.callPackage ./pkgs/sddm-theme {
+            inherit signalColors signalLib;
+            mode = "light";
+          };
+
+          # Plymouth themes
+          signal-plymouth-theme-dark = pkgs.callPackage ./pkgs/plymouth-theme {
+            inherit signalColors signalLib;
+            mode = "dark";
+          };
+          signal-plymouth-theme-light = pkgs.callPackage ./pkgs/plymouth-theme {
+            inherit signalColors signalLib;
+            mode = "light";
+          };
+
+          # GTK themes (system-wide)
+          signal-gtk-theme-dark = pkgs.callPackage ./pkgs/gtk-theme {
+            inherit signalColors signalLib;
+            mode = "dark";
+          };
+          signal-gtk-theme-light = pkgs.callPackage ./pkgs/gtk-theme {
             inherit signalColors signalLib;
             mode = "light";
           };
@@ -171,13 +194,18 @@
             test -f ${./modules/nixos/common/default.nix} || { echo "Missing nixos common module"; exit 1; }
             test -f ${./modules/nixos/boot/console.nix} || { echo "Missing nixos console module"; exit 1; }
             test -f ${./modules/nixos/boot/grub.nix} || { echo "Missing nixos grub module"; exit 1; }
+            test -f ${./modules/nixos/boot/plymouth.nix} || { echo "Missing nixos plymouth module"; exit 1; }
             test -f ${./modules/nixos/login/sddm.nix} || { echo "Missing nixos sddm module"; exit 1; }
+            test -f ${./modules/nixos/login/gdm.nix} || { echo "Missing nixos gdm module"; exit 1; }
+            test -f ${./modules/nixos/login/lightdm.nix} || { echo "Missing nixos lightdm module"; exit 1; }
             test -f ${./pkgs/grub-theme/default.nix} || { echo "Missing grub theme package"; exit 1; }
             test -f ${./pkgs/sddm-theme/default.nix} || { echo "Missing sddm theme package"; exit 1; }
+            test -f ${./pkgs/plymouth-theme/default.nix} || { echo "Missing plymouth theme package"; exit 1; }
+            test -f ${./pkgs/gtk-theme/default.nix} || { echo "Missing gtk theme package"; exit 1; }
             echo "✓ Flake structure is valid"
             echo "✓ Home Manager exports: default, signal, ironbar, gtk, helix, fuzzel, ghostty"
-            echo "✓ NixOS exports: default, signal, boot, grub, sddm"
-            echo "✓ Packages: grub-theme (dark/light), sddm-theme (dark/light)"
+            echo "✓ NixOS exports: default, signal, boot, grub, plymouth, sddm, gdm, lightdm"
+            echo "✓ Packages: grub-theme, sddm-theme, plymouth-theme, gtk-theme (all dark/light)"
             touch $out
           '';
 
@@ -439,6 +467,11 @@
             nixos-sddm-theme-basic
             nixos-sddm-disabled
             nixos-sddm-light-mode
+            nixos-plymouth-theme-basic
+            nixos-plymouth-light-mode
+            nixos-gdm-theme-basic
+            nixos-lightdm-theme-basic
+            nixos-gtk-theme-package
             ;
         }
       );

@@ -6,6 +6,14 @@
   signalLib,
   ...
 }:
+# CONFIGURATION METHOD: raw-config (Tier 4)
+# HOME-MANAGER MODULE: gtk.gtk3.extraCss / gtk.gtk4.extraCss
+# UPSTREAM SCHEMA: https://docs.gtk.org/gtk3/css-properties.html
+# SCHEMA VERSION: GTK 3.24 / GTK 4.12
+# LAST VALIDATED: 2026-01-17
+# NOTES: GTK theming requires CSS overrides using @define-color directives.
+#        Home-Manager provides extraCss for custom CSS. No structured GTK color
+#        options exist. Uses Adwaita base theme with color overrides.
 let
   inherit (lib) mkIf;
   cfg = config.theming.signal;

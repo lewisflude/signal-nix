@@ -5,6 +5,14 @@
   signalLib,
   ...
 }:
+# CONFIGURATION METHOD: freeform-settings (Tier 3)
+# HOME-MANAGER MODULE: programs.zellij.settings.themes
+# UPSTREAM SCHEMA: https://zellij.dev/documentation/themes.html
+# SCHEMA VERSION: 0.39.0
+# LAST VALIDATED: 2026-01-17
+# NOTES: Home-Manager provides freeform settings that serialize to KDL format.
+#        Zellij themes require RGB values as space-separated strings (0-255).
+#        Theme structure must match Zellij's component-based schema exactly.
 let
   inherit (lib) mkIf;
   cfg = config.theming.signal;

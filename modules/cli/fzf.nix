@@ -5,6 +5,14 @@
   signalLib,
   ...
 }:
+# CONFIGURATION METHOD: raw-config (Tier 4)
+# HOME-MANAGER MODULE: programs.fzf.defaultOptions
+# UPSTREAM SCHEMA: https://github.com/junegunn/fzf#color-configuration
+# SCHEMA VERSION: 0.47.0
+# LAST VALIDATED: 2026-01-17
+# NOTES: FZF colors require --color flags with # prefix. Home-Manager's
+#        programs.fzf.colors strips the # prefix, causing errors. We use
+#        defaultOptions to preserve the # prefix in color values.
 let
   inherit (lib) mkIf mkAfter mapAttrsToList;
   cfg = config.theming.signal;

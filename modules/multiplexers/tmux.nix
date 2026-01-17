@@ -5,6 +5,14 @@
   signalLib,
   ...
 }:
+# CONFIGURATION METHOD: raw-config (Tier 4)
+# HOME-MANAGER MODULE: programs.tmux.extraConfig
+# UPSTREAM SCHEMA: https://man.openbsd.org/tmux.1#STYLES
+# SCHEMA VERSION: 3.3a
+# LAST VALIDATED: 2026-01-17
+# NOTES: Tmux requires raw config commands in tmux.conf format. Home-Manager
+#        provides extraConfig for custom config. No structured theme options exist.
+#        Must use set-option commands with exact tmux syntax.
 let
   inherit (lib) mkIf;
   cfg = config.theming.signal;

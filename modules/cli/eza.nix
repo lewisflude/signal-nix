@@ -12,6 +12,14 @@
   signalLib,
   ...
 }:
+# CONFIGURATION METHOD: raw-config (Tier 4)
+# HOME-MANAGER MODULE: home.sessionVariables.EZA_COLORS
+# UPSTREAM SCHEMA: https://the.exa.website/docs/colour-themes
+# SCHEMA VERSION: 0.18.0
+# LAST VALIDATED: 2026-01-17
+# NOTES: Eza only supports color theming via EZA_COLORS environment variable.
+#        No structured Home-Manager options exist. Must build colon-separated string
+#        of key=value pairs matching LS_COLORS format.
 let
   inherit (lib) mkIf concatStringsSep;
   cfg = config.theming.signal;

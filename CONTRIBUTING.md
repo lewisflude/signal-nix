@@ -323,9 +323,88 @@ git push origin feature/my-new-feature
 
 ## Application Integration Guide
 
-### Adding a New Application
+### Integration Standards
 
-Follow these steps to integrate a new application:
+**Before adding any new application**, review these key documents:
+
+- **[Tier System](docs/tier-system.md)**: Four-tier configuration hierarchy (native themes → raw config)
+- **[Integration Roadmap](docs/integration-standards.md)**: Programs to integrate and their priority
+- **Module Metadata**: Required documentation standard (see below)
+
+### Quick Integration Checklist
+
+Use this condensed checklist when adding a new application. For detailed explanations, see [Integration Standards](docs/integration-standards.md).
+
+#### 1. Research Phase
+
+- [ ] Identify config format (TOML, YAML, JSON, etc.)
+- [ ] Locate config file paths
+- [ ] Review upstream theming documentation
+- [ ] Check Home-Manager source for existing module
+- [ ] Note stable/current version
+
+#### 2. Determine Configuration Method (Tier)
+
+**Check in priority order** (see [Tier System](docs/tier-system.md) for details):
+
+- [ ] **Tier 1**: Native theme options (`programs.X.themes`)
+  - If exists → **USE THIS** (best)
+- [ ] **Tier 2**: Structured color options (`programs.X.colors`)
+  - If exists → **USE THIS** (good)
+- [ ] **Tier 3**: Freeform settings attrset (`programs.X.settings`)
+  - If exists → **USE THIS** (acceptable)
+- [ ] **Tier 4**: Raw config strings (last resort only)
+  - Document why no better option exists
+
+#### 3. Implementation Phase
+
+- [ ] Create module in appropriate `modules/category/`
+- [ ] **Add metadata comment block** (see template below)
+- [ ] Map Signal colors to app schema
+- [ ] Implement dark and light modes
+- [ ] Use `signalLib.shouldThemeApp` for conditional theming
+- [ ] Format with `nix fmt`
+- [ ] Check with `statix check` and `deadnix`
+
+**Metadata Template** (required at top of every module):
+
+```nix
+{
+  config,
+  lib,
+  signalColors,
+  signalLib,
+  ...
+}:
+# CONFIGURATION METHOD: <native-theme|structured-colors|freeform-settings|raw-config>
+# HOME-MANAGER MODULE: programs.<app>.<option>
+# UPSTREAM SCHEMA: <url-to-official-docs>
+# SCHEMA VERSION: <version-number>
+# LAST VALIDATED: <YYYY-MM-DD>
+# NOTES: <why-this-tier-chosen, any-caveats>
+let
+  # ... implementation
+```
+
+#### 4. Testing Phase
+
+- [ ] Evaluate: `nix eval .#homeManagerModules.default`
+- [ ] Visual test: dark mode
+- [ ] Visual test: light mode
+- [ ] Check application logs for errors
+- [ ] Verify accessibility (contrast)
+- [ ] Test on target platforms
+
+#### 5. Documentation & Integration
+
+- [ ] Update `modules/common/default.nix` imports
+- [ ] Create example in `examples/`
+- [ ] Update README.md with app listing
+- [ ] Add screenshots if visual
+- [ ] Update CHANGELOG.md
+- [ ] Run `nix flake check`
+
+### Adding a New Application (Detailed)
 
 #### 1. Research the Application
 
@@ -333,7 +412,7 @@ Follow these steps to integrate a new application:
 - **Config location**: Where does it store its config?
 - **Theming support**: How does it handle colors?
 - **Platform support**: Linux, macOS, or both?
-- **Home Manager**: Does a module already exist?
+- **Home Manager**: Does a module already exist? What options?
 
 #### 2. Create the Module
 

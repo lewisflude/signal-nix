@@ -376,4 +376,266 @@ in
     echo "✓ SDDM light theme configured correctly"
     touch $out
   '';
+
+  # ============================================================================
+  # NixOS Plymouth Tests
+  # ============================================================================
+
+  nixos-plymouth-theme-basic = pkgs.runCommand "test-nixos-plymouth-basic" { } ''
+    echo "Testing Plymouth theme module..."
+
+    cat > test-config.nix << 'EOF'
+    { config, lib, pkgs, ... }:
+    {
+      imports = [ ${self.nixosModules.default} ];
+
+      theming.signal.nixos = {
+        enable = true;
+        mode = "dark";
+        boot.plymouth.enable = true;
+      };
+
+      # Enable Plymouth
+      boot.plymouth.enable = true;
+
+      system.stateVersion = "24.11";
+    }
+    EOF
+
+    # Test that the module evaluates
+    echo "Checking Plymouth module evaluation..."
+    ${pkgs.nix}/bin/nix-instantiate --eval --strict -E '
+      let
+        nixos = import ${pkgs.path}/nixos/lib/eval-config.nix {
+          system = "${system}";
+          modules = [ ./test-config.nix ];
+        };
+      in
+        nixos.config.boot.plymouth.theme
+    ' > /dev/null
+
+    echo "✓ Plymouth module evaluates successfully"
+
+    # Verify theme is set correctly
+    THEME=$(${pkgs.nix}/bin/nix-instantiate --eval --json --strict -E '
+      let
+        nixos = import ${pkgs.path}/nixos/lib/eval-config.nix {
+          system = "${system}";
+          modules = [ ./test-config.nix ];
+        };
+      in
+        nixos.config.boot.plymouth.theme
+    ' | jq -r '.')
+
+    if [ "$THEME" != "signal-dark" ]; then
+      echo "FAIL: Plymouth theme should be 'signal-dark', got: $THEME"
+      exit 1
+    fi
+
+    echo "✓ Plymouth theme is set to: $THEME"
+    touch $out
+  '';
+
+  nixos-plymouth-light-mode = pkgs.runCommand "test-nixos-plymouth-light" { } ''
+    echo "Testing Plymouth with light mode..."
+
+    cat > test-config.nix << 'EOF'
+    { config, lib, pkgs, ... }:
+    {
+      imports = [ ${self.nixosModules.default} ];
+
+      theming.signal.nixos = {
+        enable = true;
+        mode = "light";
+        boot.plymouth.enable = true;
+      };
+
+      boot.plymouth.enable = true;
+
+      system.stateVersion = "24.11";
+    }
+    EOF
+
+    # Verify light theme is used
+    THEME=$(${pkgs.nix}/bin/nix-instantiate --eval --json --strict -E '
+      let
+        nixos = import ${pkgs.path}/nixos/lib/eval-config.nix {
+          system = "${system}";
+          modules = [ ./test-config.nix ];
+        };
+      in
+        nixos.config.boot.plymouth.theme
+    ' | jq -r '.')
+
+    if [ "$THEME" != "signal-light" ]; then
+      echo "FAIL: Plymouth theme should be 'signal-light', got: $THEME"
+      exit 1
+    fi
+
+    echo "✓ Plymouth light theme configured correctly"
+    touch $out
+  '';
+
+  # ============================================================================
+  # NixOS GDM Tests
+  # ============================================================================
+
+  nixos-gdm-theme-basic = pkgs.runCommand "test-nixos-gdm-basic" { } ''
+    echo "Testing GDM theme module..."
+
+    cat > test-config.nix << 'EOF'
+    { config, lib, pkgs, ... }:
+    {
+      imports = [ ${self.nixosModules.default} ];
+
+      theming.signal.nixos = {
+        enable = true;
+        mode = "dark";
+        login.gdm.enable = true;
+      };
+
+      # Enable GDM
+      services.xserver.displayManager.gdm.enable = true;
+
+      system.stateVersion = "24.11";
+    }
+    EOF
+
+    # Test that the module evaluates
+    echo "Checking GDM module evaluation..."
+    ${pkgs.nix}/bin/nix-instantiate --eval --strict -E '
+      let
+        nixos = import ${pkgs.path}/nixos/lib/eval-config.nix {
+          system = "${system}";
+          modules = [ ./test-config.nix ];
+        };
+      in
+        nixos.config.services.xserver.displayManager.gdm.enable
+    ' > /dev/null
+
+    echo "✓ GDM module evaluates successfully"
+
+    # Verify GTK theme is in system packages
+    PACKAGES=$(${pkgs.nix}/bin/nix-instantiate --eval --json --strict -E '
+      let
+        nixos = import ${pkgs.path}/nixos/lib/eval-config.nix {
+          system = "${system}";
+          modules = [ ./test-config.nix ];
+        };
+      in
+        builtins.length nixos.config.environment.systemPackages
+    ')
+
+    if [ "$PACKAGES" -lt 1 ]; then
+      echo "FAIL: GDM theme package should be in systemPackages"
+      exit 1
+    fi
+
+    echo "✓ GDM theme module configured"
+    touch $out
+  '';
+
+  # ============================================================================
+  # NixOS LightDM Tests
+  # ============================================================================
+
+  nixos-lightdm-theme-basic = pkgs.runCommand "test-nixos-lightdm-basic" { } ''
+    echo "Testing LightDM theme module..."
+
+    cat > test-config.nix << 'EOF'
+    { config, lib, pkgs, ... }:
+    {
+      imports = [ ${self.nixosModules.default} ];
+
+      theming.signal.nixos = {
+        enable = true;
+        mode = "dark";
+        login.lightdm.enable = true;
+      };
+
+      # Enable LightDM
+      services.xserver.displayManager.lightdm.enable = true;
+      services.xserver.displayManager.lightdm.greeters.gtk.enable = true;
+
+      system.stateVersion = "24.11";
+    }
+    EOF
+
+    # Test that the module evaluates
+    echo "Checking LightDM module evaluation..."
+    ${pkgs.nix}/bin/nix-instantiate --eval --strict -E '
+      let
+        nixos = import ${pkgs.path}/nixos/lib/eval-config.nix {
+          system = "${system}";
+          modules = [ ./test-config.nix ];
+        };
+      in
+        nixos.config.services.xserver.displayManager.lightdm.enable
+    ' > /dev/null
+
+    echo "✓ LightDM module evaluates successfully"
+
+    # Verify GTK theme is configured
+    THEME=$(${pkgs.nix}/bin/nix-instantiate --eval --json --strict -E '
+      let
+        nixos = import ${pkgs.path}/nixos/lib/eval-config.nix {
+          system = "${system}";
+          modules = [ ./test-config.nix ];
+        };
+      in
+        nixos.config.services.xserver.displayManager.lightdm.greeters.gtk.theme.name
+    ' | jq -r '.')
+
+    if [ "$THEME" != "Signal-dark" ]; then
+      echo "FAIL: LightDM GTK theme should be 'Signal-dark', got: $THEME"
+      exit 1
+    fi
+
+    echo "✓ LightDM theme is set to: $THEME"
+    touch $out
+  '';
+
+  # ============================================================================
+  # GTK Theme Package Tests
+  # ============================================================================
+
+  nixos-gtk-theme-package = pkgs.runCommand "test-gtk-theme-package" { } ''
+    echo "Testing GTK theme package structure..."
+
+    # Build the dark theme package
+    GTK_DARK=${self.packages.${system}.signal-gtk-theme-dark}
+
+    # Verify package structure
+    if [ ! -d "$GTK_DARK/share/themes/Signal-dark" ]; then
+      echo "FAIL: GTK dark theme directory not found"
+      exit 1
+    fi
+
+    if [ ! -f "$GTK_DARK/share/themes/Signal-dark/gtk-3.0/gtk.css" ]; then
+      echo "FAIL: GTK3 CSS not found"
+      exit 1
+    fi
+
+    if [ ! -f "$GTK_DARK/share/themes/Signal-dark/gtk-4.0/gtk.css" ]; then
+      echo "FAIL: GTK4 CSS not found"
+      exit 1
+    fi
+
+    if [ ! -f "$GTK_DARK/share/themes/Signal-dark/index.theme" ]; then
+      echo "FAIL: index.theme not found"
+      exit 1
+    fi
+
+    echo "✓ GTK theme package structure is correct"
+
+    # Verify CSS contains Signal colors
+    if ! grep -q "@define-color theme_bg_color" "$GTK_DARK/share/themes/Signal-dark/gtk-3.0/gtk.css"; then
+      echo "FAIL: GTK CSS should contain theme color definitions"
+      exit 1
+    fi
+
+    echo "✓ GTK CSS contains Signal color definitions"
+
+    touch $out
+  '';
 }

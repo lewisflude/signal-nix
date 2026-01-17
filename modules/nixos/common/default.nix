@@ -22,9 +22,12 @@ in
     # Boot components
     ../boot/console.nix
     ../boot/grub.nix
+    ../boot/plymouth.nix
 
     # Login components
     ../login/sddm.nix
+    ../login/gdm.nix
+    ../login/lightdm.nix
   ];
 
   options.theming.signal.nixos = {

@@ -5,6 +5,13 @@
   signalLib,
   ...
 }:
+# CONFIGURATION METHOD: freeform-settings (Tier 3)
+# HOME-MANAGER MODULE: programs.starship.settings
+# UPSTREAM SCHEMA: https://starship.rs/config/
+# SCHEMA VERSION: 1.17.0
+# LAST VALIDATED: 2026-01-17
+# NOTES: Home-Manager provides freeform settings attrset that serializes to TOML.
+#        Starship supports palette-based theming. Must match starship schema exactly.
 let
   inherit (lib) mkIf;
   cfg = config.theming.signal;

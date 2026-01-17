@@ -5,6 +5,14 @@
   signalLib,
   ...
 }:
+# CONFIGURATION METHOD: raw-config (Tier 4)
+# HOME-MANAGER MODULE: programs.wezterm.extraConfig
+# UPSTREAM SCHEMA: https://wezfurlong.org/wezterm/config/appearance.html
+# SCHEMA VERSION: 20230712-072601-f4abf8fd
+# LAST VALIDATED: 2026-01-17
+# NOTES: WezTerm uses Lua configuration. Home-Manager's wezterm module only
+#        provides extraConfig for Lua code generation. No structured options exist.
+#        We generate a Lua table that matches WezTerm's color scheme structure.
 let
   inherit (lib) mkIf;
   cfg = config.theming.signal;

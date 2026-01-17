@@ -1,3 +1,10 @@
+# Signal Helix Theme Module
+#
+# This module ONLY applies Signal colors to helix.
+# It assumes you have already enabled helix with:
+#   programs.helix.enable = true;
+#
+# The module will not install helix or configure its functional behavior.
 {
   config,
   lib,
@@ -5,6 +12,13 @@
   signalLib,
   ...
 }:
+# CONFIGURATION METHOD: native-theme (Tier 1)
+# HOME-MANAGER MODULE: programs.helix.themes
+# UPSTREAM SCHEMA: https://docs.helix-editor.com/themes.html
+# SCHEMA VERSION: 23.10
+# LAST VALIDATED: 2026-01-17
+# NOTES: Helix provides native theme support with palette structure. Home-Manager
+#        handles theme installation. This is the optimal integration method.
 let
   inherit (lib) mkIf;
   cfg = config.theming.signal;

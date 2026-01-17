@@ -12,6 +12,13 @@
   signalLib,
   ...
 }:
+# CONFIGURATION METHOD: freeform-settings (Tier 3)
+# HOME-MANAGER MODULE: programs.delta.options
+# UPSTREAM SCHEMA: https://dandavison.github.io/delta/configuration.html
+# SCHEMA VERSION: 0.16.5
+# LAST VALIDATED: 2026-01-17
+# NOTES: Home-Manager provides freeform options attrset that serializes to gitconfig
+#        format. All option names must match delta's configuration schema exactly.
 let
   inherit (lib) mkIf;
   cfg = config.theming.signal;
