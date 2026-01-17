@@ -36,7 +36,8 @@ in
   config = mkIf (cfg.enable && shouldTheme) {
     programs.zsh = {
       # Syntax highlighting colors for zsh-syntax-highlighting plugin
-      initExtra = ''
+      # CRITICAL: Must use initContent (mkAfter) not initExtra to load AFTER the plugin
+      initContent = lib.mkAfter ''
         # Signal Theme for zsh-syntax-highlighting
         # These colors are used by the zsh-syntax-highlighting plugin
 
