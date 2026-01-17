@@ -1,21 +1,17 @@
-# Ironbar Signal Theme Configuration Module
-# Configures ironbar with Signal theme design system
+# Ironbar Signal Theme - Colors Only
+# Provides Signal color palette for ironbar via CSS
 {
   config,
   lib,
   pkgs,
   signalColors,
-  signalLib,
   ...
 }:
 let
   inherit (lib) mkIf;
   cfg = config.theming.signal;
 
-  # Import configuration generator
-  configModule = import ./config.nix { inherit pkgs lib signalColors; };
-
-  # Import tokens
+  # Import color tokens
   tokens = import ./tokens.nix { inherit signalColors; };
 
   # Generate minimal color-only style.css with Signal colors
@@ -25,8 +21,8 @@ let
      * Generated from Signal Design System
      * 
      * This file ONLY contains color definitions.
-     * For layout, spacing, and typography, create your own CSS file.
-     * See: examples/ironbar-complete.css for a complete example
+     * Configure ironbar widgets in your own configuration.
+     * See: https://github.com/JakeStanger/ironbar/wiki
      */
 
     /* =============================================================================
@@ -78,72 +74,23 @@ let
     }
 
     .workspaces button:hover {
-      color: @text_primary;
-    }
-
-    /* Window Title */
-    .focused label {
       color: @text_secondary;
-    }
-
-    .focused.active {
-      border-left-color: @accent_focus;
-    }
-
-    .focused.active label {
-      color: @text_primary;
-    }
-
-    /* Control Buttons */
-    button {
-      background-color: transparent;
-      color: @text_primary;
-    }
-
-    /* Battery States */
-    .battery.warning {
-      color: @accent_warning;
-      border-left-color: @accent_warning;
-    }
-
-    .battery.critical {
-      color: @accent_danger;
-      border-left-color: @accent_danger;
-    }
-
-    /* Clock */
-    .clock {
-      color: @text_primary;
-    }
-
-    /* Power Button */
-    .power {
-      color: @accent_danger;
-    }
-
-    /* Layout Islands */
-    #bar #start,
-    #bar #center,
-    #bar #end {
-      background-color: @surface_base;
-      border-color: @surface_emphasis;
     }
   '';
 
-  # Check if ironbar should be themed - using centralized helper
-  shouldTheme = signalLib.shouldThemeApp "ironbar" [ "ironbar" ] cfg config;
+  shouldTheme =
+    if cfg.autoEnable then config.programs.ironbar.enable or false else cfg.ironbar.enable or false;
 in
 {
+  options.theming.signal.ironbar = {
+    enable = lib.mkEnableOption "Signal colors for ironbar (requires programs.ironbar.enable)";
+  };
+
   config = mkIf (cfg.enable && shouldTheme) {
     programs.ironbar = {
-      # Note: Signal only provides colors via CSS. Enable ironbar and configure
-      # systemd integration in your own programs.ironbar configuration.
-
-      # Styling - dynamically generated with Signal colors
-      style = styleFile;
-
-      # Configuration
-      inherit (configModule) config;
+      # Signal only provides colors via CSS
+      # Configure widgets, layout, and behavior in your own programs.ironbar config
+      style = lib.mkDefault styleFile;
     };
   };
 }
