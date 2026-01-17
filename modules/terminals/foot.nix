@@ -59,7 +59,7 @@ in
         urls = toFootColor accent.secondary.Lc75;
 
         # Regular colors (0-7)
-        regular0 = toFootColor signalColors.tonal."base-L015"; # black
+        regular0 = toFootColor signalColors.tonal."black"; # black
         regular1 = toFootColor accent.danger.Lc75; # red
         regular2 = toFootColor accent.primary.Lc75; # green
         regular3 = toFootColor accent.warning.Lc75; # yellow

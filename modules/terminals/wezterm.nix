@@ -29,7 +29,7 @@ let
   # ANSI color mapping using Signal palette
   ansiColors = {
     # Normal colors
-    black = signalColors.tonal."base-L015";
+    black = signalColors.tonal."black";
     red = accent.danger.Lc75;
     green = accent.primary.Lc75;
     yellow = accent.warning.Lc75;
