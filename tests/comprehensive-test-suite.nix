@@ -487,7 +487,7 @@ in
           syntax = signalLib.getSyntaxColors "dark";
         in
         # Syntax colors should be derived from colors
-        syntax.background == colors.tonal."surface-Lc05".hex;
+        syntax.background == colors.tonal."surface-base".hex;
       expected = true;
     };
   };
@@ -598,10 +598,10 @@ in
           # Simulate multiple color lookups (as would happen in real usage)
           colors = signalLib.getColors "dark";
           lookups = [
-            colors.tonal."surface-Lc05"
-            colors.tonal."text-Lc75"
-            colors.accent.focus.Lc75
-            colors.categorical.GA02
+            colors.tonal."surface-base"
+            colors.tonal."text-primary"
+            colors.accent.info.Lc75
+            colors.categorical."data-viz-02"
           ];
         in
         # If this evaluates successfully, lookups work
@@ -700,7 +700,7 @@ in
       expr =
         let
           colors = signalLib.getColors "dark";
-          testColor = colors.tonal."surface-Lc05";
+          testColor = colors.tonal."surface-base";
         in
         builtins.isString testColor.hex;
       expected = true;
@@ -710,7 +710,7 @@ in
       expr =
         let
           colors = signalLib.getColors "dark";
-          testColor = colors.tonal."surface-Lc05";
+          testColor = colors.tonal."surface-base";
         in
         # Hex colors should start with #
         builtins.substring 0 1 testColor.hex == "#";

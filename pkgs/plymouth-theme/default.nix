@@ -76,12 +76,12 @@ let
     }, ${builtins.toString (builtins.floor (rgb.b * 1000) / 1000)}";
 
   # Extract colors for Plymouth theme
-  background = colors.tonal."surface-Lc05";
-  surface = colors.tonal."surface-Lc10";
-  text-primary = colors.tonal."text-Lc75";
-  text-secondary = colors.tonal."text-Lc60";
+  background = colors.tonal."surface-base";
+  surface = colors.tonal."surface-hover";
+  text-primary = colors.tonal."text-primary";
+  text-secondary = colors.tonal."text-secondary";
   accent = colors.accent.secondary.Lc75;
-  divider = colors.tonal."divider-Lc15";
+  divider = colors.tonal."divider-primary";
 
   # Convert to RGB floats for Plymouth
   bgRgb = hexToRgbFloat background;

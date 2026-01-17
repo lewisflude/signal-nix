@@ -17,14 +17,14 @@ let
   hexRaw = color: removePrefix "#" color.hex;
 
   # Extract colors for SDDM theme
-  surface-base = colors.tonal."surface-Lc05";
-  surface-raised = colors.tonal."surface-Lc10";
-  text-primary = colors.tonal."text-Lc75";
-  text-secondary = colors.tonal."text-Lc60";
-  text-tertiary = colors.tonal."text-Lc45";
+  surface-base = colors.tonal."surface-base";
+  surface-raised = colors.tonal."surface-hover";
+  text-primary = colors.tonal."text-primary";
+  text-secondary = colors.tonal."text-secondary";
+  text-tertiary = colors.tonal."text-tertiary";
   accent-focus = colors.accent.secondary.Lc75;
   accent-danger = colors.accent.danger.Lc75;
-  divider = colors.tonal."divider-Lc15";
+  divider = colors.tonal."divider-primary";
 
   # Theme metadata
   metadataDesktop = ''
