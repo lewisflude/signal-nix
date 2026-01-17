@@ -19,51 +19,106 @@ let
   cfg = config.theming.signal;
   themeMode = signalLib.resolveThemeMode cfg.mode;
 
-  colors = {
-    surface-base = signalColors.tonal."surface-Lc05";
-    surface-subtle = signalColors.tonal."divider-Lc15";
-    surface-emphasis = signalColors.tonal."surface-Lc10";
-    surface-card = signalColors.tonal."surface-Lc08";
-    text-primary = signalColors.tonal."text-Lc75";
-    text-secondary = signalColors.tonal."text-Lc60";
-    text-tertiary = signalColors.tonal."text-Lc45";
-    divider-primary = signalColors.tonal."divider-Lc15";
-    divider-secondary = signalColors.tonal."divider-Lc30";
+  # Color mappings based on theme mode
+  # Light mode uses lighter surfaces, dark mode uses darker surfaces
+  colors = if themeMode == "light" then {
+    # Light mode colors
+    window-bg = signalColors.tonal."surface-Lc05";
+    window-fg = signalColors.tonal."text-Lc80";
+    view-bg = signalColors.tonal."surface-Lc02";
+    view-fg = signalColors.tonal."text-Lc80";
+    headerbar-bg = signalColors.tonal."surface-Lc02";
+    headerbar-fg = signalColors.tonal."text-Lc80";
+    headerbar-border = signalColors.tonal."text-Lc80";
+    headerbar-backdrop = signalColors.tonal."surface-Lc05";
+    headerbar-shade = signalColors.tonal."divider-Lc12";
+    headerbar-darker-shade = signalColors.tonal."divider-Lc12";
+    sidebar-bg = signalColors.tonal."surface-Lc12";
+    sidebar-fg = signalColors.tonal."text-Lc80";
+    sidebar-backdrop = signalColors.tonal."surface-Lc08";
+    sidebar-shade = signalColors.tonal."divider-Lc07";
+    sidebar-border = signalColors.tonal."divider-Lc07";
+    secondary-sidebar-bg = signalColors.tonal."surface-Lc10";
+    secondary-sidebar-fg = signalColors.tonal."text-Lc80";
+    secondary-sidebar-backdrop = signalColors.tonal."surface-Lc06";
+    secondary-sidebar-shade = signalColors.tonal."divider-Lc07";
+    secondary-sidebar-border = signalColors.tonal."divider-Lc07";
+    card-bg = signalColors.tonal."surface-Lc02";
+    card-fg = signalColors.tonal."text-Lc80";
+    card-shade = signalColors.tonal."divider-Lc07";
+    dialog-bg = signalColors.tonal."surface-Lc05";
+    dialog-fg = signalColors.tonal."text-Lc80";
+    popover-bg = signalColors.tonal."surface-Lc02";
+    popover-fg = signalColors.tonal."text-Lc80";
+    popover-shade = signalColors.tonal."divider-Lc07";
+    thumbnail-bg = signalColors.tonal."surface-Lc02";
+    thumbnail-fg = signalColors.tonal."text-Lc80";
+    shade = signalColors.tonal."divider-Lc07";
+    scrollbar-outline = signalColors.tonal."surface-Lc02";
+  } else {
+    # Dark mode colors
+    window-bg = signalColors.tonal."surface-Lc20";
+    window-fg = signalColors.tonal."text-Lc95";
+    view-bg = signalColors.tonal."surface-Lc15";
+    view-fg = signalColors.tonal."text-Lc95";
+    headerbar-bg = signalColors.tonal."surface-Lc28";
+    headerbar-fg = signalColors.tonal."text-Lc95";
+    headerbar-border = signalColors.tonal."text-Lc95";
+    headerbar-backdrop = signalColors.tonal."surface-Lc20";
+    headerbar-shade = signalColors.tonal."divider-Lc36";
+    headerbar-darker-shade = signalColors.tonal."divider-Lc50";
+    sidebar-bg = signalColors.tonal."surface-Lc28";
+    sidebar-fg = signalColors.tonal."text-Lc95";
+    sidebar-backdrop = signalColors.tonal."surface-Lc24";
+    sidebar-shade = signalColors.tonal."divider-Lc25";
+    sidebar-border = signalColors.tonal."divider-Lc36";
+    secondary-sidebar-bg = signalColors.tonal."surface-Lc24";
+    secondary-sidebar-fg = signalColors.tonal."text-Lc95";
+    secondary-sidebar-backdrop = signalColors.tonal."surface-Lc22";
+    secondary-sidebar-shade = signalColors.tonal."divider-Lc25";
+    secondary-sidebar-border = signalColors.tonal."divider-Lc36";
+    card-bg = signalColors.tonal."surface-Lc25";
+    card-fg = signalColors.tonal."text-Lc95";
+    card-shade = signalColors.tonal."divider-Lc36";
+    dialog-bg = signalColors.tonal."surface-Lc32";
+    dialog-fg = signalColors.tonal."text-Lc95";
+    popover-bg = signalColors.tonal."surface-Lc32";
+    popover-fg = signalColors.tonal."text-Lc95";
+    popover-shade = signalColors.tonal."divider-Lc25";
+    thumbnail-bg = signalColors.tonal."surface-Lc35";
+    thumbnail-fg = signalColors.tonal."text-Lc95";
+    shade = signalColors.tonal."divider-Lc25";
+    scrollbar-outline = signalColors.tonal."surface-Lc12";
   };
 
   inherit (signalColors) accent;
 
-  # Generate GTK CSS
+  # Generate GTK CSS with ALL Adwaita named colors
   gtkCss = ''
-    /* Signal Color Theme - GTK Overrides */
-    /* GTK NAMED COLORS - Adwaita Compatibility */
-
-    /* Legacy base color definitions (GTK 3) */
-    @define-color theme_bg_color ${colors.surface-base.hex};
-    @define-color theme_fg_color ${colors.text-primary.hex};
-    @define-color theme_base_color ${colors.surface-base.hex};
-    @define-color theme_text_color ${colors.text-primary.hex};
-    @define-color theme_selected_bg_color ${accent.focus.Lc75.hex};
-    @define-color theme_selected_fg_color ${colors.surface-base.hex};
-
-    /* Insensitive (disabled) states */
-    @define-color insensitive_bg_color ${colors.surface-subtle.hex};
-    @define-color insensitive_fg_color ${colors.text-tertiary.hex};
-    @define-color insensitive_base_color ${colors.surface-subtle.hex};
-
-    /* Borders */
-    @define-color borders ${colors.divider-primary.hex};
-    @define-color unfocused_borders ${colors.divider-primary.hex};
-    @define-color divider_color ${colors.divider-primary.hex};
-
-    /* Window decorations */
-    @define-color wm_title ${colors.text-primary.hex};
-    @define-color wm_unfocused_title ${colors.text-secondary.hex};
-    @define-color wm_bg ${colors.surface-base.hex};
-    @define-color wm_border ${colors.divider-secondary.hex};
-
-    /* Hover states */
-    @define-color theme_hover_color ${colors.surface-subtle.hex};
+    /* Signal Color Theme - Complete Adwaita Named Colors */
+    
+    /* ============================================ */
+    /* Legacy GTK 3 Base Colors                     */
+    /* ============================================ */
+    
+    @define-color theme_bg_color ${colors.window-bg.hex};
+    @define-color theme_fg_color ${colors.window-fg.hex};
+    @define-color theme_base_color ${colors.view-bg.hex};
+    @define-color theme_text_color ${colors.view-fg.hex};
+    @define-color theme_selected_bg_color ${accent.focus.Lc60.hex};
+    @define-color theme_selected_fg_color ${colors.view-bg.hex};
+    
+    @define-color insensitive_bg_color ${colors.window-bg.hex};
+    @define-color insensitive_fg_color ${colors.shade.hex};
+    @define-color insensitive_base_color ${colors.view-bg.hex};
+    
+    @define-color borders ${colors.shade.hex};
+    @define-color unfocused_borders ${colors.shade.hex};
+    
+    @define-color wm_title ${colors.headerbar-fg.hex};
+    @define-color wm_unfocused_title ${colors.headerbar-fg.hex};
+    @define-color wm_bg ${colors.headerbar-bg.hex};
+    @define-color wm_border ${colors.headerbar-border.hex};
 
     /* ============================================ */
     /* Modern GTK 4 / Adwaita Named Colors          */
@@ -71,80 +126,80 @@ let
 
     /* Destructive action buttons */
     @define-color destructive_bg_color ${accent.danger.Lc60.hex};
-    @define-color destructive_fg_color ${colors.surface-base.hex};
-    @define-color destructive_color ${accent.danger.Lc75.hex};
+    @define-color destructive_fg_color ${colors.view-bg.hex};
+    @define-color destructive_color ${accent.danger.Lc50.hex};
 
     /* Success states (levelbars, entries, labels, infobars) */
     @define-color success_bg_color ${accent.success.Lc60.hex};
-    @define-color success_fg_color ${colors.surface-base.hex};
-    @define-color success_color ${accent.success.Lc75.hex};
+    @define-color success_fg_color ${colors.view-bg.hex};
+    @define-color success_color ${accent.success.Lc50.hex};
 
     /* Warning states */
     @define-color warning_bg_color ${accent.warning.Lc60.hex};
-    @define-color warning_fg_color ${colors.text-primary.hex};
-    @define-color warning_color ${accent.warning.Lc75.hex};
+    @define-color warning_fg_color ${if themeMode == "light" then signalColors.tonal."text-Lc80" else colors.view-bg}.hex;
+    @define-color warning_color ${accent.warning.Lc50.hex};
 
     /* Error states */
     @define-color error_bg_color ${accent.danger.Lc60.hex};
-    @define-color error_fg_color ${colors.surface-base.hex};
-    @define-color error_color ${accent.danger.Lc75.hex};
+    @define-color error_fg_color ${colors.view-bg.hex};
+    @define-color error_color ${accent.danger.Lc50.hex};
 
     /* Accent colors */
-    @define-color accent_bg_color ${accent.focus.Lc75.hex};
-    @define-color accent_fg_color ${colors.surface-base.hex};
-    @define-color accent_color ${accent.focus.Lc75.hex};
+    @define-color accent_bg_color ${accent.focus.Lc60.hex};
+    @define-color accent_fg_color ${colors.view-bg.hex};
+    @define-color accent_color ${accent.focus.Lc50.hex};
 
     /* Window colors */
-    @define-color window_bg_color ${colors.surface-base.hex};
-    @define-color window_fg_color ${colors.text-primary.hex};
+    @define-color window_bg_color ${colors.window-bg.hex};
+    @define-color window_fg_color ${colors.window-fg.hex};
 
     /* View colors (text view, tree view) */
-    @define-color view_bg_color ${colors.surface-base.hex};
-    @define-color view_fg_color ${colors.text-primary.hex};
+    @define-color view_bg_color ${colors.view-bg.hex};
+    @define-color view_fg_color ${colors.view-fg.hex};
 
     /* Header bar, search bar, tab bar */
-    @define-color headerbar_bg_color ${colors.surface-emphasis.hex};
-    @define-color headerbar_fg_color ${colors.text-primary.hex};
-    @define-color headerbar_border_color ${colors.text-primary.hex};
-    @define-color headerbar_backdrop_color ${colors.surface-base.hex};
-    @define-color headerbar_shade_color ${colors.divider-primary.hex};
-    @define-color headerbar_darker_shade_color ${colors.divider-secondary.hex};
+    @define-color headerbar_bg_color ${colors.headerbar-bg.hex};
+    @define-color headerbar_fg_color ${colors.headerbar-fg.hex};
+    @define-color headerbar_border_color ${colors.headerbar-border.hex};
+    @define-color headerbar_backdrop_color ${colors.headerbar-backdrop.hex};
+    @define-color headerbar_shade_color ${colors.headerbar-shade.hex};
+    @define-color headerbar_darker_shade_color ${colors.headerbar-darker-shade.hex};
 
     /* Split pane views - Primary sidebar */
-    @define-color sidebar_bg_color ${colors.surface-emphasis.hex};
-    @define-color sidebar_fg_color ${colors.text-primary.hex};
-    @define-color sidebar_backdrop_color ${colors.surface-subtle.hex};
-    @define-color sidebar_shade_color ${colors.divider-primary.hex};
-    @define-color sidebar_border_color ${colors.divider-primary.hex};
+    @define-color sidebar_bg_color ${colors.sidebar-bg.hex};
+    @define-color sidebar_fg_color ${colors.sidebar-fg.hex};
+    @define-color sidebar_backdrop_color ${colors.sidebar-backdrop.hex};
+    @define-color sidebar_shade_color ${colors.sidebar-shade.hex};
+    @define-color sidebar_border_color ${colors.sidebar-border.hex};
 
     /* Split pane views - Secondary sidebar */
-    @define-color secondary_sidebar_bg_color ${colors.surface-card.hex};
-    @define-color secondary_sidebar_fg_color ${colors.text-primary.hex};
-    @define-color secondary_sidebar_backdrop_color ${colors.surface-subtle.hex};
-    @define-color secondary_sidebar_shade_color ${colors.divider-primary.hex};
-    @define-color secondary_sidebar_border_color ${colors.divider-primary.hex};
+    @define-color secondary_sidebar_bg_color ${colors.secondary-sidebar-bg.hex};
+    @define-color secondary_sidebar_fg_color ${colors.secondary-sidebar-fg.hex};
+    @define-color secondary_sidebar_backdrop_color ${colors.secondary-sidebar-backdrop.hex};
+    @define-color secondary_sidebar_shade_color ${colors.secondary-sidebar-shade.hex};
+    @define-color secondary_sidebar_border_color ${colors.secondary-sidebar-border.hex};
 
     /* Cards, boxed lists */
-    @define-color card_bg_color ${colors.surface-card.hex};
-    @define-color card_fg_color ${colors.text-primary.hex};
-    @define-color card_shade_color ${colors.divider-primary.hex};
+    @define-color card_bg_color ${colors.card-bg.hex};
+    @define-color card_fg_color ${colors.card-fg.hex};
+    @define-color card_shade_color ${colors.card-shade.hex};
 
     /* Dialogs */
-    @define-color dialog_bg_color ${colors.surface-base.hex};
-    @define-color dialog_fg_color ${colors.text-primary.hex};
+    @define-color dialog_bg_color ${colors.dialog-bg.hex};
+    @define-color dialog_fg_color ${colors.dialog-fg.hex};
 
     /* Popovers */
-    @define-color popover_bg_color ${colors.surface-emphasis.hex};
-    @define-color popover_fg_color ${colors.text-primary.hex};
-    @define-color popover_shade_color ${colors.divider-primary.hex};
+    @define-color popover_bg_color ${colors.popover-bg.hex};
+    @define-color popover_fg_color ${colors.popover-fg.hex};
+    @define-color popover_shade_color ${colors.popover-shade.hex};
 
     /* Thumbnails */
-    @define-color thumbnail_bg_color ${colors.surface-emphasis.hex};
-    @define-color thumbnail_fg_color ${colors.text-primary.hex};
+    @define-color thumbnail_bg_color ${colors.thumbnail-bg.hex};
+    @define-color thumbnail_fg_color ${colors.thumbnail-fg.hex};
 
     /* Miscellaneous */
-    @define-color shade_color ${colors.divider-primary.hex};
-    @define-color scrollbar_outline_color ${colors.surface-base.hex};
+    @define-color shade_color ${colors.shade.hex};
+    @define-color scrollbar_outline_color ${colors.scrollbar-outline.hex};
   '';
 
   # Check if gtk should be themed
