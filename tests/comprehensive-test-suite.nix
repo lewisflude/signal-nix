@@ -21,8 +21,8 @@ let
   inherit (lib) runTests;
   signalLib = import ../lib {
     inherit lib;
-    palette = signal-palette.palette;
-    nix-colorizer = self.inputs.nix-colorizer;
+    inherit (signal-palette) palette;
+    inherit (self.inputs) nix-colorizer;
   };
 
   # ============================================================================
@@ -64,9 +64,11 @@ let
       modules = [
         self.homeManagerModules.signal
         {
-          home.username = "testuser";
-          home.homeDirectory = "/home/testuser";
-          home.stateVersion = "24.11";
+          home = {
+            username = "testuser";
+            homeDirectory = "/home/testuser";
+            stateVersion = "24.11";
+          };
           theming.signal = {
             enable = enableSignal;
             mode = signalMode;
@@ -558,7 +560,7 @@ in
           };
           result = signalLib.shouldThemeApp appName appPath cfg config;
         in
-        result == true; # Should theme because autoEnable is true and program is enabled
+        result; # Should theme because autoEnable is true and program is enabled
       expected = true;
     };
 
@@ -579,7 +581,7 @@ in
           };
           result = signalLib.shouldThemeApp appName appPath cfg config;
         in
-        result == true; # Should theme because explicitly enabled
+        result; # Should theme because explicitly enabled
       expected = true;
     };
   };
@@ -639,7 +641,7 @@ in
             functionalColors = {
               primary = "#000000";
             };
-            brandColors = brandColors;
+            inherit brandColors;
             decorativeBrandColors = { };
           };
         in

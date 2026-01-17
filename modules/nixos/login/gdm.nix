@@ -16,7 +16,7 @@ let
   # Import the GTK theme package
   gtkTheme = pkgs.callPackage ../../pkgs/gtk-theme {
     inherit signalColors signalLib;
-    mode = cfg.mode;
+    inherit (cfg) mode;
   };
 
   # Determine if GDM should be themed

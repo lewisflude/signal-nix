@@ -16,8 +16,8 @@ let
   inherit (lib) runTests;
   signalLib = import ../lib {
     inherit lib;
-    palette = signal-palette.palette;
-    nix-colorizer = self.inputs.nix-colorizer;
+    inherit (signal-palette) palette;
+    inherit (self.inputs) nix-colorizer;
   };
 
   # ============================================================================

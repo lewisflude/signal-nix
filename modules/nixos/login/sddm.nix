@@ -16,7 +16,7 @@ let
   # Import the SDDM theme package
   sddmTheme = pkgs.callPackage ../../pkgs/sddm-theme {
     inherit signalColors signalLib;
-    mode = cfg.mode;
+    inherit (cfg) mode;
   };
 
   # Determine if SDDM should be themed

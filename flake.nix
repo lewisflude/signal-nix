@@ -160,7 +160,7 @@
               system
               ;
             inherit (nixpkgs) lib;
-            home-manager = nixpkgs.legacyPackages.${system}.home-manager;
+            inherit (nixpkgs.legacyPackages.${system}) home-manager;
           };
 
           # Import NixOS-specific tests

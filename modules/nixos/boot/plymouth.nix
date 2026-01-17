@@ -16,7 +16,7 @@ let
   # Import the Plymouth theme package
   plymouthTheme = pkgs.callPackage ../../pkgs/plymouth-theme {
     inherit signalColors signalLib;
-    mode = cfg.mode;
+    inherit (cfg) mode;
   };
 
   # Determine if Plymouth should be themed

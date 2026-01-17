@@ -286,6 +286,6 @@ in
     };
 
     # Apply same settings to vscodium if enabled
-    programs.vscodium.userSettings = mkIf shouldThemeCodium (config.programs.vscode.userSettings);
+    programs.vscodium.userSettings = mkIf shouldThemeCodium config.programs.vscode.userSettings;
   };
 }

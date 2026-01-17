@@ -49,18 +49,20 @@ let
 in
 {
   config = mkIf (cfg.enable && shouldTheme) {
-    # Create wrapper script
-    home.file.".local/bin/dmenu-signal" = {
-      text = dmenuWrapper;
-      executable = true;
-    };
+    home = {
+      # Create wrapper script
+      file.".local/bin/dmenu-signal" = {
+        text = dmenuWrapper;
+        executable = true;
+      };
 
-    # Add to PATH
-    home.sessionPath = [ "$HOME/.local/bin" ];
+      # Add to PATH
+      sessionPath = [ "$HOME/.local/bin" ];
 
-    # Create alias for convenience
-    home.shellAliases = mkIf shouldTheme {
-      dmenu = "dmenu-signal";
+      # Create alias for convenience
+      shellAliases = mkIf shouldTheme {
+        dmenu = "dmenu-signal";
+      };
     };
   };
 }

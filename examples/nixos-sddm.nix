@@ -44,23 +44,31 @@
               };
 
               # ====================================================================
-              # Display Manager Configuration
+              # System Services Configuration
               # ====================================================================
 
-              services.displayManager.sddm = {
-                enable = true;
-                # Signal theme will be applied automatically
-                # Theme: signal-dark (or signal-light)
+              services = {
+                # Display Manager with SDDM
+                displayManager.sddm = {
+                  enable = true;
+                  # Signal theme will be applied automatically
+                  # Theme: signal-dark (or signal-light)
 
-                # Optional: Wayland support
-                wayland.enable = true;
+                  # Optional: Wayland support
+                  wayland.enable = true;
+                };
+
+                # Desktop Environment (KDE Plasma example)
+                desktopManager.plasma6.enable = true;
+
+                # Audio system
+                pipewire = {
+                  enable = true;
+                  alsa.enable = true;
+                  alsa.support32Bit = true;
+                  pulse.enable = true;
+                };
               };
-
-              # ====================================================================
-              # Desktop Environment (KDE Plasma example)
-              # ====================================================================
-
-              services.desktopManager.plasma6.enable = true;
 
               # ====================================================================
               # Standard NixOS Configuration
@@ -98,12 +106,6 @@
               # Audio
               sound.enable = true;
               security.rtkit.enable = true;
-              services.pipewire = {
-                enable = true;
-                alsa.enable = true;
-                alsa.support32Bit = true;
-                pulse.enable = true;
-              };
 
               system.stateVersion = "24.11";
             }

@@ -23,19 +23,29 @@
 
           {
             # =================================================================
-            # Signal LightDM Configuration
+            # Signal Complete System Theming with LightDM
             # =================================================================
 
             theming.signal.nixos = {
               enable = true;
               mode = "dark"; # or "light"
 
-              # Enable LightDM display manager theming
+              # Boot experience
+              boot = {
+                console.enable = true; # TTY colors
+                grub.enable = true; # GRUB boot menu
+                plymouth.enable = true; # Boot splash
+              };
+
+              # Login screen with LightDM
               login.lightdm = {
                 enable = true;
-
                 # Optional: Custom background image for login screen
                 # backgroundImage = ./path/to/background.png;
+
+                # Or use solid color background (default)
+                # (if not set, uses Signal surface color)
+                # backgroundImage = null;
               };
             };
 
@@ -60,30 +70,9 @@
             };
 
             # =================================================================
-            # Example: Complete system theming with LightDM
+            # Boot configuration (required for GRUB theming)
             # =================================================================
 
-            theming.signal.nixos = {
-              enable = true;
-              mode = "dark";
-
-              # Boot experience
-              boot = {
-                console.enable = true; # TTY colors
-                grub.enable = true; # GRUB boot menu
-                plymouth.enable = true; # Boot splash
-              };
-
-              # Login screen
-              login.lightdm = {
-                enable = true;
-                # Optional: Use solid color background
-                # (if not set, uses Signal surface color)
-                # backgroundImage = null;
-              };
-            };
-
-            # Boot configuration
             boot.loader = {
               grub = {
                 enable = true;
@@ -92,16 +81,12 @@
             };
 
             # =================================================================
-            # Example: Multi-display manager support
+            # NOTE: Multiple display managers
             # =================================================================
-
-            # You can theme multiple display managers
-            # (though only one should be enabled at a time)
-            theming.signal.nixos.login = {
-              lightdm.enable = true; # Active
-              # sddm.enable = true;  # Alternative for KDE
-              # gdm.enable = true;   # Alternative for GNOME
-            };
+            # You can configure multiple display managers, but only enable one:
+            # - theming.signal.nixos.login.lightdm.enable = true; (current)
+            # - theming.signal.nixos.login.sddm.enable = true;    (alternative for KDE)
+            # - theming.signal.nixos.login.gdm.enable = true;     (alternative for GNOME)
 
             # System version
             system.stateVersion = "24.11";

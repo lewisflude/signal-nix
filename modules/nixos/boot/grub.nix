@@ -16,7 +16,7 @@ let
   # Import the GRUB theme package with proper dependencies
   grubTheme = pkgs.callPackage ../../pkgs/grub-theme {
     inherit signalColors signalLib;
-    mode = cfg.mode;
+    inherit (cfg) mode;
   };
 
   # Determine if GRUB should be themed
