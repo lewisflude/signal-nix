@@ -22,7 +22,7 @@ let
   text-primary = colors.tonal."text-Lc75";
   text-secondary = colors.tonal."text-Lc60";
   text-tertiary = colors.tonal."text-Lc45";
-  accent-focus = colors.accent.focus.Lc75;
+  accent-focus = colors.accent.secondary.Lc75;
   accent-danger = colors.accent.danger.Lc75;
   divider = colors.tonal."divider-Lc15";
 

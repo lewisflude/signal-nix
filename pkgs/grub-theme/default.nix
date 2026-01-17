@@ -21,7 +21,7 @@ let
   surface = colors.tonal."surface-Lc10";
   text-primary = colors.tonal."text-Lc75";
   text-secondary = colors.tonal."text-Lc60";
-  accent = colors.accent.focus.Lc75;
+  accent = colors.accent.secondary.Lc75;
   divider = colors.tonal."divider-Lc15";
 
   # Theme configuration as text

@@ -14,14 +14,14 @@ let
   colors = signalLib.getColors themeMode;
 
   # Extract colors for GTK theme
-  surface-base = colors.tonal."surface-Lc05";
-  surface-subtle = colors.tonal."divider-Lc15";
-  surface-emphasis = colors.tonal."surface-Lc10";
-  text-primary = colors.tonal."text-Lc75";
-  text-secondary = colors.tonal."text-Lc60";
-  text-tertiary = colors.tonal."text-Lc45";
-  divider-primary = colors.tonal."divider-Lc15";
-  divider-secondary = colors.tonal."divider-Lc30";
+  surface-base = colors.tonal."surface-base";
+  surface-subtle = colors.tonal."surface-subtle";
+  surface-emphasis = colors.tonal."surface-hover";
+  text-primary = colors.tonal."text-primary";
+  text-secondary = colors.tonal."text-secondary";
+  text-tertiary = colors.tonal."text-tertiary";
+  divider-primary = colors.tonal."divider-primary";
+  divider-secondary = colors.tonal."divider-strong";
 
   inherit (colors) accent;
 
@@ -40,7 +40,7 @@ let
     @define-color theme_fg_color ${text-primary.hex};
     @define-color theme_base_color ${surface-base.hex};
     @define-color theme_text_color ${text-primary.hex};
-    @define-color theme_selected_bg_color ${accent.focus.Lc75.hex};
+    @define-color theme_selected_bg_color ${accent.secondary.Lc75.hex};
     @define-color theme_selected_fg_color ${surface-base.hex};
 
     /* Insensitive (disabled) states */
@@ -56,7 +56,7 @@ let
     /* State colors */
     @define-color warning_color ${accent.warning.Lc75.hex};
     @define-color error_color ${accent.danger.Lc75.hex};
-    @define-color success_color ${accent.success.Lc75.hex};
+    @define-color success_color ${accent.primary.Lc75.hex};
 
     /* Window decorations */
     @define-color wm_title ${text-primary.hex};
@@ -65,9 +65,9 @@ let
     @define-color wm_border ${divider-secondary.hex};
 
     /* Modern GTK4 semantic colors */
-    @define-color accent_bg_color ${accent.focus.Lc75.hex};
+    @define-color accent_bg_color ${accent.secondary.Lc75.hex};
     @define-color accent_fg_color ${surface-base.hex};
-    @define-color accent_color ${accent.focus.Lc75.hex};
+    @define-color accent_color ${accent.secondary.Lc75.hex};
     @define-color destructive_bg_color ${accent.danger.Lc75.hex};
     @define-color destructive_fg_color ${surface-base.hex};
     @define-color destructive_color ${accent.danger.Lc75.hex};
@@ -117,7 +117,7 @@ let
 
     button:active,
     button:checked {
-      background-color: ${accent.focus.Lc75.hex};
+      background-color: ${accent.secondary.Lc75.hex};
       color: ${surface-base.hex};
     }
 
@@ -134,7 +134,7 @@ let
     }
 
     entry:focus {
-      border-color: ${accent.focus.Lc75.hex};
+      border-color: ${accent.secondary.Lc75.hex};
     }
 
     entry:disabled {
@@ -145,7 +145,7 @@ let
     /* Selections */
     selection,
     *:selected {
-      background-color: ${accent.focus.Lc75.hex};
+      background-color: ${accent.secondary.Lc75.hex};
       color: ${surface-base.hex};
     }
 
@@ -163,7 +163,7 @@ let
 
     list row:selected,
     treeview row:selected {
-      background-color: ${accent.focus.Lc75.hex};
+      background-color: ${accent.secondary.Lc75.hex};
       color: ${surface-base.hex};
     }
 
@@ -196,7 +196,7 @@ let
     }
 
     menuitem:active {
-      background-color: ${accent.focus.Lc75.hex};
+      background-color: ${accent.secondary.Lc75.hex};
       color: ${surface-base.hex};
     }
 
@@ -223,7 +223,7 @@ let
     notebook tab:checked {
       background-color: ${surface-base.hex};
       color: ${text-primary.hex};
-      border-color: ${accent.focus.Lc75.hex};
+      border-color: ${accent.secondary.Lc75.hex};
     }
 
     /* Popovers */
@@ -240,7 +240,7 @@ let
     }
 
     progressbar progress {
-      background-color: ${accent.focus.Lc75.hex};
+      background-color: ${accent.secondary.Lc75.hex};
     }
 
     /* Switches */
@@ -249,7 +249,7 @@ let
     }
 
     switch:checked {
-      background-color: ${accent.focus.Lc75.hex};
+      background-color: ${accent.secondary.Lc75.hex};
     }
 
     switch slider {
@@ -259,19 +259,19 @@ let
     /* Check boxes and radio buttons */
     checkbutton:checked,
     radiobutton:checked {
-      background-color: ${accent.focus.Lc75.hex};
+      background-color: ${accent.secondary.Lc75.hex};
       color: ${surface-base.hex};
     }
 
     /* Links */
     link,
     *:link {
-      color: ${accent.focus.Lc75.hex};
+      color: ${accent.secondary.Lc75.hex};
     }
 
     link:visited,
     *:visited {
-      color: ${accent.special.Lc75.hex};
+      color: ${accent.tertiary.Lc75.hex};
     }
 
     /* ========================================================================
@@ -295,7 +295,7 @@ let
     /* GTK4 specific selections */
     .view:selected,
     .view:selected:focus {
-      background-color: ${accent.focus.Lc75.hex};
+      background-color: ${accent.secondary.Lc75.hex};
       color: ${surface-base.hex};
     }
 
@@ -305,7 +305,7 @@ let
 
     /* Focus indicators */
     *:focus {
-      outline-color: ${accent.focus.Lc75.hex};
+      outline-color: ${accent.secondary.Lc75.hex};
       outline-width: 2px;
       outline-style: solid;
     }
@@ -326,7 +326,7 @@ let
 
     /* Success states */
     .success {
-      color: ${accent.success.Lc75.hex};
+      color: ${accent.primary.Lc75.hex};
     }
 
     /* ========================================================================
@@ -340,12 +340,12 @@ let
     .signal-text-primary { color: ${text-primary.hex}; }
     .signal-text-secondary { color: ${text-secondary.hex}; }
     .signal-text-tertiary { color: ${text-tertiary.hex}; }
-    .signal-accent-focus { color: ${accent.focus.Lc75.hex}; }
+    .signal-accent-focus { color: ${accent.secondary.Lc75.hex}; }
     .signal-accent-danger { color: ${accent.danger.Lc75.hex}; }
-    .signal-accent-success { color: ${accent.success.Lc75.hex}; }
+    .signal-accent-success { color: ${accent.primary.Lc75.hex}; }
     .signal-accent-warning { color: ${accent.warning.Lc75.hex}; }
-    .signal-accent-info { color: ${accent.info.Lc75.hex}; }
-    .signal-accent-special { color: ${accent.special.Lc75.hex}; }
+    .signal-accent-info { color: ${accent.secondary.Lc75.hex}; }
+    .signal-accent-special { color: ${accent.tertiary.Lc75.hex}; }
   '';
 
   # Index theme file
