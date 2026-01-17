@@ -28,11 +28,12 @@ let
     if signalLib.resolveThemeMode cfg.mode == "dark" then
       {
         # Dark mode colors
+        # Use Lc45 instead of Lc25 (darker tone, Lc25 doesn't exist in palette)
         minus-style = "syntax ${signalColors.tonal."surface-Lc10".hex}";
-        minus-emph-style = "syntax ${signalColors.accent.danger.Lc25.hex}";
+        minus-emph-style = "syntax ${signalColors.accent.danger.Lc45.hex}";
         minus-non-emph-style = "syntax ${signalColors.tonal."surface-Lc10".hex}";
         plus-style = "syntax ${signalColors.tonal."surface-Lc10".hex}";
-        plus-emph-style = "syntax ${signalColors.accent.success.Lc25.hex}";
+        plus-emph-style = "syntax ${signalColors.accent.success.Lc45.hex}";
         plus-non-emph-style = "syntax ${signalColors.tonal."surface-Lc10".hex}";
 
         # Line numbers
