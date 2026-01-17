@@ -200,6 +200,38 @@ let
     /* Miscellaneous */
     @define-color shade_color ${colors.shade};
     @define-color scrollbar_outline_color ${colors.scrollbar-outline};
+
+    /* ============================================ */
+    /* Button Styles                                 */
+    /* ============================================ */
+
+    /* Secondary/normal buttons */
+    button {
+      background-color: ${colors.card-bg};
+      color: ${colors.window-fg};
+      border-color: ${colors.shade};
+    }
+
+    button:hover {
+      background-color: ${colors.sidebar-bg};
+    }
+
+    /* Primary/selected buttons (suggested-action) */
+    button.suggested-action,
+    button:active,
+    button:checked {
+      background-color: ${accent.secondary.Lc60.hex};
+      color: ${colors.view-bg};
+    }
+
+    button.suggested-action:hover {
+      background-color: ${accent.secondary.Lc75.hex};
+    }
+
+    button:disabled {
+      background-color: ${colors.window-bg};
+      color: ${colors.shade};
+    }
   '';
 
   # Check if gtk should be themed
