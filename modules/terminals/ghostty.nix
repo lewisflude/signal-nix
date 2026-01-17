@@ -12,8 +12,7 @@
 # LAST VALIDATED: 2026-01-17
 # NOTES: Ghostty is a newer terminal. Home-Manager provides freeform settings
 #        that serialize to Ghostty's config format. Keys must match schema exactly.
-#        Ghostty supports window-theme-background and window-theme-foreground for
-#        titlebar colors when window-theme is set to "ghostty" (GTK only).
+#        The window-theme option accepts "auto", "light", "dark", or "ghostty".
 let
   inherit (lib) mkIf removePrefix;
   cfg = config.theming.signal;
@@ -64,12 +63,8 @@ in
   config = mkIf (cfg.enable && shouldTheme) {
     programs.ghostty = {
       settings = {
-        # Window theme (GTK) - enables custom titlebar colors
+        # Window theme (GTK) - uses system theme for titlebar
         "window-theme" = "ghostty";
-        
-        # Titlebar colors (GTK only, requires window-theme = "ghostty")
-        "window-theme-background" = hexRaw colors.surface-elevated;
-        "window-theme-foreground" = hexRaw colors.text-primary;
 
         # Background and foreground
         background = hexRaw colors.surface-base;
