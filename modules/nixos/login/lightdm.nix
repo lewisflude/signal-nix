@@ -72,7 +72,7 @@ in
           if cfg.login.lightdm.backgroundImage != null then
             "background = ${cfg.login.lightdm.backgroundImage}"
           else
-            "background = ${signalColors.tonal."surface-Lc05".hex}"
+            "background = ${signalColors.tonal."surface-subtle".hex}"
         }
 
         # Theme
@@ -105,7 +105,7 @@ in
           if cfg.login.lightdm.backgroundImage != null then
             "background = ${cfg.login.lightdm.backgroundImage}"
           else
-            "background = ${signalColors.tonal."surface-Lc05".hex}"
+            "background = ${signalColors.tonal."surface-subtle".hex}"
         }
         user-background = false
         indicators = ~host;~spacer;~clock;~spacer;~session;~a11y;~power

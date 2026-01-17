@@ -18,25 +18,25 @@ let
 
   colors = {
     # Base colors
-    bg = signalColors.tonal."surface-Lc05".hex;
-    bg-alt = signalColors.tonal."surface-Lc10".hex;
+    bg = signalColors.tonal."surface-subtle".hex;
+    bg-alt = signalColors.tonal."surface-hover".hex;
     bg-highlight = signalColors.tonal."surface-Lc15".hex;
-    fg = signalColors.tonal."text-Lc75".hex;
-    fg-alt = signalColors.tonal."text-Lc60".hex;
-    fg-dim = signalColors.tonal."text-Lc45".hex;
-    border = signalColors.tonal."divider-Lc15".hex;
+    fg = signalColors.tonal."text-primary".hex;
+    fg-alt = signalColors.tonal."text-secondary".hex;
+    fg-dim = signalColors.tonal."text-tertiary".hex;
+    border = signalColors.tonal."divider-primary".hex;
 
     # Accent colors
-    blue = signalColors.accent.focus.Lc75.hex;
-    cyan = signalColors.accent.info.Lc75.hex;
-    green = signalColors.accent.success.Lc75.hex;
+    blue = signalColors.accent.secondary.Lc75.hex;
+    cyan = signalColors.accent.secondary.Lc75.hex;
+    green = signalColors.accent.primary.Lc75.hex;
     red = signalColors.accent.danger.Lc75.hex;
     orange = signalColors.accent.warning.Lc75.hex;
-    purple = signalColors.accent.special.Lc75.hex;
+    purple = signalColors.accent.tertiary.Lc75.hex;
 
     # Categorical
-    yellow = signalColors.categorical.GA04.hex;
-    teal = signalColors.categorical.GA02.hex;
+    yellow = signalColors.categorical."data-viz-04".hex;
+    teal = signalColors.categorical."data-viz-02".hex;
   };
 
   # Check if emacs should be themed

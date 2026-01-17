@@ -18,12 +18,12 @@ let
   cfg = config.theming.signal;
 
   colors = {
-    surface-base = signalColors.tonal."surface-Lc05";
-    surface-emphasis = signalColors.tonal."surface-Lc10";
-    surface-subtle = signalColors.tonal."divider-Lc15";
-    text-primary = signalColors.tonal."text-Lc75";
-    text-secondary = signalColors.tonal."text-Lc60";
-    text-tertiary = signalColors.tonal."text-Lc45";
+    surface-base = signalColors.tonal."surface-subtle";
+    surface-emphasis = signalColors.tonal."surface-hover";
+    surface-subtle = signalColors.tonal."divider-primary";
+    text-primary = signalColors.tonal."text-primary";
+    text-secondary = signalColors.tonal."text-secondary";
+    text-tertiary = signalColors.tonal."text-tertiary";
   };
 
   inherit (signalColors) accent;
@@ -45,11 +45,11 @@ in
 
         # Status left (session name)
         set-option -g status-left-length 40
-        set-option -g status-left "#[bg=${accent.focus.Lc75.hex},fg=${colors.surface-base.hex},bold] #S #[bg=${colors.surface-base.hex}] "
+        set-option -g status-left "#[bg=${accent.secondary.Lc75.hex},fg=${colors.surface-base.hex},bold] #S #[bg=${colors.surface-base.hex}] "
 
         # Status right (date/time)
         set-option -g status-right-length 80
-        set-option -g status-right "#[fg=${colors.text-secondary.hex}]%Y-%m-%d #[fg=${colors.text-primary.hex}]%H:%M #[bg=${accent.focus.Lc75.hex},fg=${colors.surface-base.hex},bold] #h "
+        set-option -g status-right "#[fg=${colors.text-secondary.hex}]%Y-%m-%d #[fg=${colors.text-primary.hex}]%H:%M #[bg=${accent.secondary.Lc75.hex},fg=${colors.surface-base.hex},bold] #h "
 
         # Window status
         set-option -g window-status-format " #I:#W#{?window_flags,#{window_flags}, } "
@@ -67,17 +67,17 @@ in
 
         # Pane borders
         set-option -g pane-border-style "fg=${colors.surface-subtle.hex}"
-        set-option -g pane-active-border-style "fg=${accent.focus.Lc75.hex}"
+        set-option -g pane-active-border-style "fg=${accent.secondary.Lc75.hex}"
 
         # Message styling
-        set-option -g message-style "bg=${accent.focus.Lc75.hex},fg=${colors.surface-base.hex},bold"
-        set-option -g message-command-style "bg=${accent.info.Lc75.hex},fg=${colors.surface-base.hex}"
+        set-option -g message-style "bg=${accent.secondary.Lc75.hex},fg=${colors.surface-base.hex},bold"
+        set-option -g message-command-style "bg=${accent.secondary.Lc75.hex},fg=${colors.surface-base.hex}"
 
         # Mode styling (copy mode, etc.)
-        set-option -g mode-style "bg=${accent.focus.Lc75.hex},fg=${colors.surface-base.hex},bold"
+        set-option -g mode-style "bg=${accent.secondary.Lc75.hex},fg=${colors.surface-base.hex},bold"
 
         # Clock mode colors
-        set-option -g clock-mode-colour "${accent.focus.Lc75.hex}"
+        set-option -g clock-mode-colour "${accent.secondary.Lc75.hex}"
         set-option -g clock-mode-style 24
       '';
     };

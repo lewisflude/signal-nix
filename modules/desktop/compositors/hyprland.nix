@@ -18,11 +18,11 @@ let
   cfg = config.theming.signal;
 
   colors = {
-    surface-base = signalColors.tonal."surface-Lc05";
-    surface-raised = signalColors.tonal."surface-Lc10";
-    text-primary = signalColors.tonal."text-Lc75";
-    text-secondary = signalColors.tonal."text-Lc60";
-    divider-primary = signalColors.tonal."divider-Lc15";
+    surface-base = signalColors.tonal."surface-subtle";
+    surface-raised = signalColors.tonal."surface-hover";
+    text-primary = signalColors.tonal."text-primary";
+    text-secondary = signalColors.tonal."text-secondary";
+    divider-primary = signalColors.tonal."divider-primary";
     divider-secondary = signalColors.tonal."divider-Lc20";
   };
 
@@ -53,19 +53,19 @@ in
     wayland.windowManager.hyprland.settings = {
       # General colors
       general = {
-        "col.active_border" = "${toHyprlandRgba accent.focus.Lc75 1.0}";
+        "col.active_border" = "${toHyprlandRgba accent.secondary.Lc75 1.0}";
         "col.inactive_border" = "${toHyprlandRgba colors.divider-primary 0.8}";
       };
 
       # Group (tabbed/stacked windows) colors
       group = {
-        "col.border_active" = "${toHyprlandRgba accent.focus.Lc75 1.0}";
+        "col.border_active" = "${toHyprlandRgba accent.secondary.Lc75 1.0}";
         "col.border_inactive" = "${toHyprlandRgba colors.divider-primary 0.8}";
         "col.border_locked_active" = "${toHyprlandRgba accent.warning.Lc75 1.0}";
         "col.border_locked_inactive" = "${toHyprlandRgba accent.warning.Lc75 0.6}";
 
         groupbar = {
-          "col.active" = "${toHyprlandRgba accent.focus.Lc75 1.0}";
+          "col.active" = "${toHyprlandRgba accent.secondary.Lc75 1.0}";
           "col.inactive" = "${toHyprlandRgba colors.divider-secondary 0.8}";
           "col.locked_active" = "${toHyprlandRgba accent.warning.Lc75 1.0}";
           "col.locked_inactive" = "${toHyprlandRgba accent.warning.Lc75 0.6}";

@@ -17,9 +17,9 @@ let
   cfg = config.theming.signal;
 
   colors = {
-    text-primary = signalColors.tonal."text-Lc75";
-    text-secondary = signalColors.tonal."text-Lc60";
-    text-dim = signalColors.tonal."text-Lc45";
+    text-primary = signalColors.tonal."text-primary";
+    text-secondary = signalColors.tonal."text-secondary";
+    text-dim = signalColors.tonal."text-tertiary";
   };
 
   inherit (signalColors) accent;
@@ -90,59 +90,59 @@ in
 
             # LS_COLORS for file listing (dircolors format)
             export LS_COLORS="rs=0:\
-      di=${toAnsiRgb accent.focus.Lc75}:\
-      ln=${toAnsiRgb accent.info.Lc75}:\
+      di=${toAnsiRgb accent.secondary.Lc75}:\
+      ln=${toAnsiRgb accent.secondary.Lc75}:\
       mh=00:\
       pi=${toAnsiRgb accent.warning.Lc75}:\
-      so=${toAnsiRgb accent.special.Lc75}:\
-      do=${toAnsiRgb accent.special.Lc75}:\
+      so=${toAnsiRgb accent.tertiary.Lc75}:\
+      do=${toAnsiRgb accent.tertiary.Lc75}:\
       bd=${toAnsiRgb accent.warning.Lc75}:\
       cd=${toAnsiRgb accent.warning.Lc75}:\
       or=${toAnsiRgb accent.danger.Lc75}:\
       mi=${toAnsiRgb accent.danger.Lc75}:\
       su=${toAnsiRgb accent.danger.Lc75}:\
       sg=${toAnsiRgb accent.warning.Lc75}:\
-      ca=${toAnsiRgb accent.info.Lc75}:\
-      tw=${toAnsiRgb accent.success.Lc75}:\
-      ow=${toAnsiRgb accent.success.Lc75}:\
-      st=${toAnsiRgb accent.focus.Lc75}:\
-      ex=${toAnsiRgb accent.success.Lc75}:\
-      *.tar=${toAnsiRgb accent.special.Lc75}:\
-      *.tgz=${toAnsiRgb accent.special.Lc75}:\
-      *.zip=${toAnsiRgb accent.special.Lc75}:\
-      *.gz=${toAnsiRgb accent.special.Lc75}:\
-      *.bz2=${toAnsiRgb accent.special.Lc75}:\
-      *.xz=${toAnsiRgb accent.special.Lc75}:\
-      *.jpg=${toAnsiRgb signalColors.categorical.GA06}:\
-      *.jpeg=${toAnsiRgb signalColors.categorical.GA06}:\
-      *.png=${toAnsiRgb signalColors.categorical.GA06}:\
-      *.gif=${toAnsiRgb signalColors.categorical.GA06}:\
-      *.mp3=${toAnsiRgb signalColors.categorical.GA08}:\
-      *.mp4=${toAnsiRgb signalColors.categorical.GA08}:\
-      *.avi=${toAnsiRgb signalColors.categorical.GA08}:\
-      *.mkv=${toAnsiRgb signalColors.categorical.GA08}"
+      ca=${toAnsiRgb accent.secondary.Lc75}:\
+      tw=${toAnsiRgb accent.primary.Lc75}:\
+      ow=${toAnsiRgb accent.primary.Lc75}:\
+      st=${toAnsiRgb accent.secondary.Lc75}:\
+      ex=${toAnsiRgb accent.primary.Lc75}:\
+      *.tar=${toAnsiRgb accent.tertiary.Lc75}:\
+      *.tgz=${toAnsiRgb accent.tertiary.Lc75}:\
+      *.zip=${toAnsiRgb accent.tertiary.Lc75}:\
+      *.gz=${toAnsiRgb accent.tertiary.Lc75}:\
+      *.bz2=${toAnsiRgb accent.tertiary.Lc75}:\
+      *.xz=${toAnsiRgb accent.tertiary.Lc75}:\
+      *.jpg=${toAnsiRgb signalColors.categorical."data-viz-06"}:\
+      *.jpeg=${toAnsiRgb signalColors.categorical."data-viz-06"}:\
+      *.png=${toAnsiRgb signalColors.categorical."data-viz-06"}:\
+      *.gif=${toAnsiRgb signalColors.categorical."data-viz-06"}:\
+      *.mp3=${toAnsiRgb signalColors.categorical."data-viz-08"}:\
+      *.mp4=${toAnsiRgb signalColors.categorical."data-viz-08"}:\
+      *.avi=${toAnsiRgb signalColors.categorical."data-viz-08"}:\
+      *.mkv=${toAnsiRgb signalColors.categorical."data-viz-08"}"
 
             # Grep colors
-            export GREP_COLORS="mt=${toAnsiRgb accent.focus.Lc75}:\
-      fn=${toAnsiRgb accent.info.Lc75}:\
-      ln=${toAnsiRgb accent.success.Lc75}:\
+            export GREP_COLORS="mt=${toAnsiRgb accent.secondary.Lc75}:\
+      fn=${toAnsiRgb accent.secondary.Lc75}:\
+      ln=${toAnsiRgb accent.primary.Lc75}:\
       se=${toAnsiRgb colors.text-dim}"
 
             # Less colors (for man pages)
             export LESS_TERMCAP_mb=\\e[${toAnsiRgb accent.danger.Lc75}m     # begin blinking
-            export LESS_TERMCAP_md=\\e[${toAnsiRgb accent.focus.Lc75}m      # begin bold
+            export LESS_TERMCAP_md=\\e[${toAnsiRgb accent.secondary.Lc75}m      # begin bold
             export LESS_TERMCAP_me=\\e[0m                         # end mode
             export LESS_TERMCAP_se=\\e[0m                         # end standout-mode
             export LESS_TERMCAP_so=\\e[${toAnsiRgb accent.warning.Lc75}m    # begin standout-mode
             export LESS_TERMCAP_ue=\\e[0m                         # end underline
-            export LESS_TERMCAP_us=\\e[${toAnsiRgb accent.success.Lc75}m    # begin underline
+            export LESS_TERMCAP_us=\\e[${toAnsiRgb accent.primary.Lc75}m    # begin underline
     '';
 
     # Also set a colored PS1 if not already customized
     programs.bash.bashrcExtra = lib.mkIf (!config.programs.bash ? promptInit) ''
       # Signal-themed PS1 prompt
       if [ -z "$PROMPT_COMMAND" ]; then
-        PS1="${toPs1Rgb accent.success.Lc75}\\u${toPs1Rgb colors.text-secondary}@${toPs1Rgb accent.info.Lc75}\\h ${toPs1Rgb accent.focus.Lc75}\\w ${toPs1Rgb colors.text-primary}\\$ \\[\\e[0m\\]"
+        PS1="${toPs1Rgb accent.primary.Lc75}\\u${toPs1Rgb colors.text-secondary}@${toPs1Rgb accent.secondary.Lc75}\\h ${toPs1Rgb accent.secondary.Lc75}\\w ${toPs1Rgb colors.text-primary}\\$ \\[\\e[0m\\]"
       fi
     '';
   };

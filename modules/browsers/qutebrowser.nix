@@ -17,13 +17,13 @@ let
   cfg = config.theming.signal;
 
   colors = {
-    surface-base = signalColors.tonal."surface-Lc05";
-    surface-raised = signalColors.tonal."surface-Lc10";
+    surface-base = signalColors.tonal."surface-subtle";
+    surface-raised = signalColors.tonal."surface-hover";
     surface-hover = signalColors.tonal."surface-Lc15";
-    text-primary = signalColors.tonal."text-Lc75";
-    text-secondary = signalColors.tonal."text-Lc60";
-    text-dim = signalColors.tonal."text-Lc45";
-    divider = signalColors.tonal."divider-Lc15";
+    text-primary = signalColors.tonal."text-primary";
+    text-secondary = signalColors.tonal."text-secondary";
+    text-dim = signalColors.tonal."text-tertiary";
+    divider = signalColors.tonal."divider-primary";
   };
 
   inherit (signalColors) accent;
@@ -58,11 +58,11 @@ in
             fg = colors.text-primary.hex;
             bg = colors.surface-hover.hex;
             border = {
-              top = accent.focus.Lc75.hex;
-              bottom = accent.focus.Lc75.hex;
+              top = accent.secondary.Lc75.hex;
+              bottom = accent.secondary.Lc75.hex;
             };
           };
-          match.fg = accent.focus.Lc75.hex;
+          match.fg = accent.secondary.Lc75.hex;
           scrollbar = {
             fg = colors.divider.hex;
             bg = colors.surface-base.hex;
@@ -74,11 +74,11 @@ in
           bar.bg = colors.surface-raised.hex;
           start = {
             fg = colors.surface-base.hex;
-            bg = accent.info.Lc75.hex;
+            bg = accent.secondary.Lc75.hex;
           };
           stop = {
             fg = colors.surface-base.hex;
-            bg = accent.success.Lc75.hex;
+            bg = accent.primary.Lc75.hex;
           };
           error.fg = accent.danger.Lc75.hex;
         };
@@ -87,14 +87,14 @@ in
         hints = {
           fg = colors.surface-base.hex;
           bg = accent.warning.Lc75.hex;
-          match.fg = accent.focus.Lc75.hex;
+          match.fg = accent.secondary.Lc75.hex;
         };
 
         # Keyhints
         keyhint = {
           fg = colors.text-primary.hex;
           bg = colors.surface-raised.hex;
-          suffix.fg = accent.focus.Lc75.hex;
+          suffix.fg = accent.secondary.Lc75.hex;
         };
 
         # Messages
@@ -132,15 +132,15 @@ in
           };
           insert = {
             fg = colors.surface-base.hex;
-            bg = accent.success.Lc75.hex;
+            bg = accent.primary.Lc75.hex;
           };
           passthrough = {
             fg = colors.surface-base.hex;
-            bg = accent.info.Lc75.hex;
+            bg = accent.secondary.Lc75.hex;
           };
           private = {
             fg = colors.surface-base.hex;
-            bg = accent.special.Lc75.hex;
+            bg = accent.tertiary.Lc75.hex;
           };
           command = {
             fg = colors.text-primary.hex;
@@ -152,20 +152,20 @@ in
           };
           caret = {
             fg = colors.surface-base.hex;
-            bg = accent.special.Lc75.hex;
+            bg = accent.tertiary.Lc75.hex;
             selection = {
               fg = colors.surface-base.hex;
-              bg = accent.info.Lc75.hex;
+              bg = accent.secondary.Lc75.hex;
             };
           };
-          progress.bg = accent.focus.Lc75.hex;
+          progress.bg = accent.secondary.Lc75.hex;
           url = {
             fg = colors.text-primary.hex;
             error.fg = accent.danger.Lc75.hex;
-            hover.fg = accent.info.Lc75.hex;
+            hover.fg = accent.secondary.Lc75.hex;
             success = {
-              http.fg = accent.success.Lc75.hex;
-              https.fg = accent.success.Lc75.hex;
+              http.fg = accent.primary.Lc75.hex;
+              https.fg = accent.primary.Lc75.hex;
             };
             warn.fg = accent.warning.Lc75.hex;
           };
@@ -175,8 +175,8 @@ in
         tabs = {
           bar.bg = colors.surface-base.hex;
           indicator = {
-            start = accent.info.Lc75.hex;
-            stop = accent.success.Lc75.hex;
+            start = accent.secondary.Lc75.hex;
+            stop = accent.primary.Lc75.hex;
             error = accent.danger.Lc75.hex;
           };
           odd = {

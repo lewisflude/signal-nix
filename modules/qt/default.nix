@@ -21,14 +21,14 @@ let
   themeMode = signalLib.resolveThemeMode cfg.mode;
 
   colors = {
-    surface-base = signalColors.tonal."surface-Lc05";
-    surface-subtle = signalColors.tonal."divider-Lc15";
-    surface-emphasis = signalColors.tonal."surface-Lc10";
-    text-primary = signalColors.tonal."text-Lc75";
-    text-secondary = signalColors.tonal."text-Lc60";
-    text-tertiary = signalColors.tonal."text-Lc45";
-    divider-primary = signalColors.tonal."divider-Lc15";
-    divider-secondary = signalColors.tonal."divider-Lc30";
+    surface-base = signalColors.tonal."surface-base";
+    surface-subtle = signalColors.tonal."surface-subtle";
+    surface-emphasis = signalColors.tonal."surface-hover";
+    text-primary = signalColors.tonal."text-primary";
+    text-secondary = signalColors.tonal."text-secondary";
+    text-tertiary = signalColors.tonal."text-tertiary";
+    divider-primary = signalColors.tonal."divider-primary";
+    divider-secondary = signalColors.tonal."divider-strong";
   };
 
   inherit (signalColors) accent;
@@ -69,11 +69,11 @@ in
             BackgroundAlternate = toRgb colors.surface-subtle;
             ForegroundNormal = toRgb colors.text-primary;
             ForegroundInactive = toRgb colors.text-secondary;
-            ForegroundActive = toRgb accent.focus.Lc75;
-            ForegroundLink = toRgb accent.focus.Lc75;
-            ForegroundVisited = toRgb accent.special.Lc75;
+            ForegroundActive = toRgb accent.secondary.Lc75;
+            ForegroundLink = toRgb accent.secondary.Lc75;
+            ForegroundVisited = toRgb accent.tertiary.Lc75;
             DecorationHover = toRgb colors.surface-emphasis;
-            DecorationFocus = toRgb accent.focus.Lc75;
+            DecorationFocus = toRgb accent.secondary.Lc75;
           };
 
           # View colors (content areas like text editors, lists)
@@ -82,11 +82,11 @@ in
             BackgroundAlternate = toRgb colors.surface-subtle;
             ForegroundNormal = toRgb colors.text-primary;
             ForegroundInactive = toRgb colors.text-secondary;
-            ForegroundActive = toRgb accent.focus.Lc75;
-            ForegroundLink = toRgb accent.focus.Lc75;
-            ForegroundVisited = toRgb accent.special.Lc75;
+            ForegroundActive = toRgb accent.secondary.Lc75;
+            ForegroundLink = toRgb accent.secondary.Lc75;
+            ForegroundVisited = toRgb accent.tertiary.Lc75;
             DecorationHover = toRgb colors.surface-emphasis;
-            DecorationFocus = toRgb accent.focus.Lc75;
+            DecorationFocus = toRgb accent.secondary.Lc75;
           };
 
           # Button colors
@@ -95,20 +95,20 @@ in
             BackgroundAlternate = toRgb colors.surface-emphasis;
             ForegroundNormal = toRgb colors.text-primary;
             ForegroundInactive = toRgb colors.text-secondary;
-            ForegroundActive = toRgb accent.focus.Lc75;
+            ForegroundActive = toRgb accent.secondary.Lc75;
             DecorationHover = toRgb colors.surface-emphasis;
-            DecorationFocus = toRgb accent.focus.Lc75;
+            DecorationFocus = toRgb accent.secondary.Lc75;
           };
 
           # Selection colors
           "Colors:Selection" = {
-            BackgroundNormal = toRgb accent.focus.Lc75;
-            BackgroundAlternate = toRgb accent.focus.Lc75;
+            BackgroundNormal = toRgb accent.secondary.Lc75;
+            BackgroundAlternate = toRgb accent.secondary.Lc75;
             ForegroundNormal = toRgb colors.surface-base;
             ForegroundInactive = toRgb colors.text-tertiary;
             ForegroundActive = toRgb colors.surface-base;
-            DecorationHover = toRgb accent.focus.Lc75;
-            DecorationFocus = toRgb accent.focus.Lc75;
+            DecorationHover = toRgb accent.secondary.Lc75;
+            DecorationFocus = toRgb accent.secondary.Lc75;
           };
 
           # Tooltip colors
@@ -117,9 +117,9 @@ in
             BackgroundAlternate = toRgb colors.surface-subtle;
             ForegroundNormal = toRgb colors.text-primary;
             ForegroundInactive = toRgb colors.text-secondary;
-            ForegroundActive = toRgb accent.focus.Lc75;
+            ForegroundActive = toRgb accent.secondary.Lc75;
             DecorationHover = toRgb colors.surface-emphasis;
-            DecorationFocus = toRgb accent.focus.Lc75;
+            DecorationFocus = toRgb accent.secondary.Lc75;
           };
 
           # Complementary colors (sidebars, headers)
@@ -128,9 +128,9 @@ in
             BackgroundAlternate = toRgb colors.surface-emphasis;
             ForegroundNormal = toRgb colors.text-primary;
             ForegroundInactive = toRgb colors.text-secondary;
-            ForegroundActive = toRgb accent.focus.Lc75;
+            ForegroundActive = toRgb accent.secondary.Lc75;
             DecorationHover = toRgb colors.surface-emphasis;
-            DecorationFocus = toRgb accent.focus.Lc75;
+            DecorationFocus = toRgb accent.secondary.Lc75;
           };
 
           # Header colors (title bars, etc.)
@@ -139,9 +139,9 @@ in
             BackgroundAlternate = toRgb colors.surface-subtle;
             ForegroundNormal = toRgb colors.text-primary;
             ForegroundInactive = toRgb colors.text-secondary;
-            ForegroundActive = toRgb accent.focus.Lc75;
+            ForegroundActive = toRgb accent.secondary.Lc75;
             DecorationHover = toRgb colors.surface-emphasis;
-            DecorationFocus = toRgb accent.focus.Lc75;
+            DecorationFocus = toRgb accent.secondary.Lc75;
           };
 
           # Window Manager colors
@@ -150,7 +150,7 @@ in
             activeForeground = toRgb colors.text-primary;
             inactiveBackground = toRgb colors.surface-base;
             inactiveForeground = toRgb colors.text-secondary;
-            activeBlend = toRgb accent.focus.Lc75;
+            activeBlend = toRgb accent.secondary.Lc75;
             inactiveBlend = toRgb colors.divider-secondary;
           };
 

@@ -17,12 +17,12 @@ let
   cfg = config.theming.signal;
 
   colors = {
-    surface-base = signalColors.tonal."surface-Lc05";
-    surface-raised = signalColors.tonal."surface-Lc10";
-    text-primary = signalColors.tonal."text-Lc75";
-    text-secondary = signalColors.tonal."text-Lc60";
-    text-dim = signalColors.tonal."text-Lc45";
-    divider = signalColors.tonal."divider-Lc15";
+    surface-base = signalColors.tonal."surface-subtle";
+    surface-raised = signalColors.tonal."surface-hover";
+    text-primary = signalColors.tonal."text-primary";
+    text-secondary = signalColors.tonal."text-secondary";
+    text-dim = signalColors.tonal."text-tertiary";
+    divider = signalColors.tonal."divider-primary";
   };
 
   inherit (signalColors) accent;
@@ -47,19 +47,19 @@ in
         foreground-dim = colors.text-dim.hex;
 
         # Accent colors
-        primary = accent.focus.Lc75.hex;
-        secondary = accent.info.Lc75.hex;
+        primary = accent.secondary.Lc75.hex;
+        secondary = accent.secondary.Lc75.hex;
         alert = accent.danger.Lc75.hex;
         warning = accent.warning.Lc75.hex;
-        success = accent.success.Lc75.hex;
+        success = accent.primary.Lc75.hex;
 
         # UI elements
         border = colors.divider.hex;
 
         # Module-specific colors
-        cpu = accent.focus.Lc75.hex;
-        memory = accent.info.Lc75.hex;
-        network = accent.success.Lc75.hex;
+        cpu = accent.secondary.Lc75.hex;
+        memory = accent.secondary.Lc75.hex;
+        network = accent.primary.Lc75.hex;
         battery = accent.warning.Lc75.hex;
         temperature = accent.danger.Lc75.hex;
       };

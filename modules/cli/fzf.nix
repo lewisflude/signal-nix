@@ -18,10 +18,10 @@ let
   cfg = config.theming.signal;
 
   colors = {
-    surface-base = signalColors.tonal."surface-Lc05";
-    surface-subtle = signalColors.tonal."divider-Lc15";
-    text-primary = signalColors.tonal."text-Lc75";
-    text-secondary = signalColors.tonal."text-Lc60";
+    surface-base = signalColors.tonal."surface-subtle";
+    surface-subtle = signalColors.tonal."divider-primary";
+    text-primary = signalColors.tonal."text-primary";
+    text-secondary = signalColors.tonal."text-secondary";
   };
 
   inherit (signalColors) accent;
@@ -30,15 +30,15 @@ let
   colorMap = {
     fg = colors.text-primary.hex;
     bg = colors.surface-base.hex;
-    hl = accent.focus.Lc75.hex;
+    hl = accent.secondary.Lc75.hex;
     "fg+" = colors.text-primary.hex;
     "bg+" = colors.surface-subtle.hex;
-    "hl+" = accent.focus.Lc75.hex;
-    info = accent.info.Lc75.hex;
-    prompt = accent.focus.Lc75.hex;
-    pointer = accent.focus.Lc75.hex;
-    marker = accent.success.Lc75.hex;
-    spinner = accent.info.Lc75.hex;
+    "hl+" = accent.secondary.Lc75.hex;
+    info = accent.secondary.Lc75.hex;
+    prompt = accent.secondary.Lc75.hex;
+    pointer = accent.secondary.Lc75.hex;
+    marker = accent.primary.Lc75.hex;
+    spinner = accent.secondary.Lc75.hex;
     header = colors.text-secondary.hex;
   };
 

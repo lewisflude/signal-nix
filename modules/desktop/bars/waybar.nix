@@ -17,13 +17,13 @@ let
   cfg = config.theming.signal;
 
   colors = {
-    surface-base = signalColors.tonal."surface-Lc05";
-    surface-raised = signalColors.tonal."surface-Lc10";
+    surface-base = signalColors.tonal."surface-subtle";
+    surface-raised = signalColors.tonal."surface-hover";
     surface-hover = signalColors.tonal."surface-Lc15";
-    text-primary = signalColors.tonal."text-Lc75";
-    text-secondary = signalColors.tonal."text-Lc60";
-    text-tertiary = signalColors.tonal."text-Lc45";
-    divider-primary = signalColors.tonal."divider-Lc15";
+    text-primary = signalColors.tonal."text-primary";
+    text-secondary = signalColors.tonal."text-secondary";
+    text-tertiary = signalColors.tonal."text-tertiary";
+    divider-primary = signalColors.tonal."divider-primary";
   };
 
   inherit (signalColors) accent;
@@ -63,7 +63,7 @@ in
       #workspaces button.active {
         color: ${colors.text-primary.hex};
         background-color: ${colors.surface-raised.hex};
-        border-bottom: 2px solid ${accent.focus.Lc75.hex};
+        border-bottom: 2px solid ${accent.secondary.Lc75.hex};
       }
 
       #workspaces button.urgent {
@@ -106,7 +106,7 @@ in
 
       #battery.charging,
       #battery.plugged {
-        color: ${accent.success.Lc75.hex};
+        color: ${accent.primary.Lc75.hex};
       }
 
       #battery.critical:not(.charging) {
@@ -151,7 +151,7 @@ in
       }
 
       #idle_inhibitor.activated {
-        color: ${accent.focus.Lc75.hex};
+        color: ${accent.secondary.Lc75.hex};
       }
 
       #tray > .passive {

@@ -17,12 +17,12 @@ let
   cfg = config.theming.signal;
 
   colors = {
-    surface-base = signalColors.tonal."surface-Lc05";
-    surface-raised = signalColors.tonal."surface-Lc10";
-    text-primary = signalColors.tonal."text-Lc75";
-    text-secondary = signalColors.tonal."text-Lc60";
-    text-dim = signalColors.tonal."text-Lc45";
-    divider = signalColors.tonal."divider-Lc15";
+    surface-base = signalColors.tonal."surface-subtle";
+    surface-raised = signalColors.tonal."surface-hover";
+    text-primary = signalColors.tonal."text-primary";
+    text-secondary = signalColors.tonal."text-secondary";
+    text-dim = signalColors.tonal."text-tertiary";
+    divider = signalColors.tonal."divider-primary";
   };
 
   inherit (signalColors) accent;
@@ -50,7 +50,7 @@ let
 
     -- Border colors (not border_width)
     theme.border_normal = "${colors.divider.hex}"
-    theme.border_focus  = "${accent.focus.Lc75.hex}"
+    theme.border_focus  = "${accent.secondary.Lc75.hex}"
     theme.border_marked = "${accent.warning.Lc75.hex}"
 
     -- Titlebar colors
@@ -60,7 +60,7 @@ let
     theme.titlebar_fg_focus  = theme.fg_focus
 
     -- Taglist colors
-    theme.taglist_bg_focus    = "${accent.focus.Lc75.hex}"
+    theme.taglist_bg_focus    = "${accent.secondary.Lc75.hex}"
     theme.taglist_fg_focus    = "${colors.surface-base.hex}"
     theme.taglist_bg_occupied = theme.bg_focus
     theme.taglist_fg_occupied = theme.fg_normal
@@ -87,15 +87,15 @@ let
     -- Notification colors (not sizes)
     theme.notification_bg = theme.bg_normal
     theme.notification_fg = theme.fg_normal
-    theme.notification_border_color = "${accent.info.Lc75.hex}"
+    theme.notification_border_color = "${accent.secondary.Lc75.hex}"
     theme.notification_opacity = 0.95
 
     -- Hotkeys popup colors (not fonts)
     theme.hotkeys_bg = theme.bg_normal
     theme.hotkeys_fg = theme.fg_normal
     theme.hotkeys_border_color = theme.border_focus
-    theme.hotkeys_modifiers_fg = "${accent.focus.Lc75.hex}"
-    theme.hotkeys_label_fg = "${accent.info.Lc75.hex}"
+    theme.hotkeys_modifiers_fg = "${accent.secondary.Lc75.hex}"
+    theme.hotkeys_label_fg = "${accent.secondary.Lc75.hex}"
 
     -- Tooltip colors (not sizes)
     theme.tooltip_bg = theme.bg_focus

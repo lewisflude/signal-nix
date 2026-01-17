@@ -28,43 +28,43 @@ let
     if signalLib.resolveThemeMode cfg.mode == "dark" then
       {
         # Dark mode colors
-        # Use Lc45 instead of Lc25 (darker tone, Lc25 doesn't exist in palette)
-        minus-style = "syntax ${signalColors.tonal."surface-Lc10".hex}";
-        minus-emph-style = "syntax ${signalColors.accent.danger.Lc45.hex}";
-        minus-non-emph-style = "syntax ${signalColors.tonal."surface-Lc10".hex}";
-        plus-style = "syntax ${signalColors.tonal."surface-Lc10".hex}";
-        plus-emph-style = "syntax ${signalColors.accent.success.Lc45.hex}";
-        plus-non-emph-style = "syntax ${signalColors.tonal."surface-Lc10".hex}";
+        # Use Lc60 for emphasis backgrounds
+        minus-style = "syntax ${signalColors.tonal."surface-hover".hex}";
+        minus-emph-style = "syntax ${signalColors.accent.danger.Lc60.hex}";
+        minus-non-emph-style = "syntax ${signalColors.tonal."surface-hover".hex}";
+        plus-style = "syntax ${signalColors.tonal."surface-hover".hex}";
+        plus-emph-style = "syntax ${signalColors.accent.primary.Lc60.hex}";
+        plus-non-emph-style = "syntax ${signalColors.tonal."surface-hover".hex}";
 
         # Line numbers
         line-numbers-minus-style = signalColors.accent.danger.Lc75.hex;
-        line-numbers-plus-style = signalColors.accent.success.Lc75.hex;
-        line-numbers-zero-style = signalColors.tonal."text-Lc45".hex;
-        line-numbers-left-style = signalColors.tonal."text-Lc45".hex;
-        line-numbers-right-style = signalColors.tonal."text-Lc45".hex;
+        line-numbers-plus-style = signalColors.accent.primary.Lc75.hex;
+        line-numbers-zero-style = signalColors.tonal."text-tertiary".hex;
+        line-numbers-left-style = signalColors.tonal."text-tertiary".hex;
+        line-numbers-right-style = signalColors.tonal."text-tertiary".hex;
 
         # File decoration
-        file-style = signalColors.accent.focus.Lc75.hex;
-        file-decoration-style = "${signalColors.accent.focus.Lc75.hex} ul";
+        file-style = signalColors.accent.secondary.Lc75.hex;
+        file-decoration-style = "${signalColors.accent.secondary.Lc75.hex} ul";
 
         # Commit decoration
-        commit-decoration-style = "${signalColors.accent.special.Lc75.hex} box";
-        commit-style = signalColors.accent.special.Lc75.hex;
+        commit-decoration-style = "${signalColors.accent.tertiary.Lc75.hex} box";
+        commit-style = signalColors.accent.tertiary.Lc75.hex;
 
         # Hunk header
-        hunk-header-style = "syntax ${signalColors.tonal."divider-Lc15".hex}";
-        hunk-header-decoration-style = "${signalColors.accent.info.Lc75.hex} box";
-        hunk-header-file-style = signalColors.accent.info.Lc75.hex;
-        hunk-header-line-number-style = signalColors.tonal."text-Lc60".hex;
+        hunk-header-style = "syntax ${signalColors.tonal."divider-primary".hex}";
+        hunk-header-decoration-style = "${signalColors.accent.secondary.Lc75.hex} box";
+        hunk-header-file-style = signalColors.accent.secondary.Lc75.hex;
+        hunk-header-line-number-style = signalColors.tonal."text-secondary".hex;
 
         # Blame
-        blame-palette = "${signalColors.categorical.GA01.hex} ${signalColors.categorical.GA02.hex} ${signalColors.categorical.GA03.hex} ${signalColors.categorical.GA04.hex} ${signalColors.categorical.GA05.hex} ${signalColors.categorical.GA06.hex}";
+        blame-palette = "${signalColors.categorical."data-viz-01".hex} ${signalColors.categorical."data-viz-02".hex} ${signalColors.categorical."data-viz-03".hex} ${signalColors.categorical."data-viz-04".hex} ${signalColors.categorical."data-viz-05".hex} ${signalColors.categorical."data-viz-06".hex}";
 
         # Merge conflict
         merge-conflict-begin-symbol = "▼";
         merge-conflict-end-symbol = "▲";
         merge-conflict-ours-diff-header-style = "${signalColors.accent.warning.Lc75.hex} bold";
-        merge-conflict-theirs-diff-header-style = "${signalColors.accent.info.Lc75.hex} bold";
+        merge-conflict-theirs-diff-header-style = "${signalColors.accent.secondary.Lc75.hex} bold";
       }
     else
       {

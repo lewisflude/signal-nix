@@ -26,14 +26,14 @@ let
 
   # Map signal colors to theme structure
   colors = {
-    surface-base = signalColors.tonal."surface-Lc05";
-    surface-emphasis = signalColors.tonal."surface-Lc10";
-    surface-subtle = signalColors.tonal."divider-Lc15";
-    text-primary = signalColors.tonal."text-Lc75";
-    text-secondary = signalColors.tonal."text-Lc60";
-    text-tertiary = signalColors.tonal."text-Lc45";
-    divider-primary = signalColors.tonal."divider-Lc15";
-    divider-secondary = signalColors.tonal."divider-Lc30";
+    surface-base = signalColors.tonal."surface-subtle";
+    surface-emphasis = signalColors.tonal."surface-hover";
+    surface-subtle = signalColors.tonal."divider-primary";
+    text-primary = signalColors.tonal."text-primary";
+    text-secondary = signalColors.tonal."text-secondary";
+    text-tertiary = signalColors.tonal."text-tertiary";
+    divider-primary = signalColors.tonal."divider-primary";
+    divider-secondary = signalColors.tonal."divider-strong";
   };
 
   inherit (signalColors) accent categorical;
@@ -332,16 +332,16 @@ let
       divider-secondary = colors.divider-secondary.hex;
 
       # Accent colors (semantic)
-      function = accent.focus.Lc75.hex;
+      function = accent.secondary.Lc75.hex;
       danger = accent.danger.Lc75.hex;
-      info = accent.info.Lc75.hex;
-      keyword = accent.special.Lc75.hex;
+      info = accent.secondary.Lc75.hex;
+      keyword = accent.tertiary.Lc75.hex;
 
       # Categorical colors (syntax)
-      string = categorical.GA02.hex;
-      type = categorical.GA06.hex;
-      escape = categorical.GA08.hex;
-      constant = categorical.GA06.hex;
+      string = categorical."data-viz-02".hex;
+      type = categorical."data-viz-06".hex;
+      escape = categorical."data-viz-08".hex;
+      constant = categorical."data-viz-06".hex;
       variable-param = accent.danger.Lc60.hex;
     };
   };

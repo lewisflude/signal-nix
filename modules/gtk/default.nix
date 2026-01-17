@@ -23,72 +23,72 @@ let
   # Light mode uses lighter surfaces, dark mode uses darker surfaces
   colors = if themeMode == "light" then {
     # Light mode colors - using available Signal palette colors
-    window-bg = signalColors.tonal."surface-Lc05";
-    window-fg = signalColors.tonal."text-Lc75";
-    view-bg = signalColors.tonal."surface-Lc05";
-    view-fg = signalColors.tonal."text-Lc75";
-    headerbar-bg = signalColors.tonal."surface-Lc05";
-    headerbar-fg = signalColors.tonal."text-Lc75";
-    headerbar-border = signalColors.tonal."text-Lc75";
-    headerbar-backdrop = signalColors.tonal."surface-Lc05";
-    headerbar-shade = signalColors.tonal."divider-Lc15";
-    headerbar-darker-shade = signalColors.tonal."divider-Lc15";
-    sidebar-bg = signalColors.tonal."surface-Lc10";
-    sidebar-fg = signalColors.tonal."text-Lc75";
-    sidebar-backdrop = signalColors.tonal."surface-Lc05";
-    sidebar-shade = signalColors.tonal."divider-Lc15";
-    sidebar-border = signalColors.tonal."divider-Lc15";
-    secondary-sidebar-bg = signalColors.tonal."surface-Lc10";
-    secondary-sidebar-fg = signalColors.tonal."text-Lc75";
-    secondary-sidebar-backdrop = signalColors.tonal."surface-Lc05";
-    secondary-sidebar-shade = signalColors.tonal."divider-Lc15";
-    secondary-sidebar-border = signalColors.tonal."divider-Lc15";
-    card-bg = signalColors.tonal."surface-Lc05";
-    card-fg = signalColors.tonal."text-Lc75";
-    card-shade = signalColors.tonal."divider-Lc15";
-    dialog-bg = signalColors.tonal."surface-Lc05";
-    dialog-fg = signalColors.tonal."text-Lc75";
-    popover-bg = signalColors.tonal."surface-Lc05";
-    popover-fg = signalColors.tonal."text-Lc75";
-    popover-shade = signalColors.tonal."divider-Lc15";
-    thumbnail-bg = signalColors.tonal."surface-Lc05";
-    thumbnail-fg = signalColors.tonal."text-Lc75";
-    shade = signalColors.tonal."divider-Lc15";
-    scrollbar-outline = signalColors.tonal."surface-Lc05";
+    window-bg = signalColors.tonal."surface-subtle";
+    window-fg = signalColors.tonal."text-primary";
+    view-bg = signalColors.tonal."surface-base";
+    view-fg = signalColors.tonal."text-primary";
+    headerbar-bg = signalColors.tonal."surface-subtle";
+    headerbar-fg = signalColors.tonal."text-primary";
+    headerbar-border = signalColors.tonal."text-primary";
+    headerbar-backdrop = signalColors.tonal."surface-base";
+    headerbar-shade = signalColors.tonal."divider-primary";
+    headerbar-darker-shade = signalColors.tonal."divider-strong";
+    sidebar-bg = signalColors.tonal."surface-hover";
+    sidebar-fg = signalColors.tonal."text-primary";
+    sidebar-backdrop = signalColors.tonal."surface-subtle";
+    sidebar-shade = signalColors.tonal."divider-primary";
+    sidebar-border = signalColors.tonal."divider-primary";
+    secondary-sidebar-bg = signalColors.tonal."surface-hover";
+    secondary-sidebar-fg = signalColors.tonal."text-primary";
+    secondary-sidebar-backdrop = signalColors.tonal."surface-subtle";
+    secondary-sidebar-shade = signalColors.tonal."divider-primary";
+    secondary-sidebar-border = signalColors.tonal."divider-primary";
+    card-bg = signalColors.tonal."surface-base";
+    card-fg = signalColors.tonal."text-primary";
+    card-shade = signalColors.tonal."divider-primary";
+    dialog-bg = signalColors.tonal."surface-subtle";
+    dialog-fg = signalColors.tonal."text-primary";
+    popover-bg = signalColors.tonal."surface-base";
+    popover-fg = signalColors.tonal."text-primary";
+    popover-shade = signalColors.tonal."divider-primary";
+    thumbnail-bg = signalColors.tonal."surface-base";
+    thumbnail-fg = signalColors.tonal."text-primary";
+    shade = signalColors.tonal."divider-primary";
+    scrollbar-outline = signalColors.tonal."surface-base";
   } else {
     # Dark mode colors - using available Signal palette colors
-    window-bg = signalColors.tonal."surface-Lc10";
-    window-fg = signalColors.tonal."text-Lc75";
-    view-bg = signalColors.tonal."surface-Lc10";
-    view-fg = signalColors.tonal."text-Lc75";
-    headerbar-bg = signalColors.tonal."surface-Lc10";
-    headerbar-fg = signalColors.tonal."text-Lc75";
-    headerbar-border = signalColors.tonal."text-Lc75";
-    headerbar-backdrop = signalColors.tonal."surface-Lc10";
-    headerbar-shade = signalColors.tonal."divider-Lc30";
-    headerbar-darker-shade = signalColors.tonal."divider-Lc30";
-    sidebar-bg = signalColors.tonal."surface-Lc10";
-    sidebar-fg = signalColors.tonal."text-Lc75";
-    sidebar-backdrop = signalColors.tonal."surface-Lc05";
-    sidebar-shade = signalColors.tonal."divider-Lc15";
-    sidebar-border = signalColors.tonal."divider-Lc30";
-    secondary-sidebar-bg = signalColors.tonal."surface-Lc05";
-    secondary-sidebar-fg = signalColors.tonal."text-Lc75";
-    secondary-sidebar-backdrop = signalColors.tonal."surface-Lc05";
-    secondary-sidebar-shade = signalColors.tonal."divider-Lc15";
-    secondary-sidebar-border = signalColors.tonal."divider-Lc30";
-    card-bg = signalColors.tonal."surface-Lc10";
-    card-fg = signalColors.tonal."text-Lc75";
-    card-shade = signalColors.tonal."divider-Lc30";
-    dialog-bg = signalColors.tonal."surface-Lc10";
-    dialog-fg = signalColors.tonal."text-Lc75";
-    popover-bg = signalColors.tonal."surface-Lc10";
-    popover-fg = signalColors.tonal."text-Lc75";
-    popover-shade = signalColors.tonal."divider-Lc15";
-    thumbnail-bg = signalColors.tonal."surface-Lc10";
-    thumbnail-fg = signalColors.tonal."text-Lc75";
-    shade = signalColors.tonal."divider-Lc15";
-    scrollbar-outline = signalColors.tonal."surface-Lc05";
+    window-bg = signalColors.tonal."surface-hover";
+    window-fg = signalColors.tonal."text-primary";
+    view-bg = signalColors.tonal."surface-base";
+    view-fg = signalColors.tonal."text-primary";
+    headerbar-bg = signalColors.tonal."surface-hover";
+    headerbar-fg = signalColors.tonal."text-primary";
+    headerbar-border = signalColors.tonal."text-primary";
+    headerbar-backdrop = signalColors.tonal."surface-base";
+    headerbar-shade = signalColors.tonal."divider-strong";
+    headerbar-darker-shade = signalColors.tonal."divider-strong";
+    sidebar-bg = signalColors.tonal."surface-hover";
+    sidebar-fg = signalColors.tonal."text-primary";
+    sidebar-backdrop = signalColors.tonal."surface-subtle";
+    sidebar-shade = signalColors.tonal."divider-primary";
+    sidebar-border = signalColors.tonal."divider-strong";
+    secondary-sidebar-bg = signalColors.tonal."surface-subtle";
+    secondary-sidebar-fg = signalColors.tonal."text-primary";
+    secondary-sidebar-backdrop = signalColors.tonal."surface-subtle";
+    secondary-sidebar-shade = signalColors.tonal."divider-primary";
+    secondary-sidebar-border = signalColors.tonal."divider-strong";
+    card-bg = signalColors.tonal."surface-hover";
+    card-fg = signalColors.tonal."text-primary";
+    card-shade = signalColors.tonal."divider-strong";
+    dialog-bg = signalColors.tonal."surface-hover";
+    dialog-fg = signalColors.tonal."text-primary";
+    popover-bg = signalColors.tonal."surface-base";
+    popover-fg = signalColors.tonal."text-primary";
+    popover-shade = signalColors.tonal."divider-primary";
+    thumbnail-bg = signalColors.tonal."surface-base";
+    thumbnail-fg = signalColors.tonal."text-primary";
+    shade = signalColors.tonal."divider-primary";
+    scrollbar-outline = signalColors.tonal."surface-subtle";
   };
 
   inherit (signalColors) accent;
@@ -105,7 +105,7 @@ let
     @define-color theme_fg_color ${colors.window-fg.hex};
     @define-color theme_base_color ${colors.view-bg.hex};
     @define-color theme_text_color ${colors.view-fg.hex};
-    @define-color theme_selected_bg_color ${accent.focus.Lc60.hex};
+    @define-color theme_selected_bg_color ${accent.secondary.Lc60.hex};
     @define-color theme_selected_fg_color ${colors.view-bg.hex};
     
     @define-color insensitive_bg_color ${colors.window-bg.hex};
@@ -127,27 +127,27 @@ let
     /* Destructive action buttons */
     @define-color destructive_bg_color ${accent.danger.Lc60.hex};
     @define-color destructive_fg_color ${colors.view-bg.hex};
-    @define-color destructive_color ${accent.danger.Lc50.hex};
+    @define-color destructive_color ${accent.danger.Lc75.hex};
 
     /* Success states (levelbars, entries, labels, infobars) */
-    @define-color success_bg_color ${accent.success.Lc60.hex};
+    @define-color success_bg_color ${accent.primary.Lc60.hex};
     @define-color success_fg_color ${colors.view-bg.hex};
-    @define-color success_color ${accent.success.Lc50.hex};
+    @define-color success_color ${accent.primary.Lc75.hex};
 
     /* Warning states */
     @define-color warning_bg_color ${accent.warning.Lc60.hex};
-    @define-color warning_fg_color ${if themeMode == "light" then signalColors.tonal."text-Lc75" else colors.view-bg}.hex;
-    @define-color warning_color ${accent.warning.Lc50.hex};
+    @define-color warning_fg_color ${if themeMode == "light" then signalColors.tonal."text-primary" else colors.view-bg}.hex;
+    @define-color warning_color ${accent.warning.Lc75.hex};
 
     /* Error states */
     @define-color error_bg_color ${accent.danger.Lc60.hex};
     @define-color error_fg_color ${colors.view-bg.hex};
-    @define-color error_color ${accent.danger.Lc50.hex};
+    @define-color error_color ${accent.danger.Lc75.hex};
 
     /* Accent colors */
-    @define-color accent_bg_color ${accent.focus.Lc60.hex};
+    @define-color accent_bg_color ${accent.secondary.Lc60.hex};
     @define-color accent_fg_color ${colors.view-bg.hex};
-    @define-color accent_color ${accent.focus.Lc50.hex};
+    @define-color accent_color ${accent.secondary.Lc75.hex};
 
     /* Window colors */
     @define-color window_bg_color ${colors.window-bg.hex};

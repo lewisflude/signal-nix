@@ -17,10 +17,10 @@ let
   cfg = config.theming.signal;
 
   colors = {
-    surface-base = signalColors.tonal."surface-Lc05";
-    text-primary = signalColors.tonal."text-Lc75";
-    text-secondary = signalColors.tonal."text-Lc60";
-    divider-primary = signalColors.tonal."divider-Lc15";
+    surface-base = signalColors.tonal."surface-subtle";
+    text-primary = signalColors.tonal."text-primary";
+    text-secondary = signalColors.tonal."text-secondary";
+    divider-primary = signalColors.tonal."divider-primary";
   };
 
   inherit (signalColors) accent;
@@ -30,22 +30,22 @@ let
     # Normal colors
     black = signalColors.tonal."base-L015";
     red = accent.danger.Lc75;
-    green = accent.success.Lc75;
+    green = accent.primary.Lc75;
     yellow = accent.warning.Lc75;
-    blue = accent.focus.Lc75;
-    magenta = accent.special.Lc75;
-    cyan = accent.info.Lc75;
-    white = signalColors.tonal."text-Lc60";
+    blue = accent.secondary.Lc75;
+    magenta = accent.tertiary.Lc75;
+    cyan = accent.secondary.Lc75;
+    white = signalColors.tonal."text-secondary";
 
     # Bright colors
-    bright-black = signalColors.tonal."text-Lc45";
+    bright-black = signalColors.tonal."text-tertiary";
     bright-red = accent.danger.Lc75;
-    bright-green = accent.success.Lc75;
+    bright-green = accent.primary.Lc75;
     bright-yellow = accent.warning.Lc75;
-    bright-blue = accent.focus.Lc75;
-    bright-magenta = accent.special.Lc75;
-    bright-cyan = accent.info.Lc75;
-    bright-white = signalColors.tonal."text-Lc75";
+    bright-blue = accent.secondary.Lc75;
+    bright-magenta = accent.tertiary.Lc75;
+    bright-cyan = accent.secondary.Lc75;
+    bright-white = signalColors.tonal."text-primary";
   };
 
   # Check if kitty should be themed - using centralized helper
@@ -63,7 +63,7 @@ in
         background = colors.surface-base.hex;
 
         # Cursor colors
-        cursor = accent.focus.Lc75.hex;
+        cursor = accent.secondary.Lc75.hex;
         cursor_text_color = colors.surface-base.hex;
 
         # Selection colors
@@ -71,7 +71,7 @@ in
         selection_background = colors.divider-primary.hex;
 
         # URL underline color
-        url_color = accent.focus.Lc75.hex;
+        url_color = accent.secondary.Lc75.hex;
 
         # Tab bar colors
         active_tab_foreground = colors.text-primary.hex;
@@ -81,9 +81,9 @@ in
 
         # Marks
         mark1_foreground = colors.surface-base.hex;
-        mark1_background = accent.info.Lc75.hex;
+        mark1_background = accent.secondary.Lc75.hex;
         mark2_foreground = colors.surface-base.hex;
-        mark2_background = accent.special.Lc75.hex;
+        mark2_background = accent.tertiary.Lc75.hex;
         mark3_foreground = colors.surface-base.hex;
         mark3_background = accent.warning.Lc75.hex;
 

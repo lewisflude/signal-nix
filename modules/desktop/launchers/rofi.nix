@@ -17,12 +17,12 @@ let
   cfg = config.theming.signal;
 
   colors = {
-    surface-base = signalColors.tonal."surface-Lc05";
-    surface-raised = signalColors.tonal."surface-Lc10";
+    surface-base = signalColors.tonal."surface-subtle";
+    surface-raised = signalColors.tonal."surface-hover";
     surface-hover = signalColors.tonal."surface-Lc15";
-    text-primary = signalColors.tonal."text-Lc75";
-    text-secondary = signalColors.tonal."text-Lc60";
-    divider-primary = signalColors.tonal."divider-Lc15";
+    text-primary = signalColors.tonal."text-primary";
+    text-secondary = signalColors.tonal."text-secondary";
+    divider-primary = signalColors.tonal."divider-primary";
   };
 
   inherit (signalColors) accent;
@@ -42,8 +42,8 @@ in
         background-alt = lib.mkDefault colors.surface-raised.hex;
         foreground = lib.mkDefault colors.text-primary.hex;
         foreground-alt = lib.mkDefault colors.text-secondary.hex;
-        selected = lib.mkDefault accent.focus.Lc75.hex;
-        active = lib.mkDefault accent.success.Lc75.hex;
+        selected = lib.mkDefault accent.secondary.Lc75.hex;
+        active = lib.mkDefault accent.primary.Lc75.hex;
         urgent = lib.mkDefault accent.danger.Lc75.hex;
         border-color = lib.mkDefault colors.divider-primary.hex;
       };

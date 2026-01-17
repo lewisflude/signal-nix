@@ -17,11 +17,11 @@ let
   cfg = config.theming.signal;
 
   colors = {
-    surface-base = signalColors.tonal."surface-Lc05";
-    text-primary = signalColors.tonal."text-Lc75";
-    text-secondary = signalColors.tonal."text-Lc60";
-    text-dim = signalColors.tonal."text-Lc45";
-    divider = signalColors.tonal."divider-Lc15";
+    surface-base = signalColors.tonal."surface-subtle";
+    text-primary = signalColors.tonal."text-primary";
+    text-secondary = signalColors.tonal."text-secondary";
+    text-dim = signalColors.tonal."text-tertiary";
+    divider = signalColors.tonal."divider-primary";
   };
 
   inherit (signalColors) accent;
@@ -36,7 +36,7 @@ let
 
     # General UI
     color default        ${colors.text-primary.hex} ${colors.surface-base.hex}
-    color cursor         ${colors.surface-base.hex} ${accent.focus.Lc75.hex} bold
+    color cursor         ${colors.surface-base.hex} ${accent.secondary.Lc75.hex} bold
     color title-focus    ${colors.text-primary.hex} ${colors.surface-base.hex} bold
     color title-blur     ${colors.text-secondary.hex} ${colors.surface-base.hex}
 
@@ -44,22 +44,22 @@ let
     color line-number    ${colors.text-dim.hex} ${colors.surface-base.hex}
 
     # Diff colors
-    color diff-header    ${accent.info.Lc75.hex} ${colors.surface-base.hex} bold
-    color diff-index     ${accent.info.Lc75.hex} ${colors.surface-base.hex}
-    color diff-chunk     ${accent.focus.Lc75.hex} ${colors.surface-base.hex} bold
-    color diff-add       ${accent.success.Lc75.hex} ${colors.surface-base.hex}
+    color diff-header    ${accent.secondary.Lc75.hex} ${colors.surface-base.hex} bold
+    color diff-index     ${accent.secondary.Lc75.hex} ${colors.surface-base.hex}
+    color diff-chunk     ${accent.secondary.Lc75.hex} ${colors.surface-base.hex} bold
+    color diff-add       ${accent.primary.Lc75.hex} ${colors.surface-base.hex}
     color diff-del       ${accent.danger.Lc75.hex} ${colors.surface-base.hex}
     color diff-oldmode   ${accent.warning.Lc75.hex} ${colors.surface-base.hex}
     color diff-newmode   ${accent.warning.Lc75.hex} ${colors.surface-base.hex}
-    color diff-copy-from ${accent.info.Lc75.hex} ${colors.surface-base.hex}
-    color diff-copy-to   ${accent.info.Lc75.hex} ${colors.surface-base.hex}
-    color diff-rename-from ${accent.info.Lc75.hex} ${colors.surface-base.hex}
-    color diff-rename-to ${accent.info.Lc75.hex} ${colors.surface-base.hex}
-    color diff-similarity ${accent.info.Lc75.hex} ${colors.surface-base.hex}
+    color diff-copy-from ${accent.secondary.Lc75.hex} ${colors.surface-base.hex}
+    color diff-copy-to   ${accent.secondary.Lc75.hex} ${colors.surface-base.hex}
+    color diff-rename-from ${accent.secondary.Lc75.hex} ${colors.surface-base.hex}
+    color diff-rename-to ${accent.secondary.Lc75.hex} ${colors.surface-base.hex}
+    color diff-similarity ${accent.secondary.Lc75.hex} ${colors.surface-base.hex}
 
     # Status
     color status         ${colors.text-primary.hex} ${colors.surface-base.hex}
-    color stat-staged    ${accent.success.Lc75.hex} ${colors.surface-base.hex}
+    color stat-staged    ${accent.primary.Lc75.hex} ${colors.surface-base.hex}
     color stat-unstaged  ${accent.warning.Lc75.hex} ${colors.surface-base.hex}
     color stat-untracked ${accent.danger.Lc75.hex} ${colors.surface-base.hex}
 
@@ -67,16 +67,16 @@ let
     color main-commit    ${colors.text-primary.hex} ${colors.surface-base.hex}
     color main-tag       ${accent.warning.Lc75.hex} ${colors.surface-base.hex} bold
     color main-local-tag ${accent.warning.Lc75.hex} ${colors.surface-base.hex}
-    color main-remote    ${accent.info.Lc75.hex} ${colors.surface-base.hex}
-    color main-tracked   ${accent.success.Lc75.hex} ${colors.surface-base.hex}
-    color main-ref       ${accent.focus.Lc75.hex} ${colors.surface-base.hex}
-    color main-head      ${accent.focus.Lc75.hex} ${colors.surface-base.hex} bold
+    color main-remote    ${accent.secondary.Lc75.hex} ${colors.surface-base.hex}
+    color main-tracked   ${accent.primary.Lc75.hex} ${colors.surface-base.hex}
+    color main-ref       ${accent.secondary.Lc75.hex} ${colors.surface-base.hex}
+    color main-head      ${accent.secondary.Lc75.hex} ${colors.surface-base.hex} bold
 
     # Tree view
-    color tree.directory ${accent.focus.Lc75.hex} ${colors.surface-base.hex}
+    color tree.directory ${accent.secondary.Lc75.hex} ${colors.surface-base.hex}
 
     # Author colors
-    color author         ${accent.special.Lc75.hex} ${colors.surface-base.hex}
+    color author         ${accent.tertiary.Lc75.hex} ${colors.surface-base.hex}
 
     # Commit message
     color commit         ${colors.text-primary.hex} ${colors.surface-base.hex}
@@ -85,7 +85,7 @@ let
     color date           ${colors.text-secondary.hex} ${colors.surface-base.hex}
 
     # Graph
-    color graph-commit   ${accent.focus.Lc75.hex} ${colors.surface-base.hex}
+    color graph-commit   ${accent.secondary.Lc75.hex} ${colors.surface-base.hex}
   '';
 
   # Check if tig should be themed

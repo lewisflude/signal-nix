@@ -48,8 +48,8 @@ let
     @define-color surface_emphasis ${tokens.colors.surface.emphasis};
 
     /* Accent Colors */
-    @define-color accent_focus ${tokens.colors.accent.focus};
-    @define-color accent_success ${tokens.colors.accent.success};
+    @define-color accent_focus ${tokens.colors.accent.secondary};
+    @define-color accent_success ${tokens.colors.accent.primary};
     @define-color accent_warning ${tokens.colors.accent.warning};
     @define-color accent_danger ${tokens.colors.accent.danger};
 
@@ -71,7 +71,7 @@ let
     @define-color theme_base_color ${tokens.colors.surface.base};
 
     /* Base background color of selections */
-    @define-color theme_selected_bg_color ${tokens.colors.accent.focus};
+    @define-color theme_selected_bg_color ${tokens.colors.accent.secondary};
 
     /* Text/foreground color of selections */
     @define-color theme_selected_fg_color ${tokens.colors.surface.base};
@@ -98,7 +98,7 @@ let
     @define-color theme_unfocused_base_color ${tokens.colors.surface.base};
 
     /* Base background color of selections on backdrop windows */
-    @define-color theme_unfocused_selected_bg_color ${tokens.colors.accent.focus};
+    @define-color theme_unfocused_selected_bg_color ${tokens.colors.accent.secondary};
 
     /* Text/foreground color of selections on backdrop windows */
     @define-color theme_unfocused_selected_fg_color ${tokens.colors.surface.base};
@@ -115,7 +115,7 @@ let
     /* State colors */
     @define-color warning_color ${tokens.colors.accent.warning};
     @define-color error_color ${tokens.colors.accent.danger};
-    @define-color success_color ${tokens.colors.accent.success};
+    @define-color success_color ${tokens.colors.accent.primary};
     @define-color destructive_color ${tokens.colors.accent.danger};
 
     /* Window Manager colors */
@@ -129,9 +129,9 @@ let
     @define-color wm_border alpha(black, 0.18);
     @define-color wm_button_hover_color_a ${tokens.colors.surface.emphasis};
     @define-color wm_button_hover_color_b ${tokens.colors.surface.base};
-    @define-color wm_button_active_color_a ${tokens.colors.accent.focus};
-    @define-color wm_button_active_color_b ${tokens.colors.accent.focus};
-    @define-color wm_button_active_color_c ${tokens.colors.accent.focus};
+    @define-color wm_button_active_color_a ${tokens.colors.accent.secondary};
+    @define-color wm_button_active_color_b ${tokens.colors.accent.secondary};
+    @define-color wm_button_active_color_c ${tokens.colors.accent.secondary};
 
     /* Content view background */
     @define-color content_view_bg ${tokens.colors.surface.base};

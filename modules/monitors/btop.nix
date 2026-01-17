@@ -19,11 +19,11 @@ let
   cfg = config.theming.signal;
 
   colors = {
-    surface-base = signalColors.tonal."surface-Lc05";
-    text-primary = signalColors.tonal."text-Lc75";
-    text-secondary = signalColors.tonal."text-Lc60";
-    text-tertiary = signalColors.tonal."text-Lc45";
-    divider-primary = signalColors.tonal."divider-Lc15";
+    surface-base = signalColors.tonal."surface-subtle";
+    text-primary = signalColors.tonal."text-primary";
+    text-secondary = signalColors.tonal."text-secondary";
+    text-tertiary = signalColors.tonal."text-tertiary";
+    divider-primary = signalColors.tonal."divider-primary";
   };
 
   inherit (signalColors) accent categorical;
@@ -46,7 +46,7 @@ let
     theme[title]="${hexRaw colors.text-primary}"
 
     # Highlight color for keyboard shortcuts
-    theme[hi_fg]="${hexRaw accent.focus.Lc75}"
+    theme[hi_fg]="${hexRaw accent.secondary.Lc75}"
 
     # Background color of selected items
     theme[selected_bg]="${hexRaw colors.divider-primary}"
@@ -61,7 +61,7 @@ let
     theme[graph_text]="${hexRaw colors.text-secondary}"
 
     # Misc colors for processes box
-    theme[proc_misc]="${hexRaw accent.success.Lc75}"
+    theme[proc_misc]="${hexRaw accent.primary.Lc75}"
 
     # Box outline colors
     theme[cpu_box]="${hexRaw colors.divider-primary}"
@@ -73,47 +73,47 @@ let
     theme[div_line]="${hexRaw colors.divider-primary}"
 
     # Temperature graph colors (green -> yellow -> red)
-    theme[temp_start]="${hexRaw accent.success.Lc75}"
+    theme[temp_start]="${hexRaw accent.primary.Lc75}"
     theme[temp_mid]="${hexRaw accent.warning.Lc75}"
     theme[temp_end]="${hexRaw accent.danger.Lc75}"
 
     # CPU graph colors (blue gradient)
-    theme[cpu_start]="${hexRaw accent.focus.Lc75}"
-    theme[cpu_mid]="${hexRaw accent.info.Lc75}"
-    theme[cpu_end]="${hexRaw accent.special.Lc75}"
+    theme[cpu_start]="${hexRaw accent.secondary.Lc75}"
+    theme[cpu_mid]="${hexRaw accent.secondary.Lc75}"
+    theme[cpu_end]="${hexRaw accent.tertiary.Lc75}"
 
     # Mem/Disk free meter (red -> yellow -> green)
     theme[free_start]="${hexRaw accent.danger.Lc75}"
     theme[free_mid]="${hexRaw accent.warning.Lc75}"
-    theme[free_end]="${hexRaw accent.success.Lc75}"
+    theme[free_end]="${hexRaw accent.primary.Lc75}"
 
     # Mem/Disk cached meter (blue gradient)
-    theme[cached_start]="${hexRaw accent.focus.Lc75}"
-    theme[cached_mid]="${hexRaw accent.info.Lc75}"
-    theme[cached_end]="${hexRaw accent.success.Lc75}"
+    theme[cached_start]="${hexRaw accent.secondary.Lc75}"
+    theme[cached_mid]="${hexRaw accent.secondary.Lc75}"
+    theme[cached_end]="${hexRaw accent.primary.Lc75}"
 
     # Mem/Disk available meter (purple gradient)
-    theme[available_start]="${hexRaw accent.special.Lc75}"
-    theme[available_mid]="${hexRaw categorical.GA06}"
+    theme[available_start]="${hexRaw accent.tertiary.Lc75}"
+    theme[available_mid]="${hexRaw categorical."data-viz-06"}"
     theme[available_end]="${hexRaw accent.warning.Lc75}"
 
     # Mem/Disk used meter (green -> yellow -> red)
-    theme[used_start]="${hexRaw accent.success.Lc75}"
+    theme[used_start]="${hexRaw accent.primary.Lc75}"
     theme[used_mid]="${hexRaw accent.warning.Lc75}"
     theme[used_end]="${hexRaw accent.danger.Lc75}"
 
     # Download graph colors (green gradient)
-    theme[download_start]="${hexRaw accent.success.Lc75}"
-    theme[download_mid]="${hexRaw categorical.GA02}"
-    theme[download_end]="${hexRaw accent.info.Lc75}"
+    theme[download_start]="${hexRaw accent.primary.Lc75}"
+    theme[download_mid]="${hexRaw categorical."data-viz-02"}"
+    theme[download_end]="${hexRaw accent.secondary.Lc75}"
 
     # Upload graph colors (red gradient)
     theme[upload_start]="${hexRaw accent.danger.Lc75}"
     theme[upload_mid]="${hexRaw accent.warning.Lc75}"
-    theme[upload_end]="${hexRaw categorical.GA06}"
+    theme[upload_end]="${hexRaw categorical."data-viz-06"}"
 
     # Process box color gradient
-    theme[process_start]="${hexRaw accent.focus.Lc75}"
+    theme[process_start]="${hexRaw accent.secondary.Lc75}"
     theme[process_mid]="${hexRaw accent.warning.Lc75}"
     theme[process_end]="${hexRaw accent.danger.Lc75}"
   '';

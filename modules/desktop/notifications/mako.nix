@@ -18,11 +18,11 @@ let
   cfg = config.theming.signal;
 
   colors = {
-    surface-base = signalColors.tonal."surface-Lc05";
-    surface-raised = signalColors.tonal."surface-Lc10";
-    text-primary = signalColors.tonal."text-Lc75";
-    text-secondary = signalColors.tonal."text-Lc60";
-    divider = signalColors.tonal."divider-Lc15";
+    surface-base = signalColors.tonal."surface-subtle";
+    surface-raised = signalColors.tonal."surface-hover";
+    text-primary = signalColors.tonal."text-primary";
+    text-secondary = signalColors.tonal."text-secondary";
+    divider = signalColors.tonal."divider-primary";
   };
 
   inherit (signalColors) accent;
@@ -41,18 +41,18 @@ let
     border-color=${toMakoColor colors.divider}
 
     # Progress bar color
-    progress-color=${toMakoColor accent.focus.Lc75}
+    progress-color=${toMakoColor accent.secondary.Lc75}
 
     # Low urgency colors
     [urgency=low]
     background-color=${toMakoColor colors.surface-raised}
-    border-color=${toMakoColor accent.info.Lc75}
+    border-color=${toMakoColor accent.secondary.Lc75}
     text-color=${toMakoColor colors.text-secondary}
 
     # Normal urgency colors
     [urgency=normal]
     background-color=${toMakoColor colors.surface-raised}
-    border-color=${toMakoColor accent.focus.Lc75}
+    border-color=${toMakoColor accent.secondary.Lc75}
     text-color=${toMakoColor colors.text-primary}
 
     # Critical urgency colors

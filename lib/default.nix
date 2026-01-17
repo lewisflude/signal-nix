@@ -129,33 +129,33 @@ rec {
     in
     {
       # Base colors - use palette for both modes
-      background = colors.tonal."surface-Lc05".hex;
-      foreground = colors.tonal."text-Lc75".hex;
-      caret = colors.accent.focus.Lc75.hex;
-      lineHighlight = colors.tonal."surface-Lc10".hex;
-      selection = colors.tonal."divider-Lc15".hex;
+      background = colors.tonal."surface-base".hex;
+      foreground = colors.tonal."text-primary".hex;
+      caret = colors.accent.info.Lc75.hex;
+      lineHighlight = colors.tonal."surface-hover".hex;
+      selection = colors.tonal."divider-primary".hex;
 
       # Syntax elements - consistent across modes, palette handles lightness inversion
-      comment = colors.tonal."text-Lc45".hex;
-      string = colors.categorical.GA02.hex;
-      number = colors.categorical.GA06.hex;
-      keyword = colors.accent.special.Lc75.hex;
-      operator = colors.accent.info.Lc75.hex;
-      function = colors.accent.focus.Lc75.hex;
-      type = colors.categorical.GA06.hex;
-      variable = colors.tonal."text-Lc75".hex;
-      constant = colors.categorical.GA06.hex;
-      escape = colors.categorical.GA08.hex;
-      punctuation = colors.tonal."text-Lc45".hex;
+      comment = colors.tonal."text-tertiary".hex;
+      string = colors.categorical."data-viz-02".hex;
+      number = colors.categorical."data-viz-06".hex;
+      keyword = colors.accent.tertiary.Lc75.hex;
+      operator = colors.accent.secondary.Lc75.hex;
+      function = colors.accent.info.Lc75.hex;
+      type = colors.categorical."data-viz-06".hex;
+      variable = colors.tonal."text-primary".hex;
+      constant = colors.categorical."data-viz-06".hex;
+      escape = colors.categorical."data-viz-08".hex;
+      punctuation = colors.tonal."text-tertiary".hex;
 
       # Markup
       heading = colors.accent.danger.Lc75.hex;
-      link = colors.accent.focus.Lc75.hex;
+      link = colors.accent.info.Lc75.hex;
 
       # Diff
-      diffInserted = colors.categorical.GA02.hex;
+      diffInserted = colors.categorical."data-viz-02".hex;
       diffDeleted = colors.accent.danger.Lc75.hex;
-      diffChanged = colors.accent.focus.Lc75.hex;
+      diffChanged = colors.accent.info.Lc75.hex;
     };
 
   # Brand governance helpers

@@ -35,8 +35,8 @@ let
     picture-uri-dark='${
       if cfg.login.gdm.backgroundImage != null then cfg.login.gdm.backgroundImage else ""
     }'
-    primary-color='${signalColors.tonal."surface-Lc05".hex}'
-    secondary-color='${signalColors.tonal."surface-Lc10".hex}'
+    primary-color='${signalColors.tonal."surface-subtle".hex}'
+    secondary-color='${signalColors.tonal."surface-hover".hex}'
   '';
 
 in
@@ -83,8 +83,8 @@ in
         picture-uri-dark='file://${
           if cfg.login.gdm.backgroundImage != null then cfg.login.gdm.backgroundImage else "/dev/null"
         }'
-        primary-color='${signalColors.tonal."surface-Lc05".hex}'
-        secondary-color='${signalColors.tonal."surface-Lc10".hex}'
+        primary-color='${signalColors.tonal."surface-subtle".hex}'
+        secondary-color='${signalColors.tonal."surface-hover".hex}'
       '';
     };
 

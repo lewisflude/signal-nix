@@ -18,13 +18,13 @@ let
   cfg = config.theming.signal;
 
   colors = {
-    surface-base = signalColors.tonal."surface-Lc05";
-    surface-raised = signalColors.tonal."surface-Lc10";
-    text-primary = signalColors.tonal."text-Lc75";
-    text-secondary = signalColors.tonal."text-Lc60";
-    text-dim = signalColors.tonal."text-Lc45";
-    divider-primary = signalColors.tonal."divider-Lc15";
-    divider-secondary = signalColors.tonal."divider-Lc30";
+    surface-base = signalColors.tonal."surface-subtle";
+    surface-raised = signalColors.tonal."surface-hover";
+    text-primary = signalColors.tonal."text-primary";
+    text-secondary = signalColors.tonal."text-secondary";
+    text-dim = signalColors.tonal."text-tertiary";
+    divider-primary = signalColors.tonal."divider-primary";
+    divider-secondary = signalColors.tonal."divider-strong";
   };
 
   inherit (signalColors) accent;
@@ -57,7 +57,7 @@ let
       "editor.lineHighlightBorder" = colors.divider-primary.hex;
 
       # Cursor
-      "editorCursor.foreground" = accent.focus.Lc75.hex;
+      "editorCursor.foreground" = accent.secondary.Lc75.hex;
 
       # Line numbers
       "editorLineNumber.foreground" = colors.text-dim.hex;
@@ -65,8 +65,8 @@ let
 
       # Gutter
       "editorGutter.background" = colors.surface-base.hex;
-      "editorGutter.addedBackground" = accent.success.Lc75.hex;
-      "editorGutter.modifiedBackground" = accent.focus.Lc75.hex;
+      "editorGutter.addedBackground" = accent.primary.Lc75.hex;
+      "editorGutter.modifiedBackground" = accent.secondary.Lc75.hex;
       "editorGutter.deletedBackground" = accent.danger.Lc75.hex;
 
       # Sidebar
@@ -81,7 +81,7 @@ let
       "activityBar.foreground" = colors.text-primary.hex;
       "activityBar.inactiveForeground" = colors.text-dim.hex;
       "activityBar.border" = colors.divider-primary.hex;
-      "activityBarBadge.background" = accent.focus.Lc75.hex;
+      "activityBarBadge.background" = accent.secondary.Lc75.hex;
       "activityBarBadge.foreground" = colors.surface-base.hex;
 
       # Status bar
@@ -105,12 +105,12 @@ let
       "tab.inactiveBackground" = colors.surface-base.hex;
       "tab.inactiveForeground" = colors.text-secondary.hex;
       "tab.border" = colors.divider-primary.hex;
-      "tab.activeBorder" = accent.focus.Lc75.hex;
+      "tab.activeBorder" = accent.secondary.Lc75.hex;
 
       # Panel
       "panel.background" = colors.surface-base.hex;
       "panel.border" = colors.divider-primary.hex;
-      "panelTitle.activeBorder" = accent.focus.Lc75.hex;
+      "panelTitle.activeBorder" = accent.secondary.Lc75.hex;
       "panelTitle.activeForeground" = colors.text-primary.hex;
       "panelTitle.inactiveForeground" = colors.text-secondary.hex;
 
@@ -119,20 +119,20 @@ let
       "terminal.foreground" = colors.text-primary.hex;
       "terminal.ansiBlack" = signalColors.tonal."base-L015".hex;
       "terminal.ansiRed" = accent.danger.Lc75.hex;
-      "terminal.ansiGreen" = accent.success.Lc75.hex;
+      "terminal.ansiGreen" = accent.primary.Lc75.hex;
       "terminal.ansiYellow" = accent.warning.Lc75.hex;
-      "terminal.ansiBlue" = accent.focus.Lc75.hex;
-      "terminal.ansiMagenta" = accent.special.Lc75.hex;
-      "terminal.ansiCyan" = accent.info.Lc75.hex;
-      "terminal.ansiWhite" = signalColors.tonal."text-Lc60".hex;
-      "terminal.ansiBrightBlack" = signalColors.tonal."text-Lc45".hex;
+      "terminal.ansiBlue" = accent.secondary.Lc75.hex;
+      "terminal.ansiMagenta" = accent.tertiary.Lc75.hex;
+      "terminal.ansiCyan" = accent.secondary.Lc75.hex;
+      "terminal.ansiWhite" = signalColors.tonal."text-secondary".hex;
+      "terminal.ansiBrightBlack" = signalColors.tonal."text-tertiary".hex;
       "terminal.ansiBrightRed" = accent.danger.Lc75.hex;
-      "terminal.ansiBrightGreen" = accent.success.Lc75.hex;
+      "terminal.ansiBrightGreen" = accent.primary.Lc75.hex;
       "terminal.ansiBrightYellow" = accent.warning.Lc75.hex;
-      "terminal.ansiBrightBlue" = accent.focus.Lc75.hex;
-      "terminal.ansiBrightMagenta" = accent.special.Lc75.hex;
-      "terminal.ansiBrightCyan" = accent.info.Lc75.hex;
-      "terminal.ansiBrightWhite" = signalColors.tonal."text-Lc75".hex;
+      "terminal.ansiBrightBlue" = accent.secondary.Lc75.hex;
+      "terminal.ansiBrightMagenta" = accent.tertiary.Lc75.hex;
+      "terminal.ansiBrightCyan" = accent.secondary.Lc75.hex;
+      "terminal.ansiBrightWhite" = signalColors.tonal."text-primary".hex;
 
       # Lists
       "list.activeSelectionBackground" = colors.divider-secondary.hex;
@@ -145,9 +145,9 @@ let
       "list.focusForeground" = colors.text-primary.hex;
 
       # Buttons
-      "button.background" = accent.focus.Lc75.hex;
+      "button.background" = accent.secondary.Lc75.hex;
       "button.foreground" = colors.surface-base.hex;
-      "button.hoverBackground" = "${accent.focus.Lc75.hex}e0";
+      "button.hoverBackground" = "${accent.secondary.Lc75.hex}e0";
 
       # Input
       "input.background" = colors.surface-raised.hex;
@@ -174,13 +174,13 @@ let
         {
           scope = [ "string" ];
           settings = {
-            foreground = signalColors.categorical.GA02.hex;
+            foreground = signalColors.categorical."data-viz-02".hex;
           };
         }
         {
           scope = [ "constant.numeric" ];
           settings = {
-            foreground = signalColors.categorical.GA06.hex;
+            foreground = signalColors.categorical."data-viz-06".hex;
           };
         }
         {
@@ -192,19 +192,19 @@ let
         {
           scope = [ "keyword" ];
           settings = {
-            foreground = accent.special.Lc75.hex;
+            foreground = accent.tertiary.Lc75.hex;
           };
         }
         {
           scope = [ "storage" ];
           settings = {
-            foreground = accent.special.Lc75.hex;
+            foreground = accent.tertiary.Lc75.hex;
           };
         }
         {
           scope = [ "entity.name.function" ];
           settings = {
-            foreground = accent.focus.Lc75.hex;
+            foreground = accent.secondary.Lc75.hex;
           };
         }
         {
@@ -213,7 +213,7 @@ let
             "entity.name.class"
           ];
           settings = {
-            foreground = signalColors.categorical.GA06.hex;
+            foreground = signalColors.categorical."data-viz-06".hex;
           };
         }
         {
@@ -228,13 +228,13 @@ let
             "support.class"
           ];
           settings = {
-            foreground = signalColors.categorical.GA06.hex;
+            foreground = signalColors.categorical."data-viz-06".hex;
           };
         }
         {
           scope = [ "support.function" ];
           settings = {
-            foreground = accent.focus.Lc75.hex;
+            foreground = accent.secondary.Lc75.hex;
           };
         }
         {
@@ -271,13 +271,13 @@ let
         {
           scope = [ "markup.inline.raw" ];
           settings = {
-            foreground = signalColors.categorical.GA02.hex;
+            foreground = signalColors.categorical."data-viz-02".hex;
           };
         }
         {
           scope = [ "meta.link" ];
           settings = {
-            foreground = accent.focus.Lc75.hex;
+            foreground = accent.secondary.Lc75.hex;
           };
         }
       ];

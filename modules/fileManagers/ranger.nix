@@ -17,10 +17,10 @@ let
   cfg = config.theming.signal;
 
   colors = {
-    text-primary = signalColors.tonal."text-Lc75";
-    text-secondary = signalColors.tonal."text-Lc60";
-    text-dim = signalColors.tonal."text-Lc45";
-    divider = signalColors.tonal."divider-Lc15";
+    text-primary = signalColors.tonal."text-primary";
+    text-secondary = signalColors.tonal."text-secondary";
+    text-dim = signalColors.tonal."text-tertiary";
+    divider = signalColors.tonal."divider-primary";
   };
 
   inherit (signalColors) accent;

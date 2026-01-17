@@ -17,7 +17,7 @@ let
   cfg = config.theming.signal;
 
   colors = {
-    divider-primary = signalColors.tonal."divider-Lc15";
+    divider-primary = signalColors.tonal."divider-primary";
     divider-secondary = signalColors.tonal."divider-Lc20";
   };
 
@@ -37,8 +37,8 @@ in
       # Border colors
       normal_border_color = colors.divider-primary.hex;
       active_border_color = colors.divider-secondary.hex;
-      focused_border_color = accent.focus.Lc75.hex;
-      presel_feedback_color = accent.info.Lc75.hex;
+      focused_border_color = accent.secondary.Lc75.hex;
+      presel_feedback_color = accent.secondary.Lc75.hex;
 
       # Border width (user can override)
       border_width = lib.mkDefault 2;

@@ -17,11 +17,11 @@ let
   cfg = config.theming.signal;
 
   colors = {
-    surface-base = signalColors.tonal."surface-Lc05";
-    surface-raised = signalColors.tonal."surface-Lc10";
-    text-primary = signalColors.tonal."text-Lc75";
-    text-secondary = signalColors.tonal."text-Lc60";
-    divider-primary = signalColors.tonal."divider-Lc15";
+    surface-base = signalColors.tonal."surface-subtle";
+    surface-raised = signalColors.tonal."surface-hover";
+    text-primary = signalColors.tonal."text-primary";
+    text-secondary = signalColors.tonal."text-secondary";
+    divider-primary = signalColors.tonal."divider-primary";
     divider-secondary = signalColors.tonal."divider-Lc20";
   };
 
@@ -39,11 +39,11 @@ in
     wayland.windowManager.sway.config.colors = {
       # Focused window (active)
       focused = {
-        border = accent.focus.Lc75.hex;
+        border = accent.secondary.Lc75.hex;
         background = colors.surface-raised.hex;
         text = colors.text-primary.hex;
-        indicator = accent.focus.Lc75.hex;
-        childBorder = accent.focus.Lc75.hex;
+        indicator = accent.secondary.Lc75.hex;
+        childBorder = accent.secondary.Lc75.hex;
       };
 
       # Focused window (inactive - in multi-monitor setup)

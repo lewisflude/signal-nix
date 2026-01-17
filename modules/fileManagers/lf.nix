@@ -17,9 +17,9 @@ let
   cfg = config.theming.signal;
 
   colors = {
-    text-primary = signalColors.tonal."text-Lc75";
-    text-secondary = signalColors.tonal."text-Lc60";
-    divider = signalColors.tonal."divider-Lc15";
+    text-primary = signalColors.tonal."text-primary";
+    text-secondary = signalColors.tonal."text-secondary";
+    divider = signalColors.tonal."divider-primary";
   };
 
   inherit (signalColors) accent;

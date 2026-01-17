@@ -17,11 +17,11 @@ let
   cfg = config.theming.signal;
 
   colors = {
-    surface-base = signalColors.tonal."surface-Lc05";
-    surface-raised = signalColors.tonal."surface-Lc10";
-    text-primary = signalColors.tonal."text-Lc75";
-    text-secondary = signalColors.tonal."text-Lc60";
-    divider = signalColors.tonal."divider-Lc15";
+    surface-base = signalColors.tonal."surface-subtle";
+    surface-raised = signalColors.tonal."surface-hover";
+    text-primary = signalColors.tonal."text-primary";
+    text-secondary = signalColors.tonal."text-secondary";
+    divider = signalColors.tonal."divider-primary";
   };
 
   inherit (signalColors) accent;
@@ -35,7 +35,7 @@ let
       -nb "${colors.surface-base.hex}" \
       -nf "${colors.text-primary.hex}" \
       -sb "${colors.surface-raised.hex}" \
-      -sf "${accent.focus.Lc75.hex}" \
+      -sf "${accent.secondary.Lc75.hex}" \
       -fn "Inter-14" \
       "$@"
   '';

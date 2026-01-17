@@ -47,7 +47,7 @@ in
 
       # Optional: Set background color as fallback
       # (theme.txt already sets this, but this ensures it's applied)
-      backgroundColor = signalColors.tonal."surface-Lc05".hex;
+      backgroundColor = signalColors.tonal."surface-subtle".hex;
 
       # Splash image (if custom background provided)
       splashImage = mkIf (cfg.boot.grub.customBackground != null) cfg.boot.grub.customBackground;

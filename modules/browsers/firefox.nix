@@ -17,13 +17,13 @@ let
   cfg = config.theming.signal;
 
   colors = {
-    surface-base = signalColors.tonal."surface-Lc05";
-    surface-raised = signalColors.tonal."surface-Lc10";
+    surface-base = signalColors.tonal."surface-subtle";
+    surface-raised = signalColors.tonal."surface-hover";
     surface-hover = signalColors.tonal."surface-Lc15";
-    text-primary = signalColors.tonal."text-Lc75";
-    text-secondary = signalColors.tonal."text-Lc60";
-    text-dim = signalColors.tonal."text-Lc45";
-    divider = signalColors.tonal."divider-Lc15";
+    text-primary = signalColors.tonal."text-primary";
+    text-secondary = signalColors.tonal."text-secondary";
+    text-dim = signalColors.tonal."text-tertiary";
+    divider = signalColors.tonal."divider-primary";
   };
 
   inherit (signalColors) accent;
@@ -41,8 +41,8 @@ let
       --signal-fg-alt: ${colors.text-secondary.hex};
       --signal-fg-dim: ${colors.text-dim.hex};
       --signal-border: ${colors.divider.hex};
-      --signal-accent: ${accent.focus.Lc75.hex};
-      --signal-success: ${accent.success.Lc75.hex};
+      --signal-accent: ${accent.secondary.Lc75.hex};
+      --signal-success: ${accent.primary.Lc75.hex};
       --signal-warning: ${accent.warning.Lc75.hex};
       --signal-danger: ${accent.danger.Lc75.hex};
     }

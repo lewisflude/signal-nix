@@ -17,11 +17,11 @@ let
   cfg = config.theming.signal;
 
   colors = {
-    surface-base = signalColors.tonal."surface-Lc05";
-    text-primary = signalColors.tonal."text-Lc75";
-    text-secondary = signalColors.tonal."text-Lc60";
-    text-dim = signalColors.tonal."text-Lc45";
-    divider = signalColors.tonal."divider-Lc15";
+    surface-base = signalColors.tonal."surface-subtle";
+    text-primary = signalColors.tonal."text-primary";
+    text-secondary = signalColors.tonal."text-secondary";
+    text-dim = signalColors.tonal."text-tertiary";
+    divider = signalColors.tonal."divider-primary";
   };
 
   inherit (signalColors) accent;
@@ -36,20 +36,20 @@ let
         # Primitive types
         separator: "${colors.divider.hex}"
         leading_trailing_space_bg: { attr: n }
-        header: { fg: "${accent.focus.Lc75.hex}" attr: b }
-        empty: "${accent.info.Lc75.hex}"
-        bool: "${accent.focus.Lc75.hex}"
+        header: { fg: "${accent.secondary.Lc75.hex}" attr: b }
+        empty: "${accent.secondary.Lc75.hex}"
+        bool: "${accent.secondary.Lc75.hex}"
         int: "${colors.text-primary.hex}"
-        filesize: "${accent.info.Lc75.hex}"
+        filesize: "${accent.secondary.Lc75.hex}"
         duration: "${colors.text-secondary.hex}"
-        date: "${accent.special.Lc75.hex}"
+        date: "${accent.tertiary.Lc75.hex}"
         range: "${colors.text-secondary.hex}"
         float: "${colors.text-primary.hex}"
-        string: "${accent.success.Lc75.hex}"
+        string: "${accent.primary.Lc75.hex}"
         nothing: "${colors.text-dim.hex}"
-        binary: "${accent.special.Lc75.hex}"
+        binary: "${accent.tertiary.Lc75.hex}"
         cellpath: "${colors.text-secondary.hex}"
-        row_index: { fg: "${accent.focus.Lc75.hex}" attr: b }
+        row_index: { fg: "${accent.secondary.Lc75.hex}" attr: b }
         record: "${colors.text-primary.hex}"
         list: "${colors.text-primary.hex}"
         block: "${colors.text-secondary.hex}"
@@ -57,30 +57,30 @@ let
         
         # Shapes (syntax highlighting)
         shape_garbage: { fg: "${accent.danger.Lc75.hex}" attr: b }
-        shape_binary: "${accent.special.Lc75.hex}"
-        shape_bool: "${accent.focus.Lc75.hex}"
+        shape_binary: "${accent.tertiary.Lc75.hex}"
+        shape_bool: "${accent.secondary.Lc75.hex}"
         shape_int: "${colors.text-primary.hex}"
         shape_float: "${colors.text-primary.hex}"
         shape_range: "${colors.text-secondary.hex}"
-        shape_internalcall: "${accent.info.Lc75.hex}"
-        shape_external: "${accent.success.Lc75.hex}"
+        shape_internalcall: "${accent.secondary.Lc75.hex}"
+        shape_external: "${accent.primary.Lc75.hex}"
         shape_externalarg: "${colors.text-primary.hex}"
-        shape_literal: "${accent.focus.Lc75.hex}"
+        shape_literal: "${accent.secondary.Lc75.hex}"
         shape_operator: "${accent.warning.Lc75.hex}"
-        shape_signature: { fg: "${accent.focus.Lc75.hex}" attr: b }
-        shape_string: "${accent.success.Lc75.hex}"
-        shape_string_interpolation: "${accent.info.Lc75.hex}"
-        shape_datetime: "${accent.special.Lc75.hex}"
+        shape_signature: { fg: "${accent.secondary.Lc75.hex}" attr: b }
+        shape_string: "${accent.primary.Lc75.hex}"
+        shape_string_interpolation: "${accent.secondary.Lc75.hex}"
+        shape_datetime: "${accent.tertiary.Lc75.hex}"
         shape_list: "${colors.text-secondary.hex}"
         shape_table: "${colors.text-primary.hex}"
         shape_record: "${colors.text-primary.hex}"
         shape_block: "${colors.text-secondary.hex}"
-        shape_filepath: "${accent.info.Lc75.hex}"
-        shape_directory: { fg: "${accent.focus.Lc75.hex}" attr: b }
-        shape_globpattern: "${accent.info.Lc75.hex}"
-        shape_variable: "${accent.special.Lc75.hex}"
-        shape_flag: { fg: "${accent.focus.Lc75.hex}" attr: b }
-        shape_custom: "${accent.success.Lc75.hex}"
+        shape_filepath: "${accent.secondary.Lc75.hex}"
+        shape_directory: { fg: "${accent.secondary.Lc75.hex}" attr: b }
+        shape_globpattern: "${accent.secondary.Lc75.hex}"
+        shape_variable: "${accent.tertiary.Lc75.hex}"
+        shape_flag: { fg: "${accent.secondary.Lc75.hex}" attr: b }
+        shape_custom: "${accent.primary.Lc75.hex}"
         shape_nothing: "${colors.text-dim.hex}"
       }
     }

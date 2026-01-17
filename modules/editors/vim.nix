@@ -19,27 +19,27 @@ let
 
   colors = {
     # Base colors
-    bg = signalColors.tonal."surface-Lc05".hex;
-    bg_alt = signalColors.tonal."surface-Lc10".hex;
-    fg = signalColors.tonal."text-Lc75".hex;
-    fg_alt = signalColors.tonal."text-Lc60".hex;
-    fg_dim = signalColors.tonal."text-Lc45".hex;
+    bg = signalColors.tonal."surface-subtle".hex;
+    bg_alt = signalColors.tonal."surface-hover".hex;
+    fg = signalColors.tonal."text-primary".hex;
+    fg_alt = signalColors.tonal."text-secondary".hex;
+    fg_dim = signalColors.tonal."text-tertiary".hex;
 
     # Accent colors
-    blue = signalColors.accent.focus.Lc75.hex;
-    cyan = signalColors.accent.info.Lc75.hex;
-    green = signalColors.accent.success.Lc75.hex;
+    blue = signalColors.accent.secondary.Lc75.hex;
+    cyan = signalColors.accent.secondary.Lc75.hex;
+    green = signalColors.accent.primary.Lc75.hex;
     red = signalColors.accent.danger.Lc75.hex;
     orange = signalColors.accent.warning.Lc75.hex;
-    purple = signalColors.accent.special.Lc75.hex;
+    purple = signalColors.accent.tertiary.Lc75.hex;
 
     # Categorical colors
-    yellow = signalColors.categorical.GA04.hex;
-    teal = signalColors.categorical.GA02.hex;
+    yellow = signalColors.categorical."data-viz-04".hex;
+    teal = signalColors.categorical."data-viz-02".hex;
 
     # UI colors
-    border = signalColors.tonal."divider-Lc15".hex;
-    selection = signalColors.tonal."divider-Lc15".hex;
+    border = signalColors.tonal."divider-primary".hex;
+    selection = signalColors.tonal."divider-primary".hex;
   };
 
   # Check if vim should be themed
@@ -156,20 +156,20 @@ in
       let g:terminal_ansi_colors = [
       \ '${signalColors.tonal."base-L015".hex}',
       \ '${signalColors.accent.danger.Lc75.hex}',
-      \ '${signalColors.accent.success.Lc75.hex}',
+      \ '${signalColors.accent.primary.Lc75.hex}',
       \ '${signalColors.accent.warning.Lc75.hex}',
-      \ '${signalColors.accent.focus.Lc75.hex}',
-      \ '${signalColors.accent.special.Lc75.hex}',
-      \ '${signalColors.accent.info.Lc75.hex}',
-      \ '${signalColors.tonal."text-Lc60".hex}',
-      \ '${signalColors.tonal."text-Lc45".hex}',
+      \ '${signalColors.accent.secondary.Lc75.hex}',
+      \ '${signalColors.accent.tertiary.Lc75.hex}',
+      \ '${signalColors.accent.secondary.Lc75.hex}',
+      \ '${signalColors.tonal."text-secondary".hex}',
+      \ '${signalColors.tonal."text-tertiary".hex}',
       \ '${signalColors.accent.danger.Lc75.hex}',
-      \ '${signalColors.accent.success.Lc75.hex}',
+      \ '${signalColors.accent.primary.Lc75.hex}',
       \ '${signalColors.accent.warning.Lc75.hex}',
-      \ '${signalColors.accent.focus.Lc75.hex}',
-      \ '${signalColors.accent.special.Lc75.hex}',
-      \ '${signalColors.accent.info.Lc75.hex}',
-      \ '${signalColors.tonal."text-Lc75".hex}',
+      \ '${signalColors.accent.secondary.Lc75.hex}',
+      \ '${signalColors.accent.tertiary.Lc75.hex}',
+      \ '${signalColors.accent.secondary.Lc75.hex}',
+      \ '${signalColors.tonal."text-primary".hex}',
       \ ]
     '';
   };

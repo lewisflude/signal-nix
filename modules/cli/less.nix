@@ -17,8 +17,8 @@ let
   cfg = config.theming.signal;
 
   colors = {
-    text-primary = signalColors.tonal."text-Lc75";
-    text-dim = signalColors.tonal."text-Lc45";
+    text-primary = signalColors.tonal."text-primary";
+    text-dim = signalColors.tonal."text-tertiary";
   };
 
   inherit (signalColors) accent;
@@ -74,11 +74,11 @@ in
     home.sessionVariables = {
       # Less colors for man pages and scrolling
       LESS_TERMCAP_mb = toAnsiEscape accent.danger.Lc75; # begin blinking
-      LESS_TERMCAP_md = toAnsiEscape accent.focus.Lc75; # begin bold
+      LESS_TERMCAP_md = toAnsiEscape accent.secondary.Lc75; # begin bold
       LESS_TERMCAP_me = "\\e[0m"; # end mode
       LESS_TERMCAP_so = toAnsiEscape accent.warning.Lc75; # begin standout-mode (search highlights)
       LESS_TERMCAP_se = "\\e[0m"; # end standout-mode
-      LESS_TERMCAP_us = toAnsiEscape accent.success.Lc75; # begin underline
+      LESS_TERMCAP_us = toAnsiEscape accent.primary.Lc75; # begin underline
       LESS_TERMCAP_ue = "\\e[0m"; # end underline
 
       # Additional less settings

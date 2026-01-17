@@ -37,43 +37,43 @@ let
         if mode == "dark" then
           {
             # Base colors
-            bg = signalColors.tonal."surface-Lc05".hex;
-            bg_alt = signalColors.tonal."surface-Lc10".hex;
-            bg_highlight = signalColors.tonal."divider-Lc15".hex;
-            fg = signalColors.tonal."text-Lc75".hex;
-            fg_alt = signalColors.tonal."text-Lc60".hex;
-            fg_dim = signalColors.tonal."text-Lc45".hex;
+            bg = signalColors.tonal."surface-subtle".hex;
+            bg_alt = signalColors.tonal."surface-hover".hex;
+            bg_highlight = signalColors.tonal."divider-primary".hex;
+            fg = signalColors.tonal."text-primary".hex;
+            fg_alt = signalColors.tonal."text-secondary".hex;
+            fg_dim = signalColors.tonal."text-tertiary".hex;
 
             # Accent colors
-            blue = signalColors.accent.focus.Lc75.hex;
-            cyan = signalColors.accent.info.Lc75.hex;
-            green = signalColors.accent.success.Lc75.hex;
+            blue = signalColors.accent.secondary.Lc75.hex;
+            cyan = signalColors.accent.secondary.Lc75.hex;
+            green = signalColors.accent.primary.Lc75.hex;
             red = signalColors.accent.danger.Lc75.hex;
             orange = signalColors.accent.warning.Lc75.hex;
-            purple = signalColors.accent.special.Lc75.hex;
+            purple = signalColors.accent.tertiary.Lc75.hex;
 
             # Categorical colors for syntax
-            yellow = signalColors.categorical.GA04.hex;
-            magenta = signalColors.categorical.GA05.hex;
-            teal = signalColors.categorical.GA02.hex;
+            yellow = signalColors.categorical."data-viz-04".hex;
+            magenta = signalColors.categorical."data-viz-05".hex;
+            teal = signalColors.categorical."data-viz-02".hex;
 
             # UI colors
-            border = signalColors.tonal."divider-Lc15".hex;
-            cursor_line = signalColors.tonal."surface-Lc10".hex;
-            cursor = signalColors.accent.focus.Lc75.hex;
-            selection = signalColors.tonal."divider-Lc15".hex;
-            visual = signalColors.tonal."divider-Lc15".hex;
+            border = signalColors.tonal."divider-primary".hex;
+            cursor_line = signalColors.tonal."surface-hover".hex;
+            cursor = signalColors.accent.secondary.Lc75.hex;
+            selection = signalColors.tonal."divider-primary".hex;
+            visual = signalColors.tonal."divider-primary".hex;
 
             # Git colors
-            git_add = signalColors.accent.success.Lc75.hex;
-            git_change = signalColors.accent.focus.Lc75.hex;
+            git_add = signalColors.accent.primary.Lc75.hex;
+            git_change = signalColors.accent.secondary.Lc75.hex;
             git_delete = signalColors.accent.danger.Lc75.hex;
 
             # Diff colors
-            diff_add = signalColors.tonal."surface-Lc10".hex;
-            diff_delete = signalColors.tonal."surface-Lc10".hex;
-            diff_change = signalColors.tonal."surface-Lc10".hex;
-            diff_text = signalColors.tonal."divider-Lc15".hex;
+            diff_add = signalColors.tonal."surface-hover".hex;
+            diff_delete = signalColors.tonal."surface-hover".hex;
+            diff_change = signalColors.tonal."surface-hover".hex;
+            diff_text = signalColors.tonal."divider-primary".hex;
           }
         else
           {

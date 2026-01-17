@@ -17,10 +17,10 @@ let
   cfg = config.theming.signal;
 
   colors = {
-    text-primary = signalColors.tonal."text-Lc75";
-    text-secondary = signalColors.tonal."text-Lc60";
-    text-dim = signalColors.tonal."text-Lc45";
-    divider = signalColors.tonal."divider-Lc15";
+    text-primary = signalColors.tonal."text-primary";
+    text-secondary = signalColors.tonal."text-secondary";
+    text-dim = signalColors.tonal."text-tertiary";
+    divider = signalColors.tonal."divider-primary";
   };
 
   inherit (signalColors) accent;
@@ -41,32 +41,32 @@ in
 
       # Syntax highlighting colors
       set -g fish_color_normal ${toFishColor colors.text-primary}
-      set -g fish_color_command ${toFishColor accent.focus.Lc75}
-      set -g fish_color_keyword ${toFishColor accent.special.Lc75}
-      set -g fish_color_quote ${toFishColor signalColors.categorical.GA02}
-      set -g fish_color_redirection ${toFishColor accent.info.Lc75}
+      set -g fish_color_command ${toFishColor accent.secondary.Lc75}
+      set -g fish_color_keyword ${toFishColor accent.tertiary.Lc75}
+      set -g fish_color_quote ${toFishColor signalColors.categorical."data-viz-02"}
+      set -g fish_color_redirection ${toFishColor accent.secondary.Lc75}
       set -g fish_color_end ${toFishColor colors.text-secondary}
       set -g fish_color_error ${toFishColor accent.danger.Lc75}
       set -g fish_color_param ${toFishColor colors.text-primary}
       set -g fish_color_option ${toFishColor colors.text-secondary}
       set -g fish_color_comment ${toFishColor colors.text-dim}
       set -g fish_color_selection --background=${toFishColor colors.divider}
-      set -g fish_color_operator ${toFishColor accent.info.Lc75}
-      set -g fish_color_escape ${toFishColor signalColors.categorical.GA08}
+      set -g fish_color_operator ${toFishColor accent.secondary.Lc75}
+      set -g fish_color_escape ${toFishColor signalColors.categorical."data-viz-08"}
       set -g fish_color_autosuggestion ${toFishColor colors.text-dim}
 
       # Completion pager colors
-      set -g fish_pager_color_progress ${toFishColor accent.focus.Lc75}
+      set -g fish_pager_color_progress ${toFishColor accent.secondary.Lc75}
       set -g fish_pager_color_background
-      set -g fish_pager_color_prefix ${toFishColor accent.focus.Lc75} --bold
+      set -g fish_pager_color_prefix ${toFishColor accent.secondary.Lc75} --bold
       set -g fish_pager_color_completion ${toFishColor colors.text-primary}
       set -g fish_pager_color_description ${toFishColor colors.text-dim}
       set -g fish_pager_color_selected_background --background=${toFishColor colors.divider}
-      set -g fish_pager_color_selected_prefix ${toFishColor accent.focus.Lc75} --bold
+      set -g fish_pager_color_selected_prefix ${toFishColor accent.secondary.Lc75} --bold
       set -g fish_pager_color_selected_completion ${toFishColor colors.text-primary}
       set -g fish_pager_color_selected_description ${toFishColor colors.text-secondary}
       set -g fish_pager_color_secondary_background
-      set -g fish_pager_color_secondary_prefix ${toFishColor accent.info.Lc75}
+      set -g fish_pager_color_secondary_prefix ${toFishColor accent.secondary.Lc75}
       set -g fish_pager_color_secondary_completion ${toFishColor colors.text-secondary}
       set -g fish_pager_color_secondary_description ${toFishColor colors.text-dim}
 
@@ -78,11 +78,11 @@ in
       set -g fish_color_invalid_path ${toFishColor accent.danger.Lc75}
 
       # History search colors
-      set -g fish_color_history_current ${toFishColor accent.focus.Lc75} --bold
+      set -g fish_color_history_current ${toFishColor accent.secondary.Lc75} --bold
 
       # User/host colors (prompt)
-      set -g fish_color_user ${toFishColor accent.success.Lc75}
-      set -g fish_color_host ${toFishColor accent.info.Lc75}
+      set -g fish_color_user ${toFishColor accent.primary.Lc75}
+      set -g fish_color_host ${toFishColor accent.secondary.Lc75}
       set -g fish_color_host_remote ${toFishColor accent.warning.Lc75}
 
       # Cancel command color

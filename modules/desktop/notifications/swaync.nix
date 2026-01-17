@@ -18,14 +18,14 @@ let
   cfg = config.theming.signal;
 
   colors = {
-    surface-base = signalColors.tonal."surface-Lc05";
-    surface-raised = signalColors.tonal."surface-Lc10";
+    surface-base = signalColors.tonal."surface-subtle";
+    surface-raised = signalColors.tonal."surface-hover";
     surface-emphasis = signalColors.tonal."surface-Lc15";
-    text-primary = signalColors.tonal."text-Lc75";
-    text-secondary = signalColors.tonal."text-Lc60";
-    text-tertiary = signalColors.tonal."text-Lc45";
-    divider-primary = signalColors.tonal."divider-Lc15";
-    divider-secondary = signalColors.tonal."divider-Lc30";
+    text-primary = signalColors.tonal."text-primary";
+    text-secondary = signalColors.tonal."text-secondary";
+    text-tertiary = signalColors.tonal."text-tertiary";
+    divider-primary = signalColors.tonal."divider-primary";
+    divider-secondary = signalColors.tonal."divider-strong";
   };
 
   inherit (signalColors) accent;
@@ -53,11 +53,11 @@ let
     @define-color divider-primary ${colors.divider-primary.hex};
     @define-color divider-secondary ${colors.divider-secondary.hex};
 
-    @define-color accent-focus ${accent.focus.Lc75.hex};
-    @define-color accent-success ${accent.success.Lc75.hex};
+    @define-color accent-focus ${accent.secondary.Lc75.hex};
+    @define-color accent-success ${accent.primary.Lc75.hex};
     @define-color accent-warning ${accent.warning.Lc75.hex};
     @define-color accent-danger ${accent.danger.Lc75.hex};
-    @define-color accent-info ${accent.info.Lc75.hex};
+    @define-color accent-info ${accent.secondary.Lc75.hex};
 
     /* =============================================================================
        NOTIFICATION CENTER WINDOW

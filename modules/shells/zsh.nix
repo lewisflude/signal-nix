@@ -18,9 +18,9 @@ let
   cfg = config.theming.signal;
 
   colors = {
-    text-primary = signalColors.tonal."text-Lc75";
-    text-secondary = signalColors.tonal."text-Lc60";
-    text-tertiary = signalColors.tonal."text-Lc45";
+    text-primary = signalColors.tonal."text-primary";
+    text-secondary = signalColors.tonal."text-secondary";
+    text-tertiary = signalColors.tonal."text-tertiary";
   };
 
   inherit (signalColors) accent categorical;
@@ -48,52 +48,52 @@ in
         ZSH_HIGHLIGHT_STYLES[unknown-token]='fg=${accent.danger.Lc75.hex}'
 
         # Reserved words (if, then, else, fi, etc.)
-        ZSH_HIGHLIGHT_STYLES[reserved-word]='fg=${accent.special.Lc75.hex},bold'
+        ZSH_HIGHLIGHT_STYLES[reserved-word]='fg=${accent.tertiary.Lc75.hex},bold'
 
         # Aliases
-        ZSH_HIGHLIGHT_STYLES[alias]='fg=${accent.focus.Lc75.hex}'
+        ZSH_HIGHLIGHT_STYLES[alias]='fg=${accent.secondary.Lc75.hex}'
 
         # Shell builtin commands
-        ZSH_HIGHLIGHT_STYLES[builtin]='fg=${accent.focus.Lc75.hex}'
+        ZSH_HIGHLIGHT_STYLES[builtin]='fg=${accent.secondary.Lc75.hex}'
 
         # Functions
-        ZSH_HIGHLIGHT_STYLES[function]='fg=${accent.focus.Lc75.hex}'
+        ZSH_HIGHLIGHT_STYLES[function]='fg=${accent.secondary.Lc75.hex}'
 
         # External commands
-        ZSH_HIGHLIGHT_STYLES[command]='fg=${accent.focus.Lc75.hex}'
+        ZSH_HIGHLIGHT_STYLES[command]='fg=${accent.secondary.Lc75.hex}'
 
         # Command separators (;, &&, ||)
-        ZSH_HIGHLIGHT_STYLES[commandseparator]='fg=${accent.info.Lc75.hex}'
+        ZSH_HIGHLIGHT_STYLES[commandseparator]='fg=${accent.secondary.Lc75.hex}'
 
         # Redirection operators
-        ZSH_HIGHLIGHT_STYLES[redirection]='fg=${accent.info.Lc75.hex}'
+        ZSH_HIGHLIGHT_STYLES[redirection]='fg=${accent.secondary.Lc75.hex}'
 
         # Arguments
-        ZSH_HIGHLIGHT_STYLES[arg0]='fg=${accent.focus.Lc75.hex}'
+        ZSH_HIGHLIGHT_STYLES[arg0]='fg=${accent.secondary.Lc75.hex}'
 
         # Single quoted strings
-        ZSH_HIGHLIGHT_STYLES[single-quoted-argument]='fg=${categorical.GA02.hex}'
+        ZSH_HIGHLIGHT_STYLES[single-quoted-argument]='fg=${categorical."data-viz-02".hex}'
 
         # Double quoted strings
-        ZSH_HIGHLIGHT_STYLES[double-quoted-argument]='fg=${categorical.GA02.hex}'
+        ZSH_HIGHLIGHT_STYLES[double-quoted-argument]='fg=${categorical."data-viz-02".hex}'
 
         # Backticks
-        ZSH_HIGHLIGHT_STYLES[back-quoted-argument]='fg=${categorical.GA08.hex}'
+        ZSH_HIGHLIGHT_STYLES[back-quoted-argument]='fg=${categorical."data-viz-08".hex}'
 
         # Globbing
         ZSH_HIGHLIGHT_STYLES[globbing]='fg=${accent.warning.Lc75.hex}'
 
         # History expansion (!!, !$, etc.)
-        ZSH_HIGHLIGHT_STYLES[history-expansion]='fg=${accent.special.Lc75.hex}'
+        ZSH_HIGHLIGHT_STYLES[history-expansion]='fg=${accent.tertiary.Lc75.hex}'
 
         # Command substitution
-        ZSH_HIGHLIGHT_STYLES[command-substitution-delimiter]='fg=${accent.info.Lc75.hex}'
+        ZSH_HIGHLIGHT_STYLES[command-substitution-delimiter]='fg=${accent.secondary.Lc75.hex}'
 
         # Process substitution
-        ZSH_HIGHLIGHT_STYLES[process-substitution-delimiter]='fg=${accent.info.Lc75.hex}'
+        ZSH_HIGHLIGHT_STYLES[process-substitution-delimiter]='fg=${accent.secondary.Lc75.hex}'
 
         # Arithmetic expansion
-        ZSH_HIGHLIGHT_STYLES[arithmetic-expansion]='fg=${categorical.GA06.hex}'
+        ZSH_HIGHLIGHT_STYLES[arithmetic-expansion]='fg=${categorical."data-viz-06".hex}'
 
         # Comments
         ZSH_HIGHLIGHT_STYLES[comment]='fg=${colors.text-tertiary.hex},italic'
@@ -107,12 +107,12 @@ in
         ZSH_HIGHLIGHT_STYLES[double-hyphen-option]='fg=${accent.warning.Lc75.hex}'
 
         # Assign
-        ZSH_HIGHLIGHT_STYLES[assign]='fg=${accent.info.Lc75.hex}'
+        ZSH_HIGHLIGHT_STYLES[assign]='fg=${accent.secondary.Lc75.hex}'
 
         # Additional autocomplete/menu colors
         # These work with zsh's completion system
         zstyle ':completion:*' list-colors \
-          "di=${accent.focus.Lc75.hex}:ln=${accent.info.Lc75.hex}:so=${accent.special.Lc75.hex}:pi=${accent.warning.Lc75.hex}:ex=${accent.success.Lc75.hex}:bd=${accent.danger.Lc75.hex}:cd=${accent.danger.Lc75.hex}"
+          "di=${accent.secondary.Lc75.hex}:ln=${accent.secondary.Lc75.hex}:so=${accent.tertiary.Lc75.hex}:pi=${accent.warning.Lc75.hex}:ex=${accent.primary.Lc75.hex}:bd=${accent.danger.Lc75.hex}:cd=${accent.danger.Lc75.hex}"
       '';
     };
   };

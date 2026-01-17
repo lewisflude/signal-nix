@@ -17,11 +17,11 @@ let
   cfg = config.theming.signal;
 
   colors = {
-    surface-base = signalColors.tonal."surface-Lc05";
-    surface-subtle = signalColors.tonal."divider-Lc15";
-    surface-emphasis = signalColors.tonal."surface-Lc10";
-    text-primary = signalColors.tonal."text-Lc75";
-    divider-primary = signalColors.tonal."divider-Lc15";
+    surface-base = signalColors.tonal."surface-subtle";
+    surface-subtle = signalColors.tonal."divider-primary";
+    surface-emphasis = signalColors.tonal."surface-hover";
+    text-primary = signalColors.tonal."text-primary";
+    divider-primary = signalColors.tonal."divider-primary";
   };
 
   inherit (signalColors) accent;
@@ -39,17 +39,17 @@ in
         theme = {
           # Border colors
           activeBorderColor = [
-            accent.focus.Lc75.hex
+            accent.secondary.Lc75.hex
             "bold"
           ];
           inactiveBorderColor = [ colors.divider-primary.hex ];
           searchingActiveBorderColor = [
-            accent.focus.Lc75.hex
+            accent.secondary.Lc75.hex
             "bold"
           ];
 
           # Options/help text
-          optionsTextColor = [ accent.info.Lc75.hex ];
+          optionsTextColor = [ accent.secondary.Lc75.hex ];
 
           # Selected line colors
           selectedLineBgColor = [ colors.surface-subtle.hex ];
@@ -57,7 +57,7 @@ in
           inactiveViewSelectedLineBgColor = [ colors.surface-subtle.hex ];
 
           # Cherry-picked commit colors
-          cherryPickedCommitFgColor = [ accent.info.Lc75.hex ];
+          cherryPickedCommitFgColor = [ accent.secondary.Lc75.hex ];
           cherryPickedCommitBgColor = [ colors.surface-emphasis.hex ];
 
           # Marked base commit colors (for rebase)

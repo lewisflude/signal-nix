@@ -16,12 +16,12 @@ let
   cfg = config.theming.signal;
 
   colors = {
-    surface-base = signalColors.tonal."surface-Lc05";
-    surface-raised = signalColors.tonal."surface-Lc10";
-    text-primary = signalColors.tonal."text-Lc75";
-    text-secondary = signalColors.tonal."text-Lc60";
-    text-dim = signalColors.tonal."text-Lc45";
-    divider = signalColors.tonal."divider-Lc15";
+    surface-base = signalColors.tonal."surface-subtle";
+    surface-raised = signalColors.tonal."surface-hover";
+    text-primary = signalColors.tonal."text-primary";
+    text-secondary = signalColors.tonal."text-secondary";
+    text-dim = signalColors.tonal."text-tertiary";
+    divider = signalColors.tonal."divider-primary";
   };
 
   inherit (signalColors) accent;
@@ -34,29 +34,29 @@ let
     };
 
     heading = {
-      color = accent.focus.Lc75.hex;
+      color = accent.secondary.Lc75.hex;
       bold = true;
     };
 
     h1 = {
       prefix = "# ";
-      color = accent.focus.Lc75.hex;
+      color = accent.secondary.Lc75.hex;
       bold = true;
     };
 
     h2 = {
       prefix = "## ";
-      color = accent.focus.Lc75.hex;
+      color = accent.secondary.Lc75.hex;
     };
 
     h3 = {
       prefix = "### ";
-      color = accent.info.Lc75.hex;
+      color = accent.secondary.Lc75.hex;
     };
 
     h4 = {
       prefix = "#### ";
-      color = accent.info.Lc75.hex;
+      color = accent.secondary.Lc75.hex;
     };
 
     h5 = {
@@ -78,12 +78,12 @@ let
     };
 
     code = {
-      color = accent.special.Lc75.hex;
+      color = accent.tertiary.Lc75.hex;
       background_color = colors.surface-raised.hex;
     };
 
     code_block = {
-      color = accent.special.Lc75.hex;
+      color = accent.tertiary.Lc75.hex;
       background_color = colors.surface-raised.hex;
     };
 
@@ -103,16 +103,16 @@ let
     };
 
     link = {
-      color = accent.info.Lc75.hex;
+      color = accent.secondary.Lc75.hex;
       underline = true;
     };
 
     link_text = {
-      color = accent.focus.Lc75.hex;
+      color = accent.secondary.Lc75.hex;
     };
 
     image = {
-      color = accent.special.Lc75.hex;
+      color = accent.tertiary.Lc75.hex;
     };
 
     list = {
@@ -137,7 +137,7 @@ let
     };
 
     table_header = {
-      color = accent.focus.Lc75.hex;
+      color = accent.secondary.Lc75.hex;
       bold = true;
     };
 

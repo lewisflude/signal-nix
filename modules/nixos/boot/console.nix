@@ -20,22 +20,22 @@ let
     # Normal colors (0-7)
     (hexRaw signalColors.tonal."base-L015") # 0: black
     (hexRaw accent.danger.Lc75) # 1: red
-    (hexRaw accent.success.Lc75) # 2: green
+    (hexRaw accent.primary.Lc75) # 2: green
     (hexRaw accent.warning.Lc75) # 3: yellow
-    (hexRaw accent.focus.Lc75) # 4: blue
-    (hexRaw accent.special.Lc75) # 5: magenta
-    (hexRaw accent.info.Lc75) # 6: cyan
-    (hexRaw signalColors.tonal."text-Lc60") # 7: white
+    (hexRaw accent.secondary.Lc75) # 4: blue
+    (hexRaw accent.tertiary.Lc75) # 5: magenta
+    (hexRaw accent.secondary.Lc75) # 6: cyan
+    (hexRaw signalColors.tonal."text-secondary") # 7: white
 
     # Bright colors (8-15)
-    (hexRaw signalColors.tonal."text-Lc45") # 8: bright black
+    (hexRaw signalColors.tonal."text-tertiary") # 8: bright black
     (hexRaw accent.danger.Lc75) # 9: bright red
-    (hexRaw accent.success.Lc75) # 10: bright green
+    (hexRaw accent.primary.Lc75) # 10: bright green
     (hexRaw accent.warning.Lc75) # 11: bright yellow
-    (hexRaw accent.focus.Lc75) # 12: bright blue
-    (hexRaw accent.special.Lc75) # 13: bright magenta
-    (hexRaw accent.info.Lc75) # 14: bright cyan
-    (hexRaw signalColors.tonal."text-Lc75") # 15: bright white
+    (hexRaw accent.secondary.Lc75) # 12: bright blue
+    (hexRaw accent.tertiary.Lc75) # 13: bright magenta
+    (hexRaw accent.secondary.Lc75) # 14: bright cyan
+    (hexRaw signalColors.tonal."text-primary") # 15: bright white
   ];
 
   # Determine if console should be themed

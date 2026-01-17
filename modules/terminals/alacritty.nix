@@ -17,11 +17,11 @@ let
   cfg = config.theming.signal;
 
   colors = {
-    surface-base = signalColors.tonal."surface-Lc05";
-    text-primary = signalColors.tonal."text-Lc75";
-    text-secondary = signalColors.tonal."text-Lc60";
-    divider-primary = signalColors.tonal."divider-Lc15";
-    divider-secondary = signalColors.tonal."divider-Lc30";
+    surface-base = signalColors.tonal."surface-subtle";
+    text-primary = signalColors.tonal."text-primary";
+    text-secondary = signalColors.tonal."text-secondary";
+    divider-primary = signalColors.tonal."divider-primary";
+    divider-secondary = signalColors.tonal."divider-strong";
   };
 
   inherit (signalColors) accent;
@@ -31,22 +31,22 @@ let
     # Normal colors
     black = signalColors.tonal."base-L015";
     red = accent.danger.Lc75;
-    green = accent.success.Lc75;
+    green = accent.primary.Lc75;
     yellow = accent.warning.Lc75;
-    blue = accent.focus.Lc75;
-    magenta = accent.special.Lc75;
-    cyan = accent.info.Lc75;
-    white = signalColors.tonal."text-Lc60";
+    blue = accent.secondary.Lc75;
+    magenta = accent.tertiary.Lc75;
+    cyan = accent.secondary.Lc75;
+    white = signalColors.tonal."text-secondary";
 
     # Bright colors
-    bright-black = signalColors.tonal."text-Lc45";
+    bright-black = signalColors.tonal."text-tertiary";
     bright-red = accent.danger.Lc75;
-    bright-green = accent.success.Lc75;
+    bright-green = accent.primary.Lc75;
     bright-yellow = accent.warning.Lc75;
-    bright-blue = accent.focus.Lc75;
-    bright-magenta = accent.special.Lc75;
-    bright-cyan = accent.info.Lc75;
-    bright-white = signalColors.tonal."text-Lc75";
+    bright-blue = accent.secondary.Lc75;
+    bright-magenta = accent.tertiary.Lc75;
+    bright-cyan = accent.secondary.Lc75;
+    bright-white = signalColors.tonal."text-primary";
   };
 
   # Check if alacritty should be themed - using centralized helper
@@ -69,13 +69,13 @@ in
           # Cursor colors
           cursor = {
             text = colors.surface-base.hex;
-            cursor = accent.focus.Lc75.hex;
+            cursor = accent.secondary.Lc75.hex;
           };
 
           # Vi mode cursor colors
           vi_mode_cursor = {
             text = colors.surface-base.hex;
-            cursor = accent.special.Lc75.hex;
+            cursor = accent.tertiary.Lc75.hex;
           };
 
           # Search colors
@@ -86,7 +86,7 @@ in
             };
             focused_match = {
               foreground = colors.surface-base.hex;
-              background = accent.focus.Lc75.hex;
+              background = accent.secondary.Lc75.hex;
             };
           };
 
@@ -98,7 +98,7 @@ in
             };
             end = {
               foreground = colors.surface-base.hex;
-              background = accent.info.Lc75.hex;
+              background = accent.secondary.Lc75.hex;
             };
           };
 

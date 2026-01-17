@@ -17,13 +17,13 @@ let
   cfg = config.theming.signal;
 
   colors = {
-    surface-base = signalColors.tonal."surface-Lc05";
-    surface-subtle = signalColors.tonal."divider-Lc15";
-    surface-emphasis = signalColors.tonal."surface-Lc10";
-    text-primary = signalColors.tonal."text-Lc75";
-    text-secondary = signalColors.tonal."text-Lc60";
-    divider-primary = signalColors.tonal."divider-Lc15";
-    divider-secondary = signalColors.tonal."divider-Lc30";
+    surface-base = signalColors.tonal."surface-subtle";
+    surface-subtle = signalColors.tonal."divider-primary";
+    surface-emphasis = signalColors.tonal."surface-hover";
+    text-primary = signalColors.tonal."text-primary";
+    text-secondary = signalColors.tonal."text-secondary";
+    divider-primary = signalColors.tonal."divider-primary";
+    divider-secondary = signalColors.tonal."divider-strong";
   };
 
   inherit (signalColors) accent;
@@ -72,7 +72,7 @@ in
           fg = hexRaw colors.divider-primary;
         };
         current = {
-          fg = hexRaw accent.focus.Lc75;
+          fg = hexRaw accent.secondary.Lc75;
         };
         preview = {
           fg = hexRaw colors.divider-secondary;
@@ -102,10 +102,10 @@ in
 
       # Mode - Mode indicators (normal, select, unset)
       mode = {
-        normal_main = mkModeStyle colors.surface-base accent.focus.Lc75;
-        normal_alt = mkColorPair accent.focus.Lc75 colors.surface-emphasis;
-        select_main = mkModeStyle colors.surface-base accent.success.Lc75;
-        select_alt = mkColorPair accent.success.Lc75 colors.surface-emphasis;
+        normal_main = mkModeStyle colors.surface-base accent.secondary.Lc75;
+        normal_alt = mkColorPair accent.secondary.Lc75 colors.surface-emphasis;
+        select_main = mkModeStyle colors.surface-base accent.primary.Lc75;
+        select_alt = mkColorPair accent.primary.Lc75 colors.surface-emphasis;
         unset_main = mkModeStyle colors.surface-base accent.warning.Lc75;
         unset_alt = mkColorPair accent.warning.Lc75 colors.surface-emphasis;
       };
@@ -113,7 +113,7 @@ in
       # Manager (file list) colors
       manager = {
         cwd = {
-          fg = hexRaw accent.focus.Lc75;
+          fg = hexRaw accent.secondary.Lc75;
         };
         hovered = {
           fg = hexRaw colors.text-primary;
@@ -128,13 +128,13 @@ in
           bold = true;
         };
         find_position = {
-          fg = hexRaw accent.info.Lc75;
+          fg = hexRaw accent.secondary.Lc75;
           bg = "reset";
           italic = true;
         };
-        marker_copied = mkMarker accent.success.Lc75;
+        marker_copied = mkMarker accent.primary.Lc75;
         marker_cut = mkMarker accent.danger.Lc75;
-        marker_marked = mkMarker accent.focus.Lc75;
+        marker_marked = mkMarker accent.secondary.Lc75;
         marker_selected = mkMarker accent.warning.Lc75;
         tab_active = {
           fg = hexRaw colors.text-primary;
@@ -159,15 +159,15 @@ in
           fg = hexRaw colors.surface-emphasis;
           bg = hexRaw colors.surface-emphasis;
         };
-        mode_normal = mkModeStyle colors.surface-base accent.focus.Lc75;
-        mode_select = mkModeStyle colors.surface-base accent.success.Lc75;
+        mode_normal = mkModeStyle colors.surface-base accent.secondary.Lc75;
+        mode_select = mkModeStyle colors.surface-base accent.primary.Lc75;
         mode_unset = mkModeStyle colors.surface-base accent.warning.Lc75;
         progress_label = {
           fg = hexRaw colors.text-primary;
           bold = true;
         };
         progress_normal = {
-          fg = hexRaw accent.focus.Lc75;
+          fg = hexRaw accent.secondary.Lc75;
           bg = hexRaw colors.surface-emphasis;
         };
         progress_error = {
@@ -175,7 +175,7 @@ in
           bg = hexRaw colors.surface-emphasis;
         };
         permissions_t = {
-          fg = hexRaw accent.success.Lc75;
+          fg = hexRaw accent.primary.Lc75;
         };
         permissions_r = {
           fg = hexRaw accent.warning.Lc75;
@@ -184,17 +184,17 @@ in
           fg = hexRaw accent.danger.Lc75;
         };
         permissions_x = {
-          fg = hexRaw accent.success.Lc75;
+          fg = hexRaw accent.primary.Lc75;
         };
         permissions_s = {
-          fg = hexRaw accent.special.Lc75;
+          fg = hexRaw accent.tertiary.Lc75;
         };
       };
 
       # Input line
       input = {
         border = {
-          fg = hexRaw accent.focus.Lc75;
+          fg = hexRaw accent.secondary.Lc75;
         };
         title = { };
         value = {
@@ -208,10 +208,10 @@ in
       # Select component
       select = {
         border = {
-          fg = hexRaw accent.focus.Lc75;
+          fg = hexRaw accent.secondary.Lc75;
         };
         active = {
-          fg = hexRaw accent.success.Lc75;
+          fg = hexRaw accent.primary.Lc75;
           bold = true;
         };
         inactive = {
@@ -222,11 +222,11 @@ in
       # Tasks
       tasks = {
         border = {
-          fg = hexRaw accent.focus.Lc75;
+          fg = hexRaw accent.secondary.Lc75;
         };
         title = { };
         hovered = {
-          fg = hexRaw accent.success.Lc75;
+          fg = hexRaw accent.primary.Lc75;
           underline = true;
         };
       };
@@ -237,7 +237,7 @@ in
           bg = hexRaw colors.surface-base;
         };
         cand = {
-          fg = hexRaw accent.info.Lc75;
+          fg = hexRaw accent.secondary.Lc75;
         };
         rest = {
           fg = hexRaw colors.text-secondary;
@@ -254,10 +254,10 @@ in
       # Help
       help = {
         on = {
-          fg = hexRaw accent.success.Lc75;
+          fg = hexRaw accent.primary.Lc75;
         };
         run = {
-          fg = hexRaw accent.info.Lc75;
+          fg = hexRaw accent.secondary.Lc75;
         };
         desc = {
           fg = hexRaw colors.text-secondary;
@@ -275,7 +275,7 @@ in
       # Confirm - Confirmation dialogs
       confirm = {
         border = {
-          fg = hexRaw accent.focus.Lc75;
+          fg = hexRaw accent.secondary.Lc75;
         };
         title = {
           fg = hexRaw colors.text-primary;
@@ -289,7 +289,7 @@ in
         };
         btn_yes = {
           fg = hexRaw colors.surface-base;
-          bg = hexRaw accent.success.Lc75;
+          bg = hexRaw accent.primary.Lc75;
           bold = true;
         };
         btn_no = {
@@ -306,14 +306,14 @@ in
       # Spot - Spotlight/table view
       spot = {
         border = {
-          fg = hexRaw accent.focus.Lc75;
+          fg = hexRaw accent.secondary.Lc75;
         };
         title = {
           fg = hexRaw colors.text-primary;
           bold = true;
         };
         tbl_col = {
-          fg = hexRaw accent.focus.Lc75;
+          fg = hexRaw accent.secondary.Lc75;
           bg = hexRaw colors.surface-emphasis;
         };
         tbl_cell = {
@@ -325,7 +325,7 @@ in
       # Notify - Notification styling
       notify = {
         title_info = {
-          fg = hexRaw accent.info.Lc75;
+          fg = hexRaw accent.secondary.Lc75;
           bold = true;
         };
         title_warn = {
@@ -341,10 +341,10 @@ in
       # Pick - Picker/selection UI
       pick = {
         border = {
-          fg = hexRaw accent.focus.Lc75;
+          fg = hexRaw accent.secondary.Lc75;
         };
         active = {
-          fg = hexRaw accent.success.Lc75;
+          fg = hexRaw accent.primary.Lc75;
           bold = true;
         };
         inactive = {
@@ -355,7 +355,7 @@ in
       # Cmp - Completion menu
       cmp = {
         border = {
-          fg = hexRaw accent.focus.Lc75;
+          fg = hexRaw accent.secondary.Lc75;
         };
         active = {
           fg = hexRaw colors.text-primary;
@@ -376,20 +376,20 @@ in
           # Directories
           {
             mime = "inode/directory";
-            fg = hexRaw accent.focus.Lc75;
+            fg = hexRaw accent.secondary.Lc75;
             bold = true;
           }
           # Executables
           {
             name = "*";
             is = "exec";
-            fg = hexRaw accent.success.Lc75;
+            fg = hexRaw accent.primary.Lc75;
           }
           # Links
           {
             name = "*";
             is = "link";
-            fg = hexRaw accent.info.Lc75;
+            fg = hexRaw accent.secondary.Lc75;
           }
           # Orphan links
           {
@@ -410,12 +410,12 @@ in
           # Videos
           {
             mime = "video/*";
-            fg = hexRaw accent.special.Lc75;
+            fg = hexRaw accent.tertiary.Lc75;
           }
           # Audio
           {
             mime = "audio/*";
-            fg = hexRaw accent.info.Lc75;
+            fg = hexRaw accent.secondary.Lc75;
           }
           # Archives
           {

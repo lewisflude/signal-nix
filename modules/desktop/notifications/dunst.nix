@@ -18,11 +18,11 @@ let
   cfg = config.theming.signal;
 
   colors = {
-    surface-base = signalColors.tonal."surface-Lc05";
-    surface-raised = signalColors.tonal."surface-Lc10";
-    text-primary = signalColors.tonal."text-Lc75";
-    text-secondary = signalColors.tonal."text-Lc60";
-    divider-primary = signalColors.tonal."divider-Lc15";
+    surface-base = signalColors.tonal."surface-subtle";
+    surface-raised = signalColors.tonal."surface-hover";
+    text-primary = signalColors.tonal."text-primary";
+    text-secondary = signalColors.tonal."text-secondary";
+    divider-primary = signalColors.tonal."divider-primary";
   };
 
   inherit (signalColors) accent;
@@ -39,7 +39,7 @@ in
     services.dunst.settings = {
       global = {
         # Frame (border) color - ONLY COLOR
-        frame_color = accent.focus.Lc75.hex;
+        frame_color = accent.secondary.Lc75.hex;
 
         # Separator between notifications color
         separator_color = "frame";
@@ -49,14 +49,14 @@ in
       urgency_low = {
         background = colors.surface-base.hex;
         foreground = colors.text-secondary.hex;
-        frame_color = accent.info.Lc75.hex;
+        frame_color = accent.secondary.Lc75.hex;
       };
 
       # Normal urgency notifications (default) - ONLY COLORS
       urgency_normal = {
         background = colors.surface-raised.hex;
         foreground = colors.text-primary.hex;
-        frame_color = accent.focus.Lc75.hex;
+        frame_color = accent.secondary.Lc75.hex;
       };
 
       # Critical urgency notifications (important) - ONLY COLORS

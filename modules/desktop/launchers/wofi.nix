@@ -17,14 +17,14 @@ let
   cfg = config.theming.signal;
 
   colors = {
-    surface-base = signalColors.tonal."surface-Lc05";
-    surface-raised = signalColors.tonal."surface-Lc10";
+    surface-base = signalColors.tonal."surface-subtle";
+    surface-raised = signalColors.tonal."surface-hover";
     # Use divider-Lc30 for hover state (lighter than divider-Lc15, valid token)
-    surface-hover = signalColors.tonal."divider-Lc30";
-    text-primary = signalColors.tonal."text-Lc75";
-    text-secondary = signalColors.tonal."text-Lc60";
-    text-dim = signalColors.tonal."text-Lc45";
-    divider = signalColors.tonal."divider-Lc15";
+    surface-hover = signalColors.tonal."divider-strong";
+    text-primary = signalColors.tonal."text-primary";
+    text-secondary = signalColors.tonal."text-secondary";
+    text-dim = signalColors.tonal."text-tertiary";
+    divider = signalColors.tonal."divider-primary";
   };
 
   inherit (signalColors) accent;
@@ -51,7 +51,7 @@ let
     }
 
     #input:focus {
-      border-color: ${accent.focus.Lc75.hex};
+      border-color: ${accent.secondary.Lc75.hex};
       outline: none;
     }
 

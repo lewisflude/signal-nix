@@ -17,11 +17,11 @@ let
   cfg = config.theming.signal;
 
   colors = {
-    surface-base = signalColors.tonal."surface-Lc05";
-    surface-raised = signalColors.tonal."surface-Lc10";
-    text-primary = signalColors.tonal."text-Lc75";
-    text-secondary = signalColors.tonal."text-Lc60";
-    divider = signalColors.tonal."divider-Lc15";
+    surface-base = signalColors.tonal."surface-subtle";
+    surface-raised = signalColors.tonal."surface-hover";
+    text-primary = signalColors.tonal."text-primary";
+    text-secondary = signalColors.tonal."text-secondary";
+    divider = signalColors.tonal."divider-primary";
   };
 
   inherit (signalColors) accent;
@@ -44,7 +44,7 @@ in
 
       # Text colors
       text-color = toTofiColor colors.text-primary;
-      prompt-color = toTofiColor accent.focus.Lc75;
+      prompt-color = toTofiColor accent.secondary.Lc75;
       placeholder-color = toTofiColor colors.text-secondary;
 
       # Input
@@ -52,7 +52,7 @@ in
       default-result-color = toTofiColor colors.text-secondary;
 
       # Selection
-      selection-color = toTofiColor accent.focus.Lc75;
+      selection-color = toTofiColor accent.secondary.Lc75;
       selection-background = toTofiColor colors.surface-raised;
 
       # Border

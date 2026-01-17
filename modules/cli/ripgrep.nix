@@ -17,9 +17,9 @@ let
   cfg = config.theming.signal;
 
   colors = {
-    text-primary = signalColors.tonal."text-Lc75";
-    text-secondary = signalColors.tonal."text-Lc60";
-    text-dim = signalColors.tonal."text-Lc45";
+    text-primary = signalColors.tonal."text-primary";
+    text-secondary = signalColors.tonal."text-secondary";
+    text-dim = signalColors.tonal."text-tertiary";
   };
 
   inherit (signalColors) accent;
@@ -76,10 +76,10 @@ in
       # Format: type:style:foreground:background:intense
       # We use fg: for foreground RGB colors
       RIPGREP_COLORS = lib.concatStringsSep ":" [
-        "match:fg:${toRgbTriplet accent.focus.Lc75}" # Matched text
+        "match:fg:${toRgbTriplet accent.secondary.Lc75}" # Matched text
         "match:style:bold" # Make matches bold
-        "path:fg:${toRgbTriplet accent.info.Lc75}" # File paths
-        "line:fg:${toRgbTriplet accent.success.Lc75}" # Line numbers
+        "path:fg:${toRgbTriplet accent.secondary.Lc75}" # File paths
+        "line:fg:${toRgbTriplet accent.primary.Lc75}" # Line numbers
         "column:fg:${toRgbTriplet colors.text-secondary}" # Column numbers
       ];
     };

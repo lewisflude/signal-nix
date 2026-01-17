@@ -6,17 +6,17 @@
   # Semantic Colors from Signal Theme
   colors = {
     text = {
-      primary = signalColors.tonal."text-Lc75".hex;
-      secondary = signalColors.tonal."text-Lc60".hex;
-      tertiary = signalColors.tonal."text-Lc45".hex;
+      primary = signalColors.tonal."text-primary".hex;
+      secondary = signalColors.tonal."text-secondary".hex;
+      tertiary = signalColors.tonal."text-tertiary".hex;
     };
     surface = {
-      base = signalColors.tonal."surface-Lc05".hex;
-      emphasis = signalColors.tonal."surface-Lc10".hex;
+      base = signalColors.tonal."surface-subtle".hex;
+      emphasis = signalColors.tonal."surface-hover".hex;
     };
     accent = {
-      focus = signalColors.accent.focus.Lc75.hex;
-      success = signalColors.accent.success.Lc75.hex;
+      focus = signalColors.accent.secondary.Lc75.hex;
+      success = signalColors.accent.primary.Lc75.hex;
       warning = signalColors.accent.warning.Lc75.hex;
       danger = signalColors.accent.danger.Lc75.hex;
     };

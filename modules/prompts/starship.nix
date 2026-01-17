@@ -17,10 +17,10 @@ let
   cfg = config.theming.signal;
 
   colors = {
-    surface-base = signalColors.tonal."surface-Lc05";
-    text-primary = signalColors.tonal."text-Lc75";
-    text-secondary = signalColors.tonal."text-Lc60";
-    text-tertiary = signalColors.tonal."text-Lc45";
+    surface-base = signalColors.tonal."surface-subtle";
+    text-primary = signalColors.tonal."text-primary";
+    text-secondary = signalColors.tonal."text-secondary";
+    text-tertiary = signalColors.tonal."text-tertiary";
   };
 
   inherit (signalColors) accent categorical;
@@ -48,17 +48,17 @@ in
           text-tertiary = colors.text-tertiary.hex;
 
           # Accent colors
-          focus = accent.focus.Lc75.hex;
-          success = accent.success.Lc75.hex;
+          focus = accent.secondary.Lc75.hex;
+          success = accent.primary.Lc75.hex;
           warning = accent.warning.Lc75.hex;
           danger = accent.danger.Lc75.hex;
-          info = accent.info.Lc75.hex;
-          special = accent.special.Lc75.hex;
+          info = accent.secondary.Lc75.hex;
+          special = accent.tertiary.Lc75.hex;
 
           # Categorical colors
-          cat-green = categorical.GA02.hex;
-          cat-purple = categorical.GA06.hex;
-          cat-yellow = categorical.GA08.hex;
+          cat-green = categorical."data-viz-02".hex;
+          cat-purple = categorical."data-viz-06".hex;
+          cat-yellow = categorical."data-viz-08".hex;
         };
 
         # Prompt format

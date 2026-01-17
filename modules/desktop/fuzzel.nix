@@ -18,13 +18,13 @@ let
   cfg = config.theming.signal;
 
   colors = {
-    background = signalColors.tonal."surface-Lc05";
-    text = signalColors.tonal."text-Lc75";
-    text-secondary = signalColors.tonal."text-Lc60";
-    match = signalColors.accent.focus.Lc75;
-    selection-background = signalColors.tonal."divider-Lc15";
-    selection-text = signalColors.tonal."text-Lc75";
-    border = signalColors.accent.focus.Lc75;
+    background = signalColors.tonal."surface-subtle";
+    text = signalColors.tonal."text-primary";
+    text-secondary = signalColors.tonal."text-secondary";
+    match = signalColors.accent.secondary.Lc75;
+    selection-background = signalColors.tonal."divider-primary";
+    selection-text = signalColors.tonal."text-primary";
+    border = signalColors.accent.secondary.Lc75;
   };
 
   # Use high-fidelity alpha channel handling from signalLib

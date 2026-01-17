@@ -18,12 +18,12 @@ let
   cfg = config.theming.signal;
 
   colors = {
-    surface-base = signalColors.tonal."surface-Lc05";
-    surface-raised = signalColors.tonal."surface-Lc10";
-    text-primary = signalColors.tonal."text-Lc75";
-    text-secondary = signalColors.tonal."text-Lc60";
-    text-dim = signalColors.tonal."text-Lc45";
-    divider = signalColors.tonal."divider-Lc15";
+    surface-base = signalColors.tonal."surface-subtle";
+    surface-raised = signalColors.tonal."surface-hover";
+    text-primary = signalColors.tonal."text-primary";
+    text-secondary = signalColors.tonal."text-secondary";
+    text-dim = signalColors.tonal."text-tertiary";
+    divider = signalColors.tonal."divider-primary";
   };
 
   inherit (signalColors) accent;
@@ -42,7 +42,7 @@ in
           theme = {
             lightTheme = cfg.mode == "light";
             activeBorderColor = [
-              accent.focus.Lc75.hex
+              accent.secondary.Lc75.hex
               "bold"
             ];
             inactiveBorderColor = [ colors.divider.hex ];
@@ -50,20 +50,20 @@ in
               accent.warning.Lc75.hex
               "bold"
             ];
-            optionsTextColor = [ accent.focus.Lc75.hex ];
+            optionsTextColor = [ accent.secondary.Lc75.hex ];
             selectedLineBgColor = [ colors.surface-raised.hex ];
             selectedRangeBgColor = [ colors.surface-raised.hex ];
-            cherryPickedCommitBgColor = [ accent.info.Lc75.hex ];
+            cherryPickedCommitBgColor = [ accent.secondary.Lc75.hex ];
             cherryPickedCommitFgColor = [ colors.surface-base.hex ];
             unstagedChangesColor = [ accent.danger.Lc75.hex ];
             defaultFgColor = [ colors.text-primary.hex ];
           };
         };
         reporting = {
-          containerStatusHealthy = accent.success.Lc75.hex;
+          containerStatusHealthy = accent.primary.Lc75.hex;
           containerStatusUnhealthy = accent.danger.Lc75.hex;
           containerStatusExited = colors.text-dim.hex;
-          containerStatusRunning = accent.focus.Lc75.hex;
+          containerStatusRunning = accent.secondary.Lc75.hex;
           containerStatusPaused = accent.warning.Lc75.hex;
         };
       };
