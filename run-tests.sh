@@ -44,6 +44,7 @@ CATEGORIES:
     module         Module tests
     validation     Validation tests
     documentation  Documentation tests
+    color          Color conversion tests (nix-colorizer)
 
 EXAMPLES:
     # Run all tests
@@ -151,6 +152,12 @@ list_tests() {
     echo "  - documentation-examples-valid-nix"
     echo "  - documentation-readme-references"
     echo ""
+    
+    echo -e "${GREEN}Color Conversion Tests (nix-colorizer):${NC}"
+    echo "  - color-conversion-hex-to-rgb"
+    echo "  - color-conversion-hex-with-alpha"
+    echo "  - color-conversion-validation"
+    echo ""
 }
 
 # Get tests by category
@@ -186,6 +193,9 @@ get_tests_by_category() {
             ;;
         documentation)
             echo "documentation-examples-valid-nix documentation-readme-references"
+            ;;
+        color)
+            echo "color-conversion-hex-to-rgb color-conversion-hex-with-alpha color-conversion-validation"
             ;;
         *)
             echo -e "${RED}Unknown category: $category${NC}" >&2

@@ -2,18 +2,18 @@
 
 > **Perception, engineered.**
 
-A scientific color scheme for Nix/Home Manager that themes 20+ applications with OKLCH-based colors and APCA accessibility.
+A scientific color scheme for Nix/Home Manager and NixOS that themes 20+ applications with OKLCH-based colors and APCA accessibility.
 
 ## What is Signal?
 
-**Signal is a color scheme library** that automatically themes your enabled programs. It provides scientifically-designed colors but never installs or enables programs for you.
+**Signal is a comprehensive theming system** that automatically themes your programs at both user and system level. It provides scientifically-designed colors but never installs or enables programs for you.
 
 ```
 ┌─────────────────────────────────────────────┐
 │  You Enable Programs                        │
 │  ├─ programs.helix.enable = true            │
 │  ├─ programs.kitty.enable = true            │
-│  └─ programs.bat.enable = true              │
+│  └─ boot.loader.grub.enable = true          │
 └────────────────┬────────────────────────────┘
                  │
                  ▼
@@ -21,6 +21,7 @@ A scientific color scheme for Nix/Home Manager that themes 20+ applications with
 │  Signal Themes Them                         │
 │  ├─ theming.signal.enable = true            │
 │  ├─ theming.signal.autoEnable = true        │
+│  ├─ theming.signal.nixos.boot.grub.enable  │
 │  └─ Automatically applies colors ✨         │
 └─────────────────────────────────────────────┘
 ```
@@ -28,11 +29,12 @@ A scientific color scheme for Nix/Home Manager that themes 20+ applications with
 ## Features
 
 - 🎨 **20+ Applications**: Terminals, editors, CLI tools, GTK, Ironbar, and more
+- 🖥️ **System-Level Theming**: Boot screens, TTY, GRUB (NixOS modules) - **NEW**
 - 🤖 **Automatic Detection**: Set `autoEnable = true` and Signal themes all your enabled programs
 - 🔬 **Scientific Foundation**: OKLCH color space + APCA accessibility standards
 - 🌓 **Dual Themes**: Light and dark modes with consistent semantics
 - ⚡ **Zero Configuration**: Three lines to get started
-- ✅ **Comprehensive Testing**: 55+ tests ensuring reliability and quality
+- ✅ **Comprehensive Testing**: 59+ tests ensuring reliability and quality
 
 ## Quick Start (5 Minutes)
 
@@ -84,6 +86,57 @@ home-manager switch
 That's it! All your enabled programs now use Signal colors.
 
 > **Adding Signal to an existing config?** See [Getting Started Guide](docs/getting-started.md) for integration examples.
+
+## NixOS System Theming (NEW)
+
+Signal now supports system-level theming for NixOS components!
+
+### Quick Start - NixOS
+
+```nix
+{
+  inputs = {
+    nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable";
+    signal.url = "github:lewisflude/signal-nix";
+  };
+
+  outputs = { nixpkgs, signal, ... }: {
+    nixosConfigurations.yourhostname = nixpkgs.lib.nixosSystem {
+      modules = [
+        signal.nixosModules.default
+        {
+          # System-level Signal theming
+          theming.signal.nixos = {
+            enable = true;
+            mode = "dark";
+            
+            boot = {
+              console.enable = true;  # TTY colors
+              grub.enable = true;     # GRUB theme
+            };
+          };
+          
+          # Your existing NixOS config
+          boot.loader.grub.enable = true;
+        }
+      ];
+    };
+  };
+}
+```
+
+### System Components Themed
+
+- ✅ **Virtual Console (TTY)** - Colored text in Ctrl+Alt+F1-F6
+- ✅ **GRUB Bootloader** - Themed boot menu
+- ✅ **SDDM Display Manager** - KDE/Qt login screen (NEW)
+- 🚧 **Plymouth** - Boot splash (coming soon)
+- 🚧 **GDM** - GNOME display manager (planned)
+- 🚧 **LightDM** - Alternative display manager (planned)
+
+See [NixOS Module Documentation](docs/nixos-modules.md) for complete guide.
+
+That's it! All your enabled programs now use Signal colors.
 
 ## How It Works
 
@@ -290,6 +343,7 @@ This separation enables stable color versioning, platform-agnostic usage, and si
 ### Getting Started
 
 - **[Getting Started Guide](docs/getting-started.md)** - Detailed setup for new and existing configs
+- **[NixOS Modules Guide](docs/nixos-modules.md)** - System-level theming (NEW)
 - **[Configuration Guide](docs/configuration-guide.md)** - All configuration options explained
 - **[Architecture Overview](docs/architecture.md)** - How Signal works internally
 

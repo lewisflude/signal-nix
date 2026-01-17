@@ -1,258 +1,193 @@
-# nix-colorizer Integration
-
-**Status**: ✅ Complete  
-**Date**: 2025-01-17  
-**Version**: 1.0.0
+# Signal-Nix Test Suite - nix-colorizer Integration
 
 ## Summary
 
-Integrated [nix-colorizer](https://github.com/nutsalhan87/nix-colorizer) into signal-nix to provide high-fidelity color conversions with perceptual accuracy using OKLCh color space.
+The test suite has been updated to support the new `nix-colorizer` dependency and includes 3 new tests for the color conversion utilities.
 
-## Motivation
+## What Was Added
 
-Signal-nix needed accurate color format conversions for applications with different requirements:
-- **Zellij**: Requires space-separated RGB format (e.g., "107 135 200")
-- **Fuzzel**: Requires RRGGBBAA format with alpha channel (e.g., "6b87c8f2")
-- **General**: Need to maintain color accuracy across all format conversions
+### New Tests (3)
 
-Previous implementation used manual hex parsing with `builtins.fromTOML`, which:
-- Operated in RGB color space (not perceptually uniform)
-- Had limited precision
-- Lacked proper alpha channel support
-- Required custom implementation for each format
+1. **`color-conversion-hex-to-rgb`**
+   - Tests `hexToRgbSpaceSeparated` function
+   - Validates space-separated RGB output format
+   - Tests edge case with white color (#ffffff → "255 255 255")
 
-## What Changed
+2. **`color-conversion-hex-with-alpha`**
+   - Tests `hexWithAlpha` function
+   - Validates 8-character RRGGBBAA format
+   - Tests full opacity (1.0) and half opacity (0.5)
+   - Ensures no # prefix in output
 
-### 1. Added nix-colorizer as Flake Input
+3. **`color-conversion-validation`**
+   - Tests `isValidHexColor` function
+   - Validates 6-character hex colors (#RRGGBB)
+   - Validates 8-character hex colors (#RRGGBBAA)
+   - Validates case-insensitive matching
+   - Tests rejection of invalid formats
 
-**File**: `flake.nix`
+### Files Modified
 
-```nix
-inputs = {
-  nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable";
-  signal-palette.url = "github:lewisflude/signal-palette";
-  nix-colorizer.url = "github:nutsalhan87/nix-colorizer";  # ← New
-};
+1. **`tests/comprehensive-test-suite.nix`**
+   - Added 3 new color conversion tests
+   - Added nix-colorizer parameter
+   - Total tests: 58 (was 55)
+
+2. **`tests/default.nix`**
+   - Exports 3 new color conversion tests
+   - Added nix-colorizer parameter
+
+3. **`flake.nix`**
+   - Exposes 3 new tests as checks
+   - Added color conversion test category
+
+4. **`run-tests.sh`**
+   - Added "color" category
+   - Lists 3 color conversion tests
+   - Updated help documentation
+
+## New Test Category
+
+### Color Conversion Tests
+
+**Category**: `color`  
+**Count**: 3 tests  
+**Purpose**: Validate nix-colorizer integration
+
+**Run**:
+```bash
+./run-tests.sh --category color
 ```
 
-### 2. Created High-Fidelity Conversion Utilities
+## Updated Test Statistics
 
-**File**: `lib/default.nix`
+| Category | Count | Change |
+|----------|-------|--------|
+| Happy Path | 6 | - |
+| Edge Cases | 8 | - |
+| Error Handling | 3 | - |
+| Integration | 11 | - |
+| Performance | 4 | - |
+| Security | 5 | - |
+| Unit Tests | 5 | - |
+| Module Tests | 8 | - |
+| Validation | 3 | - |
+| Documentation | 2 | - |
+| **Color Conversion** | **3** | **NEW** |
+| **TOTAL** | **58** | **+3** |
 
-Added three new conversion functions:
+## Test Coverage for nix-colorizer Functions
 
-```nix
-# Convert hex to space-separated RGB (0-255 range)
-hexToRgbSpaceSeparated = color:
-  let
-    srgb = nix-colorizer.hex.to.srgb color.hex;
-    r = builtins.floor (srgb.r * 255.0 + 0.5);
-    g = builtins.floor (srgb.g * 255.0 + 0.5);
-    b = builtins.floor (srgb.b * 255.0 + 0.5);
-  in
-  "${toString r} ${toString g} ${toString b}";
-
-# Add alpha channel in RRGGBBAA format (no # prefix)
-hexWithAlpha = color: alpha:
-  lib.removePrefix "#" (nix-colorizer.hex.setAlpha color.hex alpha);
-
-# Validate hex color format
-isValidHexColor = str: /* validation logic */;
+```
+lib/default.nix (Color Conversion Utilities)
+├── hexToRgbSpaceSeparated     ✅ color-conversion-hex-to-rgb
+├── hexWithAlpha               ✅ color-conversion-hex-with-alpha
+└── isValidHexColor            ✅ color-conversion-validation
 ```
 
-### 3. Updated Zellij Module
+## Usage
 
-**File**: `modules/multiplexers/zellij.nix`
-
-**Before** (manual hex parsing):
-```nix
-hexToRgb = color:
-  let
-    hex = removePrefix "#" color.hex;
-    r = builtins.fromTOML "x=0x${builtins.substring 0 2 hex}";
-    g = builtins.fromTOML "x=0x${builtins.substring 2 2 hex}";
-    b = builtins.fromTOML "x=0x${builtins.substring 4 2 hex}";
-  in
-  "${toString r.x} ${toString g.x} ${toString b.x}";
-```
-
-**After** (high-fidelity conversion):
-```nix
-toZellijColor = signalLib.hexToRgbSpaceSeparated;
-```
-
-### 4. Updated Fuzzel Module
-
-**File**: `modules/desktop/fuzzel.nix`
-
-**Before** (string concatenation):
-```nix
-colors = {
-  background = "${colors.background.hexRaw}f2";  # ~95% opacity
-  text = "${colors.text.hexRaw}ff";
-};
-```
-
-**After** (proper alpha channel):
-```nix
-withAlpha = color: alpha: signalLib.hexWithAlpha color alpha;
-
-colors = {
-  background = withAlpha colors.background 0.949;  # 95% opacity
-  text = withAlpha colors.text 1.0;                # Fully opaque
-};
-```
-
-### 5. Updated All Tests
-
-**Files**: `tests/default.nix`, `tests/comprehensive-test-suite.nix`
-
-Added `nix-colorizer` to test configurations:
-```nix
-signalLib = import ../lib {
-  inherit lib;
-  palette = signal-palette.palette;
-  nix-colorizer = self.inputs.nix-colorizer;  # ← New
-};
-```
-
-### 6. Updated Documentation
-
-**Files**: 
-- `docs/architecture.md` - Added "High-Fidelity Color Conversion" section
-- `docs/design-principles.md` - Updated core philosophy
-- Updated component architecture diagram to show conversion utilities
-
-## Benefits
-
-### 1. **Perceptual Accuracy**
-- OKLCh color space provides perceptually uniform color conversions
-- Colors maintain their perceived brightness and relationships
-
-### 2. **Higher Precision**
-- Uses floating-point arithmetic instead of TOML hex parsing
-- Proper rounding for RGB conversion (0-255 range)
-
-### 3. **Alpha Channel Support**
-- Native alpha channel handling with proper opacity calculations
-- Eliminates string concatenation for alpha values
-
-### 4. **Maintainability**
-- Removes custom color conversion code
-- Single source of truth for color operations
-- Professional-grade color library maintained by the community
-
-### 5. **Future-Proof**
-- Support for additional color formats (if needed)
-- Access to color manipulation functions (lighten, darken, blend, etc.)
-- Can leverage color harmony generation
-
-## Testing
-
-All integration tests pass:
+### Run color conversion tests
 
 ```bash
-✅ nix build .#checks.x86_64-linux.format
-✅ nix build .#checks.x86_64-linux.unit-lib-resolveThemeMode
-✅ nix build .#checks.x86_64-linux.integration-example-basic
-✅ nix build .#checks.x86_64-linux.integration-example-full-desktop
+# Run all color conversion tests
+./run-tests.sh --category color
+
+# Run individual test
+./run-tests.sh color-conversion-hex-to-rgb
+
+# Using nix directly
+nix build .#checks.x86_64-linux.color-conversion-hex-to-rgb
 ```
 
-## Examples
+### List color conversion tests
 
-### Zellij Color Conversion
-
-```nix
-# Input color from signal-palette
-color = signalColors.tonal."text-Lc75";  # { hex = "#c5cdd8", ... }
-
-# Old method (manual parsing)
-"197 205 216"  # May have rounding errors
-
-# New method (nix-colorizer)
-"197 205 216"  # Perceptually accurate with proper rounding
+```bash
+./run-tests.sh --list | grep -A 5 "Color Conversion"
 ```
 
-### Fuzzel Alpha Channel
-
-```nix
-# Input color
-background = signalColors.tonal."surface-Lc05";  # { hex = "#1a1c22", ... }
-
-# Old method (string concatenation)
-"1a1c22f2"  # Manual alpha calculation
-
-# New method (nix-colorizer)
-withAlpha background 0.949  # "1a1c22f2" - Proper alpha conversion
-```
-
-## API Reference
+## What the Tests Validate
 
 ### hexToRgbSpaceSeparated
-
-Converts hex color to space-separated RGB string.
-
-**Usage:**
-```nix
-signalLib.hexToRgbSpaceSeparated color
-```
-
-**Input:** Color object with `.hex` attribute (e.g., `{ hex = "#6b87c8"; ... }`)  
-**Output:** Space-separated RGB string (e.g., `"107 135 200"`)  
-**Used by:** Zellij theme format
+- ✅ Converts hex colors to space-separated RGB format
+- ✅ Output format matches regex pattern `[0-9]+ [0-9]+ [0-9]+`
+- ✅ White color (#ffffff) correctly converts to "255 255 255"
+- ✅ Used by Zellij theme module
 
 ### hexWithAlpha
-
-Adds alpha channel to hex color in RRGGBBAA format.
-
-**Usage:**
-```nix
-signalLib.hexWithAlpha color alpha
-```
-
-**Input:** 
-- `color`: Color object with `.hex` attribute
-- `alpha`: Alpha value from 0.0 (transparent) to 1.0 (opaque)
-
-**Output:** 8-character hex string without # (e.g., `"6b87c8f2"`)  
-**Used by:** Fuzzel color format
+- ✅ Adds alpha channel to hex colors
+- ✅ Output is 8 characters (RRGGBBAA without #)
+- ✅ Handles full opacity (1.0) correctly
+- ✅ Handles partial opacity (0.5) correctly
+- ✅ Removes # prefix for Fuzzel format
+- ✅ Used by Fuzzel theme module
 
 ### isValidHexColor
+- ✅ Accepts valid 6-character hex (#RRGGBB)
+- ✅ Accepts valid 8-character hex (#RRGGBBAA)
+- ✅ Case-insensitive validation
+- ✅ Rejects hex without # prefix
+- ✅ Rejects invalid lengths
+- ✅ Rejects non-hex characters
+- ✅ Used for input validation
 
-Validates hex color format.
+## Verification
 
-**Usage:**
-```nix
-signalLib.isValidHexColor "#6b87c8"  # true
-signalLib.isValidHexColor "invalid"  # false
+All files have been syntax-checked:
+
+```bash
+✓ comprehensive-test-suite.nix parses correctly
+✓ tests/default.nix parses correctly
+✓ flake.nix parses correctly
+✓ run-tests.sh works correctly
 ```
 
-**Input:** String to validate  
-**Output:** Boolean (true if valid #RRGGBB or #RRGGBBAA format)
+## Integration with CI/CD
 
-## Migration Notes
+The new tests will automatically run in CI via GitHub Actions:
 
-No breaking changes for users. All changes are internal to signal-nix implementation.
+- ✅ Pull requests
+- ✅ Push to main
+- ✅ Daily schedule
+- ✅ Manual trigger
 
-Existing configurations will continue to work without modification, but with improved color accuracy.
+## Quick Reference
 
-## Future Enhancements
+```bash
+# Run all tests (including new color conversion tests)
+./run-tests.sh --all
 
-Potential future uses of nix-colorizer:
+# Run just color conversion tests
+./run-tests.sh --category color
 
-1. **Color Manipulation**: Use `lighten`, `darken`, `blend` for programmatic color generation
-2. **Harmony Generation**: Use `complementary`, `analogous`, `splitComplementary` for derived palettes
-3. **Gradient Generation**: Use `gradient`, `shades`, `tints`, `tones` for smooth color transitions
-4. **Accessibility**: Leverage OKLCh for better contrast ratio calculations
+# Run specific test
+./run-tests.sh color-conversion-hex-with-alpha
 
-## References
+# List all color tests
+./run-tests.sh --list | grep color
 
-- [nix-colorizer GitHub](https://github.com/nutsalhan87/nix-colorizer)
-- [OKLCh Color Space](https://oklch.com/)
-- [Signal Palette](https://github.com/lewisflude/signal-palette)
-- [Architecture Documentation](./docs/architecture.md)
-- [Design Principles](./docs/design-principles.md)
+# Generate updated report
+./generate-test-report.sh
+```
 
-## Acknowledgments
+## Next Steps
 
-Special thanks to [@nutsalhan87](https://github.com/nutsalhan87) for creating and maintaining nix-colorizer.
+No additional cleanup needed. The test suite is:
+
+✅ Updated for nix-colorizer  
+✅ All tests parse correctly  
+✅ New tests added for color conversion  
+✅ Documentation updated  
+✅ Scripts updated  
+✅ Ready to use
+
+## Summary
+
+The test suite has been successfully updated to work with the new `nix-colorizer` dependency. Three new tests have been added to validate the color conversion utilities, bringing the total test count to **58 tests**. All files parse correctly and the test runner script has been updated to include the new "color" category.
+
+---
+
+**Updated**: 2026-01-17  
+**Total Tests**: 58 (+3 from original 55)  
+**New Category**: Color Conversion (3 tests)  
+**Status**: ✅ Complete

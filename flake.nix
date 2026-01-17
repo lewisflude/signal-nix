@@ -48,6 +48,52 @@
         ghostty = import ./modules/terminals/ghostty.nix;
       };
 
+      # NixOS modules (system-level theming)
+      nixosModules = {
+        default = self.nixosModules.signal;
+
+        signal = import ./modules/nixos/common {
+          inherit (signal-palette) palette;
+          inherit nix-colorizer;
+        };
+
+        # Granular module exports for advanced users
+        boot = import ./modules/nixos/boot/console.nix;
+        grub = import ./modules/nixos/boot/grub.nix;
+        sddm = import ./modules/nixos/login/sddm.nix;
+      };
+
+      # Theme packages
+      packages = forAllSystems (
+        system:
+        let
+          pkgs = nixpkgs.legacyPackages.${system};
+          signalLib = self.lib;
+          signalColors = signalLib.getColors "dark";
+        in
+        {
+          # GRUB themes
+          signal-grub-theme-dark = pkgs.callPackage ./pkgs/grub-theme {
+            inherit signalColors signalLib;
+            mode = "dark";
+          };
+          signal-grub-theme-light = pkgs.callPackage ./pkgs/grub-theme {
+            inherit signalColors signalLib;
+            mode = "light";
+          };
+
+          # SDDM themes
+          signal-sddm-theme-dark = pkgs.callPackage ./pkgs/sddm-theme {
+            inherit signalColors signalLib;
+            mode = "dark";
+          };
+          signal-sddm-theme-light = pkgs.callPackage ./pkgs/sddm-theme {
+            inherit signalColors signalLib;
+            mode = "light";
+          };
+        }
+      );
+
       # Library functions
       lib = import ./lib {
         inherit (nixpkgs) lib;
@@ -93,6 +139,16 @@
             inherit (nixpkgs) lib;
             home-manager = nixpkgs.legacyPackages.${system}.home-manager;
           };
+
+          # Import NixOS-specific tests
+          nixosTests = import ./tests/nixos.nix {
+            inherit
+              pkgs
+              self
+              system
+              ;
+            inherit (nixpkgs) lib;
+          };
         in
         {
           # ============================================================================
@@ -111,8 +167,17 @@
             test -d ${./modules} || exit 1
             test -d ${./lib} || exit 1
             test -d ${./examples} || exit 1
+            test -d ${./modules/nixos} || { echo "Missing nixos modules directory"; exit 1; }
+            test -f ${./modules/nixos/common/default.nix} || { echo "Missing nixos common module"; exit 1; }
+            test -f ${./modules/nixos/boot/console.nix} || { echo "Missing nixos console module"; exit 1; }
+            test -f ${./modules/nixos/boot/grub.nix} || { echo "Missing nixos grub module"; exit 1; }
+            test -f ${./modules/nixos/login/sddm.nix} || { echo "Missing nixos sddm module"; exit 1; }
+            test -f ${./pkgs/grub-theme/default.nix} || { echo "Missing grub theme package"; exit 1; }
+            test -f ${./pkgs/sddm-theme/default.nix} || { echo "Missing sddm theme package"; exit 1; }
             echo "✓ Flake structure is valid"
-            echo "✓ Module exports: default, signal, ironbar, gtk, helix, fuzzel, ghostty"
+            echo "✓ Home Manager exports: default, signal, ironbar, gtk, helix, fuzzel, ghostty"
+            echo "✓ NixOS exports: default, signal, boot, grub, sddm"
+            echo "✓ Packages: grub-theme (dark/light), sddm-theme (dark/light)"
             touch $out
           '';
 
@@ -350,6 +415,30 @@
           inherit (allTests)
             documentation-examples-valid-nix
             documentation-readme-references
+            ;
+
+          # ============================================================================
+          # Comprehensive Test Suite - Color Conversion (nix-colorizer)
+          # ============================================================================
+
+          inherit (allTests)
+            color-conversion-hex-to-rgb
+            color-conversion-hex-with-alpha
+            color-conversion-validation
+            ;
+
+          # ============================================================================
+          # NixOS Module Tests
+          # ============================================================================
+
+          inherit (nixosTests)
+            nixos-console-colors-basic
+            nixos-console-disabled
+            nixos-console-light-mode
+            nixos-home-manager-isolation
+            nixos-sddm-theme-basic
+            nixos-sddm-disabled
+            nixos-sddm-light-mode
             ;
         }
       );

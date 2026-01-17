@@ -734,5 +734,10 @@ in
     # Documentation Tests
     documentation-examples-valid-nix
     documentation-readme-references
+
+    # Color Conversion Tests (nix-colorizer)
+    color-conversion-hex-to-rgb
+    color-conversion-hex-with-alpha
+    color-conversion-validation
     ;
 }

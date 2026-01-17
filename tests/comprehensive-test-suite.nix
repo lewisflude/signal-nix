@@ -865,4 +865,109 @@ in
     echo "✓ Documentation references checked"
     touch $out
   '';
+
+  # ============================================================================
+  # Color Conversion Tests (nix-colorizer integration)
+  # ============================================================================
+
+  color-conversion-hex-to-rgb = mkTest "color-conversion-hex-to-rgb" {
+    testHexToRgbConversion = {
+      expr =
+        let
+          testColor = {
+            hex = "#6b87c8";
+          };
+          result = signalLib.hexToRgbSpaceSeparated testColor;
+        in
+        # Result should be space-separated RGB values
+        builtins.match "[0-9]+ [0-9]+ [0-9]+" result != null;
+      expected = true;
+    };
+
+    testRgbValues = {
+      expr =
+        let
+          testColor = {
+            hex = "#ffffff";
+          };
+          result = signalLib.hexToRgbSpaceSeparated testColor;
+        in
+        # White should be "255 255 255"
+        result == "255 255 255";
+      expected = true;
+    };
+  };
+
+  color-conversion-hex-with-alpha = mkTest "color-conversion-hex-with-alpha" {
+    testFullOpacity = {
+      expr =
+        let
+          testColor = {
+            hex = "#6b87c8";
+          };
+          result = signalLib.hexWithAlpha testColor 1.0;
+        in
+        # Result should be 8 characters (RRGGBBAA without #)
+        builtins.stringLength result == 8;
+      expected = true;
+    };
+
+    testHalfOpacity = {
+      expr =
+        let
+          testColor = {
+            hex = "#6b87c8";
+          };
+          result = signalLib.hexWithAlpha testColor 0.5;
+        in
+        # Result should be 8 characters
+        builtins.stringLength result == 8;
+      expected = true;
+    };
+
+    testNoHashPrefix = {
+      expr =
+        let
+          testColor = {
+            hex = "#6b87c8";
+          };
+          result = signalLib.hexWithAlpha testColor 1.0;
+        in
+        # Result should not start with #
+        !(lib.hasPrefix "#" result);
+      expected = true;
+    };
+  };
+
+  color-conversion-validation = mkTest "color-conversion-validation" {
+    testValidHex6 = {
+      expr = signalLib.isValidHexColor "#6b87c8";
+      expected = true;
+    };
+
+    testValidHex8 = {
+      expr = signalLib.isValidHexColor "#6b87c8ff";
+      expected = true;
+    };
+
+    testValidUppercase = {
+      expr = signalLib.isValidHexColor "#6B87C8";
+      expected = true;
+    };
+
+    testInvalidNoHash = {
+      expr = signalLib.isValidHexColor "6b87c8";
+      expected = false;
+    };
+
+    testInvalidLength = {
+      expr = signalLib.isValidHexColor "#6b87";
+      expected = false;
+    };
+
+    testInvalidCharacters = {
+      expr = signalLib.isValidHexColor "#6b87g8";
+      expected = false;
+    };
+  };
 }
