@@ -173,6 +173,7 @@ theming.signal.autoEnable = true;  # Themes your installed kitty
 - **polybar** - X11 status bar (complete INI config) ✨
 - **dunst** - Notification daemon (urgency-based colors) ✨
 - **mako** - Wayland notifications (INI config) ✨
+- **SwayNC** - Sway Notification Center (CSS styling with notification center) ✨
 - **Ironbar** - Wayland status bar (with 3 display profiles)
 - **GTK 3/4** - GTK application theming
 - **Fuzzel** - Application launcher

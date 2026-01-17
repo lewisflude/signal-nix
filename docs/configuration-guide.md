@@ -554,6 +554,11 @@ For a fully themed desktop environment:
   gtk.enable = true;
   programs.fuzzel.enable = true;
   
+  # Enable notification daemon (choose one)
+  services.dunst.enable = true;     # Traditional notification daemon
+  # services.mako.enable = true;    # Wayland notifications
+  # services.swaync.enable = true;  # Sway Notification Center
+  
   # Theme them with Signal
   theming.signal = {
     enable = true;
@@ -562,9 +567,45 @@ For a fully themed desktop environment:
     
     # Configure ironbar profile for your display
     ironbar.profile = "relaxed";  # Adjust for your resolution
+    
+    # Notification theming (automatic with autoEnable)
+    desktop.notifications = {
+      dunst.enable = true;   # or mako.enable or swaync.enable
+    };
   };
 }
 ```
+
+### Notification Daemons
+
+Signal supports three notification daemons with color theming:
+
+**Dunst** - Traditional X11/Wayland notifications
+```nix
+services.dunst.enable = true;
+theming.signal.desktop.notifications.dunst.enable = true;
+```
+
+**Mako** - Lightweight Wayland notifications
+```nix
+services.mako.enable = true;
+theming.signal.desktop.notifications.mako.enable = true;
+```
+
+**SwayNC** - Notification center with control panel (Wayland)
+```nix
+services.swaync.enable = true;
+theming.signal.desktop.notifications.swaync.enable = true;
+```
+
+Signal themes:
+- Background and foreground colors
+- Urgency levels (low, normal, critical)
+- Borders and dividers
+- Action buttons
+- Progress bars (where applicable)
+
+You configure fonts, spacing, timeouts, and other behavior in your own notification daemon config.
 
 ### Per-Monitor Configuration
 

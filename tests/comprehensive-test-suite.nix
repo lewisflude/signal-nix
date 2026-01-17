@@ -832,6 +832,40 @@ in
     touch $out
   '';
 
+  integration-gtk-qt-theming = pkgs.runCommand "test-integration-gtk-qt-theming" { } ''
+    echo "Testing that GTK and Qt modules work correctly..."
+
+    # Test GTK module exists and has color definitions
+    ${pkgs.gnugrep}/bin/grep -q "@define-color theme_bg_color" ${../modules/gtk/default.nix} || {
+      echo "FAIL: GTK module missing color definitions"
+      exit 1
+    }
+
+    ${pkgs.gnugrep}/bin/grep -q "gtk3.extraCss" ${../modules/gtk/default.nix} || {
+      echo "FAIL: GTK module missing GTK3 configuration"
+      exit 1
+    }
+
+    # Test Qt module exists and has KDE color configuration
+    ${pkgs.gnugrep}/bin/grep -q "qt.kde.settings" ${../modules/qt/default.nix} || {
+      echo "FAIL: Qt module missing KDE settings"
+      exit 1
+    }
+
+    ${pkgs.gnugrep}/bin/grep -q "Colors:Window" ${../modules/qt/default.nix} || {
+      echo "FAIL: Qt module missing window color configuration"
+      exit 1
+    }
+
+    ${pkgs.gnugrep}/bin/grep -q "adwaita" ${../modules/qt/default.nix} || {
+      echo "FAIL: Qt module missing Adwaita style configuration"
+      exit 1
+    }
+
+    echo "✓ GTK and Qt theming modules are valid"
+    touch $out
+  '';
+
   # ============================================================================
   # DOCUMENTATION TESTS
   # Ensure examples and documentation are valid

@@ -4,7 +4,7 @@
 # - Hyprland compositor
 # - Waybar status bar
 # - rofi launcher
-# - dunst notifications
+# - dunst/mako/swaync notifications (choose one)
 # - Editors (VS Code, Vim, Emacs)
 # - Shells (fish, bash)
 # - All themed with Signal colors
@@ -41,8 +41,10 @@
               # Launcher
               rofi.enable = true;
 
-              # Notifications
-              dunst.enable = true;
+              # Notifications (choose one)
+              dunst.enable = true; # Traditional notification daemon
+              # Or use mako for Wayland
+              # Or use SwayNC for a notification center with control panel
 
               # Editors
               vscode.enable = true;
@@ -68,6 +70,8 @@
             # Enable services
             services = {
               dunst.enable = true;
+              # mako.enable = true; # Alternative: Wayland notification daemon
+              # swaync.enable = true; # Alternative: Sway Notification Center
             };
 
             # Signal automatically themes ALL of the above! ✨

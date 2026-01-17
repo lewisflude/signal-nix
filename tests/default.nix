@@ -717,6 +717,7 @@ in
     integration-auto-enable-logic
     integration-helix-builds
     integration-ghostty-builds
+    integration-gtk-qt-theming
 
     # Performance Tests
     performance-color-lookups

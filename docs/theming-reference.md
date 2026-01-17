@@ -518,19 +518,26 @@ This reference organizes theming documentation by application category, making i
 **Format:** CSS  
 **Notes:** Notification center for Sway
 
-### 🔴 Mako
-**Status:** ❌ Not implemented  
+### ✅ Mako
+**Status:** ✅ Implemented  
 **Category:** Notification daemon  
 **Documentation:** [Mako Style](https://github.com/emersion/mako/blob/master/mako.5.scd#style)  
 **Format:** Mako config  
-**Notes:** Lightweight Wayland notifications
+**Notes:** Lightweight Wayland notifications. Signal provides colors only.
 
-### 🔴 Dunst
-**Status:** ❌ Not implemented  
+### ✅ Dunst
+**Status:** ✅ Implemented  
 **Category:** Notification daemon  
 **Documentation:** [Dunst Styling](https://dunst-project.org/documentation/#styling)  
 **Format:** Dunst config  
-**Notes:** X11/Wayland notification daemon
+**Notes:** X11/Wayland notification daemon. Signal themes urgency levels with colors only.
+
+### ✅ SwayNC (Sway Notification Center)
+**Status:** ✅ Implemented  
+**Category:** Notification daemon with control center  
+**Documentation:** [SwayNC Config](https://github.com/ErikReider/SwayNotificationCenter?tab=readme-ov-file#configuring)  
+**Format:** CSS  
+**Notes:** Feature-rich notification center with control panel. Signal provides CSS color overrides for all notification states and widgets.
 
 ### 🔴 SwayOSD
 **Status:** ❌ Not implemented  
