@@ -294,7 +294,8 @@ in
     })
 
     # Configure vscodium if enabled (use same settings)
-    (mkIf (cfg.enable && shouldThemeCodium) {
+    # Only set if the vscodium module exists (i.e., programs.vscodium is a valid option)
+    (mkIf (cfg.enable && shouldThemeCodium && (config.programs ? vscodium)) {
       programs.vscodium.userSettings = vscodeSettings;
     })
   ];
