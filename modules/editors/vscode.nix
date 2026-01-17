@@ -29,10 +29,9 @@ let
 
   inherit (signalColors) accent;
 
-  # Check if vscode/vscodium should be themed
+  # Check if vscode should be themed
   # Only theme if the program is actually enabled
   vscodeEnabled = config.programs.vscode.enable or false;
-  vscodiumEnabled = config.programs.vscodium.enable or false;
 
   shouldTheme =
     vscodeEnabled
@@ -41,7 +40,6 @@ let
       "vscode"
     ] cfg config);
 
-  shouldThemeCodium = vscodiumEnabled;
   vscodeSettings = {
     "workbench.colorTheme" = "Signal";
     "workbench.colorCustomizations" = {
@@ -287,16 +285,7 @@ let
   };
 in
 {
-  config = lib.mkMerge [
-    # Configure vscode if enabled
-    (mkIf (cfg.enable && shouldTheme) {
-      programs.vscode.userSettings = vscodeSettings;
-    })
-
-    # Configure vscodium if enabled (use same settings)
-    # Only set if the vscodium module exists (i.e., programs.vscodium is a valid option)
-    (mkIf (cfg.enable && shouldThemeCodium && (config.programs ? vscodium)) {
-      programs.vscodium.userSettings = vscodeSettings;
-    })
-  ];
+  config = mkIf (cfg.enable && shouldTheme) {
+    programs.vscode.userSettings = vscodeSettings;
+  };
 }
