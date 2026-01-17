@@ -20,10 +20,10 @@ let
   };
 
   # Determine if LightDM should be themed
-  shouldTheme = 
-    cfg.enable && 
-    cfg.login.lightdm.enable && 
-    (config.services.xserver.displayManager.lightdm.enable or false);
+  shouldTheme =
+    cfg.enable
+    && cfg.login.lightdm.enable
+    && (config.services.xserver.displayManager.lightdm.enable or false);
 
   # Determine which greeter is in use
   isGtkGreeter = config.services.xserver.displayManager.lightdm.greeters.gtk.enable or false;
@@ -66,28 +66,29 @@ in
       # Set background
       extraConfig = ''
         # Signal Design System LightDM Configuration
-        
+
         # Background
-        ${if cfg.login.lightdm.backgroundImage != null then
-          "background = ${cfg.login.lightdm.backgroundImage}"
-        else
-          "background = ${signalColors.tonal."surface-Lc05".hex}"
+        ${
+          if cfg.login.lightdm.backgroundImage != null then
+            "background = ${cfg.login.lightdm.backgroundImage}"
+          else
+            "background = ${signalColors.tonal."surface-Lc05".hex}"
         }
-        
+
         # Theme
         theme-name = Signal-${themeMode}
         icon-theme-name = Adwaita
-        
+
         # Font (using system default)
         font-name = Sans 11
-        
+
         # Additional appearance settings
         indicators = ~host;~spacer;~clock;~spacer;~session;~a11y;~power
         clock-format = %a, %b %d  %H:%M
-        
+
         # Panel colors (using Signal colors)
         user-background = false
-        
+
         # Disable user list for security (optional - user can override)
         # allow-guest = false
       '';
@@ -100,10 +101,11 @@ in
         [greeter]
         theme-name = Signal-${themeMode}
         icon-theme-name = Adwaita
-        ${if cfg.login.lightdm.backgroundImage != null then
-          "background = ${cfg.login.lightdm.backgroundImage}"
-        else
-          "background = ${signalColors.tonal."surface-Lc05".hex}"
+        ${
+          if cfg.login.lightdm.backgroundImage != null then
+            "background = ${cfg.login.lightdm.backgroundImage}"
+          else
+            "background = ${signalColors.tonal."surface-Lc05".hex}"
         }
         user-background = false
         indicators = ~host;~spacer;~clock;~spacer;~session;~a11y;~power

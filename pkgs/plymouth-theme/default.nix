@@ -17,31 +17,49 @@ let
   hexRaw = color: removePrefix "#" color.hex;
 
   # Convert hex to RGB values (0-1 range for Plymouth)
-  hexToRgbFloat = color:
+  hexToRgbFloat =
+    color:
     let
       hex = hexRaw color;
       # Extract R, G, B components
       r = builtins.substring 0 2 hex;
       g = builtins.substring 2 2 hex;
       b = builtins.substring 4 2 hex;
-      
+
       # Convert hex to decimal (0-255) then to float (0-1)
       # Use fromHex helper from lib
-      hexToDec = hexStr: 
+      hexToDec =
+        hexStr:
         let
           hexDigits = {
-            "0" = 0; "1" = 1; "2" = 2; "3" = 3;
-            "4" = 4; "5" = 5; "6" = 6; "7" = 7;
-            "8" = 8; "9" = 9; "a" = 10; "b" = 11;
-            "c" = 12; "d" = 13; "e" = 14; "f" = 15;
-            "A" = 10; "B" = 11; "C" = 12; "D" = 13;
-            "E" = 14; "F" = 15;
+            "0" = 0;
+            "1" = 1;
+            "2" = 2;
+            "3" = 3;
+            "4" = 4;
+            "5" = 5;
+            "6" = 6;
+            "7" = 7;
+            "8" = 8;
+            "9" = 9;
+            "a" = 10;
+            "b" = 11;
+            "c" = 12;
+            "d" = 13;
+            "e" = 14;
+            "f" = 15;
+            "A" = 10;
+            "B" = 11;
+            "C" = 12;
+            "D" = 13;
+            "E" = 14;
+            "F" = 15;
           };
           chars = lib.stringToCharacters (lib.toLower hexStr);
           values = map (c: hexDigits.${c}) chars;
         in
         lib.foldl (acc: val: acc * 16 + val) 0 values;
-      
+
       toFloat = hexStr: (hexToDec hexStr) / 255.0;
     in
     {
@@ -51,8 +69,11 @@ let
     };
 
   # Format RGB float for Plymouth script (3 decimal places)
-  formatRgb = rgb: 
-    "${builtins.toString (builtins.floor (rgb.r * 1000) / 1000)}, ${builtins.toString (builtins.floor (rgb.g * 1000) / 1000)}, ${builtins.toString (builtins.floor (rgb.b * 1000) / 1000)}";
+  formatRgb =
+    rgb:
+    "${builtins.toString (builtins.floor (rgb.r * 1000) / 1000)}, ${
+      builtins.toString (builtins.floor (rgb.g * 1000) / 1000)
+    }, ${builtins.toString (builtins.floor (rgb.b * 1000) / 1000)}";
 
   # Extract colors for Plymouth theme
   background = colors.tonal."surface-Lc05";
@@ -144,7 +165,7 @@ let
     spinner.num_dots = 3;
     spinner.dot_size = 4;
     spinner.spacing = 16;
-    
+
     # Create spinner dots
     for (i = 0; i < spinner.num_dots; i++) {
       spinner.dots[i].image = Image(spinner.dot_size, spinner.dot_size);

@@ -41,37 +41,37 @@ in
     programs.tofi.settings = {
       # Background
       background-color = toTofiColor colors.surface-base;
-      
+
       # Text colors
       text-color = toTofiColor colors.text-primary;
       prompt-color = toTofiColor accent.focus.Lc75;
       placeholder-color = toTofiColor colors.text-secondary;
-      
+
       # Input
       input-color = toTofiColor colors.text-primary;
       default-result-color = toTofiColor colors.text-secondary;
-      
+
       # Selection
       selection-color = toTofiColor accent.focus.Lc75;
       selection-background = toTofiColor colors.surface-raised;
       selection-background-padding = 4;
-      
+
       # Border
       border-width = 2;
       border-color = toTofiColor colors.divider;
-      
+
       # Outline (for selected item)
       outline-width = 0;
-      
+
       # Corner radius
       corner-radius = 8;
-      
+
       # Padding
       padding-left = 12;
       padding-right = 12;
       padding-top = 12;
       padding-bottom = 12;
-      
+
       # Font (user can override)
       font = lib.mkDefault "Inter";
       font-size = lib.mkDefault 14;

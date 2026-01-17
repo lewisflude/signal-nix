@@ -40,8 +40,8 @@ in
     # Ensure Plymouth is properly integrated with boot
     # These settings ensure smooth transitions and proper rendering
     boot.kernelParams = [
-      "quiet"      # Suppress kernel messages
-      "splash"     # Enable splash screen
+      "quiet" # Suppress kernel messages
+      "splash" # Enable splash screen
     ];
   };
 

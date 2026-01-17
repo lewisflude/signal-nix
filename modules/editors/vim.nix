@@ -105,10 +105,10 @@ in
       highlight Number guifg=${colors.orange}
       highlight Boolean guifg=${colors.orange}
       highlight Float guifg=${colors.orange}
-      
+
       highlight Identifier guifg=${colors.fg}
       highlight Function guifg=${colors.blue}
-      
+
       highlight Statement guifg=${colors.purple}
       highlight Conditional guifg=${colors.purple}
       highlight Repeat guifg=${colors.purple}
@@ -116,25 +116,25 @@ in
       highlight Operator guifg=${colors.cyan}
       highlight Keyword guifg=${colors.purple}
       highlight Exception guifg=${colors.red}
-      
+
       highlight PreProc guifg=${colors.purple}
       highlight Include guifg=${colors.purple}
       highlight Define guifg=${colors.purple}
       highlight Macro guifg=${colors.purple}
       highlight PreCondit guifg=${colors.purple}
-      
+
       highlight Type guifg=${colors.yellow}
       highlight StorageClass guifg=${colors.purple}
       highlight Structure guifg=${colors.yellow}
       highlight Typedef guifg=${colors.yellow}
-      
+
       highlight Special guifg=${colors.cyan}
       highlight SpecialChar guifg=${colors.cyan}
       highlight Tag guifg=${colors.blue}
       highlight Delimiter guifg=${colors.fg_alt}
       highlight SpecialComment guifg=${colors.cyan} gui=italic
       highlight Debug guifg=${colors.red}
-      
+
       highlight Underlined guifg=${colors.blue} gui=underline
       highlight Ignore guifg=${colors.fg_dim}
       highlight Error guifg=${colors.red} guibg=${colors.bg}

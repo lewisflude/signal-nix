@@ -167,25 +167,25 @@ in
         hyprland.enable = mkEnableOption "Signal theme for Hyprland compositor";
         sway.enable = mkEnableOption "Signal theme for Sway compositor";
       };
-      
+
       wm = {
         i3.enable = mkEnableOption "Signal theme for i3 window manager";
         bspwm.enable = mkEnableOption "Signal theme for bspwm window manager";
         awesome.enable = mkEnableOption "Signal theme for awesome window manager";
       };
-      
+
       launchers = {
         rofi.enable = mkEnableOption "Signal theme for rofi launcher";
         wofi.enable = mkEnableOption "Signal theme for wofi launcher";
         tofi.enable = mkEnableOption "Signal theme for tofi launcher";
         dmenu.enable = mkEnableOption "Signal theme for dmenu launcher";
       };
-      
+
       bars = {
         waybar.enable = mkEnableOption "Signal theme for waybar status bar";
         polybar.enable = mkEnableOption "Signal theme for polybar status bar";
       };
-      
+
       notifications = {
         dunst.enable = mkEnableOption "Signal theme for dunst notification daemon";
         mako.enable = mkEnableOption "Signal theme for mako notification daemon";

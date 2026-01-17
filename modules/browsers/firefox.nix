@@ -32,7 +32,7 @@ let
   userChromeCSS = ''
     /* Signal Firefox Theme */
     /* WARNING: This may break with Firefox updates */
-    
+
     :root {
       --signal-bg: ${colors.surface-base.hex};
       --signal-bg-alt: ${colors.surface-raised.hex};
@@ -112,7 +112,7 @@ in
     programs.firefox.profiles = lib.mkIf (config.programs.firefox ? profiles) (
       lib.mapAttrs (name: profile: {
         userChrome = mkDefault userChromeCSS;
-        
+
         # Also set some about:config preferences for better theming
         settings = {
           "toolkit.legacyUserProfileCustomizations.stylesheets" = true; # Enable userChrome.css

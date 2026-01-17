@@ -45,17 +45,17 @@ in
         foreground = colors.text-primary.hex;
         foreground-alt = colors.text-secondary.hex;
         foreground-dim = colors.text-dim.hex;
-        
+
         # Accent colors
         primary = accent.focus.Lc75.hex;
         secondary = accent.info.Lc75.hex;
         alert = accent.danger.Lc75.hex;
         warning = accent.warning.Lc75.hex;
         success = accent.success.Lc75.hex;
-        
+
         # UI elements
         border = colors.divider.hex;
-        
+
         # Module-specific colors
         cpu = accent.focus.Lc75.hex;
         memory = accent.info.Lc75.hex;
@@ -69,12 +69,12 @@ in
       "bar/signal" = {
         background = "\${colors.background}";
         foreground = "\${colors.foreground}";
-        
+
         border-color = "\${colors.border}";
-        
+
         # Module colors
         module-margin = 1;
-        
+
         # Font (users should override)
         font-0 = "Inter:size=10;2";
       };

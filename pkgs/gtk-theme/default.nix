@@ -403,7 +403,7 @@ stdenv.mkDerivation {
     longDescription = ''
       A comprehensive GTK3/GTK4 theme based on Signal's OKLCH color system.
       Provides scientifically-designed colors with APCA accessibility compliance.
-      
+
       Compatible with both GTK3 and GTK4 applications, including GNOME shell
       applications, GDM login screen, and system dialogs.
     '';

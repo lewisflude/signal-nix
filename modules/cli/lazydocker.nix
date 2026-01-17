@@ -55,7 +55,7 @@ let
           - "${accent.danger.Lc75.hex}"
         defaultFgColor:
           - "${colors.text-primary.hex}"
-    
+
     # Container status colors
     reporting:
       containerStatusHealthy: "${accent.success.Lc75.hex}"

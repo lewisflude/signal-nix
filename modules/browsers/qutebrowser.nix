@@ -40,7 +40,7 @@ in
       colors = {
         # Background/foreground
         webpage.bg = colors.surface-base.hex;
-        
+
         # Completion widget
         completion = {
           fg = colors.text-primary.hex;

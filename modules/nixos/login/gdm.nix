@@ -20,7 +20,8 @@ let
   };
 
   # Determine if GDM should be themed
-  shouldTheme = cfg.enable && cfg.login.gdm.enable && (config.services.xserver.displayManager.gdm.enable or false);
+  shouldTheme =
+    cfg.enable && cfg.login.gdm.enable && (config.services.xserver.displayManager.gdm.enable or false);
 
   # GSettings overrides for GDM
   # These settings are applied to the GDM user session
@@ -31,7 +32,9 @@ let
 
     [org.gnome.desktop.background]
     picture-uri='${if cfg.login.gdm.backgroundImage != null then cfg.login.gdm.backgroundImage else ""}'
-    picture-uri-dark='${if cfg.login.gdm.backgroundImage != null then cfg.login.gdm.backgroundImage else ""}'
+    picture-uri-dark='${
+      if cfg.login.gdm.backgroundImage != null then cfg.login.gdm.backgroundImage else ""
+    }'
     primary-color='${signalColors.tonal."surface-Lc05".hex}'
     secondary-color='${signalColors.tonal."surface-Lc10".hex}'
   '';
@@ -72,10 +75,14 @@ in
         [org/gnome/desktop/interface]
         gtk-theme='Signal-${themeMode}'
         color-scheme='${if themeMode == "dark" then "prefer-dark" else "prefer-light"}'
-        
+
         [org/gnome/desktop/background]
-        picture-uri='file://${if cfg.login.gdm.backgroundImage != null then cfg.login.gdm.backgroundImage else "/dev/null"}'
-        picture-uri-dark='file://${if cfg.login.gdm.backgroundImage != null then cfg.login.gdm.backgroundImage else "/dev/null"}'
+        picture-uri='file://${
+          if cfg.login.gdm.backgroundImage != null then cfg.login.gdm.backgroundImage else "/dev/null"
+        }'
+        picture-uri-dark='file://${
+          if cfg.login.gdm.backgroundImage != null then cfg.login.gdm.backgroundImage else "/dev/null"
+        }'
         primary-color='${signalColors.tonal."surface-Lc05".hex}'
         secondary-color='${signalColors.tonal."surface-Lc10".hex}'
       '';

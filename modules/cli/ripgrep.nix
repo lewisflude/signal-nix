@@ -25,7 +25,8 @@ let
   inherit (signalColors) accent;
 
   # Convert hex to RGB triplet for ripgrep (format: R,G,B)
-  toRgbTriplet = color:
+  toRgbTriplet =
+    color:
     let
       hex = lib.removePrefix "#" color.hex;
       r = lib.toInt "0x${builtins.substring 0 2 hex}";
@@ -44,11 +45,11 @@ in
       # Format: type:style:foreground:background:intense
       # We use fg: for foreground RGB colors
       RIPGREP_COLORS = lib.concatStringsSep ":" [
-        "match:fg:${toRgbTriplet accent.focus.Lc75}"           # Matched text
-        "match:style:bold"                                      # Make matches bold
-        "path:fg:${toRgbTriplet accent.info.Lc75}"             # File paths
-        "line:fg:${toRgbTriplet accent.success.Lc75}"          # Line numbers
-        "column:fg:${toRgbTriplet colors.text-secondary}"      # Column numbers
+        "match:fg:${toRgbTriplet accent.focus.Lc75}" # Matched text
+        "match:style:bold" # Make matches bold
+        "path:fg:${toRgbTriplet accent.info.Lc75}" # File paths
+        "line:fg:${toRgbTriplet accent.success.Lc75}" # Line numbers
+        "column:fg:${toRgbTriplet colors.text-secondary}" # Column numbers
       ];
     };
 

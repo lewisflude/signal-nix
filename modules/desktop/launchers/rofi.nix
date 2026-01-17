@@ -57,7 +57,11 @@ in
 
       mainbox = {
         background-color = lib.mkDefault "@background";
-        children = lib.mkDefault [ "inputbar" "message" "listview" ];
+        children = lib.mkDefault [
+          "inputbar"
+          "message"
+          "listview"
+        ];
       };
 
       inputbar = {
@@ -66,7 +70,10 @@ in
         border = lib.mkDefault "0 0 2px 0";
         border-color = lib.mkDefault "@selected";
         padding = lib.mkDefault "8px";
-        children = lib.mkDefault [ "prompt" "entry" ];
+        children = lib.mkDefault [
+          "prompt"
+          "entry"
+        ];
       };
 
       prompt = {

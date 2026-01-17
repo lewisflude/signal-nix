@@ -43,10 +43,10 @@ in
       extraConfig = ''
         # Signal colorscheme for ranger
         # This is a Python module that ranger will load
-        
+
         from ranger.gui.colorscheme import ColorScheme
         from ranger.gui.color import *
-        
+
         class Signal(ColorScheme):
             progress_bar_color = blue
             

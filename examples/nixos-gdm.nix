@@ -74,13 +74,13 @@
             # Home Manager integration (optional, for user-level theming)
             # home-manager.users.yourname = {
             #   imports = [ signal.homeManagerModules.default ];
-            #   
+            #
             #   theming.signal = {
             #     enable = true;
             #     autoEnable = true;
             #     mode = "dark";
             #   };
-            #   
+            #
             #   programs.helix.enable = true;
             #   programs.kitty.enable = true;
             # };

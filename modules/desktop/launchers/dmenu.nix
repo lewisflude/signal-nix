@@ -30,7 +30,7 @@ let
   dmenuWrapper = ''
     #!/usr/bin/env bash
     # Signal-themed dmenu wrapper
-    
+
     exec dmenu \
       -nb "${colors.surface-base.hex}" \
       -nf "${colors.text-primary.hex}" \

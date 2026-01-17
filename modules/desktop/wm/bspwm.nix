@@ -39,10 +39,10 @@ in
       active_border_color = colors.divider-secondary.hex;
       focused_border_color = accent.focus.Lc75.hex;
       presel_feedback_color = accent.info.Lc75.hex;
-      
+
       # Border width (user can override)
       border_width = lib.mkDefault 2;
-      
+
       # Gap size (user can override)
       window_gap = lib.mkDefault 8;
     };

@@ -52,7 +52,7 @@ in
       # Color customization
       # Format: element_color=foreground,background
       # Using ANSI color codes that will be themed by the terminal
-      
+
       # We rely on the terminal's ANSI colors being themed by Signal
       # (via kitty, alacritty, etc.) rather than trying to specify colors here
       # htop will use the terminal's color palette

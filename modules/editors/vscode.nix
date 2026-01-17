@@ -165,31 +165,127 @@ in
 
       "editor.tokenColorCustomizations" = {
         textMateRules = [
-          { scope = ["comment"]; settings = { foreground = colors.text-dim.hex; fontStyle = "italic"; }; }
-          { scope = ["string"]; settings = { foreground = signalColors.categorical.GA02.hex; }; }
-          { scope = ["constant.numeric"]; settings = { foreground = signalColors.categorical.GA06.hex; }; }
-          { scope = ["constant.language"]; settings = { foreground = accent.warning.Lc75.hex; }; }
-          { scope = ["keyword"]; settings = { foreground = accent.special.Lc75.hex; }; }
-          { scope = ["storage"]; settings = { foreground = accent.special.Lc75.hex; }; }
-          { scope = ["entity.name.function"]; settings = { foreground = accent.focus.Lc75.hex; }; }
-          { scope = ["entity.name.type" "entity.name.class"]; settings = { foreground = signalColors.categorical.GA06.hex; }; }
-          { scope = ["variable"]; settings = { foreground = colors.text-primary.hex; }; }
-          { scope = ["support.type" "support.class"]; settings = { foreground = signalColors.categorical.GA06.hex; }; }
-          { scope = ["support.function"]; settings = { foreground = accent.focus.Lc75.hex; }; }
-          { scope = ["punctuation"]; settings = { foreground = colors.text-secondary.hex; }; }
-          { scope = ["markup.heading"]; settings = { foreground = accent.danger.Lc75.hex; fontStyle = "bold"; }; }
-          { scope = ["markup.italic"]; settings = { fontStyle = "italic"; }; }
-          { scope = ["markup.bold"]; settings = { fontStyle = "bold"; }; }
-          { scope = ["markup.underline"]; settings = { fontStyle = "underline"; }; }
-          { scope = ["markup.inline.raw"]; settings = { foreground = signalColors.categorical.GA02.hex; }; }
-          { scope = ["meta.link"]; settings = { foreground = accent.focus.Lc75.hex; }; }
+          {
+            scope = [ "comment" ];
+            settings = {
+              foreground = colors.text-dim.hex;
+              fontStyle = "italic";
+            };
+          }
+          {
+            scope = [ "string" ];
+            settings = {
+              foreground = signalColors.categorical.GA02.hex;
+            };
+          }
+          {
+            scope = [ "constant.numeric" ];
+            settings = {
+              foreground = signalColors.categorical.GA06.hex;
+            };
+          }
+          {
+            scope = [ "constant.language" ];
+            settings = {
+              foreground = accent.warning.Lc75.hex;
+            };
+          }
+          {
+            scope = [ "keyword" ];
+            settings = {
+              foreground = accent.special.Lc75.hex;
+            };
+          }
+          {
+            scope = [ "storage" ];
+            settings = {
+              foreground = accent.special.Lc75.hex;
+            };
+          }
+          {
+            scope = [ "entity.name.function" ];
+            settings = {
+              foreground = accent.focus.Lc75.hex;
+            };
+          }
+          {
+            scope = [
+              "entity.name.type"
+              "entity.name.class"
+            ];
+            settings = {
+              foreground = signalColors.categorical.GA06.hex;
+            };
+          }
+          {
+            scope = [ "variable" ];
+            settings = {
+              foreground = colors.text-primary.hex;
+            };
+          }
+          {
+            scope = [
+              "support.type"
+              "support.class"
+            ];
+            settings = {
+              foreground = signalColors.categorical.GA06.hex;
+            };
+          }
+          {
+            scope = [ "support.function" ];
+            settings = {
+              foreground = accent.focus.Lc75.hex;
+            };
+          }
+          {
+            scope = [ "punctuation" ];
+            settings = {
+              foreground = colors.text-secondary.hex;
+            };
+          }
+          {
+            scope = [ "markup.heading" ];
+            settings = {
+              foreground = accent.danger.Lc75.hex;
+              fontStyle = "bold";
+            };
+          }
+          {
+            scope = [ "markup.italic" ];
+            settings = {
+              fontStyle = "italic";
+            };
+          }
+          {
+            scope = [ "markup.bold" ];
+            settings = {
+              fontStyle = "bold";
+            };
+          }
+          {
+            scope = [ "markup.underline" ];
+            settings = {
+              fontStyle = "underline";
+            };
+          }
+          {
+            scope = [ "markup.inline.raw" ];
+            settings = {
+              foreground = signalColors.categorical.GA02.hex;
+            };
+          }
+          {
+            scope = [ "meta.link" ];
+            settings = {
+              foreground = accent.focus.Lc75.hex;
+            };
+          }
         ];
       };
     };
 
     # Apply same settings to vscodium if enabled
-    programs.vscodium.userSettings = mkIf shouldThemeCodium (
-      config.programs.vscode.userSettings
-    );
+    programs.vscodium.userSettings = mkIf shouldThemeCodium (config.programs.vscode.userSettings);
   };
 }

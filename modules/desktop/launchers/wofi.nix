@@ -31,7 +31,7 @@ let
   # Generate wofi CSS theme
   wofiCSS = ''
     /* Signal theme for wofi */
-    
+
     window {
       background-color: ${colors.surface-base.hex};
       border: 2px solid ${colors.divider.hex};

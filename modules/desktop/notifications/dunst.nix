@@ -41,10 +41,10 @@ in
         # Frame (border)
         frame_color = accent.focus.Lc75.hex;
         frame_width = 2;
-        
+
         # Separator between notifications
         separator_color = "frame";
-        
+
         # Font
         font = "Inter 11";
       };

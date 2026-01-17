@@ -26,7 +26,7 @@ let
 
   # lf uses ANSI color codes (0-7 for basic, 8-15 for bright)
   # We rely on terminal ANSI colors being themed by Signal
-  
+
   # Check if lf should be themed
   shouldTheme = signalLib.shouldThemeApp "lf" [
     "fileManagers"
@@ -38,17 +38,17 @@ in
     programs.lf.extraConfig = ''
       # Signal theme for lf
       # Uses ANSI color codes that map to terminal colors
-      
+
       # Format: LF_COLORS="<type>=<color>"
       # Colors: 0-7 (basic), 8-15 (bright), or RGB
-      
+
       # File type colors (these use terminal ANSI which Signal themes)
       set ifs "\n"
-      
+
       # Use terminal colors for different file types
       # These will be themed by the terminal emulator (kitty, alacritty, etc.)
       # which Signal already themes
-      
+
       # Icons and colors are handled by the terminal's ANSI palette
       # No need to set specific colors as lf respects LS_COLORS
     '';

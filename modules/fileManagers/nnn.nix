@@ -44,7 +44,7 @@ in
       # Context order: directory, regular, executable, symlink, missing, orphan,
       #                fifo, socket, special, hardlink, unknown
       NNN_FCOLORS = "${colors.directory}${colors.regular}${colors.executable}${colors.link}${colors.missing}${colors.orphan}${colors.fifo}${colors.socket}${colors.block}${colors.hardlink}${colors.regular}";
-      
+
       # Enable colors
       NNN_OPTS = "H"; # Show hidden files with color
     };

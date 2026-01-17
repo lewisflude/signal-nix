@@ -32,130 +32,130 @@ let
       background_color = colors.surface-base.hex;
       color = colors.text-primary.hex;
     };
-    
+
     heading = {
       color = accent.focus.Lc75.hex;
       bold = true;
     };
-    
+
     h1 = {
       prefix = "# ";
       color = accent.focus.Lc75.hex;
       bold = true;
     };
-    
+
     h2 = {
       prefix = "## ";
       color = accent.focus.Lc75.hex;
     };
-    
+
     h3 = {
       prefix = "### ";
       color = accent.info.Lc75.hex;
     };
-    
+
     h4 = {
       prefix = "#### ";
       color = accent.info.Lc75.hex;
     };
-    
+
     h5 = {
       prefix = "##### ";
       color = colors.text-secondary.hex;
     };
-    
+
     h6 = {
       prefix = "###### ";
       color = colors.text-secondary.hex;
     };
-    
+
     text = {
       color = colors.text-primary.hex;
     };
-    
+
     paragraph = {
       color = colors.text-primary.hex;
     };
-    
+
     code = {
       color = accent.special.Lc75.hex;
       background_color = colors.surface-raised.hex;
     };
-    
+
     code_block = {
       color = accent.special.Lc75.hex;
       background_color = colors.surface-raised.hex;
       margin = 2;
     };
-    
+
     emph = {
       color = colors.text-primary.hex;
       italic = true;
     };
-    
+
     strong = {
       color = colors.text-primary.hex;
       bold = true;
     };
-    
+
     strikethrough = {
       color = colors.text-dim.hex;
       crossed_out = true;
     };
-    
+
     link = {
       color = accent.info.Lc75.hex;
       underline = true;
     };
-    
+
     link_text = {
       color = accent.focus.Lc75.hex;
     };
-    
+
     image = {
       color = accent.special.Lc75.hex;
     };
-    
+
     list = {
       color = colors.text-primary.hex;
     };
-    
+
     enumeration = {
       color = colors.text-primary.hex;
     };
-    
+
     item = {
       color = colors.text-primary.hex;
     };
-    
+
     task = {
       ticked = "[✓] ";
       unticked = "[ ] ";
     };
-    
+
     table = {
       color = colors.text-primary.hex;
     };
-    
+
     table_header = {
       color = accent.focus.Lc75.hex;
       bold = true;
     };
-    
+
     table_row = {
       color = colors.text-primary.hex;
     };
-    
+
     quote = {
       color = colors.text-secondary.hex;
       italic = true;
     };
-    
+
     quote_block = {
       color = colors.text-secondary.hex;
       indent = 2;
     };
-    
+
     hr = {
       color = colors.divider.hex;
     };
@@ -167,7 +167,7 @@ in
 {
   config = mkIf (cfg.enable && shouldTheme) {
     xdg.configFile."glow/signal.json".text = glowTheme;
-    
+
     # Set glow to use Signal theme by default
     home.sessionVariables = mkIf shouldTheme {
       GLOW_STYLE = "$HOME/.config/glow/signal.json";
