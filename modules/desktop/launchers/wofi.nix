@@ -19,7 +19,8 @@ let
   colors = {
     surface-base = signalColors.tonal."surface-Lc05";
     surface-raised = signalColors.tonal."surface-Lc10";
-    surface-hover = signalColors.tonal."surface-Lc15";
+    # Use divider-Lc30 for hover state (lighter than divider-Lc15, valid token)
+    surface-hover = signalColors.tonal."divider-Lc30";
     text-primary = signalColors.tonal."text-Lc75";
     text-secondary = signalColors.tonal."text-Lc60";
     text-dim = signalColors.tonal."text-Lc45";
