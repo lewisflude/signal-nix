@@ -31,13 +31,18 @@ let
   inherit (signalColors) accent;
 
   # Check if vscode/vscodium should be themed
-  shouldTheme = signalLib.shouldThemeApp "vscode" [
-    "editors"
-    "vscode"
-  ] cfg config;
+  # Only theme if the program is actually enabled
+  vscodeEnabled = config.programs.vscode.enable or false;
+  vscodiumEnabled = config.programs.vscodium.enable or false;
 
-  # Also check for vscodium
-  shouldThemeCodium = config.programs.vscodium.enable or false;
+  shouldTheme =
+    vscodeEnabled
+    && (signalLib.shouldThemeApp "vscode" [
+      "editors"
+      "vscode"
+    ] cfg config);
+
+  shouldThemeCodium = vscodiumEnabled;
 in
 {
   config = mkIf (cfg.enable && (shouldTheme || shouldThemeCodium)) {
