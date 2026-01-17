@@ -119,13 +119,6 @@ rec {
   };
 
   # Border Radius Scale
-  radius = {
-    none = 0;
-    sm = 10; # Small elements, tray icons (px)
-    md = 12; # Interactive elements, buttons (px)
-    lg = 16; # Islands, primary containers (px) - SYNCED WITH NIRI
-    xl = 18; # Popups, major emphasis (px)
-  };
 
   # Border Widths
   borders = {
@@ -190,7 +183,6 @@ rec {
     };
     workspace-button = {
       min-width = 40; # Compact square (px)
-      min-height = 40;
       margin = 4; # Horizontal margin between buttons (px)
       padding-horizontal = 8; # Internal padding (px)
       padding-vertical = 4;

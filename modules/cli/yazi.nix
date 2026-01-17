@@ -77,10 +77,6 @@ in
         preview = {
           fg = hexRaw colors.divider-secondary;
         };
-        padding = {
-          open = "█";
-          close = "█";
-        };
       };
 
       # Tabs - Tab styling

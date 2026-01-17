@@ -24,14 +24,56 @@ let
 
   inherit (signalColors) accent;
 
-  # Convert hex to ANSI RGB code
+  # Convert a hex digit to decimal (0-15)
+  hexDigitToInt = c:
+    let
+      lowerC = lib.toLower c;
+    in
+    if lowerC == "0" then 0
+    else if lowerC == "1" then 1
+    else if lowerC == "2" then 2
+    else if lowerC == "3" then 3
+    else if lowerC == "4" then 4
+    else if lowerC == "5" then 5
+    else if lowerC == "6" then 6
+    else if lowerC == "7" then 7
+    else if lowerC == "8" then 8
+    else if lowerC == "9" then 9
+    else if lowerC == "a" then 10
+    else if lowerC == "b" then 11
+    else if lowerC == "c" then 12
+    else if lowerC == "d" then 13
+    else if lowerC == "e" then 14
+    else if lowerC == "f" then 15
+    else throw "Invalid hex digit: ${c}";
+
+  # Convert a 2-character hex string to decimal (0-255)
+  hexPairToInt = pair:
+    let
+      first = hexDigitToInt (builtins.substring 0 1 pair);
+      second = hexDigitToInt (builtins.substring 1 1 pair);
+    in
+    first * 16 + second;
+
+  # Convert hex to ANSI RGB code for environment variables (no prompt escaping)
   toAnsiRgb =
     color:
     let
       hex = lib.removePrefix "#" color.hex;
-      r = lib.toInt "0x${builtins.substring 0 2 hex}";
-      g = lib.toInt "0x${builtins.substring 2 2 hex}";
-      b = lib.toInt "0x${builtins.substring 4 2 hex}";
+      r = hexPairToInt (builtins.substring 0 2 hex);
+      g = hexPairToInt (builtins.substring 2 2 hex);
+      b = hexPairToInt (builtins.substring 4 2 hex);
+    in
+    "38;2;${toString r};${toString g};${toString b}";
+
+  # Convert hex to ANSI RGB code for PS1 prompts (with bash escape sequences)
+  toPs1Rgb =
+    color:
+    let
+      hex = lib.removePrefix "#" color.hex;
+      r = hexPairToInt (builtins.substring 0 2 hex);
+      g = hexPairToInt (builtins.substring 2 2 hex);
+      b = hexPairToInt (builtins.substring 4 2 hex);
     in
     "\\[\\e[38;2;${toString r};${toString g};${toString b}m\\]";
 
@@ -87,20 +129,20 @@ in
       se=${toAnsiRgb colors.text-dim}"
 
             # Less colors (for man pages)
-            export LESS_TERMCAP_mb=${toAnsiRgb accent.danger.Lc75}     # begin blinking
-            export LESS_TERMCAP_md=${toAnsiRgb accent.focus.Lc75}      # begin bold
-            export LESS_TERMCAP_me=\\[\\e[0m\\]                         # end mode
-            export LESS_TERMCAP_se=\\[\\e[0m\\]                         # end standout-mode
-            export LESS_TERMCAP_so=${toAnsiRgb accent.warning.Lc75}    # begin standout-mode
-            export LESS_TERMCAP_ue=\\[\\e[0m\\]                         # end underline
-            export LESS_TERMCAP_us=${toAnsiRgb accent.success.Lc75}    # begin underline
+            export LESS_TERMCAP_mb=\\e[${toAnsiRgb accent.danger.Lc75}m     # begin blinking
+            export LESS_TERMCAP_md=\\e[${toAnsiRgb accent.focus.Lc75}m      # begin bold
+            export LESS_TERMCAP_me=\\e[0m                         # end mode
+            export LESS_TERMCAP_se=\\e[0m                         # end standout-mode
+            export LESS_TERMCAP_so=\\e[${toAnsiRgb accent.warning.Lc75}m    # begin standout-mode
+            export LESS_TERMCAP_ue=\\e[0m                         # end underline
+            export LESS_TERMCAP_us=\\e[${toAnsiRgb accent.success.Lc75}m    # begin underline
     '';
 
     # Also set a colored PS1 if not already customized
     programs.bash.bashrcExtra = lib.mkIf (!config.programs.bash ? promptInit) ''
       # Signal-themed PS1 prompt
       if [ -z "$PROMPT_COMMAND" ]; then
-        PS1="${toAnsiRgb accent.success.Lc75}\\u${toAnsiRgb colors.text-secondary}@${toAnsiRgb accent.info.Lc75}\\h ${toAnsiRgb accent.focus.Lc75}\\w ${toAnsiRgb colors.text-primary}\\$ \\[\\e[0m\\]"
+        PS1="${toPs1Rgb accent.success.Lc75}\\u${toPs1Rgb colors.text-secondary}@${toPs1Rgb accent.info.Lc75}\\h ${toPs1Rgb accent.focus.Lc75}\\w ${toPs1Rgb colors.text-primary}\\$ \\[\\e[0m\\]"
       fi
     '';
   };

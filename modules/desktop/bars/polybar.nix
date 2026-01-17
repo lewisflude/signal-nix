@@ -73,7 +73,6 @@ in
         border-color = "\${colors.border}";
 
         # Module colors
-        module-margin = 1;
 
         # Font (users should override)
         font-0 = "Inter:size=10;2";

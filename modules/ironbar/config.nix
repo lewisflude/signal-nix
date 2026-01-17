@@ -127,7 +127,6 @@ in
     anchor_to_edges = true;
 
     # Margin synchronized with Niri layout gaps
-    margin = lib.genAttrs [ "top" "bottom" "left" "right" ] (_: tokens.bar.margin);
 
     # Layer shell configuration
     layer = "top";

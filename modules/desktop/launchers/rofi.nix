@@ -52,7 +52,6 @@ in
         background-color = lib.mkDefault "@background";
         border = lib.mkDefault "2px";
         border-color = lib.mkDefault "@border-color";
-        padding = lib.mkDefault "8px";
       };
 
       mainbox = {
@@ -69,7 +68,6 @@ in
         text-color = lib.mkDefault "@foreground";
         border = lib.mkDefault "0 0 2px 0";
         border-color = lib.mkDefault "@selected";
-        padding = lib.mkDefault "8px";
         children = lib.mkDefault [
           "prompt"
           "entry"
@@ -79,7 +77,6 @@ in
       prompt = {
         background-color = lib.mkDefault "inherit";
         text-color = lib.mkDefault "@selected";
-        padding = lib.mkDefault "0 8px 0 0";
       };
 
       entry = {
@@ -93,7 +90,6 @@ in
         background-color = lib.mkDefault "@background-alt";
         border = lib.mkDefault "2px 0 0 0";
         border-color = lib.mkDefault "@border-color";
-        padding = lib.mkDefault "8px";
       };
 
       textbox = {
@@ -105,7 +101,6 @@ in
         background-color = lib.mkDefault "@background";
         border = lib.mkDefault "2px 0 0 0";
         border-color = lib.mkDefault "@border-color";
-        padding = lib.mkDefault "8px 0 0 0";
         lines = lib.mkDefault 8;
         scrollbar = lib.mkDefault true;
       };
@@ -113,7 +108,6 @@ in
       element = {
         background-color = lib.mkDefault "@background";
         text-color = lib.mkDefault "@foreground";
-        padding = lib.mkDefault "4px 8px";
       };
 
       "element selected normal" = {
@@ -158,8 +152,6 @@ in
         handle-color = lib.mkDefault "@selected";
         border = lib.mkDefault "0 0 0 2px";
         border-color = lib.mkDefault "@border-color";
-        handle-width = lib.mkDefault "4px";
-        padding = lib.mkDefault "0";
       };
     };
   };

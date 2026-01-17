@@ -85,7 +85,6 @@ let
     code_block = {
       color = accent.special.Lc75.hex;
       background_color = colors.surface-raised.hex;
-      margin = 2;
     };
 
     emph = {
