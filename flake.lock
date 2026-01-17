@@ -40,11 +40,11 @@
     },
     "signal-palette": {
       "locked": {
-        "lastModified": 1768577269,
-        "narHash": "sha256-rxpU87t6nK4fVOx9QP1YafBjrxEKFo3o0DEETh2Hoyk=",
+        "lastModified": 1768685232,
+        "narHash": "sha256-0sn0ugGm3Ae8sEZhtpL+gz8fo81D+2x6HH5wBdYpji8=",
         "owner": "lewisflude",
         "repo": "signal-palette",
-        "rev": "e566a406056d0475737e99a4d24bb84d2c7ef740",
+        "rev": "398cafbf15772892350a3cc822e285842e292388",
         "type": "github"
       },
       "original": {
