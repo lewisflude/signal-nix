@@ -42,9 +42,9 @@ let
         cat > test-config.nix << 'EOF'
         { config, lib, pkgs, ... }:
         {
-          imports = [ ${self.nixosModules.default} ];
+          imports = [ ../modules/nixos/common ];
 
-          theming.signal.nixos = {
+          signal.nixos = {
             enable = true;
             mode = "dark";
             boot.console.enable = true;
@@ -128,9 +128,9 @@ in
     cat > test-config.nix << 'EOF'
     { config, lib, pkgs, ... }:
     {
-      imports = [ ${self.nixosModules.default} ];
+      imports = [ ../modules/nixos/common ];
 
-      theming.signal.nixos = {
+      signal.nixos = {
         enable = true;
         mode = "dark";
         boot.console.enable = false;  # Explicitly disabled
@@ -167,9 +167,9 @@ in
     cat > test-config.nix << 'EOF'
     { config, lib, pkgs, ... }:
     {
-      imports = [ ${self.nixosModules.default} ];
+      imports = [ ../modules/nixos/common ];
 
-      theming.signal.nixos = {
+      signal.nixos = {
         enable = true;
         mode = "light";
         boot.console.enable = true;
@@ -209,9 +209,9 @@ in
     cat > test-config.nix << 'EOF'
     { config, lib, pkgs, ... }:
     {
-      imports = [ ${self.nixosModules.default} ];
+      imports = [ ../modules/nixos/common ];
 
-      theming.signal.nixos = {
+      signal.nixos = {
         enable = true;
         boot.console.enable = true;
       };
@@ -230,7 +230,7 @@ in
           modules = [ ./test-config.nix ];
         };
       in
-        nixos.config.theming.signal.nixos.enable
+        nixos.config.signal.nixos.enable
     ' > /dev/null
 
     echo "✓ NixOS and Home Manager modules are properly isolated"
@@ -247,9 +247,9 @@ in
     cat > test-config.nix << 'EOF'
     { config, lib, pkgs, ... }:
     {
-      imports = [ ${self.nixosModules.default} ];
+      imports = [ ../modules/nixos/common ];
 
-      theming.signal.nixos = {
+      signal.nixos = {
         enable = true;
         mode = "dark";
         login.sddm.enable = true;
@@ -302,9 +302,9 @@ in
     cat > test-config.nix << 'EOF'
     { config, lib, pkgs, ... }:
     {
-      imports = [ ${self.nixosModules.default} ];
+      imports = [ ../modules/nixos/common ];
 
-      theming.signal.nixos = {
+      signal.nixos = {
         enable = true;
         mode = "dark";
         login.sddm.enable = false;  # Explicitly disabled
@@ -343,9 +343,9 @@ in
     cat > test-config.nix << 'EOF'
     { config, lib, pkgs, ... }:
     {
-      imports = [ ${self.nixosModules.default} ];
+      imports = [ ../modules/nixos/common ];
 
-      theming.signal.nixos = {
+      signal.nixos = {
         enable = true;
         mode = "light";
         login.sddm.enable = true;
@@ -387,9 +387,9 @@ in
     cat > test-config.nix << 'EOF'
     { config, lib, pkgs, ... }:
     {
-      imports = [ ${self.nixosModules.default} ];
+      imports = [ ../modules/nixos/common ];
 
-      theming.signal.nixos = {
+      signal.nixos = {
         enable = true;
         mode = "dark";
         boot.plymouth.enable = true;
@@ -442,9 +442,9 @@ in
     cat > test-config.nix << 'EOF'
     { config, lib, pkgs, ... }:
     {
-      imports = [ ${self.nixosModules.default} ];
+      imports = [ ../modules/nixos/common ];
 
-      theming.signal.nixos = {
+      signal.nixos = {
         enable = true;
         mode = "light";
         boot.plymouth.enable = true;
@@ -486,9 +486,9 @@ in
     cat > test-config.nix << 'EOF'
     { config, lib, pkgs, ... }:
     {
-      imports = [ ${self.nixosModules.default} ];
+      imports = [ ../modules/nixos/common ];
 
-      theming.signal.nixos = {
+      signal.nixos = {
         enable = true;
         mode = "dark";
         login.gdm.enable = true;
@@ -545,9 +545,9 @@ in
     cat > test-config.nix << 'EOF'
     { config, lib, pkgs, ... }:
     {
-      imports = [ ${self.nixosModules.default} ];
+      imports = [ ../modules/nixos/common ];
 
-      theming.signal.nixos = {
+      signal.nixos = {
         enable = true;
         mode = "dark";
         login.lightdm.enable = true;
