@@ -40,6 +40,7 @@ in
 
     # Desktop - Themes
     ../../modules/gtk
+    ../../modules/qt
 
     # Editors
     ../../modules/editors/helix.nix
@@ -130,6 +131,20 @@ in
       '';
     };
 
+    # Color exposure - submodules populate these
+    colors = mkOption {
+      type = types.attrsOf types.anything;
+      default = { };
+      description = ''
+        Exposed color definitions from Signal modules.
+        Each application module can populate this with its color exports.
+        
+        For example, ironbar provides:
+        - colors.ironbar.cssFile: Path to CSS file with color definitions
+        - colors.ironbar.tokens: Raw color values as Nix attributes
+      '';
+    };
+
     # Per-application enables
     ironbar = {
       enable = mkEnableOption "Signal theme for Ironbar";
@@ -159,6 +174,10 @@ in
         ];
         default = "both";
       };
+    };
+
+    qt = {
+      enable = mkEnableOption "Signal theme for Qt/KDE";
     };
 
     # Desktop options
@@ -351,6 +370,7 @@ in
           cfg.autoEnable
           || cfg.ironbar.enable
           || cfg.gtk.enable
+          || cfg.qt.enable
           || cfg.fuzzel.enable
           || cfg.desktop.compositors.hyprland.enable
           || cfg.desktop.compositors.sway.enable

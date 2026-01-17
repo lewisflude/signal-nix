@@ -1,5 +1,6 @@
-# Ironbar Signal Theme - Colors Only
-# Provides Signal color palette for ironbar via CSS
+# Ironbar Signal Theme - Color Palette Provider
+# Provides Signal color palette for ironbar without configuring the program
+# Users import the colors in their own ironbar configuration
 {
   config,
   lib,
@@ -8,26 +9,30 @@
   ...
 }:
 let
-  inherit (lib) mkIf;
+  inherit (lib) mkIf mkEnableOption;
   cfg = config.theming.signal;
 
   # Import color tokens
   tokens = import ./tokens.nix { inherit signalColors; };
 
-  # Generate minimal color-only style.css with Signal colors
-  styleFile = pkgs.writeText "ironbar-signal-style.css" ''
+  # Generate CSS file with ONLY color definitions
+  # No styling, just @define-color statements
+  colorsOnlyCss = pkgs.writeText "ironbar-signal-colors.css" ''
     /**
-     * IRONBAR SIGNAL THEME - COLORS ONLY
+     * SIGNAL COLOR PALETTE FOR IRONBAR
      * Generated from Signal Design System
      * 
-     * This file ONLY contains color definitions.
-     * Configure ironbar widgets in your own configuration.
-     * See: https://github.com/JakeStanger/ironbar/wiki
+     * This file ONLY contains @define-color definitions.
+     * Import this in your ironbar style.css to use Signal colors.
+     * 
+     * Usage:
+     *   @import url("''${config.theming.signal.colors.ironbar.cssFile}");
+     * 
+     * Then use colors like:
+     *   color: @text_primary;
+     *   background-color: @surface_base;
+     *   border-color: @accent_focus;
      */
-
-    /* =============================================================================
-       SIGNAL COLOR TOKENS
-       ============================================================================= */
 
     /* Text Colors */
     @define-color text_primary ${tokens.colors.text.primary};
@@ -43,54 +48,23 @@ let
     @define-color accent_success ${tokens.colors.accent.success};
     @define-color accent_warning ${tokens.colors.accent.warning};
     @define-color accent_danger ${tokens.colors.accent.danger};
-
-    /* =============================================================================
-       APPLY COLORS TO ELEMENTS
-       Apply Signal colors while respecting your layout
-       ============================================================================= */
-
-    .background {
-      background-color: transparent;
-    }
-
-    #bar {
-      background-color: transparent;
-    }
-
-    /* Text */
-    label {
-      color: @text_primary;
-    }
-
-    /* Workspaces */
-    .workspaces button {
-      color: @text_tertiary;
-      background-color: transparent;
-    }
-
-    .workspaces button.focused {
-      color: @text_primary;
-      border-left-color: @accent_focus;
-    }
-
-    .workspaces button:hover {
-      color: @text_secondary;
-    }
   '';
-
-  shouldTheme =
-    if cfg.autoEnable then config.programs.ironbar.enable or false else cfg.ironbar.enable or false;
 in
 {
   options.theming.signal.ironbar = {
-    enable = lib.mkEnableOption "Signal colors for ironbar (requires programs.ironbar.enable)";
+    enable = mkEnableOption "Signal color palette for ironbar";
   };
 
-  config = mkIf (cfg.enable && shouldTheme) {
-    programs.ironbar = {
-      # Signal only provides colors via CSS
-      # Configure widgets, layout, and behavior in your own programs.ironbar config
-      style = lib.mkDefault styleFile;
+  config = mkIf (cfg.enable && cfg.ironbar.enable) {
+    # Expose colors for consumers to use
+    theming.signal.colors.ironbar = {
+      # Pre-generated CSS file with color definitions
+      # Users can @import this in their own style.css
+      cssFile = colorsOnlyCss;
+
+      # Raw color tokens for Nix-based configuration
+      # Useful for programmatic color access
+      tokens = tokens.colors;
     };
   };
 }
