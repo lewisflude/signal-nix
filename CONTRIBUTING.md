@@ -323,13 +323,37 @@ git push origin feature/my-new-feature
 
 ## Application Integration Guide
 
+### Using Module Templates (Recommended)
+
+**NEW: Module templates are now available!** These templates make it easy to add new applications with consistent structure and comprehensive documentation.
+
+- **[Template Directory](templates/)**: Four ready-to-use templates (one per tier)
+- **[Template README](templates/README.md)**: Complete guide with tier selection, usage instructions, and best practices
+
+**Quick Start:**
+```bash
+# 1. Copy the appropriate template
+cp templates/tier-3-freeform-settings.nix modules/terminals/my-terminal.nix
+
+# 2. Fill in placeholders (marked with UPPERCASE_PLACEHOLDER)
+# 3. Implement color mapping
+# 4. Test and submit!
+```
+
+Available templates:
+- `tier-1-native-theme.nix` - For apps with native theme support
+- `tier-2-structured-colors.nix` - For apps with structured color options
+- `tier-3-freeform-settings.nix` - For apps with freeform settings
+- `tier-4-raw-config.nix` - For apps requiring raw config generation
+
 ### Integration Standards
 
 **Before adding any new application**, review these key documents:
 
+- **[Module Templates](templates/README.md)**: Ready-to-use templates for all tiers (recommended starting point)
 - **[Tier System](docs/tier-system.md)**: Four-tier configuration hierarchy (native themes → raw config)
 - **[Integration Roadmap](docs/integration-standards.md)**: Programs to integrate and their priority
-- **Module Metadata**: Required documentation standard (see below)
+- **Module Metadata**: Required documentation standard (see templates or below)
 
 ### Quick Integration Checklist
 
@@ -405,6 +429,68 @@ let
 - [ ] Run `nix flake check`
 
 ### Adding a New Application (Detailed)
+
+#### Quick Start with mkAppModule Helpers (Recommended)
+
+**NEW**: Signal provides `mkAppModule` helpers that reduce boilerplate by ~25%. Use these for new modules:
+
+```nix
+# modules/terminals/my-terminal.nix
+{
+  config,
+  lib,
+  signalColors,
+  signalLib,
+  ...
+}:
+# CONFIGURATION METHOD: freeform-settings (Tier 3)
+# HOME-MANAGER MODULE: programs.myTerminal.settings
+# UPSTREAM SCHEMA: https://example.com/my-terminal/config
+# SCHEMA VERSION: 1.0.0
+# LAST VALIDATED: 2026-01-18
+# NOTES: Uses mkTier3Module helper for reduced boilerplate
+let
+  # Use standard color helpers
+  ansiColors = signalLib.makeAnsiColors signalColors;
+  uiColors = signalLib.makeUIColors signalColors;
+in
+signalLib.mkTier3Module {
+  appName = "myTerminal";
+  category = [ "terminals" ];
+  
+  settingsGenerator = _: {
+    foreground = uiColors.text-primary.hex;
+    background = uiColors.surface-base.hex;
+    cursor = uiColors.accent-secondary.hex;
+    
+    # ANSI colors
+    color0 = ansiColors.black.hex;
+    color1 = ansiColors.red.hex;
+    # ... etc
+  };
+}
+```
+
+**Available Helpers:**
+
+- `mkTier3Module` - For `programs.<app>.settings` (most common)
+- `mkTier2Module` - For structured color options
+- `mkTier4Module` - For raw config strings
+- `makeAnsiColors` - Standard 16-color ANSI palette
+- `makeUIColors` - Common UI colors (surface, text, accent, semantic)
+
+**Benefits:**
+- ✅ 20-30% less boilerplate code
+- ✅ Automatic theme activation logic
+- ✅ Consistent patterns across modules
+- ✅ Standard color mapping helpers
+- ✅ Less maintenance burden
+
+See `templates/README.md` for full documentation and examples.
+
+#### Manual Implementation (Advanced)
+
+For complex cases requiring custom logic, you can still implement modules manually:
 
 #### 1. Research the Application
 

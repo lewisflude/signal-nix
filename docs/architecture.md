@@ -54,12 +54,21 @@ signal-nix/
 ├─ flake.nix                    # Flake outputs and module exports
 │
 ├─ lib/
-│  └─ default.nix               # Color conversion helpers
-│     ├─ resolveThemeMode       # Convert "auto" to "dark" or "light"
-│     ├─ getColors              # Get colors for a mode
-│     ├─ hexToRgbSpaceSeparated # RGB conversion (for Zellij)
-│     ├─ hexWithAlpha           # Add alpha channel (for Fuzzel)
-│     └─ isValidHexColor        # Validate hex format
+│  ├─ default.nix               # Color conversion and utility helpers
+│  │  ├─ resolveThemeMode       # Convert "auto" to "dark" or "light"
+│  │  ├─ getColors              # Get colors for a mode
+│  │  ├─ hexToRgbSpaceSeparated # RGB conversion (for Zellij)
+│  │  ├─ hexWithAlpha           # Add alpha channel (for Fuzzel)
+│  │  └─ isValidHexColor        # Validate hex format
+│  │
+│  └─ mkAppModule.nix           # Module generator helpers (NEW)
+│     ├─ mkTier1Module          # For native theme support
+│     ├─ mkTier2Module          # For structured colors
+│     ├─ mkTier3Module          # For freeform settings
+│     ├─ mkTier4Module          # For raw config
+│     ├─ makeAnsiColors         # Standard ANSI palette
+│     ├─ makeUIColors           # Common UI colors
+│     └─ Validation helpers     # Color format checking
 │
 ├─ modules/
 │  ├─ common/

@@ -4,7 +4,27 @@
   nix-colorizer,
   ...
 }:
+let
+  # Import mkAppModule helpers
+  appModuleHelpers = import ./mkAppModule.nix { inherit lib palette nix-colorizer; };
+in
 rec {
+  # Re-export mkAppModule helpers
+  inherit (appModuleHelpers)
+    mkAppModule
+    mkTier1Module
+    mkTier2Module
+    mkTier3Module
+    mkTier4Module
+    mkSimpleAppModule
+    mkServiceModule
+    makeAnsiColors
+    makeUIColors
+    validateRequiredFields
+    validateHexColor
+    validateColorAttrset
+    ;
+
   # Resolve theme mode to a concrete value (dark or light)
   # Converts "auto" to "dark" as the default
   # Validates input and provides helpful error messages
