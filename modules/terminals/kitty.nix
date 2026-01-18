@@ -1,10 +1,8 @@
-{
-  config,
-  lib,
-  signalColors,
-  signalLib,
-  ...
-}:
+{ lib, signalPalette, nix-colorizer, ... }:
+let
+  # Import signalLib directly to avoid circular dependencies with _module.args
+  signalLib = import ../../lib { inherit lib; palette = signalPalette; inherit nix-colorizer; };
+in
 # CONFIGURATION METHOD: freeform-settings (Tier 3)
 # HOME-MANAGER MODULE: programs.kitty.settings
 # UPSTREAM SCHEMA: https://sw.kovidgoyal.net/kitty/conf/
@@ -14,20 +12,21 @@
 #        attrset to kitty.conf format. All keys must match kitty schema exactly.
 #
 # REFACTORED: Now uses mkTier3Module helper to reduce boilerplate
-let
-  inherit (signalColors) accent;
-
-  # Use the standard ANSI color helper
-  ansiColors = signalLib.makeAnsiColors signalColors;
-
-  # Use the standard UI colors helper
-  uiColors = signalLib.makeUIColors signalColors;
-in
 signalLib.mkTier3Module {
   appName = "kitty";
   category = [ "terminals" ];
 
-  settingsGenerator = _: {
+  settingsGenerator = signalColors: signalLib:
+    let
+      inherit (signalColors) accent;
+
+      # Use the standard ANSI color helper
+      ansiColors = signalLib.makeAnsiColors signalColors;
+
+      # Use the standard UI colors helper
+      uiColors = signalLib.makeUIColors signalColors;
+    in
+    {
     # Basic colors
     foreground = uiColors.text-primary.hex;
     background = uiColors.surface-base.hex;

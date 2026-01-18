@@ -73,7 +73,6 @@ let
     }:
     {
       config,
-      signalColors,
       signalLib,
       pkgs,
       ...
@@ -82,6 +81,9 @@ let
       inherit (lib) mkIf mkOption types;
       cfg = config.theming.signal;
       themeMode = signalLib.resolveThemeMode cfg.mode;
+      
+      # Get colors for the resolved theme mode
+      signalColors = signalLib.getColors themeMode;
 
       # Determine if this app should be themed
       # Uses centralized logic or custom check if provided
@@ -148,7 +150,6 @@ let
     }:
     {
       config,
-      signalColors,
       signalLib,
       pkgs,
       ...
@@ -157,10 +158,14 @@ let
       inherit (lib) mkIf;
       cfg = config.theming.signal;
       themeMode = signalLib.resolveThemeMode cfg.mode;
+      
+      # Get colors for the resolved theme mode  
+      signalColorsDark = signalLib.getColors "dark";
+      signalColorsLight = signalLib.getColors "light";
 
       # Generate theme files for both modes
-      darkTheme = themeGenerator "dark" signalColors pkgs;
-      lightTheme = themeGenerator "light" signalColors pkgs;
+      darkTheme = themeGenerator "dark" signalColorsDark pkgs;
+      lightTheme = themeGenerator "light" signalColorsLight pkgs;
 
       # Determine theme activation
       shouldTheme = signalLib.shouldThemeApp appName (category ++ [ appName ]) cfg config;
@@ -227,7 +232,7 @@ let
     {
       appName,
       category,
-      settingsGenerator, # Function: signalColors -> { setting-key = "value"; ... }
+      settingsGenerator, # Function: signalColors -> signalLib -> { setting-key = "value"; ... }
       configPath ? [ "settings" ],
       extraSettings ? { },
     }:
@@ -241,7 +246,7 @@ let
       configGenerator =
         signalColors:
         let
-          settings = settingsGenerator signalColors;
+          settings = settingsGenerator signalColors signalLib;
         in
         settings // extraSettings;
     };
@@ -259,7 +264,6 @@ let
     }:
     {
       config,
-      signalColors,
       signalLib,
       pkgs,
       ...
@@ -268,6 +272,9 @@ let
       inherit (lib) mkIf;
       cfg = config.theming.signal;
       themeMode = signalLib.resolveThemeMode cfg.mode;
+      
+      # Get colors for the resolved theme mode
+      signalColors = signalLib.getColors themeMode;
 
       # Generate raw config string
       rawConfig = configGenerator signalColors themeMode pkgs;

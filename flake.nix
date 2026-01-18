@@ -46,21 +46,30 @@
     in
     {
       # Home Manager modules (primary interface)
-      homeManagerModules = {
-        default = self.homeManagerModules.signal;
+      homeManagerModules =
+        let
+          # Create signalLib once to avoid recursion
+          signalLib = import ./lib {
+            inherit (nixpkgs) lib;
+            inherit (signal-palette) palette;
+            inherit nix-colorizer;
+          };
+        in
+        {
+          default = self.homeManagerModules.signal;
 
-        signal = import ./modules/common {
-          inherit (signal-palette) palette;
-          inherit nix-colorizer;
+          signal = import ./modules/common {
+            inherit (signal-palette) palette;
+            inherit nix-colorizer signalLib;
+          };
+
+          # Per-app modules for advanced users
+          ironbar = import ./modules/ironbar;
+          gtk = import ./modules/gtk;
+          helix = import ./modules/editors/helix.nix;
+          fuzzel = import ./modules/desktop/fuzzel.nix;
+          ghostty = import ./modules/terminals/ghostty.nix;
         };
-
-        # Per-app modules for advanced users
-        ironbar = import ./modules/ironbar;
-        gtk = import ./modules/gtk;
-        helix = import ./modules/editors/helix.nix;
-        fuzzel = import ./modules/desktop/fuzzel.nix;
-        ghostty = import ./modules/terminals/ghostty.nix;
-      };
 
       # NixOS modules (system-level theming)
       nixosModules = {
@@ -209,7 +218,7 @@
               nix-colorizer
               ;
             inherit (nixpkgs) lib;
-            home-manager = home-manager.packages.${system}.default;
+            home-manager = home-manager;
           };
 
           # Import module structure tests (validation)

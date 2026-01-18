@@ -18,7 +18,7 @@
 
 let
   # Helper to create a basic NixOS test
-  mkNixOSTest = name: testConfig: pkgs.nixosTest {
+  mkNixOSTest = name: testConfig: pkgs.testers.nixosTest {
     inherit name;
     nodes.machine = testConfig;
   };

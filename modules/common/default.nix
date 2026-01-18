@@ -1,4 +1,4 @@
-{ palette, nix-colorizer }:
+{ palette, nix-colorizer, signalLib }:
 {
   config,
   lib,
@@ -7,14 +7,12 @@
 let
   inherit (lib) mkOption mkEnableOption types;
   cfg = config.theming.signal;
-  signalLib = import ../../lib {
-    inherit lib palette nix-colorizer;
-  };
 in
 {
-  # Import all application modules unconditionally
-  # Each module uses mkIf internally to control its effect based on enable flags
+  # Import the module-args helper first to make signalPalette available to all modules
   imports = [
+    (import ./module-args.nix { inherit palette nix-colorizer; })
+    
     # Desktop - Window Managers & Compositors
     ../../modules/desktop/compositors/hyprland.nix
     ../../modules/desktop/compositors/sway.nix
@@ -381,12 +379,12 @@ in
   config = lib.mkMerge [
     # Make palette and lib available to all modules UNCONDITIONALLY
     # This prevents infinite recursion when modules reference these in their arguments
+    # This is in its own mkMerge item to ensure it's evaluated before other config
     # See: https://nixos.org/manual/nixos/stable/#sec-module-arguments
     {
       _module.args = {
         signalPalette = palette;
         inherit signalLib;
-        signalColors = signalLib.getColors (signalLib.resolveThemeMode cfg.mode);
       };
     }
 
