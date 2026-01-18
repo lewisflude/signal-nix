@@ -13,7 +13,7 @@
 # NOTES: tofi uses INI config. Home-Manager provides settings attrset.
 #        Minimalist launcher with excellent performance.
 let
-  inherit (lib) mkIf;
+  inherit (lib) mkIf mkDefault;
   cfg = config.theming.signal;
   themeMode = signalLib.resolveThemeMode cfg.mode;
   signalColors = signalLib.getColors themeMode;
@@ -42,23 +42,23 @@ in
   config = mkIf (cfg.enable && shouldTheme) {
     programs.tofi.settings = {
       # Background
-      background-color = toTofiColor colors.surface-base;
+      background-color = mkDefault (toTofiColor colors.surface-base);
 
       # Text colors
-      text-color = toTofiColor colors.text-primary;
-      prompt-color = toTofiColor accent.secondary.Lc75;
-      placeholder-color = toTofiColor colors.text-secondary;
+      text-color = mkDefault (toTofiColor colors.text-primary);
+      prompt-color = mkDefault (toTofiColor accent.secondary.Lc75);
+      placeholder-color = mkDefault (toTofiColor colors.text-secondary);
 
       # Input
-      input-color = toTofiColor colors.text-primary;
-      default-result-color = toTofiColor colors.text-secondary;
+      input-color = mkDefault (toTofiColor colors.text-primary);
+      default-result-color = mkDefault (toTofiColor colors.text-secondary);
 
       # Selection
-      selection-color = toTofiColor accent.secondary.Lc75;
-      selection-background = toTofiColor colors.surface-raised;
+      selection-color = mkDefault (toTofiColor accent.secondary.Lc75);
+      selection-background = mkDefault (toTofiColor colors.surface-raised);
 
       # Border
-      border-color = toTofiColor colors.divider;
+      border-color = mkDefault (toTofiColor colors.divider);
 
       # Outline (for selected item)
 
