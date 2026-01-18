@@ -170,40 +170,75 @@ Signal-nix uses **pure Nix-based testing** with no external dependencies:
 
 ### Test Structure
 
-Tests are organized in `/tests/default.nix`:
+Tests are organized into three directories for better maintainability:
+
+```
+tests/
+├── default.nix           # Main test aggregator (imports from subdirectories)
+├── unit/                 # Pure Nix unit tests (fast, no shell)
+│   └── default.nix       # Library functions, colors, accessibility
+├── integration/          # Shell-based validation (slower, file checks)
+│   └── default.nix       # Module structure, examples, patterns
+├── nixos.nix            # NixOS-specific tests (separate)
+└── comprehensive-test-suite.nix  # Additional test scenarios
+```
+
+**Why this structure?**
+
+- **Clear separation**: Pure tests vs shell tests are immediately distinguishable
+- **Performance**: Easy to run only fast unit tests during development
+- **Maintainability**: Related tests grouped together in focused files
+- **Future-ready**: Prepares for potential nix-unit migration of pure tests
+
+### Test Categories
+
+#### Unit Tests (`tests/unit/`)
+
+Fast, pure Nix evaluation tests using `lib.runTests`:
 
 ```nix
-{
-  pkgs,
-  lib,
-  self,
-  home-manager,
-  signal-palette,
-  system,
-}:
-{
-  # Pure unit tests using lib.runTests
-  unit-lib-resolveThemeMode = mkTest "..." { ... };
-  
-  # Shell-based validation tests
-  module-helix-dark = pkgs.runCommand "..." {} ''
-    test -f ${../modules/editors/helix.nix} || exit 1
-    echo "✓ Test passed"
-    touch $out
-  '';
-  
-  # Edge case tests combining multiple approaches
-  edge-case-brand-governance = mkTest "..." {
-    testFunctionalOverride = { expr = ...; expected = true; };
+# tests/unit/default.nix
+unit-lib-resolveThemeMode = mkTest "lib-resolve-theme-mode" {
+  testAutoToDark = {
+    expr = signalLib.resolveThemeMode "auto";
+    expected = "dark";
   };
-}
+};
 ```
+
+**Characteristics:**
+- No shell commands
+- Pure function evaluation
+- Runs in ~0.5-1 second per test
+- Ideal for library functions, color manipulation, accessibility
+
+#### Integration Tests (`tests/integration/`)
+
+Shell-based validation tests using `pkgs.runCommand`:
+
+```nix
+# tests/integration/default.nix
+module-helix-dark = pkgs.runCommand "test-module-helix" {} ''
+  test -f ${../../modules/editors/helix.nix} || exit 1
+  ${pkgs.gnugrep}/bin/grep -q "programs.helix" ${../../modules/editors/helix.nix}
+  echo "✓ Test passed"
+  touch $out
+'';
+```
+
+**Characteristics:**
+- Uses shell commands (test, grep, etc.)
+- File system access required
+- Runs in ~2-5 seconds per test
+- Ideal for module structure validation, pattern matching, examples
 
 ### Helper Functions
 
 - **`mkTest`**: Creates a test derivation from `lib.runTests` output
 - **`lib.runTests`**: Built-in Nix function for pure unit testing
 - **`pkgs.runCommand`**: Creates derivations for shell-based tests
+- **`assertFileExists`**: Helper for file existence checks (integration tests)
+- **`assertFileContains`**: Helper for pattern matching (integration tests)
 
 ## Test Output
 
@@ -240,7 +275,7 @@ See `.github/workflows/flake-check.yml` for CI configuration.
 
 ### Unit Test for Library Function
 
-Add to `tests/default.nix`:
+Add to `tests/unit/default.nix`:
 
 ```nix
 unit-lib-myFunction = mkTest "my-function" {
@@ -255,20 +290,29 @@ unit-lib-myFunction = mkTest "my-function" {
 };
 ```
 
-### Module Structure Test
+Then export it in `tests/default.nix`:
 
-Add to `tests/default.nix`:
+```nix
+inherit (unitTests)
+  # ... existing tests
+  unit-lib-myFunction
+  ;
+```
+
+### Integration Test for Module Structure
+
+Add to `tests/integration/default.nix`:
 
 ```nix
 module-myapp-evaluates = pkgs.runCommand "test-module-myapp" {} ''
   echo "Testing myapp module..."
   
-  test -f ${../modules/apps/myapp.nix} || {
+  test -f ${../../modules/apps/myapp.nix} || {
     echo "FAIL: myapp.nix not found"
     exit 1
   }
   
-  ${pkgs.gnugrep}/bin/grep -q "programs.myapp" ${../modules/apps/myapp.nix} || {
+  ${pkgs.gnugrep}/bin/grep -q "programs.myapp" ${../../modules/apps/myapp.nix} || {
     echo "FAIL: myapp.nix missing programs.myapp config"
     exit 1
   }
@@ -278,41 +322,48 @@ module-myapp-evaluates = pkgs.runCommand "test-module-myapp" {} ''
 '';
 ```
 
-### Integration Test
-
-Add to `tests/default.nix`:
+Then export it in `tests/default.nix`:
 
 ```nix
-integration-example-myconfig = pkgs.runCommand "test-example-myconfig" {} ''
-  echo "Testing myconfig.nix example..."
-  
-  test -f ${../examples/myconfig.nix} || {
-    echo "FAIL: myconfig.nix not found"
-    exit 1
-  }
-  
-  ${pkgs.gnugrep}/bin/grep -q "requiredField" ${../examples/myconfig.nix} || {
-    echo "FAIL: myconfig.nix missing required field"
-    exit 1
-  }
-  
-  echo "✓ myconfig.nix structure is valid"
-  touch $out
-'';
+inherit (integrationTests)
+  # ... existing tests
+  module-myapp-evaluates
+  ;
 ```
 
-Then add the test to the `checks` output in `flake.nix`:
+### Integration Test for Examples
+
+Add to `tests/integration/default.nix`:
 
 ```nix
-checks = forAllSystems (system: {
-  inherit (allTests)
-    # ... existing tests
-    unit-lib-myFunction
-    module-myapp-evaluates
-    integration-example-myconfig
-    ;
-});
+integration-example-myconfig = mkExampleTest 
+  "myconfig" 
+  ../../examples/myconfig.nix 
+  "requiredField";
 ```
+
+Then export it in `tests/default.nix`:
+
+```nix
+inherit (integrationTests)
+  # ... existing tests
+  integration-example-myconfig
+  ;
+```
+
+### Guidelines for Test Placement
+
+**Use Unit Tests (`tests/unit/`) when:**
+- Testing pure functions
+- No file system access needed
+- Fast execution is critical
+- Examples: color calculations, theme resolution, accessibility checks
+
+**Use Integration Tests (`tests/integration/`) when:**
+- Validating file structure
+- Pattern matching with grep
+- Checking module configuration
+- Examples: module validation, example syntax, file existence
 
 ## Test Philosophy
 
@@ -349,6 +400,50 @@ Test suite performance on typical hardware:
 - **CI (GitHub Actions)**: ~30-45 seconds
 
 All tests leverage Nix's binary caching for fast execution.
+
+### Performance by Test Type
+
+The organized test structure enables targeted test runs:
+
+**Unit Tests Only (Fast Development Loop):**
+```bash
+# Run all pure unit tests (~5-10 seconds)
+nix build .#checks.x86_64-linux.unit-lib-resolveThemeMode \
+          .#checks.x86_64-linux.unit-lib-getColors \
+          .#checks.x86_64-linux.accessibility-contrast-estimation \
+          .#checks.x86_64-linux.color-manipulation-lightness
+```
+
+- Pure Nix evaluation (9 tests)
+- No shell commands
+- ~0.5-1 second per test
+- Ideal for TDD and rapid iteration
+
+**Integration Tests (Slower but Comprehensive):**
+```bash
+# Run all integration tests (~30-60 seconds)
+nix build .#checks.x86_64-linux.integration-example-basic \
+          .#checks.x86_64-linux.module-helix-dark \
+          .#checks.x86_64-linux.validation-theme-names
+```
+
+- Shell-based validation (15 tests)
+- File system access required
+- ~2-5 seconds per test
+- Run before commits or in CI
+
+**Full Test Suite:**
+```bash
+# Run everything (60+ tests, ~6 minutes)
+nix flake check
+```
+
+### Optimization Tips
+
+1. **During development**: Run only unit tests for immediate feedback
+2. **Before committing**: Run relevant integration tests
+3. **In CI**: Run full suite with parallel execution
+4. **Cache hits**: Most tests complete in <1s when cached
 
 ## Troubleshooting
 

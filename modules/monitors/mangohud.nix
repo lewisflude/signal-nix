@@ -1,0 +1,70 @@
+{
+  config,
+  lib,
+  signalColors,
+  signalLib,
+  ...
+}:
+# CONFIGURATION METHOD: freeform-settings (Tier 3)
+# HOME-MANAGER MODULE: programs.mangohud.settings
+# UPSTREAM SCHEMA: https://github.com/flightlessmango/MangoHud#configuration
+# SCHEMA VERSION: 0.7.0
+# LAST VALIDATED: 2026-01-18
+# NOTES: MangoHud is a gaming overlay for Vulkan/OpenGL on Linux.
+#        Colors use hex format WITHOUT # prefix. Alpha is a separate float (0.0-1.0).
+#        Works with Steam, native games, Wine/Proton, and Lutris.
+let
+  inherit (lib) mkIf removePrefix;
+  cfg = config.theming.signal;
+
+  colors = {
+    surface-base = signalColors.tonal."surface-subtle";
+    text-primary = signalColors.tonal."text-primary";
+    text-secondary = signalColors.tonal."text-secondary";
+    divider-primary = signalColors.tonal."divider-primary";
+  };
+
+  inherit (signalColors) accent;
+
+  # Helper to get hex without # prefix (MangoHud requirement)
+  hexRaw = color: removePrefix "#" color.hex;
+
+  # Check if mangohud should be themed - using centralized helper
+  shouldTheme = signalLib.shouldThemeApp "mangohud" [
+    "monitors"
+    "mangohud"
+  ] cfg config;
+in
+{
+  config = mkIf (cfg.enable && shouldTheme) {
+    programs.mangohud = {
+      settings = {
+        # Background overlay colors
+        background_color = hexRaw colors.surface-base;
+        background_alpha = 0.8; # 80% opacity for visibility while gaming
+
+        # Text color for all labels
+        text_color = hexRaw colors.text-primary;
+
+        # Component-specific colors
+        gpu_color = hexRaw accent.tertiary.Lc75; # Purple for GPU metrics
+        cpu_color = hexRaw accent.secondary.Lc75; # Blue for CPU metrics
+        vram_color = hexRaw accent.warning.Lc75; # Yellow/orange for VRAM
+        ram_color = hexRaw accent.primary.Lc75; # Green for RAM metrics
+
+        # Graph colors
+        frametime_color = hexRaw accent.secondary.Lc75; # Blue for performance graphs
+        engine_color = hexRaw colors.text-secondary; # Secondary text for engine info
+        wine_color = hexRaw accent.tertiary.Lc75; # Purple for Wine/Proton info
+
+        # Additional graph colors for consistency
+        gpu_load_color = [ (hexRaw accent.tertiary.Lc75) (hexRaw accent.tertiary.Lc75) ];
+        cpu_load_color = [ (hexRaw accent.secondary.Lc75) (hexRaw accent.secondary.Lc75) ];
+        
+        # Network colors (if network stats enabled)
+        network_color_download = hexRaw accent.primary.Lc75; # Green for download
+        network_color_upload = hexRaw accent.danger.Lc75; # Red for upload
+      };
+    };
+  };
+}

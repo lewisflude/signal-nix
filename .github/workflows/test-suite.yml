@@ -27,13 +27,47 @@ jobs:
 
       - name: Check flake structure
         run: |
+          echo "::group::Flake Metadata"
           nix flake metadata
+          echo "::endgroup::"
+          
+          echo "::group::Flake Structure"
           nix flake show
+          echo "::endgroup::"
+          
+          echo "✅ Flake structure check passed" >> $GITHUB_STEP_SUMMARY
 
       - name: Run unit tests
+        id: unit_tests
         run: |
-          nix build .#checks.x86_64-linux.unit-lib-resolveThemeMode
-          nix build .#checks.x86_64-linux.unit-lib-getColors
+          echo "::group::Unit Test: resolveThemeMode"
+          START=$(date +%s)
+          if nix build .#checks.x86_64-linux.unit-lib-resolveThemeMode --print-build-logs; then
+            END=$(date +%s)
+            DURATION=$((END - START))
+            echo "✅ resolveThemeMode test passed (${DURATION}s)"
+            echo "::notice title=Unit Test Passed::resolveThemeMode test passed in ${DURATION}s"
+          else
+            echo "::error title=Unit Test Failed::resolveThemeMode test failed"
+            exit 1
+          fi
+          echo "::endgroup::"
+          
+          echo "::group::Unit Test: getColors"
+          START=$(date +%s)
+          if nix build .#checks.x86_64-linux.unit-lib-getColors --print-build-logs; then
+            END=$(date +%s)
+            DURATION=$((END - START))
+            echo "✅ getColors test passed (${DURATION}s)"
+            echo "::notice title=Unit Test Passed::getColors test passed in ${DURATION}s"
+          else
+            echo "::error title=Unit Test Failed::getColors test failed"
+            exit 1
+          fi
+          echo "::endgroup::"
+          
+          echo "## 🔥 Smoke Test Results" >> $GITHUB_STEP_SUMMARY
+          echo "✅ All smoke tests passed" >> $GITHUB_STEP_SUMMARY
 
   # Main test suite
   test-suite:
@@ -101,9 +135,113 @@ jobs:
         uses: DeterminateSystems/magic-nix-cache-action@v2
 
       - name: Run tests - ${{ matrix.category }}
+        id: run_tests
         run: |
           chmod +x ./run-tests.sh
-          ./run-tests.sh --category ${{ matrix.category }} --system ${{ matrix.system }} --verbose
+          
+          # Create output directory for logs
+          mkdir -p test-output
+          
+          echo "::group::🧪 Running ${{ matrix.category }} tests on ${{ matrix.system }}"
+          
+          # Run tests with timing and structured output
+          START_TIME=$(date +%s)
+          
+          # Run tests and capture both stdout and stderr
+          if ./run-tests.sh --category ${{ matrix.category }} --system ${{ matrix.system }} --verbose 2>&1 | tee test-output/${{ matrix.category }}-${{ matrix.system }}.log; then
+            TEST_STATUS="passed"
+            EXIT_CODE=0
+          else
+            TEST_STATUS="failed"
+            EXIT_CODE=1
+          fi
+          
+          END_TIME=$(date +%s)
+          DURATION=$((END_TIME - START_TIME))
+          
+          echo "::endgroup::"
+          
+          # Save test metadata
+          echo "$TEST_STATUS" > test-output/${{ matrix.category }}-status.txt
+          echo "$DURATION" > test-output/${{ matrix.category }}-duration.txt
+          
+          # Count individual tests if possible
+          LOG_FILE="test-output/${{ matrix.category }}-${{ matrix.system }}.log"
+          PASSED_TESTS=$(grep -c "✓" "$LOG_FILE" 2>/dev/null || echo "0")
+          FAILED_TESTS=$(grep -c "✗" "$LOG_FILE" 2>/dev/null || echo "0")
+          echo "$PASSED_TESTS" > test-output/${{ matrix.category }}-passed.txt
+          echo "$FAILED_TESTS" > test-output/${{ matrix.category }}-failed.txt
+          
+          # Create detailed summary for this category
+          {
+            echo "## 📊 Test Results: ${{ matrix.category }}"
+            echo ""
+            echo "| Metric | Value |"
+            echo "|--------|-------|"
+            if [ "$TEST_STATUS" = "passed" ]; then
+              echo "| Status | ✅ **Passed** |"
+            else
+              echo "| Status | ❌ **Failed** |"
+            fi
+            echo "| Duration | ⏱️ ${DURATION}s |"
+            echo "| System | 🖥️ ${{ matrix.system }} |"
+            if [ $PASSED_TESTS -gt 0 ] || [ $FAILED_TESTS -gt 0 ]; then
+              TOTAL_TESTS=$((PASSED_TESTS + FAILED_TESTS))
+              echo "| Tests Passed | ✅ $PASSED_TESTS/$TOTAL_TESTS |"
+            fi
+            echo ""
+          } >> $GITHUB_STEP_SUMMARY
+          
+          # Add annotations for failures with more detail
+          if [ "$TEST_STATUS" = "failed" ]; then
+            echo "::error title=Test Failure (${{ matrix.category }})::$FAILED_TESTS test(s) failed in category ${{ matrix.category }} on ${{ matrix.system }}. Duration: ${DURATION}s"
+            
+            # Extract and display failed test names
+            echo "::group::❌ Failed Tests in ${{ matrix.category }}"
+            if grep -q "✗" "$LOG_FILE"; then
+              echo "Failed tests:"
+              grep "✗" "$LOG_FILE" | head -20 || true
+              
+              # Also try to extract error messages
+              echo ""
+              echo "Error details:"
+              grep -A 5 "error:" "$LOG_FILE" | head -50 || echo "No detailed error messages found"
+            else
+              echo "Test suite failed but no individual test failures detected."
+              echo "This might be a build or evaluation error."
+              echo ""
+              echo "Last 30 lines of output:"
+              tail -30 "$LOG_FILE"
+            fi
+            echo "::endgroup::"
+            
+            # Add failed test details to summary
+            {
+              echo "### ❌ Failed Tests"
+              echo ""
+              echo "<details>"
+              echo "<summary>Click to see failed tests</summary>"
+              echo ""
+              echo "\`\`\`"
+              grep "✗" "$LOG_FILE" | head -20 || echo "No specific test failures found"
+              echo "\`\`\`"
+              echo ""
+              echo "</details>"
+              echo ""
+            } >> $GITHUB_STEP_SUMMARY
+          else
+            echo "::notice title=Tests Passed (${{ matrix.category }})::All tests in category ${{ matrix.category }} passed in ${DURATION}s"
+          fi
+          
+          exit $EXIT_CODE
+      
+      - name: Upload test logs
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: test-logs-${{ matrix.category }}-${{ matrix.system }}
+          path: test-output/
+          retention-days: 7
 
   # Full integration test on primary platform
   full-check:
@@ -121,8 +259,27 @@ jobs:
         uses: DeterminateSystems/magic-nix-cache-action@v2
 
       - name: Run full flake check
+        id: full_check
         run: |
-          nix flake check --system x86_64-linux --show-trace --print-build-logs
+          echo "::group::Full Flake Check"
+          START=$(date +%s)
+          
+          if nix flake check --system x86_64-linux --show-trace --print-build-logs; then
+            END=$(date +%s)
+            DURATION=$((END - START))
+            echo "::endgroup::"
+            echo "✅ Full flake check passed (${DURATION}s)"
+            echo "::notice title=Full Check Passed::Complete flake check passed in ${DURATION}s"
+            
+            echo "## 🔍 Full Flake Check" >> $GITHUB_STEP_SUMMARY
+            echo "✅ All checks passed (${DURATION}s)" >> $GITHUB_STEP_SUMMARY
+          else
+            END=$(date +%s)
+            DURATION=$((END - START))
+            echo "::endgroup::"
+            echo "::error title=Full Check Failed::Flake check failed after ${DURATION}s"
+            exit 1
+          fi
 
   # Report test results
   report:
@@ -130,26 +287,355 @@ jobs:
     runs-on: ubuntu-latest
     needs: [smoke-test, test-suite, full-check]
     if: always()
+    permissions:
+      pull-requests: write
+      contents: read
     steps:
-      - name: Check results
+      - name: Download all test artifacts
+        if: always()
+        uses: actions/download-artifact@v4
+        with:
+          path: test-results
+          pattern: test-logs-*
+      
+      - name: Generate comprehensive test report
+        id: generate_report
+        if: always()
         run: |
-          echo "## Test Suite Results" >> $GITHUB_STEP_SUMMARY
-          echo "" >> $GITHUB_STEP_SUMMARY
+          # Create report file for PR comment
+          REPORT_FILE="test-report.md"
           
-          if [ "${{ needs.smoke-test.result }}" == "success" ] && \
-             [ "${{ needs.test-suite.result }}" == "success" ] && \
-             [ "${{ needs.full-check.result }}" == "success" ]; then
-            echo "✅ All tests passed!" >> $GITHUB_STEP_SUMMARY
-            echo "" >> $GITHUB_STEP_SUMMARY
-            echo "- Smoke tests: ✅ Passed" >> $GITHUB_STEP_SUMMARY
-            echo "- Test suite: ✅ Passed" >> $GITHUB_STEP_SUMMARY
-            echo "- Full check: ✅ Passed" >> $GITHUB_STEP_SUMMARY
-            exit 0
+          # Header for both step summary and PR comment
+          cat > "$REPORT_FILE" << 'EOF'
+# 📊 Signal-Nix Test Suite Results
+
+EOF
+          
+          echo "**Workflow**: ${{ github.workflow }}" >> "$REPORT_FILE"
+          echo "**Commit**: \`${{ github.sha }}\`" >> "$REPORT_FILE"
+          echo "**Branch**: \`${{ github.ref_name }}\`" >> "$REPORT_FILE"
+          echo "" >> "$REPORT_FILE"
+          
+          # Overall status
+          SMOKE_STATUS="${{ needs.smoke-test.result }}"
+          SUITE_STATUS="${{ needs.test-suite.result }}"
+          CHECK_STATUS="${{ needs.full-check.result }}"
+          
+          if [ "$SMOKE_STATUS" == "success" ] && [ "$SUITE_STATUS" == "success" ] && [ "$CHECK_STATUS" == "success" ]; then
+            echo "## ✅ All Tests Passed!" >> "$REPORT_FILE"
+            OVERALL_RESULT="success"
+            EMOJI="🎉"
           else
-            echo "❌ Some tests failed" >> $GITHUB_STEP_SUMMARY
-            echo "" >> $GITHUB_STEP_SUMMARY
-            echo "- Smoke tests: ${{ needs.smoke-test.result == 'success' && '✅' || '❌' }} ${{ needs.smoke-test.result }}" >> $GITHUB_STEP_SUMMARY
-            echo "- Test suite: ${{ needs.test-suite.result == 'success' && '✅' || '❌' }} ${{ needs.test-suite.result }}" >> $GITHUB_STEP_SUMMARY
-            echo "- Full check: ${{ needs.full-check.result == 'success' && '✅' || '❌' }} ${{ needs.full-check.result }}" >> $GITHUB_STEP_SUMMARY
+            echo "## ❌ Some Tests Failed" >> "$REPORT_FILE"
+            OVERALL_RESULT="failure"
+            EMOJI="⚠️"
+          fi
+          echo "" >> "$REPORT_FILE"
+          
+          # Quick summary for PR comment (before detailed tables)
+          if [ "$OVERALL_RESULT" == "success" ]; then
+            echo "> ✅ All test stages passed successfully!" >> "$REPORT_FILE"
+          else
+            echo "> ❌ One or more test stages failed. See details below." >> "$REPORT_FILE"
+          fi
+          echo "" >> "$REPORT_FILE"
+          
+          # Test stage summary table
+          echo "### 🧪 Test Stages" >> "$REPORT_FILE"
+          echo "" >> "$REPORT_FILE"
+          echo "| Stage | Status | Description |" >> "$REPORT_FILE"
+          echo "|-------|--------|-------------|" >> "$REPORT_FILE"
+          
+          # Smoke test
+          if [ "$SMOKE_STATUS" == "success" ]; then
+            echo "| 🔥 Smoke Tests | ✅ **Passed** | Quick validation successful |" >> "$REPORT_FILE"
+          else
+            echo "| 🔥 Smoke Tests | ❌ **Failed** | Basic checks failed |" >> "$REPORT_FILE"
+          fi
+          
+          # Test suite
+          if [ "$SUITE_STATUS" == "success" ]; then
+            echo "| 🧪 Test Suite | ✅ **Passed** | All categories passed |" >> "$REPORT_FILE"
+          else
+            echo "| 🧪 Test Suite | ❌ **Failed** | One or more categories failed |" >> "$REPORT_FILE"
+          fi
+          
+          # Full check
+          if [ "$CHECK_STATUS" == "success" ]; then
+            echo "| 🔍 Full Check | ✅ **Passed** | Complete flake check successful |" >> "$REPORT_FILE"
+          else
+            echo "| 🔍 Full Check | ❌ **Failed** | Flake check failed |" >> "$REPORT_FILE"
+          fi
+          
+          echo "" >> "$REPORT_FILE"
+          
+          # Detailed category results from test suite
+          if [ -d "test-results" ]; then
+            echo "### 📋 Detailed Test Results" >> "$REPORT_FILE"
+            echo "" >> "$REPORT_FILE"
+            
+            # Count passed and failed categories and individual tests
+            passed_count=0
+            failed_count=0
+            failed_categories=""
+            total_tests_passed=0
+            total_tests_failed=0
+            
+            for result_dir in test-results/test-logs-*; do
+              if [ -d "$result_dir" ]; then
+                dir_name=$(basename "$result_dir")
+                info="${dir_name#test-logs-}"
+                category=$(echo "$info" | sed 's/-[^-]*$//')
+                
+                status_file="$result_dir/${category}-status.txt"
+                passed_file="$result_dir/${category}-passed.txt"
+                failed_file="$result_dir/${category}-failed.txt"
+                
+                # Count individual tests
+                if [ -f "$passed_file" ]; then
+                  cat_passed=$(cat "$passed_file")
+                  total_tests_passed=$((total_tests_passed + cat_passed))
+                fi
+                if [ -f "$failed_file" ]; then
+                  cat_failed=$(cat "$failed_file")
+                  total_tests_failed=$((total_tests_failed + cat_failed))
+                fi
+                
+                if [ -f "$status_file" ]; then
+                  status=$(cat "$status_file")
+                  if [ "$status" == "passed" ]; then
+                    ((passed_count++))
+                  else
+                    ((failed_count++))
+                    if [ -n "$failed_categories" ]; then
+                      failed_categories="$failed_categories, \`$category\`"
+                    else
+                      failed_categories="\`$category\`"
+                    fi
+                  fi
+                fi
+              fi
+            done
+            
+            total_categories=$((passed_count + failed_count))
+            total_tests=$((total_tests_passed + total_tests_failed))
+            
+            echo "**Categories**: $passed_count/$total_categories passed" >> "$REPORT_FILE"
+            if [ $total_tests -gt 0 ]; then
+              echo "**Individual Tests**: $total_tests_passed/$total_tests passed" >> "$REPORT_FILE"
+            fi
+            if [ $failed_count -gt 0 ]; then
+              echo "" >> "$REPORT_FILE"
+              echo "⚠️ **Failed categories**: $failed_categories" >> "$REPORT_FILE"
+            fi
+            echo "" >> "$REPORT_FILE"
+            
+            echo "| Category | System | Status | Duration | Tests | Details |" >> "$REPORT_FILE"
+            echo "|----------|--------|--------|----------|-------|---------|" >> "$REPORT_FILE"
+            
+            # Process each category result
+            for result_dir in test-results/test-logs-*; do
+              if [ -d "$result_dir" ]; then
+                # Extract category and system from directory name
+                dir_name=$(basename "$result_dir")
+                info="${dir_name#test-logs-}"
+                category=$(echo "$info" | sed 's/-[^-]*$//')
+                system=$(echo "$info" | sed 's/.*-//')
+                
+                # Read status and duration if available
+                status_file="$result_dir/${category}-status.txt"
+                duration_file="$result_dir/${category}-duration.txt"
+                passed_file="$result_dir/${category}-passed.txt"
+                failed_file="$result_dir/${category}-failed.txt"
+                log_file="$result_dir/${category}-${system}.log"
+                
+                # Get test counts
+                test_info="—"
+                if [ -f "$passed_file" ] && [ -f "$failed_file" ]; then
+                  passed=$(cat "$passed_file")
+                  failed=$(cat "$failed_file")
+                  total=$((passed + failed))
+                  if [ $total -gt 0 ]; then
+                    test_info="$passed/$total"
+                  fi
+                fi
+                
+                if [ -f "$status_file" ]; then
+                  status=$(cat "$status_file")
+                  if [ "$status" == "passed" ]; then
+                    status_icon="✅ Passed"
+                    details="—"
+                  else
+                    status_icon="❌ **Failed**"
+                    # Try to extract error details from log
+                    if [ -f "$log_file" ]; then
+                      # Look for common error patterns
+                      error_msg=$(grep -m 1 "error:" "$log_file" 2>/dev/null || echo "See artifacts")
+                      if [ ${#error_msg} -gt 80 ]; then
+                        error_msg="${error_msg:0:77}..."
+                      fi
+                      details="$error_msg"
+                    else
+                      details="Check artifacts"
+                    fi
+                  fi
+                else
+                  status_icon="⚠️ Unknown"
+                  details="—"
+                fi
+                
+                if [ -f "$duration_file" ]; then
+                  duration="$(cat "$duration_file")s"
+                else
+                  duration="N/A"
+                fi
+                
+                echo "| \`$category\` | \`$system\` | $status_icon | ⏱️ $duration | $test_info | $details |" >> "$REPORT_FILE"
+              fi
+            done
+            
+            echo "" >> "$REPORT_FILE"
+          fi
+          
+          # Performance summary
+          if [ -d "test-results" ]; then
+            total_duration=0
+            test_count=0
+            slowest_test=""
+            slowest_duration=0
+            
+            for duration_file in test-results/test-logs-*/*-duration.txt; do
+              if [ -f "$duration_file" ]; then
+                duration=$(cat "$duration_file")
+                total_duration=$((total_duration + duration))
+                test_count=$((test_count + 1))
+                
+                # Track slowest test
+                if [ $duration -gt $slowest_duration ]; then
+                  slowest_duration=$duration
+                  dir_name=$(dirname "$duration_file")
+                  dir_name=$(basename "$dir_name")
+                  info="${dir_name#test-logs-}"
+                  slowest_test=$(echo "$info" | sed 's/-[^-]*$//')
+                fi
+              fi
+            done
+            
+            if [ $test_count -gt 0 ]; then
+              echo "### ⚡ Performance Metrics" >> "$REPORT_FILE"
+              echo "" >> "$REPORT_FILE"
+              avg_duration=$((total_duration / test_count))
+              
+              # Format time nicely
+              if [ $total_duration -ge 60 ]; then
+                minutes=$((total_duration / 60))
+                seconds=$((total_duration % 60))
+                total_time="${minutes}m ${seconds}s"
+              else
+                total_time="${total_duration}s"
+              fi
+              
+              echo "- ⏱️ **Total test time**: $total_time" >> "$REPORT_FILE"
+              echo "- 📊 **Categories tested**: $test_count" >> "$REPORT_FILE"
+              echo "- 📈 **Average per category**: ${avg_duration}s" >> "$REPORT_FILE"
+              if [ $slowest_duration -gt 0 ]; then
+                echo "- 🐢 **Slowest category**: \`$slowest_test\` (${slowest_duration}s)" >> "$REPORT_FILE"
+              fi
+              echo "" >> "$REPORT_FILE"
+            fi
+          fi
+          
+          # Failed tests section with actionable information
+          if [ "$OVERALL_RESULT" == "failure" ]; then
+            echo "### 🔍 Troubleshooting" >> "$REPORT_FILE"
+            echo "" >> "$REPORT_FILE"
+            echo "**What failed:**" >> "$REPORT_FILE"
+            [ "$SMOKE_STATUS" != "success" ] && echo "- ❌ Smoke Tests - Basic validation failed" >> "$REPORT_FILE"
+            [ "$SUITE_STATUS" != "success" ] && echo "- ❌ Test Suite - See category details above" >> "$REPORT_FILE"
+            [ "$CHECK_STATUS" != "success" ] && echo "- ❌ Full Flake Check - Complete check failed" >> "$REPORT_FILE"
+            echo "" >> "$REPORT_FILE"
+            echo "**Next steps:**" >> "$REPORT_FILE"
+            echo "1. 📥 Download test logs from the [workflow artifacts](${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }})" >> "$REPORT_FILE"
+            echo "2. 🔎 Check the failed category logs for detailed error messages" >> "$REPORT_FILE"
+            echo "3. 🏃 Run locally: \`./run-tests.sh --category <failed-category> --verbose\`" >> "$REPORT_FILE"
+            echo "4. 📖 See [docs/troubleshooting.md](https://github.com/${{ github.repository }}/blob/main/docs/troubleshooting.md) for common issues" >> "$REPORT_FILE"
+            echo "" >> "$REPORT_FILE"
+          else
+            echo "### 🎉 Success!" >> "$REPORT_FILE"
+            echo "" >> "$REPORT_FILE"
+            echo "All tests passed successfully. Great work! 🚀" >> "$REPORT_FILE"
+            echo "" >> "$REPORT_FILE"
+          fi
+          
+          # Add footer with helpful links
+          echo "---" >> "$REPORT_FILE"
+          echo "" >> "$REPORT_FILE"
+          echo "📚 [Documentation](https://github.com/${{ github.repository }}/tree/main/docs) • " >> "$REPORT_FILE"
+          echo "🧪 [Test Suite Docs](https://github.com/${{ github.repository }}/blob/main/docs/testing.md) • " >> "$REPORT_FILE"
+          echo "🐛 [Report Issue](https://github.com/${{ github.repository }}/issues/new)" >> "$REPORT_FILE"
+          
+          # Copy to step summary
+          cat "$REPORT_FILE" >> $GITHUB_STEP_SUMMARY
+          
+          # Save result for next step
+          echo "result=$OVERALL_RESULT" >> $GITHUB_OUTPUT
+          
+          # Add error annotation if failed
+          if [ "$OVERALL_RESULT" == "failure" ]; then
+            echo "::error title=Test Suite Failed::One or more test stages failed. Check the test report for details."
+          fi
+          
+          # Exit with appropriate code
+          if [ "$OVERALL_RESULT" == "failure" ]; then
             exit 1
           fi
+      
+      - name: Comment PR with test results
+        if: github.event_name == 'pull_request' && always()
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const fs = require('fs');
+            const reportPath = 'test-report.md';
+            
+            if (!fs.existsSync(reportPath)) {
+              console.log('No report file found, skipping PR comment');
+              return;
+            }
+            
+            const report = fs.readFileSync(reportPath, 'utf8');
+            
+            // Find existing comment
+            const { data: comments } = await github.rest.issues.listComments({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              issue_number: context.issue.number,
+            });
+            
+            const botComment = comments.find(comment => 
+              comment.user.type === 'Bot' && 
+              comment.body.includes('📊 Signal-Nix Test Suite Results')
+            );
+            
+            const commentBody = report + '\n\n' + 
+              '<sub>🤖 This comment is automatically updated on each push.</sub>';
+            
+            if (botComment) {
+              // Update existing comment
+              await github.rest.issues.updateComment({
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                comment_id: botComment.id,
+                body: commentBody
+              });
+              console.log('Updated existing PR comment');
+            } else {
+              // Create new comment
+              await github.rest.issues.createComment({
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                issue_number: context.issue.number,
+                body: commentBody
+              });
+              console.log('Created new PR comment');
+            }
