@@ -702,7 +702,7 @@ When creating a new release:
 ✅ GitHub Issues templates and workflows  
 ✅ Troubleshooting guide with diagnostics  
 ✅ Design principles documentation  
-✅ **Comprehensive Theming System** - 62 applications with theming support:
+✅ **Comprehensive Theming System** - 63 applications with theming support:
   - ✅ Terminals (5): Alacritty, Foot, Ghostty, Kitty, WezTerm
   - ✅ CLI Tools (12): Bat, Delta, Eza, Fzf, Glow, Lazydocker, Lazygit, Less, Ripgrep, Tealdeer, Tig, Yazi
   - ✅ Monitors (5): Bottom, Btop++, Htop, MangoHud, Procs
@@ -719,6 +719,7 @@ When creating a new release:
   - ✅ Browsers (2): Firefox, Qutebrowser
   - ✅ Lock Screens (1): Swaylock
   - ✅ Media Players (1): MPV
+  - ✅ Apps (1): Satty
   - ✅ NixOS Boot (3): Console, GRUB, Plymouth
   - ✅ NixOS Login (3): GDM, LightDM, SDDM
   - ✅ System Theming (2): GTK, Qt

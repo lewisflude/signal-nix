@@ -25,7 +25,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   - Process state coloring (Running=green, Sleeping=blue, Zombie=magenta, etc.)
   - Unit-based coloring for memory sizes (K=blue, M=green, G=yellow, T/P=red)
   - Config placed at `~/.config/procs/config.toml`
-  - Signal now supports 62 applications total
+  - Signal now supports 63 applications total (including Satty)
 
 - **Zed Editor**: Modern collaborative code editor with complete JSON theme generation
   - Comprehensive syntax highlighting for 40+ language elements

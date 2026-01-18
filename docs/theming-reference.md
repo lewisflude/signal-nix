@@ -26,8 +26,8 @@ This reference organizes theming documentation by application category, making i
 - [Communication](#communication)
 - [Productivity](#productivity)
 - [Lock & Idle](#lock--idle)
-
----
+- [Screenshots & Annotation](#screenshots--annotation)
+- [Browsers](#browsers)
 
 ## Desktop Environment
 
@@ -617,6 +617,35 @@ theming.signal.desktop.swaylock.enable = true;
 **Documentation:** [Hypridle](https://wiki.hyprland.org/Hypr-Ecosystem/hypridle/)  
 **Format:** Hypridle config  
 **Notes:** Idle management for Hyprland
+
+---
+
+## Screenshots & Annotation
+
+### 🟢 Satty
+**Status:** ✅ Implemented  
+**Category:** Screenshot annotation tool  
+**Documentation:** [Satty Configuration](https://github.com/gabm/Satty#configuration-file)  
+**Format:** TOML  
+**Notes:**
+- Modern Wayland screenshot annotation tool
+- Color palette for drawing tools (brush, shapes, text, markers)
+- Supports fullscreen annotation and post-capture cropping
+- Hardware-accelerated rendering (OpenGL)
+- Integration with Wayland screenshot workflows (grim + slurp)
+
+**Signal Implementation:**
+```nix
+theming.signal.apps.satty.enable = true;
+```
+
+**Color Palette:**
+- Primary (Blue): Main annotation color
+- Danger (Red): Important/error markings
+- Warning (Yellow): Warnings/highlights
+- Success (Green): Positive markings
+- Tertiary (Purple): Alternate highlighting
+- Info (Cyan): Notes/information
 
 ---
 
