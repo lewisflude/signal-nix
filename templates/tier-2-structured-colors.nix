@@ -39,7 +39,7 @@
 # NOTES: Brief description of the color structure.
 #        Note any special color format requirements.
 let
-  inherit (lib) mkIf;
+  inherit (lib) mkIf mkDefault;
   cfg = config.theming.signal;
 
   # =============================================================================
@@ -127,52 +127,55 @@ in
     programs.APP_NAME = {
       settings = {
         colors = {
+          # IMPORTANT: Wrap all values with mkDefault to allow user overrides!
+          # This prevents conflicts when users have their own configuration.
+          
           # Example structure for terminals:
           # Primary colors
           # primary = {
-          #   background = colors.surface-base.hex;
-          #   foreground = colors.text-primary.hex;
+          #   background = mkDefault colors.surface-base.hex;
+          #   foreground = mkDefault colors.text-primary.hex;
           # };
 
           # Cursor colors
           # cursor = {
-          #   text = colors.surface-base.hex;
-          #   cursor = accent.secondary.Lc75.hex;
+          #   text = mkDefault colors.surface-base.hex;
+          #   cursor = mkDefault accent.secondary.Lc75.hex;
           # };
 
           # Selection colors
           # selection = {
-          #   text = colors.text-primary.hex;
-          #   background = colors.divider-primary.hex;
+          #   text = mkDefault colors.text-primary.hex;
+          #   background = mkDefault colors.divider-primary.hex;
           # };
 
           # ANSI colors (for terminals)
           # normal = {
-          #   black = ansiColors.black.hex;
-          #   red = ansiColors.red.hex;
-          #   green = ansiColors.green.hex;
-          #   yellow = ansiColors.yellow.hex;
-          #   blue = ansiColors.blue.hex;
-          #   magenta = ansiColors.magenta.hex;
-          #   cyan = ansiColors.cyan.hex;
-          #   white = ansiColors.white.hex;
+          #   black = mkDefault ansiColors.black.hex;
+          #   red = mkDefault ansiColors.red.hex;
+          #   green = mkDefault ansiColors.green.hex;
+          #   yellow = mkDefault ansiColors.yellow.hex;
+          #   blue = mkDefault ansiColors.blue.hex;
+          #   magenta = mkDefault ansiColors.magenta.hex;
+          #   cyan = mkDefault ansiColors.cyan.hex;
+          #   white = mkDefault ansiColors.white.hex;
           # };
 
           # bright = {
-          #   black = ansiColors.bright-black.hex;
-          #   red = ansiColors.bright-red.hex;
-          #   green = ansiColors.bright-green.hex;
-          #   yellow = ansiColors.bright-yellow.hex;
-          #   blue = ansiColors.bright-blue.hex;
-          #   magenta = ansiColors.bright-magenta.hex;
-          #   cyan = ansiColors.bright-cyan.hex;
-          #   white = ansiColors.bright-white.hex;
+          #   black = mkDefault ansiColors.bright-black.hex;
+          #   red = mkDefault ansiColors.bright-red.hex;
+          #   green = mkDefault ansiColors.bright-green.hex;
+          #   yellow = mkDefault ansiColors.bright-yellow.hex;
+          #   blue = mkDefault ansiColors.bright-blue.hex;
+          #   magenta = mkDefault ansiColors.bright-magenta.hex;
+          #   cyan = mkDefault ansiColors.bright-cyan.hex;
+          #   white = mkDefault ansiColors.bright-white.hex;
           # };
 
           # YOUR IMPLEMENTATION HERE
           # Replace with actual color structure based on upstream schema
-          # Use ${colors.PROPERTY.hex} for hex colors
-          # Use ${colors.PROPERTY.rgb} for RGB lists
+          # Use mkDefault (colors.PROPERTY.hex) for hex colors
+          # Use mkDefault (colors.PROPERTY.rgb) for RGB lists
         };
       };
     };

@@ -39,7 +39,7 @@
 # NOTES: Brief description of the settings serialization.
 #        Note the config format (TOML, YAML, INI, etc.)
 let
-  inherit (lib) mkIf;
+  inherit (lib) mkIf mkDefault;
   cfg = config.theming.signal;
 
   # =============================================================================
@@ -128,20 +128,23 @@ in
         # Tier 3: Freeform settings attrset
         # All keys must match the upstream config schema exactly
         # Home-Manager will serialize this to the app's config format
+        
+        # IMPORTANT: Wrap all values with mkDefault to allow user overrides!
+        # This prevents conflicts when users have their own configuration.
 
         # Example for terminal apps:
-        # foreground = colors.text-primary.hex;
-        # background = colors.surface-base.hex;
-        # cursor = accent.secondary.Lc75.hex;
-        # cursor_text_color = colors.surface-base.hex;
-        # selection_foreground = colors.text-primary.hex;
-        # selection_background = colors.divider-primary.hex;
+        # foreground = mkDefault colors.text-primary.hex;
+        # background = mkDefault colors.surface-base.hex;
+        # cursor = mkDefault accent.secondary.Lc75.hex;
+        # cursor_text_color = mkDefault colors.surface-base.hex;
+        # selection_foreground = mkDefault colors.text-primary.hex;
+        # selection_background = mkDefault colors.divider-primary.hex;
 
         # ANSI colors (for terminals)
-        # color0 = ansiColors.black.hex;
-        # color1 = ansiColors.red.hex;
-        # color2 = ansiColors.green.hex;
-        # color3 = ansiColors.yellow.hex;
+        # color0 = mkDefault ansiColors.black.hex;
+        # color1 = mkDefault ansiColors.red.hex;
+        # color2 = mkDefault ansiColors.green.hex;
+        # color3 = mkDefault ansiColors.yellow.hex;
         # color4 = ansiColors.blue.hex;
         # color5 = ansiColors.magenta.hex;
         # color6 = ansiColors.cyan.hex;

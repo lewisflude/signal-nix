@@ -1260,6 +1260,48 @@ let
 # SCHEMA VERSION: 0.32.0
 # LAST VALIDATED: 2026-01-18
 # NOTES: Uses freeform settings for color configuration
+```
+
+### 5. Not Using lib.mkDefault (CRITICAL!)
+
+This is the **#1 cause of user configuration conflicts**. All configuration values MUST use `mkDefault` to allow users to override them.
+
+**❌ Wrong:**
+```nix
+programs.mpv.config = {
+  osd-color = colors.text-primary.hex;  # Will conflict with user settings!
+  osd-bar-h = 2;
+};
+```
+
+**✅ Correct:**
+```nix
+let
+  inherit (lib) mkIf mkDefault;  # Import mkDefault
+in
+{
+  config = mkIf (cfg.enable && shouldTheme) {
+    programs.mpv.config = {
+      osd-color = mkDefault colors.text-primary.hex;  # User can override
+      osd-bar-h = mkDefault 2;
+    };
+  };
+}
+```
+
+**Why this matters:**
+
+Without `mkDefault`, Signal's values have the same priority as user values, causing conflicts:
+```
+error: The option `programs.swaylock.settings.indicator-radius' has conflicting definition values:
+- In user config: 110
+- In signal-nix: 100
+Use `lib.mkForce value` or `lib.mkDefault value` to change the priority
+```
+
+With `mkDefault`, user values automatically override Signal's defaults - no conflict!
+
+**See:** [docs/mkDefault-guide.md](docs/mkDefault-guide.md) for complete details.
 let
 ```
 
@@ -1367,7 +1409,7 @@ git commit -m "feat: add kitty terminal support
 Closes #123"
 ```
 
-### 10. Missing Documentation Updates
+### 11. Missing Documentation Updates
 
 **❌ Wrong:**
 ```bash
