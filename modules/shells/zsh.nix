@@ -1,7 +1,7 @@
 {
   config,
   lib,
-  signalColors,
+
   signalLib,
   ...
 }:
@@ -16,6 +16,8 @@
 let
   inherit (lib) mkIf;
   cfg = config.theming.signal;
+  themeMode = signalLib.resolveThemeMode cfg.mode;
+  signalColors = signalLib.getColors themeMode;
 
   colors = {
     text-primary = signalColors.tonal."text-primary";

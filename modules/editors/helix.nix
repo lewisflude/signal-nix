@@ -5,13 +5,7 @@
 #   programs.helix.enable = true;
 #
 # The module will not install helix or configure its functional behavior.
-{
-  config,
-  lib,
-  signalColors,
-  signalLib,
-  ...
-}:
+{ config, lib, signalPalette, nix-colorizer, ... }:
 # CONFIGURATION METHOD: native-theme (Tier 1)
 # HOME-MANAGER MODULE: programs.helix.themes
 # UPSTREAM SCHEMA: https://docs.helix-editor.com/themes.html
@@ -20,9 +14,14 @@
 # NOTES: Helix provides native theme support with palette structure. Home-Manager
 #        handles theme installation. This is the optimal integration method.
 let
+  # Import signalLib directly to avoid circular dependencies with _module.args
+  signalLib = import ../../lib { inherit lib; palette = signalPalette; inherit nix-colorizer; };
+  
   inherit (lib) mkIf;
   cfg = config.theming.signal;
   themeMode = signalLib.resolveThemeMode cfg.mode;
+  # Compute signalColors from mode (can't be provided via _module.args)
+  signalColors = signalLib.getColors themeMode;
 
   # Map signal colors to theme structure
   colors = {

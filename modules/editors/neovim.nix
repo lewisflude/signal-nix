@@ -13,7 +13,7 @@
   config,
   lib,
   pkgs,
-  signalColors,
+
   signalLib,
   ...
 }:
@@ -340,6 +340,7 @@ let
 
   # Resolved mode for static theme selection
   themeMode = signalLib.resolveThemeMode cfg.mode;
+  signalColors = signalLib.getColors themeMode;
 
   # Check if neovim should be themed
   # Check if neovim should be themed - using centralized helper

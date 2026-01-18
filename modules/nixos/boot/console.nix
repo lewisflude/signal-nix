@@ -1,13 +1,14 @@
 {
   config,
   lib,
-  signalColors,
   signalLib,
   ...
 }:
 let
   inherit (lib) mkIf removePrefix;
   cfg = config.theming.signal.nixos;
+  themeMode = signalLib.resolveThemeMode cfg.mode;
+  signalColors = signalLib.getColors themeMode;
 
   inherit (signalColors) accent;
 
@@ -18,13 +19,13 @@ let
   # console.colors expects an array of 16 hex colors (without #)
   ansiColors = [
     # Normal colors (0-7)
-    (hexRaw signalColors.tonal."base-L015") # 0: black
+    (hexRaw signalColors.tonal."black") # 0: black
     (hexRaw accent.danger.Lc75) # 1: red
     (hexRaw accent.primary.Lc75) # 2: green
     (hexRaw accent.warning.Lc75) # 3: yellow
     (hexRaw accent.secondary.Lc75) # 4: blue
     (hexRaw accent.tertiary.Lc75) # 5: magenta
-    (hexRaw accent.secondary.Lc75) # 6: cyan
+    (hexRaw accent.info.Lc75) # 6: cyan
     (hexRaw signalColors.tonal."text-secondary") # 7: white
 
     # Bright colors (8-15)
@@ -34,7 +35,7 @@ let
     (hexRaw accent.warning.Lc75) # 11: bright yellow
     (hexRaw accent.secondary.Lc75) # 12: bright blue
     (hexRaw accent.tertiary.Lc75) # 13: bright magenta
-    (hexRaw accent.secondary.Lc75) # 14: bright cyan
+    (hexRaw accent.info.Lc75) # 14: bright cyan
     (hexRaw signalColors.tonal."text-primary") # 15: bright white
   ];
 

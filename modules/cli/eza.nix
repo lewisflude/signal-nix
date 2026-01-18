@@ -8,7 +8,7 @@
 {
   config,
   lib,
-  signalColors,
+
   signalLib,
   ...
 }:
@@ -23,6 +23,8 @@
 let
   inherit (lib) mkIf concatStringsSep;
   cfg = config.theming.signal;
+  themeMode = signalLib.resolveThemeMode cfg.mode;
+  signalColors = signalLib.getColors themeMode;
 
   # ANSI color codes helper
   # Converts hex color to 256-color code approximation (simplified)

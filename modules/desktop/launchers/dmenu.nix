@@ -1,10 +1,4 @@
-{
-  config,
-  lib,
-  signalColors,
-  signalLib,
-  ...
-}:
+{ config, lib, signalPalette, nix-colorizer, ... }:
 # CONFIGURATION METHOD: command-flags (Tier 5)
 # HOME-MANAGER MODULE: xdg.configFile wrapper script
 # UPSTREAM SCHEMA: https://tools.suckless.org/dmenu/
@@ -13,8 +7,15 @@
 # NOTES: dmenu is configured via command-line flags. No config file.
 #        We create a wrapper script with Signal colors.
 let
+  # Import signalLib directly to avoid circular dependencies with _module.args
+  signalLib = import ../../../lib { inherit lib; palette = signalPalette; inherit nix-colorizer; };
+  
   inherit (lib) mkIf;
   cfg = config.theming.signal;
+
+  # Resolve theme mode and get colors
+  themeMode = signalLib.resolveThemeMode cfg.mode;
+  signalColors = signalLib.getColors themeMode;
 
   colors = {
     surface-base = signalColors.tonal."surface-subtle";

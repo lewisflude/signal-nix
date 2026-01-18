@@ -1,7 +1,7 @@
 {
   config,
   lib,
-  signalColors,
+
   signalLib,
   ...
 }:
@@ -16,6 +16,8 @@
 let
   inherit (lib) mkIf;
   cfg = config.theming.signal;
+  themeMode = signalLib.resolveThemeMode cfg.mode;
+  signalColors = signalLib.getColors themeMode;
 
   # htop color codes (0-7 are standard ANSI)
   # We use the standard ANSI colors which will be themed by the terminal

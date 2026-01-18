@@ -18,10 +18,14 @@
 
 let
   # Helper to create a basic NixOS test
-  mkNixOSTest = name: testConfig: pkgs.testers.nixosTest {
-    inherit name;
-    nodes.machine = testConfig;
-  };
+  # Takes a name and an attrset with { machineConfig, testScript }
+  mkNixOSTest =
+    name:
+    { machineConfig, testScript }:
+    pkgs.testers.nixosTest {
+      inherit name testScript;
+      nodes.machine = machineConfig;
+    };
 
 in
 {
@@ -30,25 +34,27 @@ in
   # ============================================================================
 
   nixos-vm-console-colors = mkNixOSTest "console-colors" {
-    imports = [ self.nixosModules.signal ];
+    machineConfig = {
+      imports = [ self.nixosModules.signal ];
 
-    signal.nixos = {
-      enable = true;
-      mode = "dark";
-      boot.console.enable = true;
+      theming.signal.nixos = {
+        enable = true;
+        mode = "dark";
+        boot.console.enable = true;
+      };
+
+      # Minimal system config
+      system.stateVersion = "24.11";
+      boot.loader.systemd-boot.enable = lib.mkDefault true;
     };
-
-    # Minimal system config
-    system.stateVersion = "24.11";
-    boot.loader.systemd-boot.enable = lib.mkDefault true;
 
     testScript = ''
       machine.start()
       machine.wait_for_unit("multi-user.target")
-      
+
       # Verify console.colors is set
       machine.succeed("test -n \"$(cat /proc/cmdline | grep -o 'console=')\" ")
-      
+
       # Check that console colors are configured
       # This is set by the console module
       print(machine.succeed("echo Console configuration applied"))
@@ -60,32 +66,34 @@ in
   # ============================================================================
 
   nixos-vm-sddm = mkNixOSTest "sddm-login" {
-    imports = [ self.nixosModules.signal ];
+    machineConfig = {
+      imports = [ self.nixosModules.signal ];
 
-    signal.nixos = {
-      enable = true;
-      mode = "dark";
-      login.sddm.enable = true;
+      theming.signal.nixos = {
+        enable = true;
+        mode = "dark";
+        login.sddm.enable = true;
+      };
+
+      # Enable SDDM
+      services.displayManager.sddm.enable = true;
+      services.xserver.enable = true;
+
+      system.stateVersion = "24.11";
+      boot.loader.systemd-boot.enable = lib.mkDefault true;
     };
-
-    # Enable SDDM
-    services.displayManager.sddm.enable = true;
-    services.xserver.enable = true;
-
-    system.stateVersion = "24.11";
-    boot.loader.systemd-boot.enable = lib.mkDefault true;
 
     testScript = ''
       machine.start()
       machine.wait_for_unit("display-manager.service")
-      
+
       # Verify SDDM is running
       machine.wait_for_unit("sddm.service")
-      
+
       # Check theme configuration exists
       machine.succeed("ls -la /run/current-system/sw/share/sddm/themes/ || true")
-      
-      print("✓ SDDM display manager started successfully")
+
+      print("SDDM display manager started successfully")
     '';
   };
 
@@ -94,28 +102,30 @@ in
   # ============================================================================
 
   nixos-vm-plymouth = mkNixOSTest "plymouth-boot" {
-    imports = [ self.nixosModules.signal ];
+    machineConfig = {
+      imports = [ self.nixosModules.signal ];
 
-    signal.nixos = {
-      enable = true;
-      mode = "dark";
+      theming.signal.nixos = {
+        enable = true;
+        mode = "dark";
+        boot.plymouth.enable = true;
+      };
+
+      # Enable Plymouth
       boot.plymouth.enable = true;
+      boot.loader.systemd-boot.enable = lib.mkDefault true;
+
+      system.stateVersion = "24.11";
     };
-
-    # Enable Plymouth
-    boot.plymouth.enable = true;
-    boot.loader.systemd-boot.enable = lib.mkDefault true;
-
-    system.stateVersion = "24.11";
 
     testScript = ''
       machine.start()
       machine.wait_for_unit("multi-user.target")
-      
+
       # Verify plymouth theme is set
       machine.succeed("test -d /run/current-system/sw/share/plymouth/themes/signal-dark || echo 'Theme dir check'")
-      
-      print("✓ Plymouth boot splash configured")
+
+      print("Plymouth boot splash configured")
     '';
   };
 
@@ -124,32 +134,34 @@ in
   # ============================================================================
 
   nixos-vm-grub = mkNixOSTest "grub-boot" {
-    imports = [ self.nixosModules.signal ];
+    machineConfig = {
+      imports = [ self.nixosModules.signal ];
 
-    signal.nixos = {
-      enable = true;
-      mode = "dark";
-      boot.grub.enable = true;
+      theming.signal.nixos = {
+        enable = true;
+        mode = "dark";
+        boot.grub.enable = true;
+      };
+
+      # Enable GRUB
+      boot.loader.grub = {
+        enable = true;
+        device = "nodev";
+        efiSupport = true;
+      };
+      boot.loader.efi.canTouchEfiVariables = true;
+
+      system.stateVersion = "24.11";
     };
-
-    # Enable GRUB
-    boot.loader.grub = {
-      enable = true;
-      device = "nodev";
-      efiSupport = true;
-    };
-    boot.loader.efi.canTouchEfiVariables = true;
-
-    system.stateVersion = "24.11";
 
     testScript = ''
       machine.start()
       machine.wait_for_unit("multi-user.target")
-      
+
       # Verify GRUB theme is installed
       machine.succeed("ls -la /boot/grub/ || echo 'GRUB directory check'")
-      
-      print("✓ GRUB boot loader configured")
+
+      print("GRUB boot loader configured")
     '';
   };
 
@@ -158,37 +170,39 @@ in
   # ============================================================================
 
   nixos-vm-integration = mkNixOSTest "full-integration" {
-    imports = [ self.nixosModules.signal ];
+    machineConfig = {
+      imports = [ self.nixosModules.signal ];
 
-    signal.nixos = {
-      enable = true;
-      mode = "dark";
-      boot = {
-        console.enable = true;
-        plymouth.enable = true;
+      theming.signal.nixos = {
+        enable = true;
+        mode = "dark";
+        boot = {
+          console.enable = true;
+          plymouth.enable = true;
+        };
+        login.sddm.enable = true;
       };
-      login.sddm.enable = true;
+
+      # Enable services
+      services.displayManager.sddm.enable = true;
+      services.xserver.enable = true;
+      boot.plymouth.enable = true;
+      boot.loader.systemd-boot.enable = lib.mkDefault true;
+
+      system.stateVersion = "24.11";
     };
-
-    # Enable services
-    services.displayManager.sddm.enable = true;
-    services.xserver.enable = true;
-    boot.plymouth.enable = true;
-    boot.loader.systemd-boot.enable = lib.mkDefault true;
-
-    system.stateVersion = "24.11";
 
     testScript = ''
       machine.start()
       machine.wait_for_unit("multi-user.target")
       machine.wait_for_unit("display-manager.service")
-      
+
       # Verify multiple components are configured
       machine.succeed("echo 'Console colors: configured'")
       machine.succeed("echo 'Plymouth theme: configured'")
-      
+
       machine.wait_for_unit("sddm.service")
-      print("✓ Full system integration test passed")
+      print("Full system integration test passed")
     '';
   };
 
@@ -197,29 +211,31 @@ in
   # ============================================================================
 
   nixos-vm-light-mode = mkNixOSTest "light-mode-system" {
-    imports = [ self.nixosModules.signal ];
+    machineConfig = {
+      imports = [ self.nixosModules.signal ];
 
-    signal.nixos = {
-      enable = true;
-      mode = "light";
-      boot.console.enable = true;
-      login.sddm.enable = true;
+      theming.signal.nixos = {
+        enable = true;
+        mode = "light";
+        boot.console.enable = true;
+        login.sddm.enable = true;
+      };
+
+      services.displayManager.sddm.enable = true;
+      services.xserver.enable = true;
+      boot.loader.systemd-boot.enable = lib.mkDefault true;
+
+      system.stateVersion = "24.11";
     };
-
-    services.displayManager.sddm.enable = true;
-    services.xserver.enable = true;
-    boot.loader.systemd-boot.enable = lib.mkDefault true;
-
-    system.stateVersion = "24.11";
 
     testScript = ''
       machine.start()
       machine.wait_for_unit("multi-user.target")
-      
+
       # Verify system boots with light mode configuration
       machine.succeed("echo 'Light mode system configuration applied'")
-      
-      print("✓ Light mode system test passed")
+
+      print("Light mode system test passed")
     '';
   };
 }

@@ -2,7 +2,7 @@
   config,
   lib,
   pkgs,
-  signalColors,
+
   signalLib,
   ...
 }:
@@ -17,6 +17,8 @@
 let
   inherit (lib) mkIf removePrefix;
   cfg = config.theming.signal;
+  themeMode = signalLib.resolveThemeMode cfg.mode;
+  signalColors = signalLib.getColors themeMode;
 
   colors = {
     surface-base = signalColors.tonal."surface-subtle";

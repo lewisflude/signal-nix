@@ -2,7 +2,7 @@
   config,
   lib,
   pkgs,
-  signalColors,
+
   signalLib,
   ...
 }:
@@ -17,6 +17,8 @@
 let
   inherit (lib) mkIf;
   cfg = config.theming.signal;
+  themeMode = signalLib.resolveThemeMode cfg.mode;
+  signalColors = signalLib.getColors themeMode;
 
   # Map Signal colors to terminal color names
   # Procs uses standard terminal color names (BrightWhite, Blue, etc.)

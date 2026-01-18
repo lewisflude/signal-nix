@@ -8,7 +8,7 @@
 {
   config,
   lib,
-  signalColors,
+
   signalLib,
   ...
 }:
@@ -22,6 +22,8 @@
 let
   inherit (lib) mkIf;
   cfg = config.theming.signal;
+  themeMode = signalLib.resolveThemeMode cfg.mode;
+  signalColors = signalLib.getColors themeMode;
 
   # Define color mappings for both dark and light modes
   deltaColors =

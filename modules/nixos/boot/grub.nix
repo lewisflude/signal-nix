@@ -2,7 +2,7 @@
   config,
   lib,
   pkgs,
-  signalColors,
+
   signalLib,
   ...
 }:
@@ -12,9 +12,10 @@ let
 
   # Resolve theme mode
   themeMode = signalLib.resolveThemeMode cfg.mode;
+  signalColors = signalLib.getColors themeMode;
 
   # Import the GRUB theme package with proper dependencies
-  grubTheme = pkgs.callPackage ../../pkgs/grub-theme {
+  grubTheme = pkgs.callPackage ../../../pkgs/grub-theme {
     inherit signalColors signalLib;
     inherit (cfg) mode;
   };

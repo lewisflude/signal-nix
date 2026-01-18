@@ -2,7 +2,7 @@
   config,
   lib,
   pkgs,
-  signalColors,
+
   signalLib,
   ...
 }:
@@ -33,6 +33,7 @@ let
   inherit (lib) mkIf;
   cfg = config.theming.signal;
   themeMode = signalLib.resolveThemeMode cfg.mode;
+  signalColors = signalLib.getColors themeMode;
 
   # Color mappings based on theme mode
   # Light mode uses lighter surfaces, dark mode uses darker surfaces

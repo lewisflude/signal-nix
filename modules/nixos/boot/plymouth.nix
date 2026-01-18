@@ -2,7 +2,7 @@
   config,
   lib,
   pkgs,
-  signalColors,
+
   signalLib,
   ...
 }:
@@ -12,9 +12,10 @@ let
 
   # Resolve theme mode
   themeMode = signalLib.resolveThemeMode cfg.mode;
+  signalColors = signalLib.getColors themeMode;
 
   # Import the Plymouth theme package
-  plymouthTheme = pkgs.callPackage ../../pkgs/plymouth-theme {
+  plymouthTheme = pkgs.callPackage ../../../pkgs/plymouth-theme {
     inherit signalColors signalLib;
     inherit (cfg) mode;
   };

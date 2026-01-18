@@ -2,21 +2,18 @@
 let
   # Import signalLib directly to avoid circular dependencies with _module.args
   signalLib = import ../../lib { inherit lib; palette = signalPalette; inherit nix-colorizer; };
+  
+  # Create the module using mkTier3Module
+  # This returns a module function, so we need to "unwrap" it by calling it with module args
 in
-# CONFIGURATION METHOD: freeform-settings (Tier 3)
-# HOME-MANAGER MODULE: programs.kitty.settings
-# UPSTREAM SCHEMA: https://sw.kovidgoyal.net/kitty/conf/
-# SCHEMA VERSION: 0.32.0
-# LAST VALIDATED: 2026-01-17
-# NOTES: No native theme option available. Home-Manager serializes the settings
-#        attrset to kitty.conf format. All keys must match kitty schema exactly.
-#
-# REFACTORED: Now uses mkTier3Module helper to reduce boilerplate
-signalLib.mkTier3Module {
-  appName = "kitty";
-  category = [ "terminals" ];
+# Return a proper module that imports the generated module
+{
+  imports = [
+    (signalLib.mkTier3Module {
+      appName = "kitty";
+      category = [ "terminals" ];
 
-  settingsGenerator = signalColors: signalLib:
+      settingsGenerator = signalColors: signalLib:
     let
       inherit (signalColors) accent;
 
@@ -86,8 +83,10 @@ signalLib.mkTier3Module {
     color6 = ansiColors.cyan.hex;
     color14 = ansiColors.bright-cyan.hex;
 
-    # White
-    color7 = ansiColors.white.hex;
-    color15 = ansiColors.bright-white.hex;
-  };
+      # White
+      color7 = ansiColors.white.hex;
+      color15 = ansiColors.bright-white.hex;
+    };
+    })
+  ];
 }

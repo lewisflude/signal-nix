@@ -1,7 +1,7 @@
 {
   config,
   lib,
-  signalColors,
+
   signalLib,
   ...
 }:
@@ -15,6 +15,8 @@
 let
   inherit (lib) mkIf;
   cfg = config.theming.signal;
+  themeMode = signalLib.resolveThemeMode cfg.mode;
+  signalColors = signalLib.getColors themeMode;
 
   # nnn uses ANSI color codes (30-37 for foreground, 40-47 for background)
   # We map Signal semantic colors to ANSI codes

@@ -2,7 +2,7 @@
   config,
   lib,
   pkgs,
-  signalColors,
+
   signalLib,
   ...
 }:
@@ -12,9 +12,10 @@ let
 
   # Resolve theme mode
   themeMode = signalLib.resolveThemeMode cfg.mode;
+  signalColors = signalLib.getColors themeMode;
 
   # Import the GTK theme package
-  gtkTheme = pkgs.callPackage ../../pkgs/gtk-theme {
+  gtkTheme = pkgs.callPackage ../../../pkgs/gtk-theme {
     inherit signalColors signalLib;
     inherit (cfg) mode;
   };
@@ -22,22 +23,6 @@ let
   # Determine if GDM should be themed
   shouldTheme =
     cfg.enable && cfg.login.gdm.enable && (config.services.xserver.displayManager.gdm.enable or false);
-
-  # GSettings overrides for GDM
-  # These settings are applied to the GDM user session
-  gSettingsOverrides = ''
-    [org.gnome.desktop.interface]
-    gtk-theme='Signal-${themeMode}'
-    color-scheme='${if themeMode == "dark" then "prefer-dark" else "prefer-light"}'
-
-    [org.gnome.desktop.background]
-    picture-uri='${if cfg.login.gdm.backgroundImage != null then cfg.login.gdm.backgroundImage else ""}'
-    picture-uri-dark='${
-      if cfg.login.gdm.backgroundImage != null then cfg.login.gdm.backgroundImage else ""
-    }'
-    primary-color='${signalColors.tonal."surface-subtle".hex}'
-    secondary-color='${signalColors.tonal."surface-hover".hex}'
-  '';
 
 in
 {
@@ -60,15 +45,7 @@ in
     # Install Signal GTK theme system-wide
     environment.systemPackages = [ gtkTheme ];
 
-    # Apply GTK theme to GDM via GSettings
-    # GDM runs as the 'gdm' user and loads these settings
-    services.xserver.displayManager.gdm = {
-      # Apply GSettings overrides for GDM greeter
-      # This configures the login screen appearance
-      extraGSettingsOverrides = gSettingsOverrides;
-    };
-
-    # Alternative method: dconf database for GDM
+    # Apply GTK theme to GDM via dconf database
     # This creates a dconf profile that GDM will use
     environment.etc."dconf/db/gdm.d/01-signal-theme" = {
       text = ''

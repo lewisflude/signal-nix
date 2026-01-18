@@ -1,4 +1,8 @@
-{ palette, nix-colorizer, signalLib }:
+{
+  palette,
+  nix-colorizer,
+  signalLib,
+}:
 {
   config,
   lib,
@@ -9,10 +13,7 @@ let
   cfg = config.theming.signal;
 in
 {
-  # Import the module-args helper first to make signalPalette available to all modules
   imports = [
-    (import ./module-args.nix { inherit palette nix-colorizer; })
-    
     # Desktop - Window Managers & Compositors
     ../../modules/desktop/compositors/hyprland.nix
     ../../modules/desktop/compositors/sway.nix
@@ -376,15 +377,20 @@ in
     };
   };
 
+  # Example: Each module should compute signalColors using:
+  #   themeMode = signalLib.resolveThemeMode cfg.mode;
+  #   signalColors = signalLib.getColors themeMode;
+  # This ensures theme names like "signal-dark" are resolved correctly (not "signal-auto")
+
   config = lib.mkMerge [
-    # Make palette and lib available to all modules UNCONDITIONALLY
-    # This prevents infinite recursion when modules reference these in their arguments
-    # This is in its own mkMerge item to ensure it's evaluated before other config
+    # Provide module arguments unconditionally (outside mkIf)
+    # This makes signalPalette, nix-colorizer, and signalLib available to all modules
+    # NOTE: signalColors is NOT provided because it depends on config - each module computes it
     # See: https://nixos.org/manual/nixos/stable/#sec-module-arguments
     {
       _module.args = {
         signalPalette = palette;
-        inherit signalLib;
+        inherit nix-colorizer signalLib;
       };
     }
 

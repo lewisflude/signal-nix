@@ -9,7 +9,7 @@
   config,
   lib,
   pkgs,
-  signalColors,
+
   signalLib,
   ...
 }:
@@ -300,6 +300,7 @@ let
 
   # Resolved mode for static theme selection
   themeMode = signalLib.resolveThemeMode cfg.mode;
+  signalColors = signalLib.getColors themeMode;
 
   # Check if bat should be themed - using centralized helper
   shouldTheme = signalLib.shouldThemeApp "bat" [

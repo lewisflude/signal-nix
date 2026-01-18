@@ -150,14 +150,15 @@ in
   };
 
   config = lib.mkMerge [
-    # Make palette and lib available to all NixOS modules UNCONDITIONALLY
+    # Make palette and signalLib available to all NixOS modules UNCONDITIONALLY
     # This prevents infinite recursion when modules reference these in their arguments
+    # NOTE: signalColors is NOT provided here because it depends on cfg.mode which would
+    # create a circular dependency. Each submodule computes signalColors itself.
     # See: https://nixos.org/manual/nixos/stable/#sec-module-arguments
     {
       _module.args = {
         signalPalette = palette;
         inherit signalLib;
-        signalColors = signalLib.getColors (signalLib.resolveThemeMode cfg.mode);
       };
     }
 

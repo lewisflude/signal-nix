@@ -10,7 +10,7 @@
 {
   config,
   lib,
-  signalColors,
+
   signalLib,
   pkgs,
   ...
@@ -27,6 +27,7 @@ let
   inherit (lib) mkIf;
   cfg = config.theming.signal;
   themeMode = signalLib.resolveThemeMode cfg.mode;
+  signalColors = signalLib.getColors themeMode;
 
   # Map signal colors to theme structure
   colors = {
