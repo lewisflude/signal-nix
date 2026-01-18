@@ -149,14 +149,16 @@ in
     };
   };
 
-  config = lib.mkIf cfg.enable {
-    # Make palette and lib available to all NixOS modules
-    _module.args = {
-      signalPalette = palette;
-      inherit signalLib;
-      signalColors = signalLib.getColors (signalLib.resolveThemeMode cfg.mode);
-    };
+  # Make palette and lib available to all NixOS modules UNCONDITIONALLY
+  # This prevents infinite recursion when modules reference these in their arguments
+  # See: https://nixos.org/manual/nixos/stable/#sec-module-arguments
+  _module.args = {
+    signalPalette = palette;
+    inherit signalLib;
+    signalColors = signalLib.getColors (signalLib.resolveThemeMode cfg.mode);
+  };
 
+  config = lib.mkIf cfg.enable {
     # Helpful assertions
     assertions = [
       # Warn if Signal is enabled but nothing is selected for theming

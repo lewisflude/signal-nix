@@ -287,6 +287,44 @@
             touch $out
           '';
 
+          # Verify _module.args is not inside config blocks (prevents infinite recursion)
+          module-args-placement = pkgs.runCommand "check-module-args-placement" { } ''
+            echo "Checking _module.args placement..."
+
+            # Find any _module.args declarations
+            # They should NOT be inside "config = lib.mkIf" blocks as this causes infinite recursion
+
+            # Check common module
+            if ${pkgs.gnugrep}/bin/grep -A 5 "config = lib.mkIf cfg.enable" ${./modules/common/default.nix} | ${pkgs.gnugrep}/bin/grep -q "_module.args"; then
+              echo "ERROR: modules/common/default.nix has _module.args inside config block"
+              echo "This causes infinite recursion when modules reference these arguments"
+              echo "See docs/MODULE_ARGS_INFINITE_RECURSION.md for details"
+              exit 1
+            fi
+
+            # Check nixos common module
+            if ${pkgs.gnugrep}/bin/grep -A 5 "config = lib.mkIf cfg.enable" ${./modules/nixos/common/default.nix} | ${pkgs.gnugrep}/bin/grep -q "_module.args"; then
+              echo "ERROR: modules/nixos/common/default.nix has _module.args inside config block"
+              echo "This causes infinite recursion when modules reference these arguments"
+              echo "See docs/MODULE_ARGS_INFINITE_RECURSION.md for details"
+              exit 1
+            fi
+
+            # Verify _module.args exists at top level in both modules
+            ${pkgs.gnugrep}/bin/grep -q "^  _module.args = {" ${./modules/common/default.nix} || {
+              echo "ERROR: modules/common/default.nix should have _module.args at top level"
+              exit 1
+            }
+
+            ${pkgs.gnugrep}/bin/grep -q "^  _module.args = {" ${./modules/nixos/common/default.nix} || {
+              echo "ERROR: modules/nixos/common/default.nix should have _module.args at top level"
+              exit 1
+            }
+
+            echo "✓ _module.args is correctly placed at top level (not inside config blocks)"
+            touch $out
+          '';
+
           # ============================================================================
           # Unit Tests - Library Functions
           # ============================================================================
