@@ -2,7 +2,7 @@
 
 > **Scientifically-designed colors for your Nix environment**
 
-Bring the Signal color palette to your NixOS, nix-darwin, or Home Manager setup. Signal provides OKLCH-based colors with APCA accessibility standards, automatically theming 60+ applications across your system.
+Bring the Signal color palette to your NixOS, nix-darwin, or Home Manager setup. Signal provides OKLCH-based colors with APCA accessibility standards, automatically theming 62 applications across your system.
 
 ## What is signal-nix?
 
@@ -18,7 +18,7 @@ You control which programs to install and use. Signal handles applying the Signa
 
 ## Why Signal?
 
-- 🎨 **Consistent Colors Everywhere**: One color palette across 60+ applications
+- 🎨 **Consistent Colors Everywhere**: One color palette across 62 applications
 - 🔬 **Science-Based Design**: OKLCH color space ensures perceptual uniformity
 - ♿ **Accessibility First**: APCA contrast standards for readable text
 - 🌓 **Light & Dark Modes**: Carefully calibrated themes for both modes
@@ -150,7 +150,7 @@ theming.signal.enable = true;  # ← Signal themes kitty with Signal colors
 
 ## Supported Applications
 
-Signal provides color themes for 61 applications across all categories:
+Signal provides color themes for 62 applications across all categories:
 
 ### Desktop & Window Management
 
@@ -205,6 +205,7 @@ Signal provides color themes for 61 applications across all categories:
 - **btop++** - Resource monitor (with gradients)
 - **htop** - Classic system monitor ✨
 - **bottom** - Modern resource monitor ✨
+- **procs** - Modern ps replacement (state/usage coloring)
 - **MangoHud** - Gaming overlay (HUD colors)
 - **tealdeer** - Fast tldr client ✨
 - **less** - Pager (man page colors) ✨

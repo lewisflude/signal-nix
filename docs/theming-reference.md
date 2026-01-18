@@ -319,12 +319,15 @@ This reference organizes theming documentation by application category, making i
 **Format:** Nvtop config  
 **Notes:** NVIDIA GPU monitoring
 
-### 🔴 Bottom
-**Status:** ❌ Not implemented  
+### 🟢 Bottom
+**Status:** ✅ Implemented  
 **Category:** Process/system monitor  
 **Documentation:** [Bottom Customization](https://github.com/ClementTsang/bottom#customization)  
 **Format:** TOML  
-**Notes:** Rust-based, customizable layout
+**Notes:**
+- Rust-based system monitor with customizable layout
+- CPU, memory, network, disk, temperature, processes
+- Widget-based color theming
 
 ### 🔴 Gdu
 **Status:** ❌ Not implemented  
@@ -340,12 +343,18 @@ This reference organizes theming documentation by application category, making i
 **Format:** TOML  
 **Notes:** Alternative to du, graphical output
 
-### 🔴 Procs
-**Status:** ❌ Not implemented  
+### 🟢 Procs
+**Status:** ✅ Implemented  
 **Category:** Process viewer  
-**Documentation:** [Procs Configuration](https://github.com/dalance/procs?tab=readme-ov-file#configuration)  
+**Documentation:** [Procs Configuration](https://github.com/dalance/procs#configuration)  
 **Format:** TOML  
-**Notes:** Modern ps replacement
+**Notes:**
+- Modern ps replacement written in Rust
+- Percentage-based coloring for CPU/memory (0-100%+)
+- Process state coloring (running, sleeping, zombie, etc.)
+- Unit-based coloring for memory sizes (K, M, G, T, P)
+- Terminal color names (BrightBlue, BrightGreen, etc.)
+- Config at `~/.config/procs/config.toml`
 
 ---
 
