@@ -1,7 +1,6 @@
 {
   lib,
   stdenv,
-  signalColors,
   signalLib,
   mode ? "dark",
 }:

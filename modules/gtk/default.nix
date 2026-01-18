@@ -179,16 +179,8 @@ let
         signalColors.tonal."surface-subtle".hex
       else
         signalColors.tonal."surface-hover".hex;
-    light_4 =
-      if themeMode == "light" then
-        signalColors.tonal."divider-primary".hex
-      else
-        signalColors.tonal."divider-primary".hex;
-    light_5 =
-      if themeMode == "light" then
-        signalColors.tonal."divider-strong".hex
-      else
-        signalColors.tonal."divider-strong".hex;
+    light_4 = signalColors.tonal."divider-primary".hex;
+    light_5 = signalColors.tonal."divider-strong".hex;
 
     # Dark grays (dark_1 through dark_5)
     dark_1 =
@@ -201,16 +193,8 @@ let
         signalColors.tonal."text-secondary".hex
       else
         signalColors.tonal."text-tertiary".hex;
-    dark_3 =
-      if themeMode == "light" then
-        signalColors.tonal."surface-hover".hex
-      else
-        signalColors.tonal."surface-hover".hex;
-    dark_4 =
-      if themeMode == "light" then
-        signalColors.tonal."surface-subtle".hex
-      else
-        signalColors.tonal."surface-subtle".hex;
+    dark_3 = signalColors.tonal."surface-hover".hex;
+    dark_4 = signalColors.tonal."surface-subtle".hex;
     dark_5 = if themeMode == "light" then signalColors.tonal."surface-base".hex else "#000000";
   };
 

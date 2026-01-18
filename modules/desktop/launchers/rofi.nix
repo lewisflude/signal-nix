@@ -40,25 +40,25 @@ in
   config = mkIf (cfg.enable && shouldTheme) {
     programs.rofi.theme = {
       "*" = {
-        background = lib.mkDefault colors.surface-base.hex;
-        background-alt = lib.mkDefault colors.surface-raised.hex;
-        foreground = lib.mkDefault colors.text-primary.hex;
-        foreground-alt = lib.mkDefault colors.text-secondary.hex;
-        selected = lib.mkDefault accent.secondary.Lc75.hex;
-        active = lib.mkDefault accent.primary.Lc75.hex;
-        urgent = lib.mkDefault accent.danger.Lc75.hex;
-        border-color = lib.mkDefault colors.divider-primary.hex;
+        background = colors.surface-base.hex;
+        background-alt = colors.surface-raised.hex;
+        foreground = colors.text-primary.hex;
+        foreground-alt = colors.text-secondary.hex;
+        selected = accent.secondary.Lc75.hex;
+        active = accent.primary.Lc75.hex;
+        urgent = accent.danger.Lc75.hex;
+        border-color = colors.divider-primary.hex;
       };
 
       window = {
-        background-color = lib.mkDefault "@background";
-        border = lib.mkDefault "2px";
-        border-color = lib.mkDefault "@border-color";
+        background-color = "@background";
+        border = "2px";
+        border-color = "@border-color";
       };
 
       mainbox = {
-        background-color = lib.mkDefault "@background";
-        children = lib.mkDefault [
+        background-color = "@background";
+        children = [
           "inputbar"
           "message"
           "listview"
@@ -66,94 +66,94 @@ in
       };
 
       inputbar = {
-        background-color = lib.mkDefault "@background-alt";
-        text-color = lib.mkDefault "@foreground";
-        border = lib.mkDefault "0 0 2px 0";
-        border-color = lib.mkDefault "@selected";
-        children = lib.mkDefault [
+        background-color = "@background-alt";
+        text-color = "@foreground";
+        border = "0 0 2px 0";
+        border-color = "@selected";
+        children = [
           "prompt"
           "entry"
         ];
       };
 
       prompt = {
-        background-color = lib.mkDefault "inherit";
-        text-color = lib.mkDefault "@selected";
+        background-color = "inherit";
+        text-color = "@selected";
       };
 
       entry = {
-        background-color = lib.mkDefault "inherit";
-        text-color = lib.mkDefault "@foreground";
-        placeholder = lib.mkDefault "Search...";
-        placeholder-color = lib.mkDefault "@foreground-alt";
+        background-color = "inherit";
+        text-color = "@foreground";
+        placeholder = "Search...";
+        placeholder-color = "@foreground-alt";
       };
 
       message = {
-        background-color = lib.mkDefault "@background-alt";
-        border = lib.mkDefault "2px 0 0 0";
-        border-color = lib.mkDefault "@border-color";
+        background-color = "@background-alt";
+        border = "2px 0 0 0";
+        border-color = "@border-color";
       };
 
       textbox = {
-        background-color = lib.mkDefault "inherit";
-        text-color = lib.mkDefault "@foreground";
+        background-color = "inherit";
+        text-color = "@foreground";
       };
 
       listview = {
-        background-color = lib.mkDefault "@background";
-        border = lib.mkDefault "2px 0 0 0";
-        border-color = lib.mkDefault "@border-color";
-        lines = lib.mkDefault 8;
-        scrollbar = lib.mkDefault true;
+        background-color = "@background";
+        border = "2px 0 0 0";
+        border-color = "@border-color";
+        lines = 8;
+        scrollbar = true;
       };
 
       element = {
-        background-color = lib.mkDefault "@background";
-        text-color = lib.mkDefault "@foreground";
+        background-color = "@background";
+        text-color = "@foreground";
       };
 
       "element selected normal" = {
-        background-color = lib.mkDefault "@selected";
-        text-color = lib.mkDefault "@background";
+        background-color = "@selected";
+        text-color = "@background";
       };
 
       "element selected active" = {
-        background-color = lib.mkDefault "@active";
-        text-color = lib.mkDefault "@background";
+        background-color = "@active";
+        text-color = "@background";
       };
 
       "element selected urgent" = {
-        background-color = lib.mkDefault "@urgent";
-        text-color = lib.mkDefault "@background";
+        background-color = "@urgent";
+        text-color = "@background";
       };
 
       "element normal active" = {
-        text-color = lib.mkDefault "@active";
+        text-color = "@active";
       };
 
       "element normal urgent" = {
-        text-color = lib.mkDefault "@urgent";
+        text-color = "@urgent";
       };
 
       "element alternate normal" = {
-        background-color = lib.mkDefault "@background";
+        background-color = "@background";
       };
 
       "element alternate active" = {
-        background-color = lib.mkDefault "@background";
-        text-color = lib.mkDefault "@active";
+        background-color = "@background";
+        text-color = "@active";
       };
 
       "element alternate urgent" = {
-        background-color = lib.mkDefault "@background";
-        text-color = lib.mkDefault "@urgent";
+        background-color = "@background";
+        text-color = "@urgent";
       };
 
       scrollbar = {
-        background-color = lib.mkDefault "@background-alt";
-        handle-color = lib.mkDefault "@selected";
-        border = lib.mkDefault "0 0 0 2px";
-        border-color = lib.mkDefault "@border-color";
+        background-color = "@background-alt";
+        handle-color = "@selected";
+        border = "0 0 0 2px";
+        border-color = "@border-color";
       };
     };
   };

@@ -95,46 +95,45 @@
         let
           pkgs = nixpkgs.legacyPackages.${system};
           signalLib = self.lib;
-          signalColors = signalLib.getColors "dark";
         in
         {
           # GRUB themes
           signal-grub-theme-dark = pkgs.callPackage ./pkgs/grub-theme {
-            inherit signalColors signalLib;
+            inherit signalLib;
             mode = "dark";
           };
           signal-grub-theme-light = pkgs.callPackage ./pkgs/grub-theme {
-            inherit signalColors signalLib;
+            inherit signalLib;
             mode = "light";
           };
 
           # SDDM themes
           signal-sddm-theme-dark = pkgs.callPackage ./pkgs/sddm-theme {
-            inherit signalColors signalLib;
+            inherit signalLib;
             mode = "dark";
           };
           signal-sddm-theme-light = pkgs.callPackage ./pkgs/sddm-theme {
-            inherit signalColors signalLib;
+            inherit signalLib;
             mode = "light";
           };
 
           # Plymouth themes
           signal-plymouth-theme-dark = pkgs.callPackage ./pkgs/plymouth-theme {
-            inherit signalColors signalLib;
+            inherit signalLib;
             mode = "dark";
           };
           signal-plymouth-theme-light = pkgs.callPackage ./pkgs/plymouth-theme {
-            inherit signalColors signalLib;
+            inherit signalLib;
             mode = "light";
           };
 
           # GTK themes (system-wide)
           signal-gtk-theme-dark = pkgs.callPackage ./pkgs/gtk-theme {
-            inherit signalColors signalLib;
+            inherit signalLib;
             mode = "dark";
           };
           signal-gtk-theme-light = pkgs.callPackage ./pkgs/gtk-theme {
-            inherit signalColors signalLib;
+            inherit signalLib;
             mode = "light";
           };
         }

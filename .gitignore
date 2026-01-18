@@ -22,7 +22,6 @@ Thumbs.db
 
 # Logs
 logs/
-logs/
 
 # Ralph working directories and config
 .ralph/
