@@ -323,9 +323,24 @@ git push origin feature/my-new-feature
 
 ## Application Integration Guide
 
+### 🎯 NEW: Step-by-Step Application Guide
+
+**Want to add a new application to Signal?** We have a comprehensive guide just for you!
+
+📖 **[CONTRIBUTING_APPLICATIONS.md](CONTRIBUTING_APPLICATIONS.md)** - Complete step-by-step guide for adding applications
+
+This guide includes:
+- ✅ Detailed walkthrough from research to submission
+- ✅ Decision tree for choosing the right configuration tier
+- ✅ Example implementations for each tier
+- ✅ Testing checklist and common pitfalls
+- ✅ Pull request template and best practices
+
+**Perfect for first-time contributors!**
+
 ### Using Module Templates (Recommended)
 
-**NEW: Module templates are now available!** These templates make it easy to add new applications with consistent structure and comprehensive documentation.
+**Module templates make it easy** to add new applications with consistent structure:
 
 - **[Template Directory](templates/)**: Four ready-to-use templates (one per tier)
 - **[Template README](templates/README.md)**: Complete guide with tier selection, usage instructions, and best practices
@@ -350,10 +365,11 @@ Available templates:
 
 **Before adding any new application**, review these key documents:
 
-- **[Module Templates](templates/README.md)**: Ready-to-use templates for all tiers (recommended starting point)
+- **[Application Contribution Guide](CONTRIBUTING_APPLICATIONS.md)**: Complete step-by-step guide (START HERE!)
+- **[Module Templates](templates/README.md)**: Ready-to-use templates for all tiers
 - **[Tier System](docs/tier-system.md)**: Four-tier configuration hierarchy (native themes → raw config)
 - **[Integration Roadmap](docs/integration-standards.md)**: Programs to integrate and their priority
-- **Module Metadata**: Required documentation standard (see templates or below)
+- **Module Metadata**: Required documentation standard (see templates or guide)
 
 ### Quick Integration Checklist
 

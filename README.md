@@ -393,19 +393,20 @@ Signal prioritizes:
 ### For Contributors
 
 - [**Contributing Guide**](CONTRIBUTING.md) - How to contribute
+- [**Application Guide**](CONTRIBUTING_APPLICATIONS.md) - Step-by-step guide for adding applications
 - [**Test Suite**](docs/TEST_SUITE.md) - Running and writing tests
-- [**Theming Reference**](docs/theming-reference.md) - Adding new applications
+- [**Theming Reference**](docs/theming-reference.md) - Color usage and integration standards
 
 ## Contributing
 
 We welcome contributions! Areas where you can help:
 
-- **Add application support** - See [Theming Reference](docs/theming-reference.md) for applications we'd like to support
+- **Add application support** - See [Application Contribution Guide](CONTRIBUTING_APPLICATIONS.md) for step-by-step instructions
 - **Improve documentation** - Help make Signal easier to use
 - **Report issues** - Found a bug or color issue? Let us know
 - **Share configs** - Show us your Signal setup
 
-See [CONTRIBUTING.md](CONTRIBUTING.md) for guidelines.
+See [CONTRIBUTING.md](CONTRIBUTING.md) for general guidelines and [CONTRIBUTING_APPLICATIONS.md](CONTRIBUTING_APPLICATIONS.md) for adding new applications.
 
 ## License
 
