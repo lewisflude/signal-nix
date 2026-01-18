@@ -73,6 +73,7 @@ in
     ../../modules/cli/ripgrep.nix
     ../../modules/cli/glow.nix
     ../../modules/cli/tig.nix
+    ../../modules/cli/tealdeer.nix
 
     # File Managers
     ../../modules/fileManagers/ranger.nix

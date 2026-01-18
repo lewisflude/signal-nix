@@ -7,7 +7,7 @@ Based on research in `docs/color-theme-research.md`, this document tracks implem
 ### ✅ Completed Modules (50+)
 
 **Terminals (5/5):** Alacritty, Foot, Ghostty, Kitty, WezTerm  
-**CLI Tools (11):** Bat, Delta, Eza, Fzf, Glow, Lazydocker, Lazygit, Less, Ripgrep, Tig, Yazi  
+**CLI Tools (12):** Bat, Delta, Eza, Fzf, Glow, Lazydocker, Lazygit, Less, Ripgrep, Tealdeer, Tig, Yazi  
 **Monitors (3):** Bottom, Btop++, Htop  
 **File Managers (3):** Lf, Nnn, Ranger  
 **Desktop Bars (3):** Ironbar, Polybar, Waybar  
@@ -24,14 +24,13 @@ Based on research in `docs/color-theme-research.md`, this document tracks implem
 **NixOS Login (3):** GDM, LightDM, SDDM  
 **System Theming (2):** GTK, Qt
 
-**Total: ~56 applications with theming support!**
+**Total: ~57 applications with theming support!**
 
 ### 📋 Remaining High-Value TODOs
 
 The following items from the original TODO remain unimplemented and would provide value:
 
 **High Priority (Native HM Options):**
-- Tealdeer (tldr pages styling)
 - MangoHud (gaming overlay)
 - Swaylock (screen locker)
 - MPV (media player OSD/subtitles)
@@ -76,7 +75,7 @@ The following items from the original TODO remain unimplemented and would provid
   - Graph colors (commit graph visualization)
   - Title/cursor colors for active selection
 
-- [ ] **Tealdeer** - Add module for `programs.tealdeer.settings.style`
+- [x] **Tealdeer** - ✅ Module: `modules/cli/tealdeer.nix`
   - Description colors (main content text)
   - Command name styling (bold, colors)
   - Example text colors (usage examples)
@@ -617,39 +616,316 @@ These applications don't have native Home Manager color options but can be theme
 ## Research & Design
 
 - [ ] Define color role mapping
-  - Primary/secondary/accent
-  - Success/warning/error
-  - Background hierarchy
-  - Text contrast levels
+  - Primary/secondary/accent roles and their usage
+  - Success/warning/error semantic colors for states
+  - Background hierarchy (base, elevated, overlay levels)
+  - Text contrast levels (primary, secondary, tertiary, disabled)
+  - **Context**: Need clear rules for when to use which color
+  - **Current state**: Have technical palette, need semantic layer
+  - **Semantic roles to define**:
+    - **Action colors**:
+      - Primary: Main actions (submit, confirm, primary buttons)
+      - Secondary: Alternative actions (cancel, back)
+      - Tertiary: Subtle actions (edit, view details)
+      - Danger: Destructive actions (delete, remove)
+      - Warning: Caution actions (proceed with risk)
+      - Success: Positive confirmation (saved, completed)
+    - **Surface colors**:
+      - Base: Default background
+      - Elevated: Cards, modals, raised surfaces
+      - Overlay: Tooltips, dropdowns
+      - Sunken: Input fields, text areas
+    - **Text colors**:
+      - Primary: Body text (highest contrast)
+      - Secondary: Supporting text (medium contrast)
+      - Tertiary: Hint text (lower contrast)
+      - Disabled: Inactive text (lowest contrast)
+      - On-accent: Text on colored backgrounds
+    - **Border colors**:
+      - Subtle: Light dividers
+      - Default: Standard borders
+      - Strong: Emphasized borders
+      - Focus: Keyboard focus indicators
+  - **Contrast requirements**: Follow WCAG 2.1 AA guidelines
+    - Normal text: 4.5:1 minimum
+    - Large text: 3:1 minimum
+    - UI components: 3:1 minimum
+  - **Output**: Document in `docs/COLOR_SEMANTICS.md`
 
 - [ ] Create default color palettes
-  - Light theme palette
-  - Dark theme palette
-  - High contrast variants
-  - Colorblind-friendly options
+  - Light theme palette (high-key, bright backgrounds)
+  - Dark theme palette (low-key, dark backgrounds)
+  - High contrast variants (enhanced contrast for accessibility)
+  - Colorblind-friendly options (adjusted hues for common color blindness types)
+  - **Light theme considerations**:
+    - Higher lightness values (L > 90 for backgrounds)
+    - Darker text (L < 40 for primary text)
+    - Reduced saturation for backgrounds
+    - Increased contrast ratios
+  - **Dark theme considerations** (current focus):
+    - Lower lightness values (L < 20 for backgrounds)
+    - Lighter text (L > 80 for primary text)
+    - Can use more saturated colors
+    - Avoid pure black (use dark gray)
+  - **High contrast variants**:
+    - Maximum contrast ratios (7:1 or higher)
+    - Reduced color variety (focus on contrast)
+    - Simpler color schemes
+    - Good for low vision users
+  - **Colorblind-friendly palettes**:
+    - Protanopia (red-blind): Avoid red-green distinctions
+    - Deuteranopia (green-blind): Similar to protanopia
+    - Tritanopia (blue-blind): Avoid blue-yellow distinctions
+    - Use patterns/shapes in addition to color
+    - Test with colorblind simulation tools
+  - **Implementation**: Add palette variants to `modules/common/default.nix`
+  - **Testing**: Use contrast checkers and colorblind simulators
 
 - [ ] Application grouping strategy
-  - Which apps should share exact colors
-  - Which need unique adaptations
-  - Consistency vs. optimization
+  - Which apps should share exact colors (terminals need consistency)
+  - Which need unique adaptations (media players may need different backgrounds)
+  - Consistency vs. optimization trade-offs
+  - **Categories for color treatment**:
+    1. **Strict consistency**: Terminals, CLI tools
+       - Need identical ANSI colors
+       - Muscle memory for colors
+       - Visual cues depend on exact colors
+    2. **Semantic consistency**: GUI applications
+       - Same meanings (error = red) but different shades OK
+       - Can adapt to app's design language
+       - More flexibility in implementation
+    3. **Contextual adaptation**: Media players, image viewers
+       - May need neutral backgrounds (avoid color cast)
+       - Subtitles need maximum contrast
+       - UI should not interfere with content
+  - **Decision factors**:
+    - User expectations (familiar patterns)
+    - Application purpose (work vs. media)
+    - Technical constraints (limited palette)
+    - Brand recognition (maintain visual identity)
+  - **Documentation**: Create decision tree in `docs/COLOR_GROUPING.md`
 
 ## Notes
 
 ### Priority Criteria
 - **High**: Native HM options, widely used, straightforward implementation
+  - Quick wins with immediate value
+  - Well-documented upstream
+  - Low risk of breakage
+  - Examples: Git Delta, Tig, MangoHud
+  
 - **Medium**: Config file based, good documentation, clear benefit
+  - Requires config file generation
+  - More complex but still manageable
+  - May need template systems
+  - Examples: Btop++, Zed, Glow
+  
 - **Lower**: External dependencies, complex setup, niche use cases
+  - May need external tools or packages
+  - Complex implementation or maintenance
+  - Smaller user base
+  - Examples: Discord (needs Vencord), Telegram (needs theme builder)
 
 ### Implementation Order
-1. Start with high-priority applications with native HM options
-2. Create color system infrastructure
-3. Implement medium-priority config-based apps
-4. Add environment variable support
-5. Handle complex/external theming cases
+1. **Start with high-priority applications with native HM options**
+   - Fastest path to value
+   - Build momentum with quick wins
+   - Learn patterns that apply to other apps
+   - Current focus: Delta, Tig, Tealdeer, MangoHud, Swaylock, MPV
+
+2. **Create color system infrastructure**
+   - Semantic color roles (what each color means)
+   - Format converters (hex to RGB, etc.)
+   - Validation helpers (contrast checking)
+   - This investment pays off for all future apps
+
+3. **Implement medium-priority config-based apps**
+   - Apply infrastructure built in step 2
+   - Focus on apps with highest user request
+   - Build reusable config generation patterns
+
+4. **Add environment variable support**
+   - Group by shell (zsh, bash, fish)
+   - Shared variables (LESS_TERMCAP_*, GLAMOUR_STYLE)
+   - Per-app variables as needed
+
+5. **Handle complex/external theming cases**
+   - Requires most effort for least coverage
+   - Wait for user requests and feedback
+   - May need external tool integration
 
 ### Considerations
-- Some apps (GTK-based) automatically inherit from GTK theme
-- Terminal emulator colors affect many CLI tools
-- Environment variables can be grouped in shell modules
-- Qt theming is separate concern from GTK
-- Some apps (Discord, Obsidian) may need external tools
+- **Some apps automatically inherit from GTK theme**
+  - Thunar, Nautilus, File Roller, Polkit-gnome
+  - Focus on GTK CSS instead of per-app modules
+  - Single source of truth prevents inconsistency
+  - Documented in `.claude/gtk-theming-docs-research.md`
+
+- **Terminal emulator colors affect many CLI tools**
+  - ANSI color palette is shared across all terminal apps
+  - Consistency critical for user experience
+  - Test CLI tools in all terminal emulators
+  - Some tools (dust, atuin) only use terminal colors
+
+- **Environment variables can be grouped in shell modules**
+  - Less, Man, GitHub CLI (glamour) use env vars
+  - Add to existing shell modules (zsh, bash, fish)
+  - Single place to configure all shell colors
+  - Example: `LESS_TERMCAP_*` for colored man pages
+
+- **Qt theming is separate concern from GTK**
+  - Different architecture and styling system
+  - Need both qt5ct and qt6ct support
+  - Kvantum adds complexity but more features
+  - Not all Qt apps respect qt5ct/qt6ct
+  - Some apps (OBS, Telegram) use own themes
+
+- **Some apps need external tools**
+  - Discord: Requires BetterDiscord or Vencord
+  - Telegram: Needs .tdesktop-theme file (can use theme generator API)
+  - Obsidian: Per-vault CSS snippets (complex to automate)
+  - Steam: Skin files (can use existing skins like Adwaita-for-Steam)
+  - Lower priority due to complexity and maintenance burden
+
+### Configuration Tiers Explained
+
+**Tier 1: Preset Selection** (Simplest)
+- App only offers preset themes/color schemes
+- Can only choose from predefined options
+- Example: htop (schemes 0-6), some terminal themes
+- Implementation: Map Signal theme to closest preset
+
+**Tier 2: Structured Colors** (Medium complexity)
+- App has dedicated color configuration structure
+- Organized sections (primary, normal, bright)
+- Type-safe, validated by Home Manager
+- Example: Alacritty (`colors.primary.background`)
+- Implementation: Direct mapping to structured options
+
+**Tier 3: Freeform Settings** (Flexible)
+- App accepts key-value pairs
+- No strict structure enforced
+- More freedom but less validation
+- Example: Ghostty, Kitty, Foot
+- Implementation: Generate flat key-value config
+
+**Tier 4: Config File Generation** (Most complex)
+- No Home Manager options, must generate full config
+- May need templates or complex string building
+- Examples: Btop++ theme files, Zed JSON themes
+- Implementation: Template-based or programmatic generation
+
+### Color Format Reference
+
+**Hex** (most common)
+- With hash: `#3b82f6`
+- Without hash: `3b82f6`
+- With alpha: `#3b82f680` (last 2 digits = alpha)
+
+**RGB**
+- Separate values: `r: 59, g: 130, b: 246`
+- CSS format: `rgb(59, 130, 246)`
+- With alpha: `rgba(59, 130, 246, 0.5)`
+
+**Terminal Colors**
+- Named: `red`, `green`, `blue`, `brightred`, etc.
+- 256-color: `38;5;33` (foreground), `48;5;33` (background)
+- True color: `38;2;59;130;246`
+
+**Other Formats**
+- ANSI escape: `\x1b[38;2;59;130;246m`
+- Decimal array: `[0.23, 0.51, 0.96]` (0-1 range)
+- Integer array: `[59, 130, 246]` (0-255 range)
+
+### Testing Strategy
+
+**Per-Module Tests**
+1. Color value validation (format, bounds)
+2. Config structure correctness
+3. Activation logic (enable/disable)
+4. Override behavior (custom colors)
+
+**Integration Tests**
+1. Full home-manager build
+2. No evaluation errors
+3. Files generated in correct locations
+4. No conflicts between modules
+
+**Visual Tests** (manual)
+1. Screenshot each themed application
+2. Verify colors match design system
+3. Check consistency across apps
+4. Test in both light and dark modes (when both supported)
+
+**Accessibility Tests**
+1. Contrast ratio checks (WCAG 2.1)
+2. Colorblind simulation
+3. High contrast mode
+4. Screen reader compatibility (for GUI apps)
+
+### Future Considerations
+
+**OKLCH Color Space**
+- Current: Using RGB/Hex colors
+- Future: Could use OKLCH for better perceptual uniformity
+- Benefits: Equal numerical differences = equal perceived differences
+- Challenge: Need conversion functions, not all apps support
+- Resources: 
+  - https://evilmartians.com/chronicles/oklch-in-css-why-quit-rgb-hsl
+  - https://developer.mozilla.org/en-US/docs/Web/CSS/color_value/oklch
+
+**Dynamic Theme Switching**
+- Runtime theme changes without restart
+- System theme detection (dark/light mode)
+- Time-based themes (light during day, dark at night)
+- Per-app theme overrides
+
+**Theme Variants**
+- Seasonal themes (spring, summer, fall, winter)
+- Holiday themes (Halloween, Christmas, etc.)
+- Event themes (conferences, product launches)
+- Mood themes (focus, relax, energize)
+
+**Community Themes**
+- Allow users to share custom themes
+- Theme gallery or marketplace
+- Rating and review system
+- Import/export functionality
+
+### Related Documentation
+
+- **Research files**:
+  - `docs/color-theme-research.md` - Complete app theming reference
+  - `.claude/ghostty-implementation-research.md` - Ghostty implementation details
+  - `.claude/gtk-theming-docs-research.md` - GTK theming comprehensive guide
+  
+- **Architecture docs**:
+  - `docs/architecture.md` - System architecture overview
+  - `docs/design-principles.md` - Design philosophy and principles
+  - `docs/tier-system.md` - Configuration tier explanation
+  
+- **Guides**:
+  - `docs/configuration-guide.md` - User configuration guide
+  - `docs/theming-reference.md` - Theming API reference
+  - `docs/THEME_QUICK_REF.md` - Quick reference for theme options
+
+### Useful Links
+
+- **Nix/Home Manager**:
+  - Home Manager options: https://nix-community.github.io/home-manager/options.xhtml
+  - Nixpkgs manual: https://nixos.org/manual/nixpkgs/stable/
+  - Nix language basics: https://nix.dev/tutorials/nix-language
+
+- **Theming inspiration**:
+  - Stylix: https://github.com/danth/stylix
+  - nix-colors: https://github.com/Misterio77/nix-colors
+  - base16: https://github.com/chriskempson/base16
+  
+- **Color tools**:
+  - Contrast checker: https://webaim.org/resources/contrastchecker/
+  - Colorblind simulator: https://www.color-blindness.com/coblis-color-blindness-simulator/
+  - OKLCH picker: https://oklch.com/
+
+- **Testing**:
+  - nix-unit: https://github.com/nix-community/nix-unit
+  - nix-output-monitor: https://github.com/maralorn/nix-output-monitor
