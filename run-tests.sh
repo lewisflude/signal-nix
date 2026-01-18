@@ -215,11 +215,30 @@ run_test() {
     
     echo -e "${BLUE}Running test: ${test_name}${NC}"
     
+    # Start timing
+    local start_time=$(date +%s)
+    
     if nix build ".#checks.${SYSTEM}.${test_name}" "${build_args[@]}" 2>&1; then
-        echo -e "${GREEN}✓ ${test_name} passed${NC}"
+        local end_time=$(date +%s)
+        local duration=$((end_time - start_time))
+        echo -e "${GREEN}✓ ${test_name} passed (${duration}s)${NC}"
+        
+        # Output structured result for CI parsing
+        if [[ -n "${GITHUB_ACTIONS:-}" ]]; then
+            echo "::notice title=Test Passed (${test_name})::Test passed in ${duration}s"
+        fi
+        
         return 0
     else
-        echo -e "${RED}✗ ${test_name} failed${NC}"
+        local end_time=$(date +%s)
+        local duration=$((end_time - start_time))
+        echo -e "${RED}✗ ${test_name} failed (${duration}s)${NC}"
+        
+        # Output structured failure for CI parsing
+        if [[ -n "${GITHUB_ACTIONS:-}" ]]; then
+            echo "::error title=Test Failed (${test_name})::Test failed after ${duration}s"
+        fi
+        
         return 1
     fi
 }
@@ -230,28 +249,57 @@ run_tests() {
     local passed=0
     local failed=0
     local total=${#tests[@]}
+    local total_duration=0
     
     echo -e "${BLUE}Running ${total} tests...${NC}\n"
     
+    # Start overall timing
+    local overall_start=$(date +%s)
+    
     for test in "${tests[@]}"; do
+        local test_start=$(date +%s)
+        
         if run_test "$test"; then
             ((passed++))
         else
             ((failed++))
         fi
+        
+        local test_end=$(date +%s)
+        local test_duration=$((test_end - test_start))
+        total_duration=$((total_duration + test_duration))
+        
         echo ""
     done
+    
+    local overall_end=$(date +%s)
+    local overall_duration=$((overall_end - overall_start))
     
     echo -e "${BLUE}========================================${NC}"
     echo -e "${BLUE}Test Summary${NC}"
     echo -e "${BLUE}========================================${NC}"
-    echo -e "Total:  ${total}"
-    echo -e "${GREEN}Passed: ${passed}${NC}"
+    echo -e "Total:    ${total}"
+    echo -e "${GREEN}Passed:   ${passed}${NC}"
     if [[ $failed -gt 0 ]]; then
-        echo -e "${RED}Failed: ${failed}${NC}"
+        echo -e "${RED}Failed:   ${failed}${NC}"
+    else
+        echo -e "Failed:   0"
+    fi
+    echo -e "Duration: ${overall_duration}s"
+    echo -e "========================================${NC}"
+    
+    # Output structured summary for CI
+    if [[ -n "${GITHUB_ACTIONS:-}" ]]; then
+        if [[ $failed -gt 0 ]]; then
+            echo "::error title=Test Suite Failed::${failed} of ${total} tests failed (${overall_duration}s total)"
+        else
+            echo "::notice title=Test Suite Passed::All ${total} tests passed (${overall_duration}s total)"
+        fi
+    fi
+    
+    if [[ $failed -gt 0 ]]; then
         return 1
     else
-        echo -e "Failed: 0"
         return 0
     fi
 }
@@ -265,11 +313,27 @@ run_all_tests() {
         build_args+=(--print-build-logs)
     fi
     
+    local start_time=$(date +%s)
+    
     if nix flake check "${build_args[@]}" --system "$SYSTEM"; then
-        echo -e "\n${GREEN}✓ All tests passed${NC}"
+        local end_time=$(date +%s)
+        local duration=$((end_time - start_time))
+        echo -e "\n${GREEN}✓ All tests passed (${duration}s)${NC}"
+        
+        if [[ -n "${GITHUB_ACTIONS:-}" ]]; then
+            echo "::notice title=All Tests Passed::Complete test suite passed in ${duration}s"
+        fi
+        
         return 0
     else
-        echo -e "\n${RED}✗ Some tests failed${NC}"
+        local end_time=$(date +%s)
+        local duration=$((end_time - start_time))
+        echo -e "\n${RED}✗ Some tests failed (${duration}s)${NC}"
+        
+        if [[ -n "${GITHUB_ACTIONS:-}" ]]; then
+            echo "::error title=Tests Failed::Test suite failed after ${duration}s"
+        fi
+        
         return 1
     fi
 }

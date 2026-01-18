@@ -4,11 +4,17 @@
 
 This document tracks all programs that should be themed by Signal, organized by category and priority.
 
+**Related Documents:**
+- `.github/TODO.md` - High-level project roadmap and architecture improvements
+- `COLOR_THEME_TODO.md` - Detailed color theme implementation tracking with technical context
+- `docs/color-theme-research.md` - Application theming research and examples (1260 lines)
+- `.claude/todo-enhancement-summary.md` - Summary of recent TODO documentation enhancements
+
 ## Current Status
 
 **Supported Programs**: 42 modules across 12 categories (+14 new!)  
 **Priority 0 Complete**: All critical desktop, editor, and shell integrations ✅  
-**Latest Update**: 2026-01-17
+**Latest Update**: 2026-01-18
 
 ---
 
@@ -16,10 +22,10 @@ This document tracks all programs that should be themed by Signal, organized by 
 
 ### ✅ Terminals (4/5 major)
 - Alacritty (Tier 2) ✅
-- Ghostty (Tier 3) ✅
+- Ghostty (Tier 3) ✅ - See `.claude/ghostty-implementation-research.md` for implementation details
 - Kitty (Tier 3) ✅
 - WezTerm (Tier 4) ✅
-- **TODO**: Foot
+- **TODO**: Foot - Native HM option, straightforward (see `COLOR_THEME_TODO.md`)
 
 ### ✅ Editors (5/6 major) 🎉 NEW
 - Helix (Tier 1) ✅
@@ -27,7 +33,7 @@ This document tracks all programs that should be themed by Signal, organized by 
 - Vim (Tier 4) ✅ NEW
 - VS Code/VSCodium (Tier 2) ✅ NEW
 - Emacs (Tier 4) ✅ NEW
-- **TODO**: Zed
+- **TODO**: Zed - JSON theme generation (Medium priority in `COLOR_THEME_TODO.md`)
 
 ### ✅ Terminal Multiplexers (2/2)
 - tmux (Tier 4) ✅
@@ -45,14 +51,16 @@ This document tracks all programs that should be themed by Signal, organized by 
 
 ### ✅ CLI Tools (8/15+) 🎉 NEW
 - bat (Tier 1) ✅
-- delta (Tier 3) ✅
+- delta (Tier 3) ✅ - **High priority** enhancement in `COLOR_THEME_TODO.md`
 - eza (Tier 4) ✅
 - fzf (Tier 4) ✅
 - lazygit (Tier 3) ✅
 - yazi (Tier 3) ✅
 - less (Tier 5) ✅ NEW
 - ripgrep (Tier 5) ✅ NEW
-- **TODO**: bottom, more...
+- **TODO**: See `COLOR_THEME_TODO.md` for detailed list:
+  - **High Priority**: Tig (git TUI), Tealdeer (tldr), MangoHud (gaming overlay)
+  - **Medium Priority**: Glow (markdown), Procs (ps replacement), bottom (system monitor)
 
 ### ✅ Desktop Apps (9/20+) 🎉 NEW
 - GTK 3/4 (Tier 4) ✅
@@ -78,8 +86,10 @@ This document tracks all programs that should be themed by Signal, organized by 
 - SDDM ✅
 - GDM ✅
 - LightDM ✅
-- GTK Theme package ✅
-- **TODO**: Qt theme, systemd-boot
+- GTK Theme package ✅ - See `.claude/gtk-theming-docs-research.md` for complete GTK theming reference
+- **TODO**: 
+  - Qt theme (qt5ct/qt6ct, Kvantum) - Detailed in `COLOR_THEME_TODO.md`
+  - systemd-boot (alternative to GRUB)
 
 ---
 
@@ -111,36 +121,38 @@ This document tracks all programs that should be themed by Signal, organized by 
 
 ## Priority 1: High Demand
 
+**Note**: For detailed implementation context, format requirements, and upstream documentation for each application, see `COLOR_THEME_TODO.md`.
+
 ### Desktop/WM (Home Manager)
 - [ ] **bspwm** - Binary space partitioning WM
 - [ ] **awesome** - Lua-based window manager
-- [ ] **mako** - Wayland notification daemon
-- [ ] **wofi** - Wayland launcher alternative
+- [ ] **mako** - Wayland notification daemon (Native HM option available)
+- [ ] **wofi** - Wayland launcher alternative (Native HM option available)
 - [ ] **polybar** - Popular X11 status bar
 - [ ] **picom** - X11 compositor
 
 ### Terminals (Home Manager)
-- [ ] **foot** - Minimal Wayland terminal
+- [ ] **foot** - Minimal Wayland terminal (Native HM option, straightforward implementation)
 - [ ] **Rio** - GPU-accelerated terminal
-- [ ] **st** - Suckless simple terminal
+- [ ] **st** - Suckless simple terminal (requires patching)
 
 ### File Managers (Home Manager)
-- [ ] **ranger** - Vim-like file manager
-- [ ] **lf** - Fast lightweight file manager
-- [ ] **nnn** - Blazing fast file manager
-- [ ] **Thunar** - XFCE file manager (GTK)
-- [ ] **Nautilus** - GNOME file manager (GTK)
-- [ ] **Dolphin** - KDE file manager (Qt)
+- [ ] **ranger** - Vim-like file manager (Config file based)
+- [ ] **lf** - Fast lightweight file manager (Config file based)
+- [ ] **nnn** - Blazing fast file manager (Environment variables)
+- [ ] **Thunar** - XFCE file manager (GTK theme + extra CSS)
+- [ ] **Nautilus** - GNOME file manager (GTK/libadwaita theme)
+- [ ] **Dolphin** - KDE file manager (Qt theme dependency)
 
 ### System Monitors (Home Manager)
-- [ ] **bottom (btm)** - Modern resource monitor
+- [ ] **bottom (btm)** - Modern resource monitor (Config file, medium priority in `COLOR_THEME_TODO.md`)
 - [ ] **glances** - Cross-platform system monitor
 
 ### Development (Home Manager)
 - [x] **lazydocker** - Docker TUI (like lazygit) ✅ RE-ENABLED
 - [x] **glow** - Markdown viewer ✅
-- [ ] **gdb** - GNU debugger with colors
-- [ ] **jq** - JSON processor with colors
+- [ ] **gdb** - GNU debugger with colors (Limited theming)
+- [ ] **jq** - JSON processor with colors (Limited theming)
 
 ### Browsers (Home Manager)
 - [ ] **Firefox** - userChrome.css + userContent.css
@@ -163,7 +175,7 @@ This document tracks all programs that should be themed by Signal, organized by 
 - [ ] **fish prompt** - Fish built-in prompt
 
 ### Media (Home Manager)
-- [ ] **mpv** - Video player OSD
+- [ ] **mpv** - Video player OSD (**High priority** in `COLOR_THEME_TODO.md` - Native HM option with alpha support)
 - [ ] **ncmpcpp** - Music player
 - [ ] **cava** - Audio visualizer
 - [ ] **musikcube** - Terminal music player
@@ -179,17 +191,17 @@ This document tracks all programs that should be themed by Signal, organized by 
 - [ ] **nano** - Simple terminal editor
 
 ### Terminal Utils (Home Manager)
-- [ ] **direnv** - Environment switcher
-- [ ] **atuin** - Shell history manager
-- [ ] **tealdeer (tldr)** - Man page alternative
-- [ ] **procs** - Modern ps replacement
-- [ ] **duf** - Modern df replacement
-- [ ] **dust** - Modern du replacement
+- [ ] **direnv** - Environment switcher (No theming needed)
+- [ ] **atuin** - Shell history manager (Uses terminal colors)
+- [ ] **tealdeer (tldr)** - Man page alternative (**High priority** in `COLOR_THEME_TODO.md` - Native HM option)
+- [ ] **procs** - Modern ps replacement (Medium priority in `COLOR_THEME_TODO.md` - Config file)
+- [ ] **duf** - Modern df replacement (Limited/no theming)
+- [ ] **dust** - Modern du replacement (Uses terminal colors only)
 
 ### Git Tools (Home Manager)
-- [ ] **tig** - Text-mode git interface
+- [ ] **tig** - Text-mode git interface (**High priority** in `COLOR_THEME_TODO.md` - Native HM option)
 - [ ] **gitui** - Git TUI (like lazygit)
-- [ ] **gh** - GitHub CLI (may not be themeable)
+- [ ] **gh** - GitHub CLI (Limited theming, uses terminal colors + GLAMOUR_STYLE env var)
 
 ---
 
@@ -316,6 +328,38 @@ modules/
 
 ---
 
-**Last Updated**: 2026-01-17
-**Total Programs Planned**: ~100+
-**Currently Supported**: 20+
+**Last Updated**: 2026-01-18  
+**Total Programs Planned**: ~100+  
+**Currently Supported**: 42+
+
+## Additional Resources
+
+### Documentation
+- **Color Theme Research**: `docs/color-theme-research.md` (1260 lines)
+  - Complete reference for how to theme every application
+  - Configuration examples and format requirements
+  - Organized by category with upstream documentation links
+
+- **TODO Tracking**:
+  - `.github/TODO.md` - Project roadmap and architecture improvements
+  - `COLOR_THEME_TODO.md` - Detailed color theme implementation tracking
+  - `.claude/todo-enhancement-summary.md` - Summary of recent enhancements
+
+- **Implementation Research**:
+  - `.claude/ghostty-implementation-research.md` - Terminal implementation case study
+  - `.claude/gtk-theming-docs-research.md` - Complete GTK theming reference
+  - `.claude/stylix-targets-research.md` - Stylix architecture analysis
+
+### Architecture Inspiration
+- **Stylix**: https://github.com/danth/stylix - Targets-based module architecture
+- **nix-colors**: https://github.com/Misterio77/nix-colors - Ports library pattern for color mappings
+
+### Testing & Development
+- **nix-unit**: https://github.com/nix-community/nix-unit - Unit testing framework for Nix
+- **nix-output-monitor**: https://github.com/maralorn/nix-output-monitor - Better build output visualization
+
+### Color Theory & Accessibility
+- **OKLCH**: https://evilmartians.com/chronicles/oklch-in-css-why-quit-rgb-hsl - Perceptually uniform color space
+- **WCAG 2.1**: Contrast requirements (4.5:1 for text, 3:1 for UI)
+- **Contrast Checker**: https://webaim.org/resources/contrastchecker/
+- **Colorblind Simulator**: https://www.color-blindness.com/coblis-color-blindness-simulator/

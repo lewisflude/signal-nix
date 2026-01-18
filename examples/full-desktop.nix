@@ -44,6 +44,7 @@
               lazygit.enable = true;
               yazi.enable = true;
               btop.enable = true;
+              mangohud.enable = true;
               starship.enable = true;
               zsh.enable = true;
             };
@@ -94,6 +95,7 @@
               # System Monitors
               monitors = {
                 btop.enable = true;
+                mangohud.enable = true; # Gaming overlay
               };
 
               # Shell Prompts

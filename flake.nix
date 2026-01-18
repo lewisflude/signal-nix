@@ -235,6 +235,7 @@
             test -f ${./modules/multiplexers/tmux.nix} || { echo "Missing tmux module"; exit 1; }
             test -f ${./modules/multiplexers/zellij.nix} || { echo "Missing zellij module"; exit 1; }
             test -f ${./modules/monitors/btop.nix} || { echo "Missing btop module"; exit 1; }
+            test -f ${./modules/monitors/mangohud.nix} || { echo "Missing mangohud module"; exit 1; }
 
             # Check examples
             test -f ${./examples/basic.nix} || { echo "Missing basic example"; exit 1; }

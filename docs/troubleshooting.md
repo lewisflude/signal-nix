@@ -299,6 +299,11 @@ home-manager generations | head -n 1
    ls -la ~/.config/gtk-4.0/gtk.css
    ```
 
+5. **For GTK applications like Thunar**: Signal now includes the complete Adwaita color palette (45 palette variables). If you're experiencing issues with older GTK apps not picking up colors:
+   - Ensure you're using the latest version of signal-nix
+   - Restart the application completely (kill all processes)
+   - Check that `~/.config/gtk-3.0/gtk.css` includes `@define-color blue_1`, `green_2`, etc.
+
 ### Helix colors not showing
 
 **Cause**: Helix config not updated or terminal doesn't support true color.

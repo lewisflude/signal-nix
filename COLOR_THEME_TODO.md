@@ -4,11 +4,11 @@ Based on research in `docs/color-theme-research.md`, this document tracks implem
 
 ## Implementation Progress
 
-### ✅ Completed Modules (50+)
+### ✅ Completed Modules (51)
 
 **Terminals (5/5):** Alacritty, Foot, Ghostty, Kitty, WezTerm  
 **CLI Tools (12):** Bat, Delta, Eza, Fzf, Glow, Lazydocker, Lazygit, Less, Ripgrep, Tealdeer, Tig, Yazi  
-**Monitors (3):** Bottom, Btop++, Htop  
+**Monitors (4):** Bottom, Btop++, Htop, MangoHud  
 **File Managers (3):** Lf, Nnn, Ranger  
 **Desktop Bars (3):** Ironbar, Polybar, Waybar  
 **Launchers (4):** Dmenu, Fuzzel, Rofi, Tofi, Wofi  
@@ -24,14 +24,14 @@ Based on research in `docs/color-theme-research.md`, this document tracks implem
 **NixOS Login (3):** GDM, LightDM, SDDM  
 **System Theming (2):** GTK, Qt
 
-**Total: ~57 applications with theming support!**
+**Total: ~58 applications with theming support!**
 
 ### 📋 Remaining High-Value TODOs
 
 The following items from the original TODO remain unimplemented and would provide value:
 
 **High Priority (Native HM Options):**
-- MangoHud (gaming overlay)
+- [x] **MangoHud** - ✅ Module: `modules/monitors/mangohud.nix` (gaming overlay)
 - Swaylock (screen locker)
 - MPV (media player OSD/subtitles)
 

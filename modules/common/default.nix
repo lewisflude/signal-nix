@@ -84,6 +84,7 @@ in
     ../../modules/monitors/btop.nix
     ../../modules/monitors/htop.nix
     ../../modules/monitors/bottom.nix
+    ../../modules/monitors/mangohud.nix
 
     # Browsers
     ../../modules/browsers/firefox.nix
@@ -261,6 +262,7 @@ in
       btop.enable = mkEnableOption "Signal theme for btop";
       htop.enable = mkEnableOption "Signal theme for htop";
       bottom.enable = mkEnableOption "Signal theme for bottom";
+      mangohud.enable = mkEnableOption "Signal theme for MangoHud gaming overlay";
     };
 
     browsers = {
@@ -404,6 +406,7 @@ in
           || cfg.cli.ripgrep.enable
           || cfg.monitors.btop.enable
           || cfg.monitors.htop.enable
+          || cfg.monitors.mangohud.enable
           || cfg.prompts.starship.enable
           || cfg.shells.zsh.enable
           || cfg.shells.fish.enable
