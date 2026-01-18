@@ -14,7 +14,7 @@
 #        Colors are mapped to authentication states: normal, clear, verify, wrong.
 #        The indicator ring provides visual feedback during password entry.
 let
-  inherit (lib) mkIf removePrefix;
+  inherit (lib) mkIf mkDefault removePrefix;
   cfg = config.theming.signal;
   themeMode = signalLib.resolveThemeMode cfg.mode;
   signalColors = signalLib.getColors themeMode;
@@ -61,102 +61,102 @@ in
   config = mkIf (cfg.enable && shouldTheme) {
     programs.swaylock.settings = {
       # Background color
-      color = stripHash colors.surface-base;
+      color = mkDefault (stripHash colors.surface-base);
 
       # Indicator appearance
-      indicator-radius = 100;
-      indicator-thickness = 10;
+      indicator-radius = mkDefault 100;
+      indicator-thickness = mkDefault 10;
 
       # =======================================================================
       # Ring colors (outer circle of indicator)
       # =======================================================================
       # Normal: neutral blue when idle/typing
-      ring-color = stripHash accent.secondary.Lc60;
+      ring-color = mkDefault (stripHash accent.secondary.Lc60);
 
       # Clear: subtle when input is cleared
-      ring-clear-color = stripHash colors.divider-primary;
+      ring-clear-color = mkDefault (stripHash colors.divider-primary);
 
       # Caps Lock: warning yellow when caps lock is on
-      ring-caps-lock-color = stripHash accent.warning.Lc75;
+      ring-caps-lock-color = mkDefault (stripHash accent.warning.Lc75);
 
       # Verify: primary green when verifying password
-      ring-ver-color = stripHash accent.primary.Lc75;
+      ring-ver-color = mkDefault (stripHash accent.primary.Lc75);
 
       # Wrong: danger red when password is incorrect
-      ring-wrong-color = stripHash accent.danger.Lc75;
+      ring-wrong-color = mkDefault (stripHash accent.danger.Lc75);
 
       # =======================================================================
       # Inside colors (inner circle of indicator)
       # =======================================================================
       # Normal: slightly raised surface
-      inside-color = stripHash colors.surface-subtle;
+      inside-color = mkDefault (stripHash colors.surface-subtle);
 
       # Clear: same as normal (subtle feedback)
-      inside-clear-color = stripHash colors.surface-subtle;
+      inside-clear-color = mkDefault (stripHash colors.surface-subtle);
 
       # Caps Lock: subtle warning background
-      inside-caps-lock-color = stripHash colors.surface-hover;
+      inside-caps-lock-color = mkDefault (stripHash colors.surface-hover);
 
       # Verify: slight green tint using surface color
-      inside-ver-color = stripHash colors.surface-hover;
+      inside-ver-color = mkDefault (stripHash colors.surface-hover);
 
       # Wrong: slight red tint using surface color
-      inside-wrong-color = stripHash colors.surface-hover;
+      inside-wrong-color = mkDefault (stripHash colors.surface-hover);
 
       # =======================================================================
       # Line colors (separator between inside and ring)
       # =======================================================================
       # Use ring colors for consistency
-      line-uses-ring = true;
+      line-uses-ring = mkDefault true;
 
       # =======================================================================
       # Text colors (password dots and messages)
       # =======================================================================
       # Normal: primary text
-      text-color = stripHash colors.text-primary;
+      text-color = mkDefault (stripHash colors.text-primary);
 
       # Clear: secondary text
-      text-clear-color = stripHash colors.text-secondary;
+      text-clear-color = mkDefault (stripHash colors.text-secondary);
 
       # Caps Lock: warning text
-      text-caps-lock-color = stripHash accent.warning.Lc75;
+      text-caps-lock-color = mkDefault (stripHash accent.warning.Lc75);
 
       # Verify: primary green text
-      text-ver-color = stripHash accent.primary.Lc75;
+      text-ver-color = mkDefault (stripHash accent.primary.Lc75);
 
       # Wrong: danger red text
-      text-wrong-color = stripHash accent.danger.Lc75;
+      text-wrong-color = mkDefault (stripHash accent.danger.Lc75);
 
       # =======================================================================
       # Key highlight colors (visual feedback when typing)
       # =======================================================================
       # Normal key press: accent secondary
-      key-hl-color = stripHash accent.secondary.Lc75;
+      key-hl-color = mkDefault (stripHash accent.secondary.Lc75);
 
       # Backspace highlight: subtle
-      bs-hl-color = stripHash colors.divider-primary;
+      bs-hl-color = mkDefault (stripHash colors.divider-primary);
 
       # Caps lock key press: warning
-      caps-lock-key-hl-color = stripHash accent.warning.Lc75;
+      caps-lock-key-hl-color = mkDefault (stripHash accent.warning.Lc75);
 
       # Caps lock backspace: warning
-      caps-lock-bs-hl-color = stripHash accent.warning.Lc60;
+      caps-lock-bs-hl-color = mkDefault (stripHash accent.warning.Lc60);
 
       # =======================================================================
       # Layout indicator colors (keyboard layout display)
       # =======================================================================
-      layout-bg-color = stripHash colors.surface-hover;
-      layout-border-color = stripHash colors.divider-primary;
-      layout-text-color = stripHash colors.text-primary;
+      layout-bg-color = mkDefault (stripHash colors.surface-hover);
+      layout-border-color = mkDefault (stripHash colors.divider-primary);
+      layout-text-color = mkDefault (stripHash colors.text-primary);
 
       # Separator between highlight segments
-      separator-color = stripHash colors.divider-primary;
+      separator-color = mkDefault (stripHash colors.divider-primary);
 
       # Show failed attempts for security feedback
-      show-failed-attempts = true;
+      show-failed-attempts = mkDefault true;
 
       # Show keyboard layout if configured
-      show-keyboard-layout = true;
+      show-keyboard-layout = mkDefault true;
     };
   };
 }
