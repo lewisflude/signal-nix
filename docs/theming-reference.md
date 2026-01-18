@@ -161,6 +161,18 @@ This reference organizes theming documentation by application category, making i
 - Git integration (GitSigns)
 - Diagnostics styling
 
+### 🟢 Zed
+**Status:** ✅ Implemented  
+**Category:** Modern collaborative editor  
+**Documentation:** [Zed Themes](https://zed.dev/docs/themes)  
+**Format:** JSON  
+**Notes:**
+- Complete JSON theme file generation
+- Supports syntax highlighting, UI elements, and terminal colors
+- Collaborative editing cursor colors
+- Version control integration
+- Theme placed in `~/.config/zed/themes/signal-dark.json`
+
 ### 🔴 Micro
 **Status:** ❌ Not implemented  
 **Category:** Modern terminal editor  

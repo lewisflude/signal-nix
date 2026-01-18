@@ -434,7 +434,7 @@ nix build .#checks.x86_64-linux.integration-example-basic \
 
 **Full Test Suite:**
 ```bash
-# Run everything (60+ tests, ~6 minutes)
+# Run everything (61 tests, ~6 minutes)
 nix flake check
 ```
 

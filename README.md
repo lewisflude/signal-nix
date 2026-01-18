@@ -150,7 +150,7 @@ theming.signal.enable = true;  # ← Signal themes kitty with Signal colors
 
 ## Supported Applications
 
-Signal provides color themes for 60+ applications across all categories:
+Signal provides color themes for 61 applications across all categories:
 
 ### Desktop & Window Management
 
@@ -180,6 +180,7 @@ Signal provides color themes for 60+ applications across all categories:
 - **Vim** - Classic modal editor ✨
 - **VS Code/VSCodium** - GUI editor ✨
 - **Emacs** - Extensible editor (Org, Magit support) ✨
+- **Zed** - Modern collaborative editor (JSON theme)
 
 ### Terminals
 

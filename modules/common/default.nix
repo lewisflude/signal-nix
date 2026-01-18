@@ -52,6 +52,7 @@ in
     ../../modules/editors/vim.nix
     ../../modules/editors/vscode.nix
     ../../modules/editors/emacs.nix
+    ../../modules/editors/zed.nix
 
     # Terminals
     ../../modules/terminals/ghostty.nix
@@ -231,6 +232,7 @@ in
       vim.enable = mkEnableOption "Signal theme for Vim editor";
       vscode.enable = mkEnableOption "Signal theme for VS Code/VSCodium";
       emacs.enable = mkEnableOption "Signal theme for Emacs";
+      zed.enable = mkEnableOption "Signal theme for Zed editor";
     };
 
     terminals = {
@@ -399,6 +401,7 @@ in
           || cfg.editors.vim.enable
           || cfg.editors.vscode.enable
           || cfg.editors.emacs.enable
+          || cfg.editors.zed.enable
           || cfg.terminals.ghostty.enable
           || cfg.terminals.alacritty.enable
           || cfg.terminals.kitty.enable

@@ -85,7 +85,7 @@ When creating a new release:
 
 #### Medium Priority Applications (Config File Based)
 
-- [ ] **Zed Editor** - Add module with `xdg.configFile` for settings.json
+- [x] **Zed Editor theming** - Add module with `xdg.configFile` for JSON theme (Completed 2026-01-18)
   - Theme selection (choose from built-in themes)
   - Experimental theme overrides (preview feature)
   - Custom theme file support (full theme creation)
@@ -94,11 +94,11 @@ When creating a new release:
   - Implementation: Generate custom theme JSON with Signal colors
   - Upstream docs: https://zed.dev/docs/themes
 
-- [ ] **Zsh Syntax Highlighting** - Add to existing zsh module
+- [x] **Zsh Syntax Highlighting** - Add to existing zsh module (Completed 2026-01-18)
   - Highlighter styles for different syntax elements
   - Command/builtin colors, alias/function colors, path highlighting
   - Format: Zsh style definitions (e.g., `"alias" = "fg=magenta,bold"`)
-  - Integration: Add to existing `modules/shells/zsh.nix`
+  - Integration: Added to existing `modules/shells/zsh.nix`
   - Upstream docs: https://github.com/zsh-users/zsh-syntax-highlighting/blob/master/docs/highlighters.md
 
 - [ ] **Powerlevel10k** - Add p10k theme generation
@@ -695,7 +695,7 @@ When creating a new release:
 ✅ GitHub Issues templates and workflows  
 ✅ Troubleshooting guide with diagnostics  
 ✅ Design principles documentation  
-✅ **Comprehensive Theming System** - 60+ applications with theming support:
+✅ **Comprehensive Theming System** - 61 applications with theming support:
   - ✅ Terminals (5): Alacritty, Foot, Ghostty, Kitty, WezTerm
   - ✅ CLI Tools (12): Bat, Delta, Eza, Fzf, Glow, Lazydocker, Lazygit, Less, Ripgrep, Tealdeer, Tig, Yazi
   - ✅ Monitors (4): Bottom, Btop++, Htop, MangoHud
@@ -705,7 +705,7 @@ When creating a new release:
   - ✅ Notifications (3): Dunst, Mako, SwayNC
   - ✅ Compositors (2): Hyprland, Sway
   - ✅ Window Managers (3): Awesome, Bspwm, i3
-  - ✅ Editors (5): Emacs, Helix, Neovim, Vim, VSCode
+  - ✅ Editors (6): Emacs, Helix, Neovim, Vim, VSCode, Zed
   - ✅ Multiplexers (2): Tmux, Zellij
   - ✅ Shells (4): Bash, Fish, Nushell, Zsh
   - ✅ Prompts (1): Starship
@@ -720,4 +720,4 @@ When creating a new release:
 
 **Note**: This file replaces the temporary launch tracking files which have been removed after successful launch.
 
-Last updated: 2026-01-18 (added MPV theming)
+Last updated: 2026-01-18 (added Zed Editor theming)

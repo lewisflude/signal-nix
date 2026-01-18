@@ -9,6 +9,17 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Added
 
+#### New Application Support
+- **Zed Editor**: Modern collaborative code editor with complete JSON theme generation
+  - Comprehensive syntax highlighting for 40+ language elements
+  - Full UI theming (borders, surfaces, scrollbars, status bars)
+  - Terminal ANSI color support (16 colors with bright/dim variants)
+  - Version control integration colors
+  - Collaborative editing cursor colors (8 multiplayer cursors)
+  - Theme file placed at `~/.config/zed/themes/signal-{mode}.json`
+  - Supports both dark and light modes
+  - Signal now supports 61 applications total
+
 #### GTK Theming Enhancement
 - **Complete Adwaita Color Palette**: GTK module now defines all 45 Adwaita palette variables (`blue_1` through `dark_5`)
   - Maps Signal accent colors to Adwaita blue, green, yellow, orange, red, and purple palettes
