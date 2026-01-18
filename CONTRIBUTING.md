@@ -53,7 +53,21 @@ cd signal-nix
 git remote add upstream https://github.com/lewisflude/signal-nix.git
 ```
 
-### 2. Enter Development Environment
+### 2. Set Up Git Hooks
+
+```bash
+# Configure Git to use project hooks
+git config core.hooksPath .githooks
+
+# Verify hooks are executable
+chmod +x .githooks/*
+```
+
+This enables:
+- **Pre-commit**: Syntax validation before each commit
+- **Commit-msg**: Conventional commits validation
+
+### 3. Enter Development Environment
 
 ```bash
 # Enter the development shell with all tools
@@ -70,7 +84,7 @@ The development shell includes:
 - `deadnix` - Dead code detection
 - `nil` - Nix language server
 
-### 3. Test Your Setup
+### 4. Test Your Setup
 
 ```bash
 # Check flake validity
@@ -199,6 +213,37 @@ signal-nix/
 
 ## Testing
 
+Signal uses a comprehensive testing approach with both unit and integration tests.
+
+> **📖 For detailed testing guidance, see [docs/TESTING_GUIDE.md](docs/TESTING_GUIDE.md)**
+
+### Quick Testing Commands
+
+```bash
+# Run all tests
+nix flake check
+
+# Run specific test
+nix build .#checks.x86_64-linux.unit-lib-resolveThemeMode
+
+# Use the test runner script
+./run-tests.sh --all           # All tests
+./run-tests.sh --category unit # Unit tests only
+./run-tests.sh test-name       # Specific test
+./run-tests.sh --list          # List all tests
+```
+
+### Test Types
+
+**Unit Tests** (`tests/unit/`) - Fast, pure Nix tests for library functions  
+**Integration Tests** (`tests/integration/`) - Module validation and example checks
+
+See [TESTING_GUIDE.md](docs/TESTING_GUIDE.md) for:
+- When to use each test type
+- Writing tests for new modules
+- Test templates and examples
+- Debugging test failures
+
 ### Local Testing
 
 1. **Test module evaluation:**
@@ -233,6 +278,8 @@ All PRs are automatically tested with GitHub Actions:
 - ✅ Format validation
 - ✅ Linting (statix, deadnix)
 - ✅ Example builds
+- ✅ Unit and integration tests
+- ✅ Module structure validation
 - ✅ Module evaluation
 
 View CI results in the "Actions" tab of your PR.

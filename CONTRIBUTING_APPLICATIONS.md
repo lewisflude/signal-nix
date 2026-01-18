@@ -504,7 +504,42 @@ See `templates/README.md` for full documentation on `mkAppModule` helpers.
 
 Thorough testing ensures your module works correctly in all scenarios.
 
-#### 5.1 Add Module Import
+> **📖 For comprehensive testing guidance, see [docs/TESTING_GUIDE.md](docs/TESTING_GUIDE.md)**
+>
+> The Testing Guide provides detailed information on:
+> - Writing unit tests for library functions
+> - Writing integration tests for module validation  
+> - Choosing between test types with decision trees
+> - Test templates for common patterns
+> - Debugging test failures with examples
+> - Performance optimization tips
+>
+> **This section covers the basics. Refer to the Testing Guide for complete details.**
+
+#### 5.1 Quick Testing Overview
+
+Signal uses a **hybrid testing approach**:
+
+**Unit Tests** (`tests/unit/`) - For pure functions:
+- Library function tests
+- Color manipulation tests  
+- Theme resolution tests
+- Fast execution (< 1s per test)
+
+**Integration Tests** (`tests/integration/`) - For module validation:
+- Module structure tests
+- Configuration generation tests
+- Pattern matching with grep
+- Slower execution (~2-5s per test)
+
+**Required tests for your module:**
+- ✅ Module structure test (validates file exists and has correct structure)
+- ✅ Color configuration test (if applicable)
+- ✅ Theme resolution test (for Tier 1-2 modules)
+
+See [docs/TESTING_GUIDE.md](docs/TESTING_GUIDE.md) for test templates and detailed examples.
+
+#### 5.2 Add Module Import
 
 First, make your module available by adding it to the imports in `modules/common/default.nix`:
 
@@ -529,7 +564,7 @@ First, make your module available by adding it to the imports in `modules/common
 
 Find the appropriate section for your category and add your module there.
 
-#### 5.2 Static Validation
+#### 5.3 Static Validation
 
 Run these checks to catch syntax and evaluation errors:
 
@@ -552,7 +587,7 @@ nix eval .#homeManagerModules.default
 
 All of these should pass without errors.
 
-#### 5.3 Create a Test Configuration
+#### 5.4 Create a Test Configuration
 
 Create a minimal test configuration to verify your module works:
 
@@ -580,7 +615,7 @@ Evaluate it:
 nix-instantiate --eval --strict test-my-app.nix
 ```
 
-#### 5.4 Visual Testing
+#### 5.5 Visual Testing
 
 Test in the actual application to verify colors appear correctly:
 
@@ -626,7 +661,7 @@ theming.signal.mode = "auto";
 
 Currently "auto" resolves to "dark" (future: system theme detection).
 
-#### 5.5 AutoEnable Testing
+#### 5.6 AutoEnable Testing
 
 Test that auto-detection works:
 
@@ -648,7 +683,7 @@ home-manager switch --flake .
 # ✓ Config file contains Signal colors
 ```
 
-#### 5.6 App-Specific Targeting
+#### 5.7 App-Specific Targeting
 
 Test that your module respects targeting options:
 
@@ -667,7 +702,7 @@ programs.kitty.enable = true;
 ```
 Result: Kitty should NOT be themed (respects explicit disable) ✓
 
-#### 5.7 Config File Verification
+#### 5.8 Config File Verification
 
 Check that the generated config file contains your colors:
 

@@ -449,13 +449,13 @@ When creating a new release:
        - ✅ Included testing checklist
        - ✅ Linked to existing documentation
        - Effort: 1 day (completed)
-    2. **Document module testing requirements** (Priority: Medium)
-       - Create `docs/TESTING_GUIDE.md`
-       - Explain when to use unit vs integration tests
-       - Provide test templates and examples
-       - Show how to run tests locally
-       - Include debugging tips for common issues
-       - Effort: Half day
+    2. **Document module testing requirements** (Priority: Medium) ✅ Completed (2026-01-18)
+       - ✅ Created `docs/TESTING_GUIDE.md`
+       - ✅ Explained when to use unit vs integration tests
+       - ✅ Provided test templates and examples
+       - ✅ Showed how to run tests locally
+       - ✅ Included debugging tips for common issues
+       - Effort: Half day (completed)
     3. **Create module templates** (Priority: Medium)
        - Add template files in `templates/` directory
        - Tier 1: Structured config template (e.g., Helix-style)

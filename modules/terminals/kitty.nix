@@ -4,7 +4,7 @@
   signalColors,
   signalLib,
   ...
-|}:
+}:
 # CONFIGURATION METHOD: freeform-settings (Tier 3)
 # HOME-MANAGER MODULE: programs.kitty.settings
 # UPSTREAM SCHEMA: https://sw.kovidgoyal.net/kitty/conf/
@@ -26,7 +26,7 @@ in
 signalLib.mkTier3Module {
   appName = "kitty";
   category = [ "terminals" ];
-  
+
   settingsGenerator = _: {
     # Basic colors
     foreground = uiColors.text-primary.hex;

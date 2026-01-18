@@ -404,6 +404,7 @@ Signal prioritizes:
 
 - [**Contributing Guide**](CONTRIBUTING.md) - How to contribute
 - [**Application Guide**](CONTRIBUTING_APPLICATIONS.md) - Step-by-step guide for adding applications
+- [**Syntax Validation**](docs/SYNTAX_VALIDATION.md) - Tooling to prevent syntax errors
 - [**Test Suite**](docs/TEST_SUITE.md) - Running and writing tests
 - [**Theming Reference**](docs/theming-reference.md) - Color usage and integration standards
 

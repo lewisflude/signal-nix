@@ -6,6 +6,7 @@ This document provides a complete index of all test suite resources.
 
 - **Quick Start**: [TEST_SUMMARY.md](./TEST_SUMMARY.md#quick-start)
 - **Full Documentation**: [TEST_SUITE.md](./TEST_SUITE.md)
+- **Testing Guide for Contributors**: [TESTING_GUIDE.md](./TESTING_GUIDE.md) ← **New!**
 - **Test Directory Guide**: [tests/README.md](./tests/README.md)
 - **Implementation Details**: [IMPLEMENTATION_SUMMARY.md](./IMPLEMENTATION_SUMMARY.md)
 
@@ -57,6 +58,20 @@ This document provides a complete index of all test suite resources.
 - Troubleshooting guide
 - Contributing guidelines
 - Future improvements
+
+### 2.5. Testing Guide for Contributors  
+**File**: [TESTING_GUIDE.md](./TESTING_GUIDE.md) ← **New!**  
+**Purpose**: Step-by-step guide for writing tests  
+**When to use**: Contributing new modules or features  
+**Content**:
+- When to use unit vs integration tests
+- Writing unit tests with examples
+- Writing integration tests with templates
+- Test requirements for new modules
+- Debugging test failures
+- Common testing patterns
+- Performance optimization tips
+- CI/CD integration details
 
 ### 3. Test Directory Guide
 **File**: [tests/README.md](./tests/README.md)  
@@ -480,6 +495,7 @@ Quick steps:
 ### Documentation
 - [TEST_SUITE.md](./TEST_SUITE.md) - Complete documentation
 - [TEST_SUMMARY.md](./TEST_SUMMARY.md) - Quick reference
+- [TESTING_GUIDE.md](./TESTING_GUIDE.md) - Testing guide for contributors ← **New!**
 - [tests/README.md](./tests/README.md) - Test directory guide
 - [IMPLEMENTATION_SUMMARY.md](./IMPLEMENTATION_SUMMARY.md) - Implementation details
 

@@ -71,6 +71,11 @@ Help make Signal better:
   - Development setup
   - Adding application support
   - Coding standards
+- **[Contributing Applications](../CONTRIBUTING_APPLICATIONS.md)** - Step-by-step guide for adding new apps
+- **[Testing Guide](TESTING_GUIDE.md)** - Writing and running tests
+  - Unit vs integration tests
+  - Test templates and examples
+  - Debugging test failures
 - **[Theming Reference](theming-reference.md)** - Application integration guide
 
 ## Color Science

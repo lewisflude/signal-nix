@@ -607,8 +607,10 @@ signalLib.mkTier3Module {
 - [Tier System](../docs/tier-system.md) - Detailed tier system explanation
 - [Integration Standards](../docs/integration-standards.md) - Integration guidelines
 - [Design Principles](../docs/design-principles.md) - Color usage philosophy
-- [Testing Guide](../docs/testing.md) - How to test modules
+- [Testing Guide](../docs/TESTING_GUIDE.md) - Comprehensive testing guidance ← **Recommended!**
+- [Testing Overview](../docs/testing.md) - Test suite overview
 - [Contribution Guide](../CONTRIBUTING.md) - How to contribute
+- [Contributing Applications](../CONTRIBUTING_APPLICATIONS.md) - Step-by-step app guide
 
 ## Examples
 

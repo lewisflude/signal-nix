@@ -1,0 +1,54 @@
+#!/usr/bin/env bash
+# Pre-commit hook to validate Nix syntax
+# Catches syntax errors before they're committed
+
+set -e
+
+echo "🔍 Running pre-commit checks..."
+
+# Get list of staged .nix files
+staged_files=$(git diff --cached --name-only --diff-filter=ACMR | grep '\.nix$' || true)
+
+if [ -z "$staged_files" ]; then
+    echo "✅ No Nix files to check"
+    exit 0
+fi
+
+echo "📝 Checking Nix files for syntax errors..."
+errors=0
+
+# Check each file for syntax errors
+for file in $staged_files; do
+    if [ -f "$file" ]; then
+        echo "  Checking $file..."
+        if ! nix-instantiate --parse "$file" > /dev/null 2>&1; then
+            echo "❌ Syntax error in $file"
+            nix-instantiate --parse "$file" 2>&1 | head -n 10
+            errors=$((errors + 1))
+        fi
+    fi
+done
+
+if [ $errors -gt 0 ]; then
+    echo ""
+    echo "❌ Found $errors file(s) with syntax errors"
+    echo "   Fix the errors above and try again"
+    exit 1
+fi
+
+echo "✅ All Nix files have valid syntax"
+
+# Optional: Run formatter check
+echo "🎨 Checking formatting..."
+if command -v nixfmt &> /dev/null; then
+    for file in $staged_files; do
+        if [ -f "$file" ]; then
+            if ! nixfmt --check "$file" 2>/dev/null; then
+                echo "⚠️  $file is not formatted (run 'nix fmt' to fix)"
+            fi
+        fi
+    done
+fi
+
+echo "✅ Pre-commit checks passed!"
+exit 0

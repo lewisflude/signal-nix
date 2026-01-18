@@ -2,6 +2,16 @@
 
 Comprehensive test coverage for the Signal Design System NixOS/Home Manager integration.
 
+> **📖 For detailed testing guidance, see [TESTING_GUIDE.md](TESTING_GUIDE.md)**
+>
+> This document provides an overview of Signal's test suite. For comprehensive guidance on:
+> - Writing new tests for modules
+> - Choosing between unit and integration tests
+> - Debugging test failures
+> - Test templates and patterns
+>
+> Please refer to the **[Testing Guide](TESTING_GUIDE.md)**.
+
 ## Overview
 
 Signal-nix includes **32 automated tests** covering:
