@@ -15,8 +15,6 @@ This file tracks ongoing tasks and future improvements for Signal Design System.
 
 ### Medium Priority
 
-- [ ] **Zed Editor theming** - Modern code editor gaining popularity
-- [ ] **Zsh Syntax Highlighting** - Enhance existing zsh module with syntax colors
 - [ ] **Qt theming enhancements** - qt5ct/qt6ct and Kvantum support for better Qt app integration
 - [ ] **GTK CSS enhancements** - Per-app customizations (Thunar sidebar, Nautilus, etc.)
 - [ ] Consider submitting to nixpkgs after community validation
