@@ -11,6 +11,18 @@
     nix-colorizer = {
       url = "github:nutsalhan87/nix-colorizer";
     };
+
+    # NMT - Nix Module Test framework (used by home-manager for testing)
+    nmt = {
+      url = "sourcehut:~rycee/nmt";
+      flake = false;
+    };
+
+    # Home Manager for proper module testing
+    home-manager = {
+      url = "github:nix-community/home-manager";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
   };
 
   outputs =
@@ -19,6 +31,8 @@
       nixpkgs,
       signal-palette,
       nix-colorizer,
+      nmt,
+      home-manager,
       ...
     }:
     let
@@ -137,7 +151,19 @@
               pkgs.statix
               pkgs.deadnix
               pkgs.nil
+              pkgs.nix-unit
             ];
+
+            shellHook = ''
+              echo "Signal Design System Development Environment"
+              echo ""
+              echo "Available commands:"
+              echo "  nix flake check              - Run all tests"
+              echo "  nix build .#checks.x86_64-linux.<test-name>  - Run specific test"
+              echo "  nix-unit tests/nmt/           - Run NMT tests"
+              echo "  nixfmt .                     - Format Nix files"
+              echo ""
+            '';
           };
         }
       );
@@ -292,36 +318,37 @@
             echo "Checking _module.args placement..."
 
             # Find any _module.args declarations
-            # They should NOT be inside "config = lib.mkIf" blocks as this causes infinite recursion
+            # They should NOT be inside "config = lib.mkIf cfg.enable" blocks as this causes infinite recursion
+            # They should be in unconditional config sections
 
-            # Check common module
-            if ${pkgs.gnugrep}/bin/grep -A 5 "config = lib.mkIf cfg.enable" ${./modules/common/default.nix} | ${pkgs.gnugrep}/bin/grep -q "_module.args"; then
-              echo "ERROR: modules/common/default.nix has _module.args inside config block"
+            # Check common module - make sure _module.args is NOT inside the mkIf block
+            if ${pkgs.gnugrep}/bin/grep -A 10 "(lib.mkIf cfg.enable" ${./modules/common/default.nix} | ${pkgs.gnugrep}/bin/grep -q "_module.args"; then
+              echo "ERROR: modules/common/default.nix has _module.args inside conditional config block"
               echo "This causes infinite recursion when modules reference these arguments"
               echo "See docs/MODULE_ARGS_INFINITE_RECURSION.md for details"
               exit 1
             fi
 
-            # Check nixos common module
-            if ${pkgs.gnugrep}/bin/grep -A 5 "config = lib.mkIf cfg.enable" ${./modules/nixos/common/default.nix} | ${pkgs.gnugrep}/bin/grep -q "_module.args"; then
-              echo "ERROR: modules/nixos/common/default.nix has _module.args inside config block"
+            # Check nixos common module - make sure _module.args is NOT inside the mkIf block
+            if ${pkgs.gnugrep}/bin/grep -A 10 "(lib.mkIf cfg.enable" ${./modules/nixos/common/default.nix} | ${pkgs.gnugrep}/bin/grep -q "_module.args"; then
+              echo "ERROR: modules/nixos/common/default.nix has _module.args inside conditional config block"
               echo "This causes infinite recursion when modules reference these arguments"
               echo "See docs/MODULE_ARGS_INFINITE_RECURSION.md for details"
               exit 1
             fi
 
-            # Verify _module.args exists at top level in both modules
-            ${pkgs.gnugrep}/bin/grep -q "^  _module.args = {" ${./modules/common/default.nix} || {
-              echo "ERROR: modules/common/default.nix should have _module.args at top level"
+            # Verify _module.args exists in both modules
+            ${pkgs.gnugrep}/bin/grep -q "_module.args = {" ${./modules/common/default.nix} || {
+              echo "ERROR: modules/common/default.nix should have _module.args defined"
               exit 1
             }
 
-            ${pkgs.gnugrep}/bin/grep -q "^  _module.args = {" ${./modules/nixos/common/default.nix} || {
-              echo "ERROR: modules/nixos/common/default.nix should have _module.args at top level"
+            ${pkgs.gnugrep}/bin/grep -q "_module.args = {" ${./modules/nixos/common/default.nix} || {
+              echo "ERROR: modules/nixos/common/default.nix should have _module.args defined"
               exit 1
             }
 
-            echo "✓ _module.args is correctly placed at top level (not inside config blocks)"
+            echo "✓ _module.args is correctly placed outside conditional blocks"
             touch $out
           '';
 

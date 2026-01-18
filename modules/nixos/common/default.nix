@@ -149,68 +149,72 @@ in
     };
   };
 
-  # Make palette and lib available to all NixOS modules UNCONDITIONALLY
-  # This prevents infinite recursion when modules reference these in their arguments
-  # See: https://nixos.org/manual/nixos/stable/#sec-module-arguments
-  _module.args = {
-    signalPalette = palette;
-    inherit signalLib;
-    signalColors = signalLib.getColors (signalLib.resolveThemeMode cfg.mode);
-  };
+  config = lib.mkMerge [
+    # Make palette and lib available to all NixOS modules UNCONDITIONALLY
+    # This prevents infinite recursion when modules reference these in their arguments
+    # See: https://nixos.org/manual/nixos/stable/#sec-module-arguments
+    {
+      _module.args = {
+        signalPalette = palette;
+        inherit signalLib;
+        signalColors = signalLib.getColors (signalLib.resolveThemeMode cfg.mode);
+      };
+    }
 
-  config = lib.mkIf cfg.enable {
-    # Helpful assertions
-    assertions = [
-      # Warn if Signal is enabled but nothing is selected for theming
-      {
-        assertion =
-          cfg.autoEnable
-          || cfg.boot.console.enable
-          || cfg.boot.grub.enable
-          || cfg.boot.plymouth.enable
-          || cfg.login.gdm.enable
-          || cfg.login.sddm.enable
-          || cfg.login.lightdm.enable
-          || cfg.login.greetd.enable
-          || cfg.desktop.gtk.enable
-          || cfg.desktop.qt.enable
-          || cfg.desktop.cursor.enable
-          || cfg.desktop.icons.enable
-          || cfg.system.dmenu.enable
-          || cfg.system.rofi.enable
-          || cfg.system.nano.enable
-          || cfg.system.vim.enable;
-        message = ''
-          Signal NixOS module is enabled but no system components are selected for theming.
+    (lib.mkIf cfg.enable {
+      # Helpful assertions
+      assertions = [
+        # Warn if Signal is enabled but nothing is selected for theming
+        {
+          assertion =
+            cfg.autoEnable
+            || cfg.boot.console.enable
+            || cfg.boot.grub.enable
+            || cfg.boot.plymouth.enable
+            || cfg.login.gdm.enable
+            || cfg.login.sddm.enable
+            || cfg.login.lightdm.enable
+            || cfg.login.greetd.enable
+            || cfg.desktop.gtk.enable
+            || cfg.desktop.qt.enable
+            || cfg.desktop.cursor.enable
+            || cfg.desktop.icons.enable
+            || cfg.system.dmenu.enable
+            || cfg.system.rofi.enable
+            || cfg.system.nano.enable
+            || cfg.system.vim.enable;
+          message = ''
+            Signal NixOS module is enabled but no system components are selected for theming.
 
-          Either:
-          1. Enable autoEnable to automatically theme all enabled system components:
-             theming.signal.nixos.autoEnable = true;
+            Either:
+            1. Enable autoEnable to automatically theme all enabled system components:
+               theming.signal.nixos.autoEnable = true;
 
-          2. Or explicitly enable theming for specific components:
-             theming.signal.nixos.boot.console.enable = true;
-             theming.signal.nixos.login.sddm.enable = true;
+            2. Or explicitly enable theming for specific components:
+               theming.signal.nixos.boot.console.enable = true;
+               theming.signal.nixos.login.sddm.enable = true;
 
-          See: https://github.com/lewisflude/signal-nix/blob/main/NIXOS_MODULE_PLAN.md
-        '';
-      }
+            See: https://github.com/lewisflude/signal-nix/blob/main/NIXOS_MODULE_PLAN.md
+          '';
+        }
 
-      # Warn about invalid mode
-      {
-        assertion = lib.elem cfg.mode [
-          "light"
-          "dark"
-          "auto"
-        ];
-        message = ''
-          Invalid NixOS theme mode: "${cfg.mode}"
+        # Warn about invalid mode
+        {
+          assertion = lib.elem cfg.mode [
+            "light"
+            "dark"
+            "auto"
+          ];
+          message = ''
+            Invalid NixOS theme mode: "${cfg.mode}"
 
-          Valid modes are:
-          - "dark"  - Dark background, light text
-          - "light" - Light background, dark text
-          - "auto"  - Follow system preference (currently defaults to dark)
-        '';
-      }
-    ];
-  };
+            Valid modes are:
+            - "dark"  - Dark background, light text
+            - "light" - Light background, dark text
+            - "auto"  - Follow system preference (currently defaults to dark)
+          '';
+        }
+      ];
+    })
+  ];
 }

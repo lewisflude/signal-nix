@@ -378,114 +378,118 @@ in
     };
   };
 
-  # Make palette and lib available to all modules UNCONDITIONALLY
-  # This prevents infinite recursion when modules reference these in their arguments
-  # See: https://nixos.org/manual/nixos/stable/#sec-module-arguments
-  _module.args = {
-    signalPalette = palette;
-    inherit signalLib;
-    signalColors = signalLib.getColors (signalLib.resolveThemeMode cfg.mode);
-  };
+  config = lib.mkMerge [
+    # Make palette and lib available to all modules UNCONDITIONALLY
+    # This prevents infinite recursion when modules reference these in their arguments
+    # See: https://nixos.org/manual/nixos/stable/#sec-module-arguments
+    {
+      _module.args = {
+        signalPalette = palette;
+        inherit signalLib;
+        signalColors = signalLib.getColors (signalLib.resolveThemeMode cfg.mode);
+      };
+    }
 
-  config = lib.mkIf cfg.enable {
-    # Helpful assertions to catch common mistakes
-    assertions = [
-      # Warn if Signal is enabled but nothing is selected for theming
-      {
-        assertion =
-          cfg.autoEnable
-          || cfg.ironbar.enable
-          || cfg.gtk.enable
-          || cfg.qt.enable
-          || cfg.fuzzel.enable
-          || cfg.desktop.compositors.hyprland.enable
-          || cfg.desktop.compositors.sway.enable
-          || cfg.desktop.wm.i3.enable
-          || cfg.desktop.launchers.rofi.enable
-          || cfg.desktop.bars.waybar.enable
-          || cfg.desktop.notifications.dunst.enable
-          || cfg.desktop.notifications.mako.enable
-          || cfg.desktop.notifications.swaync.enable
-          || cfg.desktop.swaylock.enable
-          || cfg.editors.helix.enable
-          || cfg.editors.neovim.enable
-          || cfg.editors.vim.enable
-          || cfg.editors.vscode.enable
-          || cfg.editors.emacs.enable
-          || cfg.editors.zed.enable
-          || cfg.terminals.ghostty.enable
-          || cfg.terminals.alacritty.enable
-          || cfg.terminals.kitty.enable
-          || cfg.terminals.wezterm.enable
-          || cfg.multiplexers.tmux.enable
-          || cfg.multiplexers.zellij.enable
-          || cfg.cli.bat.enable
-          || cfg.cli.delta.enable
-          || cfg.cli.eza.enable
-          || cfg.cli.fzf.enable
-          || cfg.cli.lazygit.enable
-          || cfg.cli.yazi.enable
-          || cfg.cli.less.enable
-          || cfg.cli.ripgrep.enable
-          || cfg.monitors.btop.enable
-          || cfg.monitors.htop.enable
-          || cfg.monitors.mangohud.enable
-          || cfg.monitors.procs.enable
-          || cfg.apps.satty.enable
-          || cfg.prompts.starship.enable
-          || cfg.shells.zsh.enable
-          || cfg.shells.fish.enable
-          || cfg.shells.bash.enable;
-        message = ''
-          Signal is enabled but no applications are selected for theming.
+    (lib.mkIf cfg.enable {
+      # Helpful assertions to catch common mistakes
+      assertions = [
+        # Warn if Signal is enabled but nothing is selected for theming
+        {
+          assertion =
+            cfg.autoEnable
+            || cfg.ironbar.enable
+            || cfg.gtk.enable
+            || cfg.qt.enable
+            || cfg.fuzzel.enable
+            || cfg.desktop.compositors.hyprland.enable
+            || cfg.desktop.compositors.sway.enable
+            || cfg.desktop.wm.i3.enable
+            || cfg.desktop.launchers.rofi.enable
+            || cfg.desktop.bars.waybar.enable
+            || cfg.desktop.notifications.dunst.enable
+            || cfg.desktop.notifications.mako.enable
+            || cfg.desktop.notifications.swaync.enable
+            || cfg.desktop.swaylock.enable
+            || cfg.editors.helix.enable
+            || cfg.editors.neovim.enable
+            || cfg.editors.vim.enable
+            || cfg.editors.vscode.enable
+            || cfg.editors.emacs.enable
+            || cfg.editors.zed.enable
+            || cfg.terminals.ghostty.enable
+            || cfg.terminals.alacritty.enable
+            || cfg.terminals.kitty.enable
+            || cfg.terminals.wezterm.enable
+            || cfg.multiplexers.tmux.enable
+            || cfg.multiplexers.zellij.enable
+            || cfg.cli.bat.enable
+            || cfg.cli.delta.enable
+            || cfg.cli.eza.enable
+            || cfg.cli.fzf.enable
+            || cfg.cli.lazygit.enable
+            || cfg.cli.yazi.enable
+            || cfg.cli.less.enable
+            || cfg.cli.ripgrep.enable
+            || cfg.monitors.btop.enable
+            || cfg.monitors.htop.enable
+            || cfg.monitors.mangohud.enable
+            || cfg.monitors.procs.enable
+            || cfg.apps.satty.enable
+            || cfg.prompts.starship.enable
+            || cfg.shells.zsh.enable
+            || cfg.shells.fish.enable
+            || cfg.shells.bash.enable;
+          message = ''
+            Signal is enabled but no applications are selected for theming.
 
-          Either:
-          1. Enable autoEnable to automatically theme all enabled programs:
-             theming.signal.autoEnable = true;
+            Either:
+            1. Enable autoEnable to automatically theme all enabled programs:
+               theming.signal.autoEnable = true;
 
-          2. Or explicitly enable theming for specific applications:
-             theming.signal.editors.helix.enable = true;
-             theming.signal.terminals.kitty.enable = true;
+            2. Or explicitly enable theming for specific applications:
+               theming.signal.editors.helix.enable = true;
+               theming.signal.terminals.kitty.enable = true;
 
-          See: https://github.com/lewisflude/signal-nix#configuration
-        '';
-      }
+            See: https://github.com/lewisflude/signal-nix#configuration
+          '';
+        }
 
-      # Warn about common mode typo
-      {
-        assertion = lib.elem cfg.mode [
-          "light"
-          "dark"
-          "auto"
-        ];
-        message = ''
-          Invalid theme mode: "${cfg.mode}"
+        # Warn about common mode typo
+        {
+          assertion = lib.elem cfg.mode [
+            "light"
+            "dark"
+            "auto"
+          ];
+          message = ''
+            Invalid theme mode: "${cfg.mode}"
 
-          Valid modes are:
-          - "dark"  - Dark background, light text
-          - "light" - Light background, dark text
-          - "auto"  - Follow system preference (currently defaults to dark)
-        '';
-      }
+            Valid modes are:
+            - "dark"  - Dark background, light text
+            - "light" - Light background, dark text
+            - "auto"  - Follow system preference (currently defaults to dark)
+          '';
+        }
 
-      # Warn about integrated brand governance without colors
-      {
-        assertion =
-          cfg.brandGovernance.policy != "integrated"
-          || (cfg.brandGovernance.decorativeBrandColors != { } || cfg.brandGovernance.brandColors != { });
-        message = ''
-          Brand governance policy is set to "integrated" but no brand colors are defined.
+        # Warn about integrated brand governance without colors
+        {
+          assertion =
+            cfg.brandGovernance.policy != "integrated"
+            || (cfg.brandGovernance.decorativeBrandColors != { } || cfg.brandGovernance.brandColors != { });
+          message = ''
+            Brand governance policy is set to "integrated" but no brand colors are defined.
 
-          Either:
-          1. Add decorative brand colors:
-             theming.signal.brandGovernance.decorativeBrandColors = {
-               brand-primary = "#5a7dcf";
-             };
+            Either:
+            1. Add decorative brand colors:
+               theming.signal.brandGovernance.decorativeBrandColors = {
+                 brand-primary = "#5a7dcf";
+               };
 
-          2. Or use a different policy:
-             theming.signal.brandGovernance.policy = "functional-override";
-        '';
-      }
-    ];
-  };
+            2. Or use a different policy:
+               theming.signal.brandGovernance.policy = "functional-override";
+          '';
+        }
+      ];
+    })
+  ];
 }
