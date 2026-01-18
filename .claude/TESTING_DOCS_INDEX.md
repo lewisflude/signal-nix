@@ -6,7 +6,7 @@
 
 **If you're a contributor**: Read `docs/COMPREHENSIVE_TESTING.md`
 
-**If tests are failing**: Read `TESTING_TASKS.md`
+**If tests are failing**: Check test output and docs/TESTING_GUIDE.md
 
 ---
 
@@ -55,7 +55,7 @@
 
 ### Task Management
 
-1. **TESTING_TASKS.md** (root directory)
+1. **docs/TESTING_GUIDE.md** (main testing documentation)
    - Detailed task breakdown
    - Priorities and estimates
    - Dependencies
@@ -78,7 +78,7 @@
 → Read: `.claude/testing-implementation-summary.md`
 
 ### "I need the task list"
-→ Read: `TESTING_TASKS.md`
+→ Read: `docs/TESTING_GUIDE.md`
 
 ### "I'm testing on Darwin"
 → Read: `docs/PLATFORM_TESTING.md`
@@ -100,7 +100,7 @@ signal-nix/
 │   ├── PLATFORM_TESTING.md                Platform guide
 │   └── TESTING_GUIDE.md                   Original guide
 │
-├── TESTING_TASKS.md                       Task breakdown
+├── docs/TESTING_GUIDE.md                  Testing guide
 │
 └── tests/
     ├── activation/                        ← NEEDS FIX

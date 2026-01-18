@@ -46,7 +46,7 @@ nix flake check --no-build --show-trace 2>&1 | grep -B 20 "infinite recursion"
 **Start here**:
 1. `testing-implementation-summary.md` - What's done, what's not
 2. `testing-framework-handoff.md` - Detailed technical handoff
-3. `../TESTING_TASKS.md` - Full task breakdown
+3. `../docs/TESTING_GUIDE.md` - Testing guide and reference
 
 **Research**:
 - `effective-testing-research-2026-01-18.md` - Why we're doing this
