@@ -14,7 +14,7 @@
 #        Subtitle colors include text, outline, and background.
 #        Alpha channel: 00 = transparent, FF = opaque.
 let
-  inherit (lib) mkIf removePrefix;
+  inherit (lib) mkIf mkDefault removePrefix;
   cfg = config.theming.signal;
   themeMode = signalLib.resolveThemeMode cfg.mode;
   signalColors = signalLib.getColors themeMode;
@@ -80,22 +80,22 @@ in
       # We use semi-transparent backgrounds for subtle, non-intrusive display.
 
       # OSD text color - primary text for good readability
-      osd-color = colors.text-primary.hex;
+      osd-color = mkDefault colors.text-primary.hex;
 
       # OSD background - semi-transparent surface (75% opacity)
       # Used behind OSD text for better contrast against video
-      osd-back-color = hexWithAlpha colors.surface-base "C0";
+      osd-back-color = mkDefault (hexWithAlpha colors.surface-base "C0");
 
       # OSD outline/border color - subtle divider (75% opacity)
       # Creates separation between OSD elements and video
-      osd-border-color = hexWithAlpha colors.divider-primary "C0";
+      osd-border-color = mkDefault (hexWithAlpha colors.divider-primary "C0");
 
       # Selected item colors (for playlists and menus)
       # Selected text - accent color for highlighting
-      osd-selected-color = accent.secondary.Lc75.hex;
+      osd-selected-color = mkDefault accent.secondary.Lc75.hex;
 
       # Selected outline - slightly transparent accent
-      osd-selected-outline-color = hexWithAlpha accent.secondary.Lc75 "E0";
+      osd-selected-outline-color = mkDefault (hexWithAlpha accent.secondary.Lc75 "E0");
 
       # =======================================================================
       # Subtitle Colors
@@ -104,15 +104,15 @@ in
       # We use strong contrast with outlines for visibility against any background.
 
       # Subtitle text color - primary text for maximum readability
-      sub-color = colors.text-primary.hex;
+      sub-color = mkDefault colors.text-primary.hex;
 
       # Subtitle outline/border - semi-transparent black (90% opacity)
       # Creates strong contrast against light backgrounds in video
-      sub-border-color = hexWithAlpha colors.black "E0";
+      sub-border-color = mkDefault (hexWithAlpha colors.black "E0");
 
       # Subtitle background - semi-transparent dark surface (80% opacity)
       # Used for background-box style or shadowing
-      sub-back-color = hexWithAlpha colors.surface-base "CC";
+      sub-back-color = mkDefault (hexWithAlpha colors.surface-base "CC");
 
       # =======================================================================
       # Additional Settings
@@ -120,16 +120,16 @@ in
       # These improve the overall viewing experience with Signal theming
 
       # Use a reasonable OSD bar height
-      osd-bar-h = 2;
+      osd-bar-h = mkDefault 2;
 
       # Show OSD with a slight border for better definition
-      osd-border-size = 1;
+      osd-border-size = mkDefault 1;
 
       # Subtitle outline for better readability
-      sub-border-size = 2;
+      sub-border-size = mkDefault 2;
 
       # Subtitle font scale (can be adjusted by user preferences)
-      sub-scale = 1.0;
+      sub-scale = mkDefault 1.0;
     };
   };
 }
