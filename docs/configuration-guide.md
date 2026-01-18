@@ -1,6 +1,6 @@
 # Configuration Guide
 
-Complete reference for all Signal configuration options.
+Complete reference for configuring Signal color theming in your Nix environment.
 
 ## Table of Contents
 
@@ -16,6 +16,8 @@ Complete reference for all Signal configuration options.
 
 ### Minimal Configuration
 
+The simplest way to adopt Signal colors:
+
 ```nix
 theming.signal = {
   enable = true;
@@ -24,7 +26,11 @@ theming.signal = {
 };
 ```
 
-### Full Configuration Template
+This automatically applies Signal colors to all your enabled programs.
+
+### Full Configuration Example
+
+All available options:
 
 ```nix
 theming.signal = {
@@ -33,14 +39,14 @@ theming.signal = {
   autoEnable = true;
   mode = "dark";
   
-  # Desktop
+  # Desktop applications
   ironbar = {
     enable = true;
-    profile = "relaxed";
+    profile = "relaxed";  # compact | relaxed | spacious
   };
   gtk = {
     enable = true;
-    version = "both";
+    version = "both";  # gtk3 | gtk4 | both
   };
   fuzzel.enable = true;
   
@@ -98,7 +104,7 @@ theming.signal = {
 **Type**: `boolean`  
 **Default**: `false`
 
-Master switch for Signal theming. Must be `true` for any theming to occur.
+Master switch for Signal theming. Must be `true` for Signal colors to be applied.
 
 ```nix
 theming.signal.enable = true;
@@ -110,7 +116,7 @@ theming.signal.enable = true;
 **Default**: `false`  
 **Recommended**: `true`
 
-Automatically themes all programs that are enabled in your configuration.
+Automatically applies Signal colors to all programs you've enabled.
 
 ```nix
 theming.signal.autoEnable = true;
@@ -118,8 +124,8 @@ theming.signal.autoEnable = true;
 
 **How it works:**
 
-- Detects `programs.<app>.enable = true`
-- Applies Signal colors if the app is supported
+- Detects when you set `programs.<app>.enable = true`
+- Applies Signal colors to that app if supported
 - Can be overridden per-app with explicit enable/disable
 
 **Precedence:**

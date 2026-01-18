@@ -1,33 +1,31 @@
-# Signal-nix Design Principles
+# Signal Design Principles
 
-## Core Philosophy: Color Theme, Not Configuration Manager
+## Core Philosophy: Color Theme for Nix
 
-**Signal-nix is a color theme system, not a program configuration framework.**
+**Signal is a color theme system for Nix environments, not a configuration manager.**
 
-Signal focuses exclusively on applying colors with maximum fidelity and accuracy, using professional-grade color conversion tools to ensure colors maintain their intended appearance across all applications.
+Signal focuses exclusively on applying Signal Design System colors to your applications. It never installs programs or modifies non-color settings.
 
 ### What Signal Does ✅
 
-- Applies Signal Design System colors to your programs
-- Provides consistent color palettes (dark/light/auto modes)
+- Applies Signal color palette to your programs
+- Provides consistent colors (dark/light modes)
 - Manages ANSI terminal colors
-- Generates syntax highlighting themes
+- Generates syntax highlighting themes  
 - Sets UI element colors (backgrounds, foregrounds, borders, selections)
-- Ensures color consistency across your entire system
-- **Converts colors with high fidelity using [nix-colorizer](https://github.com/nutsalhan87/nix-colorizer)**
+- Ensures color consistency across your environment
+- **Converts colors with high fidelity** using [nix-colorizer](https://github.com/nutsalhan87/nix-colorizer)
   - OKLCh color space for perceptual accuracy
   - Proper hex ↔ sRGB ↔ OKLCh conversions
   - Alpha channel support for transparency
-  - Maintains color precision for professional design systems
 
 ### What Signal Does NOT Do ❌
 
-- **Enable programs** - You must set `programs.X.enable = true` yourself
+- **Enable programs** - You must set `programs.X.enable = true`
 - **Configure fonts** - Font family, size, weight are your choice
 - **Set layout** - Margins, padding, spacing, border radius are yours
 - **Configure behavior** - Keybindings, features, modes are your preferences
 - **Manage services** - systemd, autostart, daemons are your responsibility
-- **Set tooling** - Pagers, formatters, external tools are your choices
 
 ## Color vs. Behavior: Decision Matrix
 

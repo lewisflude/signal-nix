@@ -1,41 +1,49 @@
 # Getting Started with Signal
 
-This guide walks you through setting up Signal in different scenarios.
+This guide helps you adopt the Signal color theme in your Nix environment, whether you're using NixOS, nix-darwin (macOS), or standalone Home Manager.
 
 ## Table of Contents
 
 - [Prerequisites](#prerequisites)
-- [New Configuration (Greenfield)](#new-configuration-greenfield)
-- [Existing Configuration (Migration)](#existing-configuration-migration)
+- [Choose Your Setup](#choose-your-setup)
+- [New Configuration](#new-configuration-greenfield)
+- [Existing Configuration](#existing-configuration-migration)
 - [Standalone Home Manager](#standalone-home-manager)
 - [NixOS with Home Manager](#nixos-with-home-manager)
 - [Nix-darwin (macOS)](#nix-darwin-macos)
-- [Without Flakes](#without-flakes-legacy)
+- [Without Flakes (Legacy)](#without-flakes-legacy)
 - [Verification](#verification)
 - [Next Steps](#next-steps)
 
 ## Prerequisites
 
-### Required
+- **Nix** with flakes enabled - [Install Nix with flakes](https://github.com/DeterminateSystems/nix-installer)
+- **Home Manager** configured - [Home Manager setup guide](https://nix-community.github.io/home-manager/)
 
-- **Nix** with flakes enabled ([installation guide](https://github.com/DeterminateSystems/nix-installer))
-- **Home Manager** configured ([setup guide](https://nix-community.github.io/home-manager/))
+> **New to Nix?** Nix is a package manager that lets you declare your entire system configuration. Home Manager extends this to user-level configurations (dotfiles, programs, themes). 
 
-### Helpful to Know
+## Choose Your Setup
 
-- Basic Nix syntax
-- How to rebuild your configuration
-- Where your config files are located
+Pick the scenario that matches your situation:
+
+| Scenario | Description | Jump to |
+|----------|-------------|---------|
+| **Starting fresh** | Creating a new Nix config from scratch | [New Configuration](#new-configuration-greenfield) |
+| **Have existing config** | Adding Signal to your current setup | [Existing Configuration](#existing-configuration-migration) |
+| **Home Manager only** | Not using NixOS or nix-darwin | [Standalone Home Manager](#standalone-home-manager) |
+| **NixOS user** | Using NixOS with Home Manager | [NixOS with Home Manager](#nixos-with-home-manager) |
+| **macOS user** | Using nix-darwin | [Nix-darwin](#nix-darwin-macos) |
+| **No flakes** | Using channels (not recommended) | [Without Flakes](#without-flakes-legacy) |
 
 ## New Configuration (Greenfield)
 
 Starting from scratch? Use this minimal template.
 
-### Step 1: Create flake.nix
+### Step 1: Create your flake.nix
 
 ```nix
 {
-  description = "My Home Manager configuration";
+  description = "My Home Manager configuration with Signal theme";
 
   inputs = {
     nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable";
@@ -48,7 +56,7 @@ Starting from scratch? Use this minimal template.
 
   outputs = { nixpkgs, home-manager, signal, ... }: {
     homeConfigurations.yourname = home-manager.lib.homeManagerConfiguration {
-      pkgs = nixpkgs.legacyPackages.x86_64-linux;
+      pkgs = nixpkgs.legacyPackages.x86_64-linux;  # or aarch64-linux, x86_64-darwin, etc.
       
       modules = [
         signal.homeManagerModules.default
@@ -59,7 +67,7 @@ Starting from scratch? Use this minimal template.
             stateVersion = "24.11";
           };
 
-          # Enable programs you want
+          # Enable the programs you want to use
           programs = {
             helix.enable = true;
             kitty.enable = true;
@@ -68,11 +76,11 @@ Starting from scratch? Use this minimal template.
             starship.enable = true;
           };
 
-          # Signal automatically themes them
+          # Signal automatically themes them with its colors
           theming.signal = {
             enable = true;
-            autoEnable = true;  # ← Automatic theming
-            mode = "dark";
+            autoEnable = true;  # Automatically theme all enabled programs
+            mode = "dark";      # or "light"
           };
         }
       ];
@@ -90,58 +98,37 @@ nix build .#homeConfigurations.yourname.activationPackage
 # Activate it
 ./result/activate
 
-# Or use home-manager directly
+# Or use home-manager command (if installed)
 home-manager switch --flake .
 ```
 
+**Done!** Your programs are now themed with Signal colors.
+
 ## Existing Configuration (Migration)
 
-Already have Home Manager set up? Here's how to add Signal.
+Already have Home Manager? Here's how to add Signal to your existing setup.
 
-### Your Current Structure
+### Step 1: Add Signal to your flake inputs
 
-Your config might look like this:
-
-```
-~/.config/home-manager/
-├── flake.nix
-├── home.nix
-├── programs/
-│   ├── editors.nix
-│   └── terminals.nix
-└── ...
-```
-
-### Step 1: Add Signal to inputs
-
-In your `flake.nix`, add Signal to inputs:
+In your existing `flake.nix`:
 
 ```nix
 {
   inputs = {
     nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable";
     home-manager.url = "github:nix-community/home-manager";
-    signal.url = "github:lewisflude/signal-nix";  # ← Add this
+    signal.url = "github:lewisflude/signal-nix";  # ← Add this line
   };
 
   outputs = { nixpkgs, home-manager, signal, ... }: {
-    # Pass signal to your configuration
-    homeConfigurations.yourname = home-manager.lib.homeManagerConfiguration {
-      # ... existing config ...
-      modules = [
-        ./home.nix
-        # Add other modules here
-      ];
-    };
+    # Your existing configuration...
   };
 }
 ```
 
 ### Step 2: Import Signal module
 
-You have two options:
-
-#### Option A: In your main module list (recommended)
+Add Signal to your Home Manager modules:
 
 ```nix
 {
@@ -151,57 +138,17 @@ You have two options:
       
       modules = [
         signal.homeManagerModules.default  # ← Add this
-        ./home.nix
-        ./programs/editors.nix
-        ./programs/terminals.nix
+        ./home.nix                          # Your existing config
+        # ... other modules
       ];
     };
   };
 }
 ```
 
-#### Option B: In your home.nix
+### Step 3: Enable Signal
 
-```nix
-{ config, pkgs, ... }:
-
-{
-  imports = [
-    ./programs/editors.nix
-    ./programs/terminals.nix
-  ];
-
-  # Your existing config
-  home = {
-    username = "yourname";
-    homeDirectory = "/home/yourname";
-    stateVersion = "24.11";
-  };
-
-  # ... rest of your config ...
-}
-```
-
-Then modify `flake.nix` to pass signal:
-
-```nix
-{
-  outputs = { nixpkgs, home-manager, signal, ... }: {
-    homeConfigurations.yourname = home-manager.lib.homeManagerConfiguration {
-      pkgs = nixpkgs.legacyPackages.x86_64-linux;
-      
-      modules = [
-        signal.homeManagerModules.default  # Import Signal
-        ./home.nix
-      ];
-    };
-  };
-}
-```
-
-### Step 3: Configure Signal
-
-Create a new file `theming.nix` (optional but recommended):
+In your `home.nix` or create a new `theming.nix` file:
 
 ```nix
 { config, ... }:
@@ -211,46 +158,31 @@ Create a new file `theming.nix` (optional but recommended):
     enable = true;
     autoEnable = true;  # Automatically theme all your enabled programs
     mode = "dark";
-    
-    # Optional: Disable theming for specific programs
-    # cli.bat.enable = false;
   };
 }
 ```
 
-Import it in your module list:
+If you create a separate file, import it in your modules list:
 
 ```nix
 modules = [
   signal.homeManagerModules.default
   ./home.nix
-  ./theming.nix  # ← Add this
+  ./theming.nix  # ← Add your Signal config
 ];
-```
-
-Or add directly to `home.nix`:
-
-```nix
-{
-  # ... existing config ...
-  
-  theming.signal = {
-    enable = true;
-    autoEnable = true;
-    mode = "dark";
-  };
-}
 ```
 
 ### Step 4: Update and rebuild
 
 ```bash
-# Update flake.lock to get Signal
+# Update flake.lock to include Signal
 nix flake update
 
-# Rebuild
+# Rebuild your configuration
 home-manager switch --flake .
 ```
+
+**That's it!** Signal is now theming all your programs.
 
 ## Standalone Home Manager
 
@@ -456,22 +388,24 @@ in
 
 After rebuilding, verify Signal is working:
 
-### Check program themes
+### Check configuration files
+
+Signal generates themed config files for your programs:
 
 ```bash
-# Check if helix uses Signal theme
-cat ~/.config/helix/config.toml | grep signal
+# Check Helix theme
+cat ~/.config/helix/config.toml | grep theme
 
-# Check kitty colors
-cat ~/.config/kitty/kitty.conf | grep -A 5 "Signal"
+# Check Kitty colors
+cat ~/.config/kitty/kitty.conf | grep "# Signal"
 
-# List all themed programs
-home-manager generations | head -n 1
+# Check bat theme
+bat --list-themes | grep signal
 ```
 
 ### Test visually
 
-Open your themed applications and verify colors:
+Open your programs and verify the colors look right:
 
 ```bash
 # Test terminal colors
@@ -480,62 +414,105 @@ kitty
 # Test editor theme
 helix
 
-# Test CLI tool
-bat --style=plain ~/.config/home-manager/flake.nix
+# Test syntax highlighting
+bat ~/.config/home-manager/flake.nix
+
+# Test fuzzy finder
+fzf
 ```
+
+### Verify theme mode
+
+Try switching between light and dark:
+
+```nix
+# In your config
+theming.signal.mode = "light";
+```
+
+```bash
+# Rebuild
+home-manager switch --flake .
+```
+
+Programs should now use light mode colors.
 
 ## Next Steps
 
 Now that Signal is installed:
 
-1. **Customize your configuration** - See [Configuration Guide](configuration-guide.md)
-2. **Switch between light/dark** - Change `mode = "light"` and rebuild
-3. **Add more programs** - Enable more programs and Signal will theme them automatically
-4. **Fine-tune specific apps** - See [Advanced Usage](advanced-usage.md)
+1. **Explore configuration options** - See [Configuration Guide](configuration-guide.md)
+2. **Add more programs** - Enable more programs and Signal will theme them automatically
+3. **Try light mode** - Change `mode = "light"` and rebuild
+4. **Customize if needed** - See [Advanced Usage](advanced-usage.md) for brand colors and overrides
+5. **Browse examples** - Check out [examples/](../examples/) for inspiration
 
 ## Troubleshooting
 
 ### Program not themed
 
-**Check if the program is enabled:**
+**Check program is enabled:**
 
 ```nix
 programs.helix.enable = true;  # Must be true
 ```
 
-**Check if Signal is enabled:**
+**Check Signal is enabled:**
 
 ```nix
 theming.signal.enable = true;
-theming.signal.autoEnable = true;  # Or explicit enable
+theming.signal.autoEnable = true;
 ```
 
-**Check if Signal supports the program:**
+**Check Signal supports the program:**
 
-See [Supported Applications](../README.md#supported-applications)
+See [Supported Applications](../README.md#supported-applications) in the README.
 
-### Theme not applying
+### Colors look wrong
 
-**Rebuild your configuration:**
+**Check theme mode matches your preference:**
+
+```nix
+theming.signal.mode = "dark";  # or "light"
+```
+
+**Rebuild to apply changes:**
 
 ```bash
 home-manager switch --flake .
 ```
 
-**Check for errors:**
+**Some programs may need a restart:**
 
-```bash
-journalctl --user -u home-manager-$USER.service
-```
+Close and reopen the application after rebuilding.
 
-### Conflicts with existing themes
+### Conflicts with existing theme
 
-Signal will override existing theme configurations. To revert:
+If you have another theme manager (like Stylix or Catppuccin):
+
+**Option 1: Disable the other theme**
 
 ```nix
-theming.signal.enable = false;
+# Disable other theme
+stylix.enable = false;
+
+# Use only Signal
+theming.signal.enable = true;
 ```
 
-Then rebuild.
+**Option 2: Use both selectively**
+
+```nix
+# Theme some apps with Stylix
+stylix.targets.helix.enable = true;
+
+# Theme others with Signal
+theming.signal = {
+  enable = true;
+  autoEnable = false;  # Manual mode
+  terminals.kitty.enable = true;
+  cli.bat.enable = true;
+};
+```
 
 For more help, see the [Troubleshooting Guide](troubleshooting.md).

@@ -1,6 +1,6 @@
 # Architecture
 
-Understanding how Signal works internally and integrates with Home Manager.
+Understanding how Signal applies colors to your Nix environment through Home Manager.
 
 ## Table of Contents
 
@@ -14,36 +14,36 @@ Understanding how Signal works internally and integrates with Home Manager.
 
 ## Overview
 
-Signal is a Home Manager module that provides color theming for applications. It follows a simple architecture:
+Signal is a Home Manager module that applies colors from the Signal Design System to your applications. It follows a simple architecture:
 
 ```
-┌─────────────────────────────────────────────────────┐
-│  User Configuration                                 │
-│  ├─ programs.*.enable = true                        │
-│  └─ theming.signal.enable = true                    │
-└────────────────┬────────────────────────────────────┘
+┌─────────────────────────────────────────────┐
+│  Your Configuration                         │
+│  ├─ programs.*.enable = true                │
+│  └─ theming.signal.enable = true            │
+└────────────────┬────────────────────────────┘
                  │
                  ▼
-┌─────────────────────────────────────────────────────┐
-│  Signal Module System                               │
-│  ├─ Detects enabled programs                        │
-│  ├─ Resolves theme mode (dark/light)                │
-│  ├─ Loads colors from signal-palette                │
-│  └─ Applies colors to program configs               │
-└────────────────┬────────────────────────────────────┘
+┌─────────────────────────────────────────────┐
+│  Signal Module System                       │
+│  ├─ Detects enabled programs                │
+│  ├─ Resolves theme mode (dark/light)        │
+│  ├─ Loads colors from signal-palette        │
+│  └─ Applies colors to program configs       │
+└────────────────┬────────────────────────────┘
                  │
                  ▼
-┌─────────────────────────────────────────────────────┐
-│  Home Manager Activation                            │
-│  └─ Generates config files with Signal colors       │
-└─────────────────────────────────────────────────────┘
+┌─────────────────────────────────────────────┐
+│  Home Manager Activation                    │
+│  └─ Generates config files with colors      │
+└─────────────────────────────────────────────┘
 ```
 
 ### Key Principles
 
-1. **Separation of Concerns**: Signal only handles colors, never program installation
+1. **Color-Only Scope**: Signal only sets colors, never program behavior or installation
 2. **Lazy Evaluation**: Modules only evaluate when enabled
-3. **Declarative**: All configuration is declarative and reproducible
+3. **Declarative**: All color configuration is reproducible
 4. **Composable**: Works alongside other Home Manager modules
 
 ## Component Architecture
@@ -54,14 +54,12 @@ signal-nix/
 ├─ flake.nix                    # Flake outputs and module exports
 │
 ├─ lib/
-│  └─ default.nix               # Helper functions
+│  └─ default.nix               # Color conversion helpers
 │     ├─ resolveThemeMode       # Convert "auto" to "dark" or "light"
-│     ├─ getThemeName           # Generate theme names
 │     ├─ getColors              # Get colors for a mode
-│     ├─ hexToRgbSpaceSeparated # Convert hex to RGB (for Zellij)
+│     ├─ hexToRgbSpaceSeparated # RGB conversion (for Zellij)
 │     ├─ hexWithAlpha           # Add alpha channel (for Fuzzel)
-│     ├─ isValidHexColor        # Validate hex color format
-│     └─ brandGovernance        # Brand color helpers
+│     └─ isValidHexColor        # Validate hex format
 │
 ├─ modules/
 │  ├─ common/
@@ -71,17 +69,12 @@ signal-nix/
 │  │     └─ Config              # Pass colors to modules
 │  │
 │  ├─ editors/
-│  │  ├─ helix.nix              # Helix theming
-│  │  └─ neovim.nix             # Neovim theming
+│  │  ├─ helix.nix              # Helix color theming
+│  │  └─ neovim.nix             # Neovim color theming
 │  │
 │  ├─ terminals/
-│  │  ├─ kitty.nix              # Kitty theming
-│  │  ├─ ghostty.nix            # Ghostty theming
-│  │  └─ ...
-│  │
-│  ├─ cli/
-│  │  ├─ bat.nix                # Bat theming
-│  │  ├─ fzf.nix                # Fzf theming
+│  │  ├─ kitty.nix              # Kitty color theming
+│  │  ├─ ghostty.nix            # Ghostty color theming
 │  │  └─ ...
 │  │
 │  └─ ...                        # Other categories
@@ -94,13 +87,13 @@ signal-nix/
 **Common Module** (`modules/common/default.nix`):
 - Defines all options under `theming.signal`
 - Imports all application-specific modules
-- Provides colors and utilities to child modules
-- Handles global configuration (mode, autoEnable, brand governance)
+- Provides Signal colors to child modules
+- Handles global configuration (mode, autoEnable)
 
 **Application Modules** (e.g., `modules/editors/helix.nix`):
 - Receives colors via `_module.args`
 - Implements `shouldTheme` logic (explicit enable or autoEnable)
-- Generates application-specific configuration
+- Generates application-specific color configuration
 - Uses `mkIf` guards for conditional evaluation
 
 ## Data Flow
@@ -126,7 +119,7 @@ signal-nix/
    │
    └─ Evaluate application modules
       ├─ Check if should theme (shouldTheme logic)
-      ├─ If yes: Generate configuration
+      ├─ If yes: Generate color configuration
       └─ If no: No-op (mkIf guard)
 
 4. Configuration generation
@@ -141,10 +134,9 @@ signal-nix/
 ```
 User sets mode → resolveThemeMode → getColors → Apply to apps
      ↓
-  "dark"     →      "dark"      →   palette.  →  program
-  "light"    →      "light"     →   tonal.    →  configs
-  "auto"     →      "dark"      →   dark/     →
-                                    light
+  "dark"     →      "dark"      →   Signal   →  program
+  "light"    →      "light"     →   palette  →  color
+  "auto"     →      "dark"      →   colors   →  configs
 ```
 
 ### shouldTheme Logic
@@ -616,26 +608,26 @@ nix-instantiate --eval --strict -E '
 ### Why Home Manager?
 
 - User-level theming belongs in user-level config
-- Declarative, reproducible
+- Declarative and reproducible color management
 - Works across NixOS, nix-darwin, and standalone
-- Rich ecosystem of program modules
+- Rich ecosystem of program modules to theme
 
 ### Why Separate signal-palette?
 
-- Platform-agnostic colors (web, Nix, JSON)
-- Independent versioning
-- Stable color API
-- Reusable across projects
+- Platform-agnostic colors (use Signal colors in web apps, design tools)
+- Independent versioning of colors
+- Stable color API across platforms
+- Reusable across projects beyond Nix
 
 ### Why autoEnable?
 
-- Reduces cognitive load
+- Reduces configuration burden
 - Matches user expectation ("theme my programs")
 - Still allows fine-grained control
-- Sane default behavior
+- Provides sensible defaults
 
 ## Next Steps
 
-- **Implementation details** - See source code in `modules/`
+- **Using Signal** - See [Configuration Guide](configuration-guide.md) for all options
 - **Contributing** - Add new app support ([CONTRIBUTING.md](../CONTRIBUTING.md))
-- **Advanced usage** - See [Advanced Usage](advanced-usage.md)
+- **Advanced Usage** - See [Advanced Usage](advanced-usage.md)

@@ -1,44 +1,33 @@
-# Signal Design System - Nix/Home Manager
+# Signal - Nix Color Theme
 
-> **Perception, engineered.**
+> **Scientifically-designed colors for your Nix environment**
 
-A scientific color scheme for Nix/Home Manager and NixOS that themes 20+ applications with OKLCH-based colors and APCA accessibility.
+Bring the Signal color palette to your NixOS, nix-darwin, or Home Manager setup. Signal provides OKLCH-based colors with APCA accessibility standards, automatically theming 60+ applications across your system.
 
-## What is Signal?
+## What is signal-nix?
 
-**Signal is a comprehensive theming system** that automatically themes your programs at both user and system level. It provides scientifically-designed colors but never installs or enables programs for you.
+**signal-nix makes it easy to adopt the Signal color theme across your entire Nix environment.** It's a Home Manager module that applies Signal's scientifically-designed colors to your applications—without installing or configuring programs for you.
+
+**The Concept:**
 
 ```
-┌─────────────────────────────────────────────┐
-│  You Enable Programs                        │
-│  ├─ programs.helix.enable = true            │
-│  ├─ programs.kitty.enable = true            │
-│  └─ boot.loader.grub.enable = true          │
-└────────────────┬────────────────────────────┘
-                 │
-                 ▼
-┌─────────────────────────────────────────────┐
-│  Signal Themes Them                         │
-│  ├─ theming.signal.enable = true            │
-│  ├─ theming.signal.autoEnable = true        │
-│  ├─ theming.signal.nixos.boot.grub.enable  │
-│  └─ Automatically applies colors ✨         │
-└─────────────────────────────────────────────┘
+You enable programs → Signal provides the colors
 ```
 
-## Features
+You control which programs to install and use. Signal handles applying the Signal color palette to them.
 
-- 🎨 **60+ Applications**: Window managers, compositors, editors, terminals, file managers, browsers, and more
-- 🖥️ **System-Level Theming**: Boot screens, TTY, GRUB (NixOS modules)
-- 🤖 **Automatic Detection**: Set `autoEnable = true` and Signal themes all your enabled programs
-- 🔬 **Scientific Foundation**: OKLCH color space + APCA accessibility standards
-- 🌓 **Dual Themes**: Light and dark modes with consistent semantics
-- ⚡ **Zero Configuration**: Three lines to get started
-- ✅ **Comprehensive Testing**: 59+ tests ensuring reliability and quality
+## Why Signal?
 
-## Quick Start (5 Minutes)
+- 🎨 **Consistent Colors Everywhere**: One color palette across 60+ applications
+- 🔬 **Science-Based Design**: OKLCH color space ensures perceptual uniformity
+- ♿ **Accessibility First**: APCA contrast standards for readable text
+- 🌓 **Light & Dark Modes**: Carefully calibrated themes for both modes
+- ⚡ **Zero-Config Adoption**: Enable Signal and it themes all your programs automatically
+- 🎯 **Nix-Native**: Built specifically for NixOS, nix-darwin, and Home Manager
 
-### 1. Add to your flake inputs
+## Quick Start
+
+### 1. Add Signal to your flake
 
 ```nix
 {
@@ -50,14 +39,14 @@ A scientific color scheme for Nix/Home Manager and NixOS that themes 20+ applica
 }
 ```
 
-### 2. Import and configure
+### 2. Enable Signal theming
 
 ```nix
 {
   home-manager.users.yourname = {
     imports = [ signal.homeManagerModules.default ];
     
-    # Enable the programs you want to use (as usual)
+    # Enable your programs as usual
     programs = {
       helix.enable = true;
       kitty.enable = true;
@@ -65,10 +54,10 @@ A scientific color scheme for Nix/Home Manager and NixOS that themes 20+ applica
       fzf.enable = true;
     };
     
-    # Signal automatically themes all enabled programs ✨
+    # Signal automatically applies its colors to them
     theming.signal = {
       enable = true;
-      autoEnable = true;  # ← The magic setting
+      autoEnable = true;  # Automatically theme all enabled programs
       mode = "dark";      # or "light"
     };
   };
@@ -78,20 +67,20 @@ A scientific color scheme for Nix/Home Manager and NixOS that themes 20+ applica
 ### 3. Rebuild
 
 ```bash
-home-manager switch
+home-manager switch --flake .
 # or: sudo nixos-rebuild switch
 # or: darwin-rebuild switch
 ```
 
-That's it! All your enabled programs now use Signal colors.
+**Done!** All your enabled programs now use Signal colors.
 
-> **Adding Signal to an existing config?** See [Getting Started Guide](docs/getting-started.md) for integration examples.
+> **New to Nix or Home Manager?** See [Getting Started Guide](docs/getting-started.md) for detailed setup instructions.
 
-## NixOS System Theming (NEW)
+## NixOS System Theming
 
-Signal now supports system-level theming for NixOS components!
+Signal also provides system-level color theming for NixOS components like boot screens and display managers.
 
-### Quick Start - NixOS
+### Quick Example
 
 ```nix
 {
@@ -113,6 +102,13 @@ Signal now supports system-level theming for NixOS components!
             boot = {
               console.enable = true;  # TTY colors
               grub.enable = true;     # GRUB theme
+              plymouth.enable = true; # Boot splash
+            };
+            
+            login = {
+              gdm.enable = true;      # GNOME display manager
+              # or sddm.enable = true;
+              # or lightdm.enable = true;
             };
           };
           
@@ -125,139 +121,148 @@ Signal now supports system-level theming for NixOS components!
 }
 ```
 
-### System Components Themed
+### What Gets Themed
 
 - ✅ **Virtual Console (TTY)** - Colored text in Ctrl+Alt+F1-F6
 - ✅ **GRUB Bootloader** - Themed boot menu
-- ✅ **SDDM Display Manager** - KDE/Qt login screen
-- ✅ **Plymouth Boot Splash** - Animated boot screen (NEW)
-- ✅ **GDM Display Manager** - GNOME login screen (NEW)
-- ✅ **LightDM Display Manager** - GTK greeter login (NEW)
-- 🚧 **System-wide GTK/Qt** - Desktop application themes (planned)
+- ✅ **Plymouth** - Animated boot splash screen
+- ✅ **Display Managers** - GDM, SDDM, LightDM login screens
 
-See [NixOS Module Documentation](docs/nixos-modules.md) for complete guide.
+See [NixOS Modules Guide](docs/nixos-modules.md) for complete documentation.
 
-That's it! All your enabled programs now use Signal colors.
+## How Signal Works
 
-## How It Works
+Signal is a Home Manager module that:
 
-Signal uses Home Manager's module system to detect which programs you've enabled and applies color configurations to them. It follows a simple principle:
+1. **Detects your enabled programs** - Checks which applications you've enabled in your config
+2. **Applies Signal colors** - Generates color configurations for each program
+3. **Respects your preferences** - Never installs programs or changes non-color settings
 
-**You control what programs are installed. Signal controls what colors they use.**
+**You manage programs. Signal manages colors.**
 
 ```nix
-# ❌ Signal does NOT do this
-theming.signal.terminals.kitty.enable = true;  # Does NOT install kitty
+# You enable programs
+programs.kitty.enable = true;  # ← You install kitty
 
-# ✅ You do this
-programs.kitty.enable = true;  # Installs kitty
-
-# ✅ Then Signal does this
-theming.signal.autoEnable = true;  # Themes your installed kitty
+# Signal applies colors
+theming.signal.enable = true;  # ← Signal themes kitty with Signal colors
 ```
 
 ## Supported Applications
 
-### Desktop
+Signal provides color themes for 60+ applications across all categories:
 
-- **Hyprland** - Modern Wayland compositor (complete color scheme) ✨
-- **Sway** - i3-compatible Wayland compositor (full i3-style colors) ✨
-- **i3** - Popular X11 window manager (complete color config) ✨
-- **bspwm** - Binary space partitioning WM (border colors) ✨
-- **awesome** - Lua-based WM (comprehensive theme.lua) ✨
-- **rofi** - Universal application launcher (comprehensive .rasi theme) ✨
-- **wofi** - Wayland launcher (CSS styling) ✨
-- **tofi** - Minimal launcher (INI config) ✨
-- **dmenu** - Classic X11 launcher (wrapper script) ✨
-- **waybar** - Wayland status bar (full CSS styling) ✨
-- **polybar** - X11 status bar (complete INI config) ✨
-- **dunst** - Notification daemon (urgency-based colors) ✨
-- **mako** - Wayland notifications (INI config) ✨
-- **SwayNC** - Sway Notification Center (CSS styling with notification center) ✨
-- **Ironbar** - Wayland status bar (with 3 display profiles)
+### Desktop & Window Management
+
+- **Hyprland** - Modern Wayland compositor ✨
+- **Sway** - i3-compatible Wayland compositor ✨
+- **i3** - X11 window manager ✨
+- **bspwm** - Binary space partitioning WM ✨
+- **awesome** - Lua-based WM ✨
+- **rofi** - Application launcher ✨
+- **wofi** - Wayland launcher ✨
+- **tofi** - Minimal launcher ✨
+- **dmenu** - Classic X11 launcher ✨
+- **Fuzzel** - Wayland application launcher
+- **waybar** - Wayland status bar ✨
+- **polybar** - X11 status bar ✨
+- **Ironbar** - Wayland status bar (3 display profiles)
+- **dunst** - Notification daemon ✨
+- **mako** - Wayland notifications ✨
+- **SwayNC** - Sway Notification Center ✨
 - **GTK 3/4** - GTK application theming
-- **Fuzzel** - Application launcher
 
-### Editors
+### Editors & IDEs
 
-- **Helix** - Modern modal editor (comprehensive theme with palette structure)
-- **Neovim** - Extensible Vim-based editor (full Lua colorscheme with Treesitter and LSP support)
-- **Vim** - Classic modal editor (complete Vimscript colorscheme) ✨
-- **VS Code/VSCodium** - Popular GUI editor (workbench + token colors) ✨
-- **Emacs** - Extensible editor (complete Elisp theme with Org, Magit, and more) ✨
+- **Helix** - Modern modal editor (comprehensive theme) ✨
+- **Neovim** - Extensible Vim (Treesitter + LSP support) ✨
+- **Vim** - Classic modal editor ✨
+- **VS Code/VSCodium** - GUI editor ✨
+- **Emacs** - Extensible editor (Org, Magit support) ✨
 
 ### Terminals
 
-- **Ghostty** - Fast terminal emulator (full ANSI palette)
-- **Alacritty** - GPU-accelerated terminal (complete color scheme)
-- **Kitty** - Feature-rich terminal (16 colors + tab bar)
-- **WezTerm** - Lua-based terminal (full theme with tab bar)
-- **Foot** - Minimal Wayland terminal (complete INI config) ✨
+- **Ghostty** - Fast terminal (full ANSI palette)
+- **Alacritty** - GPU-accelerated terminal
+- **Kitty** - Feature-rich terminal (16 colors + tabs)
+- **WezTerm** - Lua-configured terminal (full theme)
+- **Foot** - Minimal Wayland terminal ✨
+
+### CLI Tools & Utilities
+
+- **bat** - Cat replacement (custom syntax highlighting)
+- **delta** - Git diff viewer (Signal theme)
+- **eza** - Modern ls (file types + git status)
+- **fzf** - Fuzzy finder
+- **lazygit** - Git TUI
+- **lazydocker** - Docker TUI
+- **yazi** - Modern file manager
+- **ranger** - Vim-like file manager ✨
+- **lf** - Fast minimal file manager ✨
+- **nnn** - Super fast file manager ✨
+- **btop++** - Resource monitor (with gradients)
+- **htop** - Classic system monitor ✨
+- **bottom** - Modern resource monitor ✨
+- **less** - Pager (man page colors) ✨
+- **ripgrep** - Fast search tool ✨
+- **glow** - Markdown viewer ✨
+- **tig** - Text-mode git interface ✨
+
+### Shells & Prompts
+
+- **zsh** - Z shell (syntax highlighting)
+- **fish** - Friendly shell ✨
+- **bash** - Bourne Again Shell ✨
+- **nushell** - Structured data shell ✨
+- **Starship** - Cross-shell prompt (custom palette)
 
 ### Terminal Multiplexers
 
-- **tmux** - Terminal multiplexer (status bar, panes, windows)
+- **tmux** - Terminal multiplexer (status bar, panes)
 - **Zellij** - Modern multiplexer (comprehensive KDL theme)
-
-### File Managers
-
-- **ranger** - Vim-like file manager (Python colorscheme) ✨
-- **lf** - Fast minimal file manager (LS_COLORS) ✨
-- **nnn** - Super fast file manager (NNN_FCOLORS) ✨
-- **yazi** - Modern file manager (complete theme: manager, status, tabs, etc.)
-
-### System Monitors
-
-- **btop++** - Resource monitor (complete theme with gradients)
-- **htop** - Classic system monitor (color configuration) ✨
-- **bottom** - Modern resource monitor (complete TOML theme) ✨
-
-### Shell Prompts
-
-- **Starship** - Cross-shell prompt (custom palette with git integration)
-
-### Shells
-
-- **zsh** - Z shell (syntax highlighting colors)
-- **fish** - Friendly shell (comprehensive color variables) ✨
-- **bash** - Bourne Again Shell (LS_COLORS, prompt, less/grep) ✨
-- **nushell** - Structured data shell (color_config) ✨
-
-### CLI Tools
-
-- **bat** - Cat replacement (custom .tmTheme with Signal colors)
-- **delta** - Git diff viewer (syntax-highlighted diffs with Signal theme)
-- **eza** - Modern ls replacement (comprehensive file type and git status colors)
-- **fzf** - Fuzzy finder (complete color configuration)
-- **lazygit** - Git TUI (comprehensive theme)
-- **lazydocker** - Docker TUI (complete YAML theme)
-- **less** - Pager (man page colors via LESS_TERMCAP) ✨
-- **ripgrep** - Fast search tool (color output configuration) ✨
-- **glow** - Markdown viewer (JSON glamour theme) ✨
-- **tig** - Text-mode git interface (comprehensive color config) ✨
 
 ### Browsers
 
-- **Firefox** - userChrome.css UI theming (advanced) ✨
-- **Qutebrowser** - Vim-like browser (complete Python config) ✨
+- **Firefox** - userChrome.css theming ✨
+- **Qutebrowser** - Vim-like browser ✨
 
-## Configuration
+✨ = Fully implemented with comprehensive theming
 
-Signal provides two approaches to theming your programs:
+See [Theming Reference](docs/theming-reference.md) for complete application list and theming details.
 
-### Recommended: Automatic Mode
+## Configuration Options
 
-**Use this if:** You want Signal to automatically theme all your enabled programs.
+### Automatic Theming (Recommended)
+
+Enable Signal once and it themes all your enabled programs:
 
 ```nix
 theming.signal = {
   enable = true;
-  autoEnable = true;  # ← Automatically themes all enabled programs
+  autoEnable = true;  # Automatically theme all enabled programs
   mode = "dark";      # "light", "dark", or "auto"
 };
 ```
 
-You can selectively disable specific programs:
+### Selective Theming
+
+Choose exactly which programs get themed:
+
+```nix
+theming.signal = {
+  enable = true;
+  mode = "dark";
+  
+  # Explicitly enable theming for specific programs
+  editors.helix.enable = true;
+  terminals.kitty.enable = true;
+  cli.bat.enable = true;
+};
+```
+
+### Selective Disabling
+
+Theme everything except specific programs:
 
 ```nix
 theming.signal = {
@@ -265,76 +270,23 @@ theming.signal = {
   autoEnable = true;
   mode = "dark";
   
-  # Don't theme these specific programs
+  # Don't theme these
   cli.bat.enable = false;
   terminals.kitty.enable = false;
 };
 ```
 
-### Advanced: Manual Mode
-
-**Use this if:** You want fine-grained control over which programs are themed.
-
-```nix
-theming.signal = {
-  enable = true;
-  mode = "dark";
-  # autoEnable = false (default)
-  
-  # Explicitly enable theming for each program
-  editors.helix.enable = true;
-  terminals.kitty.enable = true;
-  cli.bat.enable = true;
-};
-```
-
-> **Note**: With manual mode, you must explicitly enable theming for each program. Signal will not theme programs automatically.
-
 ### Theme Modes
 
-Choose your preferred color scheme:
-
-- `"dark"` - Dark background, light text (recommended for most users)
+- `"dark"` - Dark background, light text (recommended)
 - `"light"` - Light background, dark text
-- `"auto"` - Follows system preference (currently defaults to dark)
+- `"auto"` - Follow system preference (currently defaults to dark)
 
-### Application-Specific Options
+Switch modes by changing `mode` and rebuilding:
 
-Some applications have additional configuration options:
-
-#### Ironbar Display Profiles
-
-```nix
-theming.signal.ironbar = {
-  enable = true;
-  profile = "relaxed"; # "compact" | "relaxed" | "spacious"
-};
-```
-
-- **compact**: 1080p displays (40px bar)
-- **relaxed**: 1440p+ displays (48px bar) - default
-- **spacious**: 4K displays (56px bar)
-
-#### GTK Theming
-
-```nix
-theming.signal.gtk = {
-  enable = true;
-  version = "both"; # "gtk3" | "gtk4" | "both"
-};
-```
-
-#### Brand Colors
-
-Customize Signal with your brand colors:
-
-```nix
-theming.signal.brandGovernance = {
-  policy = "functional-override";
-  decorativeBrandColors = {
-    brand-primary = "#5a7dcf";
-  };
-};
+```bash
+# In your config: mode = "light"
+home-manager switch --flake .
 ```
 
 See [Configuration Guide](docs/configuration-guide.md) for all options.
@@ -343,77 +295,117 @@ See [Configuration Guide](docs/configuration-guide.md) for all options.
 
 Real-world configuration examples:
 
-- **[auto-enable.nix](examples/auto-enable.nix)** - Recommended: Automatic theming (3 lines)
-- **[migrating-existing-config.nix](examples/migrating-existing-config.nix)** - Adding Signal to your existing config
-- **[basic.nix](examples/basic.nix)** - Manual per-app theming
-- **[multi-machine.nix](examples/multi-machine.nix)** - Shared config across multiple machines
+- **[auto-enable.nix](examples/auto-enable.nix)** - Recommended: Automatic theming
+- **[migrating-existing-config.nix](examples/migrating-existing-config.nix)** - Add Signal to existing config
+- **[basic.nix](examples/basic.nix)** - Manual program-by-program theming
+- **[multi-machine.nix](examples/multi-machine.nix)** - Shared config across machines
 - **[full-desktop.nix](examples/full-desktop.nix)** - Complete desktop environment
 - **[custom-brand.nix](examples/custom-brand.nix)** - Custom brand colors
+- **[nixos-complete.nix](examples/nixos-complete.nix)** - NixOS system theming
 
-## Philosophy
+## The Signal Color System
 
-Signal is built on three principles:
+### What Makes Signal Different
 
-1. **Scientific**: Every color calculated using OKLCH color space
-2. **Accessible**: APCA-compliant contrast for all elements  
-3. **Perceptually Uniform**: Consistent lightness across all hues
+Signal uses **OKLCH color space** instead of traditional RGB or HSL. This provides:
 
-Traditional RGB/HSL color spaces aren't perceptually uniform—L=50% looks different for different hues. OKLCH fixes this with consistent perceived lightness and accurate contrast predictions.
+1. **Perceptual Uniformity** - Colors with the same lightness value appear equally bright
+2. **Accurate Contrast** - APCA (Advanced Perceptual Contrast Algorithm) for accessibility
+3. **Professional Design** - Color relationships based on human perception, not math
+
+Traditional RGB/HSL color spaces aren't perceptually uniform—a blue at 50% lightness looks different than a red at 50% lightness. OKLCH fixes this.
+
+### Color Philosophy
+
+Signal follows three principles:
+
+1. **Scientific** - Every color calculated using OKLCH
+2. **Accessible** - APCA-compliant contrast for all text
+3. **Consistent** - Perceptually uniform lightness across hues
+
+Learn more about Signal's color science:
+- [Signal Palette Philosophy](https://github.com/lewisflude/signal-palette/blob/main/docs/philosophy.md)
+- [OKLCH Explained](https://github.com/lewisflude/signal-palette/blob/main/docs/oklch-explained.md)
+- [Accessibility Standards](https://github.com/lewisflude/signal-palette/blob/main/docs/accessibility.md)
 
 ## Architecture
 
-Signal uses a two-repository architecture:
+Signal uses a two-repository design:
 
-- **[signal-palette](https://github.com/lewisflude/signal-palette)**: Platform-agnostic color definitions
-- **[signal-nix](https://github.com/lewisflude/signal-nix)**: This repository - Nix/Home Manager integration
+- **[signal-palette](https://github.com/lewisflude/signal-palette)** - Platform-agnostic color definitions (OKLCH values, hex codes, RGB)
+- **[signal-nix](https://github.com/lewisflude/signal-nix)** - This repository: Nix/Home Manager integration
 
-This separation enables stable color versioning, platform-agnostic usage, and simple dependency management.
+This separation enables:
+- Stable color versioning across platforms
+- Use Signal colors outside of Nix (web, design tools)
+- Simple dependency management
 
-## Comparison
+See [Architecture Guide](docs/architecture.md) for technical details.
 
-| System | Approach | Philosophy |
-|--------|----------|------------|
-| **Signal** | Scientific, OKLCH | Calculated, accessible, professional |
-| **Catppuccin** | Warm, pastel | Cute, cozy, friendly |
-| **Gruvbox** | Retro, warm | Nostalgic, vintage |
-| **Dracula** | High contrast, vivid | Bold, dramatic |
+## Platform Support
+
+Signal works on:
+
+- ✅ **NixOS** - System and user-level theming
+- ✅ **nix-darwin** - macOS with Nix
+- ✅ **Home Manager** - Standalone on any Linux distro
+- ✅ **Flakes** - First-class flake support
+- ⚠️ **Channels** - Supported but not recommended
+
+See [Getting Started Guide](docs/getting-started.md) for setup instructions for your platform.
+
+## Comparison with Other Themes
+
+| Theme | Approach | Philosophy |
+|-------|----------|------------|
+| **Signal** | Scientific OKLCH | Calculated, accessible, professional |
+| **Catppuccin** | Warm pastels | Cute, cozy, friendly |
+| **Gruvbox** | Retro warm tones | Nostalgic, vintage |
+| **Dracula** | High contrast vivid | Bold, dramatic |
+| **Nord** | Arctic cool tones | Calm, minimalist |
+
+Signal prioritizes:
+- **Science over aesthetics** - Colors chosen for perceptual accuracy
+- **Accessibility** - APCA contrast standards
+- **Consistency** - Uniform appearance across applications
+- **Nix-first design** - Built specifically for Nix environments
 
 ## Documentation
 
 ### Getting Started
 
-- **[Getting Started Guide](docs/getting-started.md)** - Detailed setup for new and existing configs
-- **[NixOS Modules Guide](docs/nixos-modules.md)** - System-level theming (NEW)
-- **[Configuration Guide](docs/configuration-guide.md)** - All configuration options explained
-- **[Architecture Overview](docs/architecture.md)** - How Signal works internally
+- [**Getting Started Guide**](docs/getting-started.md) - Setup for NixOS, nix-darwin, and Home Manager
+- [**Configuration Guide**](docs/configuration-guide.md) - All configuration options
+- [**NixOS Modules Guide**](docs/nixos-modules.md) - System-level theming
 
-### Testing
+### Using Signal
 
-- **[Test Suite Overview](TEST_INDEX.md)** - Complete index of test resources
-- **[Test Summary](TEST_SUMMARY.md)** - Quick reference and statistics
-- **[Running Tests](TEST_SUITE.md)** - Comprehensive testing documentation
-- **[Test Directory Guide](tests/README.md)** - Working with test files
+- [**Supported Applications**](docs/theming-reference.md) - Complete list with implementation status
+- [**Examples Directory**](examples/) - Real-world configurations
+- [**Troubleshooting**](docs/troubleshooting.md) - Common issues and solutions
 
-### Reference
+### Understanding Signal
 
-- **[Troubleshooting Guide](docs/troubleshooting.md)** - Common issues and solutions
-- **[Theming Reference](docs/theming-reference.md)** - Complete theming guide
-- **[Advanced Usage](docs/advanced-usage.md)** - Brand governance, multi-machine setups
+- [**Architecture**](docs/architecture.md) - How Signal works internally
+- [**Design Principles**](docs/design-principles.md) - What Signal does and doesn't do
+- [**Advanced Usage**](docs/advanced-usage.md) - Power user features
 
-### Philosophy & Design
+### For Contributors
 
-- [Signal Palette Philosophy](https://github.com/lewisflude/signal-palette/blob/main/docs/philosophy.md) - Design principles
-- [OKLCH Explained](https://github.com/lewisflude/signal-palette/blob/main/docs/oklch-explained.md) - Color space overview
-- [Accessibility Standards](https://github.com/lewisflude/signal-palette/blob/main/docs/accessibility.md) - APCA compliance
+- [**Contributing Guide**](CONTRIBUTING.md) - How to contribute
+- [**Test Suite**](docs/TEST_SUITE.md) - Running and writing tests
+- [**Theming Reference**](docs/theming-reference.md) - Adding new applications
 
 ## Contributing
 
-Contributions welcome! See [CONTRIBUTING.md](CONTRIBUTING.md) for guidelines.
+We welcome contributions! Areas where you can help:
 
-Priority areas:
-- Additional application integrations
-- Light mode refinements  
-- Documentation improvements
+- **Add application support** - See [Theming Reference](docs/theming-reference.md) for applications we'd like to support
+- **Improve documentation** - Help make Signal easier to use
+- **Report issues** - Found a bug or color issue? Let us know
+- **Share configs** - Show us your Signal setup
+
+See [CONTRIBUTING.md](CONTRIBUTING.md) for guidelines.
 
 ## License
 
@@ -421,10 +413,11 @@ MIT © Lewis Flude
 
 ## Related Projects
 
-- [signal-palette](https://github.com/lewisflude/signal-palette) - Platform-agnostic color definitions
+- [signal-palette](https://github.com/lewisflude/signal-palette) - Platform-agnostic Signal color definitions
 
 ## Acknowledgments
 
-- Built on the OKLCH color space specification
-- Accessibility guidelines from [APCA](https://github.com/Myndex/SAPC-APCA)
-- Inspired by modern color systems like Radix Colors and Catppuccin
+- OKLCH color space specification
+- [APCA](https://github.com/Myndex/SAPC-APCA) for accessibility guidelines
+- Inspired by modern color systems like Radix Colors
+- The Nix and Home Manager communities
