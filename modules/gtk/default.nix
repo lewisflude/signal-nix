@@ -14,6 +14,21 @@
 # NOTES: GTK theming requires CSS overrides using @define-color directives.
 #        Home-Manager provides extraCss for custom CSS. No structured GTK color
 #        options exist. Uses Adwaita base theme with color overrides.
+#
+#        This module defines ALL Adwaita color palette variables (45 total):
+#        - blue_1 through blue_5 (Signal secondary accent, Lc75 and Lc60)
+#        - green_1 through green_5 (Signal primary/success accent, Lc75 and Lc60)
+#        - yellow_1 through yellow_5 (Signal warning accent, Lc75 and Lc60)
+#        - orange_1 through orange_5 (Signal warning accent, Lc75 and Lc60)
+#        - red_1 through red_5 (Signal danger accent, Lc75 and Lc60)
+#        - purple_1 through purple_5 (Signal tertiary accent, Lc75 and Lc60)
+#        - brown_1 through brown_5 (Signal neutral tones)
+#        - light_1 through light_5 (Signal surface colors)
+#        - dark_1 through dark_5 (Signal surface/text colors)
+#
+#        Note: Signal accent colors only have two lightness levels (Lc60 and Lc75),
+#        so the 5-shade palette reuses these values. The middle value (e.g., blue_3)
+#        is the primary shade that GTK apps will use most frequently.
 let
   inherit (lib) mkIf;
   cfg = config.theming.signal;
@@ -95,48 +110,50 @@ let
 
   # Map Signal colors to Adwaita palette
   # These are the standard GNOME color palette that GTK apps use
+  # Note: Signal accent colors only have Lc60 and Lc75, so we create
+  # a 5-shade range using both accent values and tonal colors
   adwaitaPalette = {
     # Blues - Using Signal secondary accent
-    blue_1 = accent.secondary.Lc85.hex;
-    blue_2 = accent.secondary.Lc75.hex;
-    blue_3 = accent.secondary.Lc65.hex;
-    blue_4 = accent.secondary.Lc60.hex;
-    blue_5 = accent.secondary.Lc55.hex;
+    blue_1 = accent.secondary.Lc75.hex;  # Lightest
+    blue_2 = accent.secondary.Lc75.hex;  # Light
+    blue_3 = accent.secondary.Lc60.hex;  # Medium (default)
+    blue_4 = accent.secondary.Lc60.hex;  # Dark
+    blue_5 = accent.secondary.Lc60.hex;  # Darkest
     
     # Greens - Using Signal primary accent (success)
-    green_1 = accent.primary.Lc85.hex;
+    green_1 = accent.primary.Lc75.hex;
     green_2 = accent.primary.Lc75.hex;
-    green_3 = accent.primary.Lc65.hex;
+    green_3 = accent.primary.Lc60.hex;
     green_4 = accent.primary.Lc60.hex;
-    green_5 = accent.primary.Lc55.hex;
+    green_5 = accent.primary.Lc60.hex;
     
     # Yellows - Using Signal warning accent
-    yellow_1 = accent.warning.Lc85.hex;
+    yellow_1 = accent.warning.Lc75.hex;
     yellow_2 = accent.warning.Lc75.hex;
-    yellow_3 = accent.warning.Lc65.hex;
+    yellow_3 = accent.warning.Lc60.hex;
     yellow_4 = accent.warning.Lc60.hex;
-    yellow_5 = accent.warning.Lc55.hex;
+    yellow_5 = accent.warning.Lc60.hex;
     
-    # Oranges - Using Signal warning accent (shifted)
-    orange_1 = accent.warning.Lc80.hex;
-    orange_2 = accent.warning.Lc70.hex;
+    # Oranges - Using Signal warning accent
+    orange_1 = accent.warning.Lc75.hex;
+    orange_2 = accent.warning.Lc75.hex;
     orange_3 = accent.warning.Lc60.hex;
-    orange_4 = accent.warning.Lc55.hex;
-    orange_5 = accent.warning.Lc50.hex;
+    orange_4 = accent.warning.Lc60.hex;
+    orange_5 = accent.warning.Lc60.hex;
     
     # Reds - Using Signal danger accent
-    red_1 = accent.danger.Lc85.hex;
+    red_1 = accent.danger.Lc75.hex;
     red_2 = accent.danger.Lc75.hex;
-    red_3 = accent.danger.Lc65.hex;
+    red_3 = accent.danger.Lc60.hex;
     red_4 = accent.danger.Lc60.hex;
-    red_5 = accent.danger.Lc55.hex;
+    red_5 = accent.danger.Lc60.hex;
     
     # Purples - Using Signal tertiary accent
-    purple_1 = accent.tertiary.Lc85.hex;
+    purple_1 = accent.tertiary.Lc75.hex;
     purple_2 = accent.tertiary.Lc75.hex;
-    purple_3 = accent.tertiary.Lc65.hex;
+    purple_3 = accent.tertiary.Lc60.hex;
     purple_4 = accent.tertiary.Lc60.hex;
-    purple_5 = accent.tertiary.Lc55.hex;
+    purple_5 = accent.tertiary.Lc60.hex;
     
     # Browns - Using neutral tonal colors
     brown_1 = signalColors.tonal."text-tertiary".hex;
