@@ -55,21 +55,25 @@
             # =================================================================
             # Example: Complete GNOME setup with Signal theming
             # =================================================================
+            # Note: Commented out to avoid duplicate attribute definition
+            # In practice, you would merge this with the configuration above
 
-            # System-level theming
-            theming.signal.nixos = {
-              enable = true;
-              mode = "dark";
+            /*
+              # Alternative comprehensive configuration:
+              theming.signal.nixos = {
+                enable = true;
+                mode = "dark";
 
-              # Boot theming
-              boot = {
-                console.enable = true; # TTY colors
-                plymouth.enable = true; # Boot splash
+                # Boot theming
+                boot = {
+                  console.enable = true; # TTY colors
+                  plymouth.enable = true; # Boot splash
+                };
+
+                # Login screen theming
+                login.gdm.enable = true; # GDM login screen
               };
-
-              # Login screen theming
-              login.gdm.enable = true; # GDM login screen
-            };
+            */
 
             # Home Manager integration (optional, for user-level theming)
             # home-manager.users.yourname = {

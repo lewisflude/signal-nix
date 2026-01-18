@@ -281,8 +281,12 @@ in
     ${assertFileExists ../../modules/apps/satty.nix "satty module"}
 
     # Check for color palette configuration
-    ${assertFileContains ../../modules/apps/satty.nix "colorPalette =" "satty module missing colorPalette"}
-    ${assertFileContains ../../modules/apps/satty.nix "customColors =" "satty module missing customColors"}
+    ${assertFileContains ../../modules/apps/satty.nix "colorPalette ="
+      "satty module missing colorPalette"
+    }
+    ${assertFileContains ../../modules/apps/satty.nix "customColors ="
+      "satty module missing customColors"
+    }
 
     # Check for Signal color usage
     ${assertFileContains ../../modules/apps/satty.nix "accent.secondary"

@@ -58,7 +58,11 @@ let
         hunk-header-line-number-style = signalColors.tonal."text-secondary".hex;
 
         # Blame
-        blame-palette = "${signalColors.categorical."data-viz-01".hex} ${signalColors.categorical."data-viz-02".hex} ${signalColors.categorical."data-viz-03".hex} ${signalColors.categorical."data-viz-04".hex} ${signalColors.categorical."data-viz-05".hex} ${signalColors.categorical."data-viz-06".hex}";
+        blame-palette = "${signalColors.categorical."data-viz-01".hex} ${
+          signalColors.categorical."data-viz-02".hex
+        } ${signalColors.categorical."data-viz-03".hex} ${signalColors.categorical."data-viz-04".hex} ${
+          signalColors.categorical."data-viz-05".hex
+        } ${signalColors.categorical."data-viz-06".hex}";
 
         # Merge conflict
         merge-conflict-begin-symbol = "▼";

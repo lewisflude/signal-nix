@@ -77,7 +77,7 @@ let
       colors = signalLib.getSyntaxColors mode;
       # OR define custom colors:
       # colors = {
-      #   background = if mode == "dark" 
+      #   background = if mode == "dark"
       #     then signalColors.tonal."surface-base".hex
       #     else signalColors.tonal."surface-subtle".hex;
       #   foreground = signalColors.tonal."text-primary".hex;

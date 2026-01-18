@@ -56,13 +56,17 @@
             # =================================================================
             # Example: Complete boot experience with Signal theming
             # =================================================================
+            # Note: Commented out to avoid duplicate attribute definition
+            # In practice, you would merge this with the configuration above
 
-            # You can combine Plymouth with other boot theming:
-            theming.signal.nixos.boot = {
-              console.enable = true; # TTY colors
-              grub.enable = false; # Using systemd-boot instead
-              plymouth.enable = true; # Boot splash
-            };
+            /*
+              # Alternative: You can combine Plymouth with other boot theming:
+              theming.signal.nixos.boot = {
+                console.enable = true; # TTY colors
+                grub.enable = false; # Using systemd-boot instead
+                plymouth.enable = true; # Boot splash
+              };
+            */
 
             # Additional Plymouth configuration (optional)
             # These are already set by Signal's module but can be overridden

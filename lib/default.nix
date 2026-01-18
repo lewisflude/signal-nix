@@ -77,15 +77,43 @@ rec {
   # Required for Fuzzel color format
   # Input: color object with .hex attribute, alpha value [0.0, 1.0]
   # Output: 8-character hex string without # (e.g., "6b87c8ff")
-  # Uses nix-colorizer for proper alpha channel handling
   hexWithAlpha =
     color: alpha:
     let
-      # Use nix-colorizer's setAlpha function for accurate conversion
-      hexWithAlphaChannel = nix-colorizer.hex.setAlpha color.hex alpha;
-      # Remove the # prefix for Fuzzel format
+      # Strip # from hex color
+      hexColor = lib.removePrefix "#" color.hex;
+
+      # Convert alpha (0.0-1.0) to byte value (0-255)
+      alphaByte = builtins.floor (alpha * 255.0 + 0.5);
+
+      # Convert byte to 2-character uppercase hex string
+      # We need to handle 0-15 (single digit) and 16-255 (double digit)
+      toHexDigit =
+        n:
+        if n < 10 then
+          toString n
+        else if n == 10 then
+          "A"
+        else if n == 11 then
+          "B"
+        else if n == 12 then
+          "C"
+        else if n == 13 then
+          "D"
+        else if n == 14 then
+          "E"
+        else if n == 15 then
+          "F"
+        else
+          throw "toHexDigit: invalid digit ${toString n}";
+
+      # Split byte into high and low nibbles
+      highNibble = alphaByte / 16;
+      lowNibble = alphaByte - (highNibble * 16);
+
+      alphaHex = toHexDigit highNibble + toHexDigit lowNibble;
     in
-    lib.removePrefix "#" hexWithAlphaChannel;
+    lib.toUpper hexColor + alphaHex;
 
   # Validate hex color format
   # Returns: true if valid hex color (#RRGGBB or #RRGGBBAA format)

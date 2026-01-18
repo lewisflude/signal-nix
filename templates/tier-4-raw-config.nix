@@ -42,7 +42,7 @@
 let
   inherit (lib) mkIf;
   cfg = config.theming.signal;
-  
+
   # Get resolved theme mode (light/dark)
   themeMode = signalLib.resolveThemeMode cfg.mode;
 
@@ -71,17 +71,21 @@ let
   # =============================================================================
 
   # For Tier 4, you may need mode-specific color mappings
-  colors = if themeMode == "light" then {
-    # Light mode colors
-    background = signalColors.tonal."surface-subtle".hex;
-    foreground = signalColors.tonal."text-primary".hex;
-    # ... more colors ...
-  } else {
-    # Dark mode colors
-    background = signalColors.tonal."surface-base".hex;
-    foreground = signalColors.tonal."text-primary".hex;
-    # ... more colors ...
-  };
+  colors =
+    if themeMode == "light" then
+      {
+        # Light mode colors
+        background = signalColors.tonal."surface-subtle".hex;
+        foreground = signalColors.tonal."text-primary".hex;
+        # ... more colors ...
+      }
+    else
+      {
+        # Dark mode colors
+        background = signalColors.tonal."surface-base".hex;
+        foreground = signalColors.tonal."text-primary".hex;
+        # ... more colors ...
+      };
 
   inherit (signalColors) accent;
 
@@ -105,25 +109,25 @@ let
   configText = ''
     # Signal Design System Colors
     # Generated for ${themeMode} mode
-    
+
     # Example for shell syntax:
     # FOREGROUND="${colors.foreground}"
     # BACKGROUND="${colors.background}"
-    
+
     # Example for Lua syntax:
     # config.colors = {
     #   foreground = "${colors.foreground}",
     #   background = "${colors.background}",
     # }
-    
+
     # Example for CSS syntax:
     # @define-color foreground_color ${colors.foreground};
     # @define-color background_color ${colors.background};
-    
+
     # Example for INI syntax:
     # foreground = ${colors.foreground}
     # background = ${colors.background}
-    
+
     # YOUR IMPLEMENTATION HERE
     # Replace with actual config syntax
   '';
@@ -148,7 +152,7 @@ let
     "CATEGORY"
     "APP_NAME"
   ] cfg config;
-  
+
   # Alternative for non-programs apps (like GTK):
   # shouldTheme = cfg.CATEGORY.enable || (cfg.autoEnable && (config.APP_NAME.enable or false));
 in
@@ -164,12 +168,12 @@ in
       # - extraCss (gtk)
       # - initExtra (zsh, bash)
       # - plugins with color config (fzf)
-      
+
       # YOUR IMPLEMENTATION HERE
       # Replace with actual Home-Manager option
       # extraConfig = configText;
     };
-    
+
     # Or for non-programs apps:
     # APP_NAME = {
     #   extraCss = configText;

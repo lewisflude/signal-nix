@@ -33,13 +33,12 @@ let
   # Validate color format (hex string with # prefix)
   validateHexColor =
     colorValue:
-    assert lib.assertMsg (signalLib.isValidHexColor colorValue) "Invalid hex color format: ${colorValue}. Must be #RRGGBB or #RRGGBBAA";
+    assert lib.assertMsg (signalLib.isValidHexColor colorValue)
+      "Invalid hex color format: ${colorValue}. Must be #RRGGBB or #RRGGBBAA";
     colorValue;
 
   # Validate that all colors in an attrset are valid hex colors
-  validateColorAttrset =
-    colors:
-    lib.mapAttrs (name: color: validateHexColor color.hex) colors;
+  validateColorAttrset = colors: lib.mapAttrs (name: color: validateHexColor color.hex) colors;
 
   # ============================================================================
   # Core Module Generator
@@ -119,10 +118,7 @@ let
 
       # Apply config at the correct path within programs.<app> or services.<app>
       appConfig =
-        if configPath == [ ] then
-          generatedConfig
-        else
-          lib.setAttrByPath configPath generatedConfig;
+        if configPath == [ ] then generatedConfig else lib.setAttrByPath configPath generatedConfig;
 
       # Determine the target attribute path
       targetAttrPath = if usesService then "services" else "programs";
@@ -144,7 +140,10 @@ let
       category,
       themeGenerator, # Function: mode -> derivation (theme file)
       themePath ? [ "themes" ], # Path to theme option (e.g., ["themes"] for programs.bat.themes)
-      themeConfigPath ? [ "config" "theme" ], # Path to theme config
+      themeConfigPath ? [
+        "config"
+        "theme"
+      ], # Path to theme config
       extraThemeConfig ? { }, # Additional theme-related config
     }:
     {
@@ -171,14 +170,11 @@ let
       themeConfig = {
         signal-dark = darkTheme;
         signal-light = lightTheme;
-      } // extraThemeConfig;
+      }
+      // extraThemeConfig;
 
       # Select active theme
-      activeTheme =
-        if cfg.mode == "auto" then
-          "auto"
-        else
-          "signal-${themeMode}";
+      activeTheme = if cfg.mode == "auto" then "auto" else "signal-${themeMode}";
     in
     {
       config = mkIf (cfg.enable && shouldTheme) {
@@ -203,7 +199,10 @@ let
       appName,
       category,
       colorMapping, # Function: signalColors -> { colors = { ... }; }
-      configPath ? [ "settings" "colors" ],
+      configPath ? [
+        "settings"
+        "colors"
+      ],
       extraConfig ? { },
     }:
     mkAppModule {
@@ -353,34 +352,32 @@ let
 
   # Standard UI color mapping for applications
   # Returns an attrset with common UI color roles
-  makeUIColors =
-    signalColors:
-    {
-      # Surface colors
-      surface-base = signalColors.tonal."surface-base";
-      surface-subtle = signalColors.tonal."surface-subtle";
-      surface-hover = signalColors.tonal."surface-hover";
+  makeUIColors = signalColors: {
+    # Surface colors
+    surface-base = signalColors.tonal."surface-base";
+    surface-subtle = signalColors.tonal."surface-subtle";
+    surface-hover = signalColors.tonal."surface-hover";
 
-      # Text colors
-      text-primary = signalColors.tonal."text-primary";
-      text-secondary = signalColors.tonal."text-secondary";
-      text-tertiary = signalColors.tonal."text-tertiary";
+    # Text colors
+    text-primary = signalColors.tonal."text-primary";
+    text-secondary = signalColors.tonal."text-secondary";
+    text-tertiary = signalColors.tonal."text-tertiary";
 
-      # Divider/border colors
-      divider-primary = signalColors.tonal."divider-primary";
-      divider-strong = signalColors.tonal."divider-strong";
+    # Divider/border colors
+    divider-primary = signalColors.tonal."divider-primary";
+    divider-strong = signalColors.tonal."divider-strong";
 
-      # Accent colors
-      accent-primary = signalColors.accent.primary.Lc75;
-      accent-secondary = signalColors.accent.secondary.Lc75;
-      accent-tertiary = signalColors.accent.tertiary.Lc75;
+    # Accent colors
+    accent-primary = signalColors.accent.primary.Lc75;
+    accent-secondary = signalColors.accent.secondary.Lc75;
+    accent-tertiary = signalColors.accent.tertiary.Lc75;
 
-      # Semantic colors
-      success = signalColors.accent.primary.Lc75;
-      warning = signalColors.accent.warning.Lc75;
-      danger = signalColors.accent.danger.Lc75;
-      info = signalColors.accent.info.Lc75;
-    };
+    # Semantic colors
+    success = signalColors.accent.primary.Lc75;
+    warning = signalColors.accent.warning.Lc75;
+    danger = signalColors.accent.danger.Lc75;
+    info = signalColors.accent.info.Lc75;
+  };
 
   # ============================================================================
   # Export
@@ -394,15 +391,15 @@ in
     mkTier2Module
     mkTier3Module
     mkTier4Module
-    
+
     # Convenience helpers
     mkSimpleAppModule
     mkServiceModule
-    
+
     # Color mapping helpers
     makeAnsiColors
     makeUIColors
-    
+
     # Validation helpers
     validateRequiredFields
     validateHexColor

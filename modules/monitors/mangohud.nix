@@ -58,9 +58,15 @@ in
         wine_color = hexRaw accent.tertiary.Lc75; # Purple for Wine/Proton info
 
         # Additional graph colors for consistency
-        gpu_load_color = [ (hexRaw accent.tertiary.Lc75) (hexRaw accent.tertiary.Lc75) ];
-        cpu_load_color = [ (hexRaw accent.secondary.Lc75) (hexRaw accent.secondary.Lc75) ];
-        
+        gpu_load_color = [
+          (hexRaw accent.tertiary.Lc75)
+          (hexRaw accent.tertiary.Lc75)
+        ];
+        cpu_load_color = [
+          (hexRaw accent.secondary.Lc75)
+          (hexRaw accent.secondary.Lc75)
+        ];
+
         # Network colors (if network stats enabled)
         network_color_download = hexRaw accent.primary.Lc75; # Green for download
         network_color_upload = hexRaw accent.danger.Lc75; # Red for upload

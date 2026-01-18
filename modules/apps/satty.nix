@@ -22,7 +22,7 @@ let
   #
   # Satty uses a color palette for annotation tools (brush, shapes, text, etc.)
   # We provide Signal colors that work well for annotation and visibility.
-  # 
+  #
   # The palette appears in the toolbar for quick selection.
   # Custom colors are available in the color picker as presets.
   # =============================================================================
