@@ -1,13 +1,20 @@
 # Test that verifies module structure is correct
 # This catches issues like placing _module.args at the wrong level
-{ pkgs, lib, self, system, ... }:
+{
+  pkgs,
+  lib,
+  self,
+  system,
+  ...
+}:
 
 let
   # Helper to test Home Manager module structure
-  testHMModule = name: extraConfig:
+  testHMModule =
+    name: extraConfig:
     pkgs.runCommand "test-hm-module-${name}" { } ''
       echo "Testing Home Manager module structure: ${name}"
-      
+
       # Try to evaluate a minimal Home Manager config
       ${pkgs.nix}/bin/nix-instantiate --eval --strict --json \
         --expr '
@@ -41,16 +48,17 @@ let
           echo "ERROR: Module structure is invalid for ${name}"
           exit 1
         }
-      
+
       echo "✓ Module structure is valid for ${name}"
       touch $out
     '';
 
-  # Helper to test NixOS module structure  
-  testNixOSModule = name: extraConfig:
+  # Helper to test NixOS module structure
+  testNixOSModule =
+    name: extraConfig:
     pkgs.runCommand "test-nixos-module-${name}" { } ''
       echo "Testing NixOS module structure: ${name}"
-      
+
       ${pkgs.nix}/bin/nix-instantiate --eval --strict --json \
         --expr '
           let
@@ -80,7 +88,7 @@ let
           echo "ERROR: NixOS module structure is invalid for ${name}"
           exit 1
         }
-      
+
       echo "✓ NixOS module structure is valid for ${name}"
       touch $out
     '';
@@ -88,7 +96,7 @@ let
   # Test that _module.args is accessible
   testModuleArgs = pkgs.runCommand "test-module-args-accessible" { } ''
     echo "Testing that _module.args are accessible to child modules"
-    
+
     # Test that signalLib, signalColors, etc. are available
     ${pkgs.nix}/bin/nix-instantiate --eval --strict \
       --expr '
@@ -131,7 +139,7 @@ let
         echo "ERROR: _module.args are not accessible"
         exit 1
       }
-    
+
     echo "✓ _module.args are properly accessible"
     touch $out
   '';
@@ -146,17 +154,17 @@ in
     terminals.kitty.enable = true;
     cli.bat.enable = true;
   '';
-  
+
   structure-nixos-basic = testNixOSModule "basic" "boot.console.enable = true;";
   structure-nixos-login = testNixOSModule "login" "login.sddm.enable = true;";
-  
+
   # Test that module args work
   structure-module-args = testModuleArgs;
-  
+
   # Test that config merging works correctly
   structure-config-merge = pkgs.runCommand "test-config-merge" { } ''
     echo "Testing that lib.mkMerge works correctly"
-    
+
     # Verify that both unconditional (_module.args) and conditional (enable-gated) 
     # config sections are properly merged
     ${pkgs.nix}/bin/nix-instantiate --eval --strict \
@@ -185,7 +193,7 @@ in
         echo "ERROR: Config merge is broken"
         exit 1
       }
-    
+
     echo "✓ Config merge works correctly"
     touch $out
   '';

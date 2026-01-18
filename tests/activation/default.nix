@@ -41,7 +41,8 @@ let
             manual.html.enable = false;
             manual.json.enable = false;
           }
-        ] ++ configModules;
+        ]
+        ++ configModules;
       };
 
       # Extract the activation package
@@ -98,46 +99,46 @@ in
     }
     {
       testScript = ''
-        echo "Testing Helix dark mode configuration..."
+          echo "Testing Helix dark mode configuration..."
 
-        # Check config file exists
-        test -f "$TEST_HOME/.config/helix/config.toml" || {
-          echo "ERROR: helix config.toml not found"
-          ls -la "$TEST_HOME/.config/" || true
+          # Check config file exists
+          test -f "$TEST_HOME/.config/helix/config.toml" || {
+            echo "ERROR: helix config.toml not found"
+            ls -la "$TEST_HOME/.config/" || true
+            exit 1
+          }
+
+          # Check theme is set
+          grep -q 'theme = "signal-dark"' "$TEST_HOME/.config/helix/config.toml" || {
+            echo "ERROR: Theme not set to signal-dark"
+            cat "$TEST_HOME/.config/helix/config.toml"
+            exit 1
+          }
+
+          # Check theme file exists
+          test -f "$TEST_HOME/.config/helix/themes/signal-dark.toml" || {
+            echo "ERROR: signal-dark theme file not found"
+            exit 1
+          }
+
+        # Verify background color
+        echo "=== Checking theme file contents ==="
+        if [ -f "$TEST_HOME/.config/helix/themes/signal-dark.toml" ]; then
+          echo "Theme file exists, showing first 50 lines:"
+          head -50 "$TEST_HOME/.config/helix/themes/signal-dark.toml"
+        else
+          echo "ERROR: Theme file not found"
+          exit 1
+        fi
+
+        # Check if palette section exists with surface-base color
+        grep -q 'surface-base = "#26272f"' "$TEST_HOME/.config/helix/themes/signal-dark.toml" || {
+          echo "ERROR: Wrong background color in palette"
+          grep "surface-base" "$TEST_HOME/.config/helix/themes/signal-dark.toml" || echo "surface-base not found"
           exit 1
         }
 
-        # Check theme is set
-        grep -q 'theme = "signal-dark"' "$TEST_HOME/.config/helix/config.toml" || {
-          echo "ERROR: Theme not set to signal-dark"
-          cat "$TEST_HOME/.config/helix/config.toml"
-          exit 1
-        }
-
-        # Check theme file exists
-        test -f "$TEST_HOME/.config/helix/themes/signal-dark.toml" || {
-          echo "ERROR: signal-dark theme file not found"
-          exit 1
-        }
-
-      # Verify background color
-      echo "=== Checking theme file contents ==="
-      if [ -f "$TEST_HOME/.config/helix/themes/signal-dark.toml" ]; then
-        echo "Theme file exists, showing first 50 lines:"
-        head -50 "$TEST_HOME/.config/helix/themes/signal-dark.toml"
-      else
-        echo "ERROR: Theme file not found"
-        exit 1
-      fi
-      
-      # Check if palette section exists with surface-base color
-      grep -q 'surface-base = "#26272f"' "$TEST_HOME/.config/helix/themes/signal-dark.toml" || {
-        echo "ERROR: Wrong background color in palette"
-        grep "surface-base" "$TEST_HOME/.config/helix/themes/signal-dark.toml" || echo "surface-base not found"
-        exit 1
-      }
-
-        echo "✓ Helix dark mode configuration correct"
+          echo "✓ Helix dark mode configuration correct"
       '';
     }
   ];
@@ -153,25 +154,25 @@ in
     }
     {
       testScript = ''
-        echo "Testing Helix light mode configuration..."
+          echo "Testing Helix light mode configuration..."
 
-        grep -q 'theme = "signal-light"' "$TEST_HOME/.config/helix/config.toml" || {
-          echo "ERROR: Theme not set to signal-light"
+          grep -q 'theme = "signal-light"' "$TEST_HOME/.config/helix/config.toml" || {
+            echo "ERROR: Theme not set to signal-light"
+            exit 1
+          }
+
+          test -f "$TEST_HOME/.config/helix/themes/signal-light.toml" || {
+            echo "ERROR: signal-light theme file not found"
+            exit 1
+          }
+
+        grep -q 'surface-base = "#e9eaef"' "$TEST_HOME/.config/helix/themes/signal-light.toml" || {
+          echo "ERROR: Wrong light mode background color"
+          grep "surface-base" "$TEST_HOME/.config/helix/themes/signal-light.toml" || echo "surface-base not found"
           exit 1
         }
 
-        test -f "$TEST_HOME/.config/helix/themes/signal-light.toml" || {
-          echo "ERROR: signal-light theme file not found"
-          exit 1
-        }
-
-      grep -q 'surface-base = "#e9eaef"' "$TEST_HOME/.config/helix/themes/signal-light.toml" || {
-        echo "ERROR: Wrong light mode background color"
-        grep "surface-base" "$TEST_HOME/.config/helix/themes/signal-light.toml" || echo "surface-base not found"
-        exit 1
-      }
-
-        echo "✓ Helix light mode configuration correct"
+          echo "✓ Helix light mode configuration correct"
       '';
     }
   ];
@@ -198,13 +199,13 @@ in
           exit 1
         }
 
-        grep -q 'background = "#0f1419"' "$TEST_HOME/.config/alacritty/alacritty.toml" || {
+        grep -q 'background = "#26272f"' "$TEST_HOME/.config/alacritty/alacritty.toml" || {
           echo "ERROR: Wrong background color"
           cat "$TEST_HOME/.config/alacritty/alacritty.toml"
           exit 1
         }
 
-        grep -q 'foreground = "#e6e1cf"' "$TEST_HOME/.config/alacritty/alacritty.toml" || {
+        grep -q 'foreground = "#d4d5df"' "$TEST_HOME/.config/alacritty/alacritty.toml" || {
           echo "ERROR: Wrong foreground color"
           exit 1
         }
@@ -242,13 +243,13 @@ in
           exit 1
         }
 
-        grep -q 'background = 0f1419' "$TEST_HOME/.config/ghostty/config" || {
+        grep -q 'background = 26272f' "$TEST_HOME/.config/ghostty/config" || {
           echo "ERROR: Wrong background color"
           cat "$TEST_HOME/.config/ghostty/config"
           exit 1
         }
 
-        grep -q 'foreground = e6e1cf' "$TEST_HOME/.config/ghostty/config" || {
+        grep -q 'foreground = d4d5df' "$TEST_HOME/.config/ghostty/config" || {
           echo "ERROR: Wrong foreground color"
           exit 1
         }

@@ -33,9 +33,9 @@
     # Helper to capture and verify assertions
     home.file = lib.mkMerge [
       (lib.mkIf (config.test.assertions.expected != [ ]) {
-        "test/assertions.actual".text = lib.concatMapStringsSep "\n---\n" (
-          x: x.message
-        ) (lib.filter (x: !x.assertion) config.assertions);
+        "test/assertions.actual".text = lib.concatMapStringsSep "\n---\n" (x: x.message) (
+          lib.filter (x: !x.assertion) config.assertions
+        );
 
         "test/assertions.expected".text = lib.concatStringsSep "\n---\n" config.test.assertions.expected;
       })

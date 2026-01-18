@@ -1,11 +1,22 @@
 # Ironbar Signal Theme - Color Palette Provider
 # Provides Signal color palette for ironbar without configuring the program
 # Users import the colors in their own ironbar configuration
-{ config, lib, pkgs, signalPalette, nix-colorizer, ... }:
+{
+  config,
+  lib,
+  pkgs,
+  signalPalette,
+  nix-colorizer,
+  ...
+}:
 let
   # Import signalLib directly to avoid circular dependencies with _module.args
-  signalLib = import ../../lib { inherit lib; palette = signalPalette; inherit nix-colorizer; };
-  
+  signalLib = import ../../lib {
+    inherit lib;
+    palette = signalPalette;
+    inherit nix-colorizer;
+  };
+
   inherit (lib) mkIf;
   cfg = config.theming.signal;
   themeMode = signalLib.resolveThemeMode cfg.mode;

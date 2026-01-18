@@ -52,7 +52,7 @@
         };
         nmt.script = ''
           CONFIG="home-files/.config/gtk-3.0/gtk.css"
-          
+
           # Verify Adwaita palette colors are defined
           for color in blue_1 green_2 yellow_3 orange_4 red_5 purple_1 brown_2 light_3 dark_4; do
             grep -q "@define-color $color" "$CONFIG" || {
@@ -60,7 +60,7 @@
               exit 1
             }
           done
-          
+
           echo "✓ All Adwaita palette colors present"
         '';
       }

@@ -80,10 +80,10 @@ let
         gnused
         diffutils
         jq
-        
+
         # Shell and basic tools
         bash
-        
+
         # Packages commonly referenced in modules
         ;
     };

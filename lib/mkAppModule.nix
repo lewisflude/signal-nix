@@ -81,7 +81,7 @@ let
       inherit (lib) mkIf mkOption types;
       cfg = config.theming.signal;
       themeMode = signalLib.resolveThemeMode cfg.mode;
-      
+
       # Get colors for the resolved theme mode
       signalColors = signalLib.getColors themeMode;
 
@@ -158,8 +158,8 @@ let
       inherit (lib) mkIf;
       cfg = config.theming.signal;
       themeMode = signalLib.resolveThemeMode cfg.mode;
-      
-      # Get colors for the resolved theme mode  
+
+      # Get colors for the resolved theme mode
       signalColorsDark = signalLib.getColors "dark";
       signalColorsLight = signalLib.getColors "light";
 
@@ -272,7 +272,7 @@ let
       inherit (lib) mkIf;
       cfg = config.theming.signal;
       themeMode = signalLib.resolveThemeMode cfg.mode;
-      
+
       # Get colors for the resolved theme mode
       signalColors = signalLib.getColors themeMode;
 
