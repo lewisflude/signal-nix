@@ -279,6 +279,10 @@ in
       procs.enable = mkEnableOption "Signal theme for procs process viewer";
     };
 
+    media = {
+      mpv.enable = mkEnableOption "Signal theme for mpv media player";
+    };
+
     browsers = {
       firefox.enable = mkEnableOption "Signal theme for Firefox (userChrome.css)";
       qutebrowser.enable = mkEnableOption "Signal theme for Qutebrowser";
@@ -438,6 +442,7 @@ in
             || cfg.monitors.htop.enable
             || cfg.monitors.mangohud.enable
             || cfg.monitors.procs.enable
+            || cfg.media.mpv.enable
             || cfg.apps.satty.enable
             || cfg.prompts.starship.enable
             || cfg.shells.zsh.enable
