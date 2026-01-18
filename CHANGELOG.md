@@ -10,6 +10,14 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Added
 
 #### New Application Support
+- **Procs**: Modern replacement for `ps` written in Rust
+  - TOML configuration with terminal color names (BrightBlue, BrightGreen, etc.)
+  - Percentage-based coloring for CPU/memory usage (0-25%, 25-50%, 50-75%, 75-100%, 100%+)
+  - Process state coloring (Running=green, Sleeping=blue, Zombie=magenta, etc.)
+  - Unit-based coloring for memory sizes (K=blue, M=green, G=yellow, T/P=red)
+  - Config placed at `~/.config/procs/config.toml`
+  - Signal now supports 62 applications total
+
 - **Zed Editor**: Modern collaborative code editor with complete JSON theme generation
   - Comprehensive syntax highlighting for 40+ language elements
   - Full UI theming (borders, surfaces, scrollbars, status bars)
@@ -18,7 +26,6 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   - Collaborative editing cursor colors (8 multiplayer cursors)
   - Theme file placed at `~/.config/zed/themes/signal-{mode}.json`
   - Supports both dark and light modes
-  - Signal now supports 61 applications total
 
 #### GTK Theming Enhancement
 - **Complete Adwaita Color Palette**: GTK module now defines all 45 Adwaita palette variables (`blue_1` through `dark_5`)

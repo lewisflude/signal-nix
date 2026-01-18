@@ -107,7 +107,7 @@ When creating a new release:
   - Keep user's segment choices, only replace colors
   - Upstream docs: https://github.com/romkatv/powerlevel10k#configuration
 
-- [ ] **Procs** - Add module with config.toml
+- [x] **Procs** - Add module with config.toml (Completed 2026-01-18)
   - Header styling, percentage-based colors, state-based colors
   - Format: TOML configuration with terminal color names
   - Percentage gradient: Define colors for 0%, 25%, 50%, 75%, 100% thresholds
@@ -693,10 +693,10 @@ When creating a new release:
 ✅ GitHub Issues templates and workflows  
 ✅ Troubleshooting guide with diagnostics  
 ✅ Design principles documentation  
-✅ **Comprehensive Theming System** - 61 applications with theming support:
+✅ **Comprehensive Theming System** - 62 applications with theming support:
   - ✅ Terminals (5): Alacritty, Foot, Ghostty, Kitty, WezTerm
   - ✅ CLI Tools (12): Bat, Delta, Eza, Fzf, Glow, Lazydocker, Lazygit, Less, Ripgrep, Tealdeer, Tig, Yazi
-  - ✅ Monitors (4): Bottom, Btop++, Htop, MangoHud
+  - ✅ Monitors (5): Bottom, Btop++, Htop, MangoHud, Procs
   - ✅ File Managers (3): Lf, Nnn, Ranger
   - ✅ Desktop Bars (3): Ironbar, Polybar, Waybar
   - ✅ Launchers (5): Dmenu, Fuzzel, Rofi, Tofi, Wofi
@@ -718,4 +718,4 @@ When creating a new release:
 
 **Note**: This file replaces the temporary launch tracking files which have been removed after successful launch.
 
-Last updated: 2026-01-18 (added Zed Editor theming)
+Last updated: 2026-01-18 (added Procs theming)

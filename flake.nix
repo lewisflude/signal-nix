@@ -323,8 +323,11 @@
             module-ghostty-evaluates
             module-bat-evaluates
             module-fzf-evaluates
+            module-mpv-structure
+            module-mpv-colors
             module-gtk-evaluates
             module-ironbar-evaluates
+            module-procs-evaluates
             ;
 
           # ============================================================================
@@ -459,7 +462,7 @@
           # ============================================================================
           # NixOS Module Tests
           # ============================================================================
-          
+
           # Disabled: These tests have structural issues with module interpolation
           # See tests/nixos.nix for test definitions that need refactoring
         }

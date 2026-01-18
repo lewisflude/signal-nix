@@ -170,29 +170,25 @@ in
     echo "Testing MPV module color configuration..."
 
     ${assertFileExists ../../modules/media/mpv.nix "mpv module"}
-    
+
     # Check for OSD colors
-    ${assertFileContains ../../modules/media/mpv.nix "osd-color"
-      "mpv module missing osd-color"
-    }
+    ${assertFileContains ../../modules/media/mpv.nix "osd-color" "mpv module missing osd-color"}
     ${assertFileContains ../../modules/media/mpv.nix "osd-back-color"
       "mpv module missing osd-back-color"
     }
     ${assertFileContains ../../modules/media/mpv.nix "osd-border-color"
       "mpv module missing osd-border-color"
     }
-    
+
     # Check for subtitle colors
-    ${assertFileContains ../../modules/media/mpv.nix "sub-color"
-      "mpv module missing sub-color"
-    }
+    ${assertFileContains ../../modules/media/mpv.nix "sub-color" "mpv module missing sub-color"}
     ${assertFileContains ../../modules/media/mpv.nix "sub-border-color"
       "mpv module missing sub-border-color"
     }
     ${assertFileContains ../../modules/media/mpv.nix "sub-back-color"
       "mpv module missing sub-back-color"
     }
-    
+
     # Check for alpha channel helper function
     ${assertFileContains ../../modules/media/mpv.nix "hexWithAlpha"
       "mpv module missing hexWithAlpha helper"
@@ -218,6 +214,42 @@ in
     ${assertFileExists ../../modules/ironbar/default.nix "ironbar module"}
 
     echo "✓ ironbar module structure is valid"
+    touch $out
+  '';
+
+  module-procs-evaluates = pkgs.runCommand "test-module-procs" { } ''
+    echo "Testing procs module..."
+
+    ${assertFileExists ../../modules/monitors/procs.nix "procs module"}
+
+    # Check for TOML config generation
+    ${assertFileContains ../../modules/monitors/procs.nix "writeText"
+      "procs module missing config generation"
+    }
+    ${assertFileContains ../../modules/monitors/procs.nix "procs-config.toml"
+      "procs module missing TOML config filename"
+    }
+
+    # Check for color sections
+    ${assertFileContains ../../modules/monitors/procs.nix "\\[style.by_percentage\\]"
+      "procs module missing percentage colors"
+    }
+    ${assertFileContains ../../modules/monitors/procs.nix "\\[style.by_state\\]"
+      "procs module missing state colors"
+    }
+    ${assertFileContains ../../modules/monitors/procs.nix "\\[style.by_unit\\]"
+      "procs module missing unit colors"
+    }
+
+    # Check config file placement
+    ${assertFileContains ../../modules/monitors/procs.nix "xdg.configFile"
+      "procs module missing xdg.configFile"
+    }
+    ${assertFileContains ../../modules/monitors/procs.nix "procs/config.toml"
+      "procs module missing config path"
+    }
+
+    echo "✓ procs module has correct structure"
     touch $out
   '';
 

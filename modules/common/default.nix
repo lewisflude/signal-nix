@@ -89,6 +89,7 @@ in
     ../../modules/monitors/htop.nix
     ../../modules/monitors/bottom.nix
     ../../modules/monitors/mangohud.nix
+    ../../modules/monitors/procs.nix
 
     # Media Players
     ../../modules/media/mpv.nix
@@ -148,7 +149,7 @@ in
       description = ''
         Exposed color definitions from Signal modules.
         Each application module can populate this with its color exports.
-        
+
         For example, ironbar provides:
         - colors.ironbar.cssFile: Path to CSS file with color definitions
         - colors.ironbar.tokens: Raw color values as Nix attributes
@@ -273,6 +274,7 @@ in
       htop.enable = mkEnableOption "Signal theme for htop";
       bottom.enable = mkEnableOption "Signal theme for bottom";
       mangohud.enable = mkEnableOption "Signal theme for MangoHud gaming overlay";
+      procs.enable = mkEnableOption "Signal theme for procs process viewer";
     };
 
     browsers = {
@@ -419,6 +421,7 @@ in
           || cfg.monitors.btop.enable
           || cfg.monitors.htop.enable
           || cfg.monitors.mangohud.enable
+          || cfg.monitors.procs.enable
           || cfg.prompts.starship.enable
           || cfg.shells.zsh.enable
           || cfg.shells.fish.enable

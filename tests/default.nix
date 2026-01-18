@@ -101,6 +101,7 @@ in
     module-mpv-colors
     module-gtk-evaluates
     module-ironbar-evaluates
+    module-procs-evaluates
 
     # Edge cases
     edge-case-all-disabled
