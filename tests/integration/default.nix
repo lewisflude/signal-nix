@@ -164,6 +164,44 @@ in
 
   module-fzf-evaluates = mkModuleTest "fzf" ../../modules/cli/fzf.nix "fzf";
 
+  module-mpv-structure = mkModuleTest "mpv" ../../modules/media/mpv.nix "mpv";
+
+  module-mpv-colors = pkgs.runCommand "test-module-mpv-colors" { } ''
+    echo "Testing MPV module color configuration..."
+
+    ${assertFileExists ../../modules/media/mpv.nix "mpv module"}
+    
+    # Check for OSD colors
+    ${assertFileContains ../../modules/media/mpv.nix "osd-color"
+      "mpv module missing osd-color"
+    }
+    ${assertFileContains ../../modules/media/mpv.nix "osd-back-color"
+      "mpv module missing osd-back-color"
+    }
+    ${assertFileContains ../../modules/media/mpv.nix "osd-border-color"
+      "mpv module missing osd-border-color"
+    }
+    
+    # Check for subtitle colors
+    ${assertFileContains ../../modules/media/mpv.nix "sub-color"
+      "mpv module missing sub-color"
+    }
+    ${assertFileContains ../../modules/media/mpv.nix "sub-border-color"
+      "mpv module missing sub-border-color"
+    }
+    ${assertFileContains ../../modules/media/mpv.nix "sub-back-color"
+      "mpv module missing sub-back-color"
+    }
+    
+    # Check for alpha channel helper function
+    ${assertFileContains ../../modules/media/mpv.nix "hexWithAlpha"
+      "mpv module missing hexWithAlpha helper"
+    }
+
+    echo "✓ MPV module has correct color configuration"
+    touch $out
+  '';
+
   module-gtk-evaluates = pkgs.runCommand "test-module-gtk" { } ''
     echo "Testing gtk module..."
 

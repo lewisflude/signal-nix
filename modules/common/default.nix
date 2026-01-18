@@ -89,6 +89,9 @@ in
     ../../modules/monitors/bottom.nix
     ../../modules/monitors/mangohud.nix
 
+    # Media Players
+    ../../modules/media/mpv.nix
+
     # Browsers
     ../../modules/browsers/firefox.nix
     ../../modules/browsers/qutebrowser.nix

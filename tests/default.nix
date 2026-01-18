@@ -97,6 +97,8 @@ in
     module-ghostty-evaluates
     module-bat-evaluates
     module-fzf-evaluates
+    module-mpv-structure
+    module-mpv-colors
     module-gtk-evaluates
     module-ironbar-evaluates
 

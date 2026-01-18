@@ -676,12 +676,24 @@ theming.signal.desktop.swaylock.enable = true;
 **Format:** ncmpcpp config  
 **Notes:** Feature-rich MPD client
 
-### 🔴 Mpv
-**Status:** ❌ Not implemented  
+### 🟢 MPV
+**Status:** ✅ Implemented  
 **Category:** Media player  
-**Documentation:** [Mpv OSC](https://mpv.io/manual/master/#on-screen-controller)  
-**Format:** mpv.conf / Lua  
-**Notes:** Powerful media player with OSD theming
+**Home Manager:** `programs.mpv.config`  
+**Documentation:** [MPV Manual](https://mpv.io/manual/stable/)  
+**Format:** Structured settings (Tier 2)  
+**Notes:** Powerful media player with OSD and subtitle theming
+
+**Colors configured:**
+- OSD (on-screen display): text, background, border, selected items
+- Subtitles: text, outline/border, background
+- Alpha channel support for semi-transparent elements
+
+**Example:**
+```nix
+programs.mpv.enable = true;
+theming.signal.media.mpv.enable = true;
+```
 
 ### 🔴 Newsboat
 **Status:** ❌ Not implemented  

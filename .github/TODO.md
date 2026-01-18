@@ -11,7 +11,7 @@ This file tracks ongoing tasks and future improvements for Signal Design System.
 - [ ] Monitor and respond to user feedback in Discussions and Issues
 - [ ] Review and merge community contributions
 - [ ] Keep dependencies up to date (run `nix flake update` periodically)
-- [ ] **MPV theming** - Widely used media player with OSD/subtitle theming
+- [x] **MPV theming** - Widely used media player with OSD/subtitle theming (Completed 2026-01-18)
 
 ### Medium Priority
 
@@ -65,7 +65,7 @@ When creating a new release:
 
 #### High Priority Applications (Native HM Options)
 
-- [ ] **Swaylock** - Add module for `programs.swaylock.settings`
+- [x] **Swaylock** - Add module for `programs.swaylock.settings` (Completed 2026-01-18)
   - Ring colors: normal, clear, verify, wrong (authentication states)
   - Inside colors, text colors, key highlight colors
   - Format: Hex colors without `#` prefix (e.g., `"ring-color" = "3b82f6"`)
@@ -73,14 +73,14 @@ When creating a new release:
   - Use warning/danger accent colors for wrong state, primary for verify
   - Upstream docs: `man swaylock`
 
-- [ ] **MPV** - Add module for `programs.mpv.config`
+- [x] **MPV** - Add module for `programs.mpv.config` (Completed 2026-01-18)
   - OSD colors (on-screen display: play/pause, volume, time)
   - Subtitle colors (text, border, background)
   - Border colors (window borders in borderless mode)
-  - OSC theme support via script-opts (modern UI skin)
-  - Format: Hex with alpha: `#RRGGBBAA` for semi-transparency
-  - OSC theming: Separate config file in `script-opts/osc.conf`
-  - Example: `osd-color = "#e8e8e8"`, `osd-back-color = "#1a1a2e80"`
+  - Format: Hex with alpha: `#AARRGGBB` for semi-transparency
+  - Implementation: Uses hexWithAlpha helper for alpha channel support
+  - Selected item colors for playlist/menu highlighting
+  - Example: `osd-color = "#e8e8e8"`, `osd-back-color = "#C01a1a2e"`
   - Upstream docs: https://mpv.io/manual/stable/
 
 #### Medium Priority Applications (Config File Based)
@@ -695,7 +695,7 @@ When creating a new release:
 ✅ GitHub Issues templates and workflows  
 ✅ Troubleshooting guide with diagnostics  
 ✅ Design principles documentation  
-✅ **Comprehensive Theming System** - 59+ applications with theming support:
+✅ **Comprehensive Theming System** - 60+ applications with theming support:
   - ✅ Terminals (5): Alacritty, Foot, Ghostty, Kitty, WezTerm
   - ✅ CLI Tools (12): Bat, Delta, Eza, Fzf, Glow, Lazydocker, Lazygit, Less, Ripgrep, Tealdeer, Tig, Yazi
   - ✅ Monitors (4): Bottom, Btop++, Htop, MangoHud
@@ -711,6 +711,7 @@ When creating a new release:
   - ✅ Prompts (1): Starship
   - ✅ Browsers (2): Firefox, Qutebrowser
   - ✅ Lock Screens (1): Swaylock
+  - ✅ Media Players (1): MPV
   - ✅ NixOS Boot (3): Console, GRUB, Plymouth
   - ✅ NixOS Login (3): GDM, LightDM, SDDM
   - ✅ System Theming (2): GTK, Qt
@@ -719,4 +720,4 @@ When creating a new release:
 
 **Note**: This file replaces the temporary launch tracking files which have been removed after successful launch.
 
-Last updated: 2026-01-18 (added Swaylock theming)
+Last updated: 2026-01-18 (added MPV theming)

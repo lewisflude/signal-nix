@@ -204,6 +204,8 @@ Signal provides color themes for 60+ applications across all categories:
 - **btop++** - Resource monitor (with gradients)
 - **htop** - Classic system monitor ✨
 - **bottom** - Modern resource monitor ✨
+- **MangoHud** - Gaming overlay (HUD colors)
+- **tealdeer** - Fast tldr client ✨
 - **less** - Pager (man page colors) ✨
 - **ripgrep** - Fast search tool ✨
 - **glow** - Markdown viewer ✨
@@ -226,6 +228,10 @@ Signal provides color themes for 60+ applications across all categories:
 
 - **Firefox** - userChrome.css theming ✨
 - **Qutebrowser** - Vim-like browser ✨
+
+### Media Players
+
+- **MPV** - Media player (OSD + subtitle theming)
 
 ✨ = Fully implemented with comprehensive theming
 
