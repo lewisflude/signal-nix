@@ -2,6 +2,8 @@
 
 This file tracks ongoing tasks and future improvements for Signal Design System.
 
+**Note**: Theming tasks from `COLOR_THEME_TODO.md` have been consolidated here. See "Future Enhancements > Theming Expansion" section below.
+
 ## Active Tasks
 
 ### High Priority
@@ -9,28 +11,27 @@ This file tracks ongoing tasks and future improvements for Signal Design System.
 - [ ] Monitor and respond to user feedback in Discussions and Issues
 - [ ] Review and merge community contributions
 - [ ] Keep dependencies up to date (run `nix flake update` periodically)
+- [ ] **Swaylock theming** - High-value security/lock screen application (Wayland-only)
+- [ ] **MPV theming** - Widely used media player with OSD/subtitle theming
 
 ### Medium Priority
 
+- [ ] **Zed Editor theming** - Modern code editor gaining popularity
+- [ ] **Zsh Syntax Highlighting** - Enhance existing zsh module with syntax colors
+- [ ] **Qt theming enhancements** - qt5ct/qt6ct and Kvantum support for better Qt app integration
+- [ ] **GTK CSS enhancements** - Per-app customizations (Thunar sidebar, Nautilus, etc.)
 - [ ] Consider submitting to nixpkgs after community validation
   - **Requirements**: Stable API, positive community feedback, comprehensive documentation, passing CI
   - **Process**: Submit flake as package, ensure license compatibility, provide maintainer info
   - **Related**: https://github.com/NixOS/nixpkgs/blob/master/CONTRIBUTING.md
 - [ ] Create demo videos if requested by community:
-  - **Desktop tour** (1-2 min): Show themed desktop with various applications, demonstrate consistency
-  - **Application showcases** (30-60s each): Individual apps showing color usage, before/after comparisons
-  - **OKLCH color space explanation**: Educational video explaining why OKLCH provides better perceptual uniformity than RGB/HSL
-    - **Key points to cover**:
-      - Perceptual uniformity: Equal numerical differences = equal perceived differences
-      - Better than RGB: RGB's red appears brighter than blue at same values
-      - Better than HSL: HSL's lightness doesn't match human perception
-      - Practical benefits: Easier to create harmonious color schemes, better accessibility
-      - Resources: https://evilmartians.com/chronicles/oklch-in-css-why-quit-rgb-hsl
-  - **Tools**: OBS Studio (themed with Signal colors!), kdenlive for editing, mpv for playback testing
+  - **Desktop tour** (1-2 min): Show themed desktop with various applications
+  - **Application showcases** (30-60s each): Individual apps showing color usage
+  - **OKLCH color space explanation**: Educational video on perceptual uniformity benefits
+    - Resources: https://evilmartians.com/chronicles/oklch-in-css-why-quit-rgb-hsl
+  - **Tools**: OBS Studio, kdenlive for editing, mpv for playback testing
 - [ ] Build community showcase gallery with user screenshots
-- [ ] Post to additional communities if interest grows:
-  - r/unixporn (with high-quality screenshots)
-  - Hacker News (if appropriate timing/interest)
+- [ ] Post to additional communities if interest grows (r/unixporn, Hacker News)
 
 ### Low Priority
 
@@ -60,6 +61,226 @@ When creating a new release:
 6. Announce in Discussions
 
 ## Future Enhancements
+
+### Theming Expansion
+
+#### High Priority Applications (Native HM Options)
+
+- [ ] **Swaylock** - Add module for `programs.swaylock.settings`
+  - Ring colors: normal, clear, verify, wrong (authentication states)
+  - Inside colors, text colors, key highlight colors
+  - Format: Hex colors without `#` prefix (e.g., `"ring-color" = "3b82f6"`)
+  - Security: Wayland-only, works with Sway, Hyprland, other compositors
+  - Use warning/danger accent colors for wrong state, primary for verify
+  - Upstream docs: `man swaylock`
+
+- [ ] **MPV** - Add module for `programs.mpv.config`
+  - OSD colors (on-screen display: play/pause, volume, time)
+  - Subtitle colors (text, border, background)
+  - Border colors (window borders in borderless mode)
+  - OSC theme support via script-opts (modern UI skin)
+  - Format: Hex with alpha: `#RRGGBBAA` for semi-transparency
+  - OSC theming: Separate config file in `script-opts/osc.conf`
+  - Example: `osd-color = "#e8e8e8"`, `osd-back-color = "#1a1a2e80"`
+  - Upstream docs: https://mpv.io/manual/stable/
+
+#### Medium Priority Applications (Config File Based)
+
+- [ ] **Zed Editor** - Add module with `xdg.configFile` for settings.json
+  - Theme selection (choose from built-in themes)
+  - Experimental theme overrides (preview feature)
+  - Custom theme file support (full theme creation)
+  - Format: JSON configuration file
+  - Theme location: `~/.config/zed/themes/`
+  - Implementation: Generate custom theme JSON with Signal colors
+  - Upstream docs: https://zed.dev/docs/themes
+
+- [ ] **Zsh Syntax Highlighting** - Add to existing zsh module
+  - Highlighter styles for different syntax elements
+  - Command/builtin colors, alias/function colors, path highlighting
+  - Format: Zsh style definitions (e.g., `"alias" = "fg=magenta,bold"`)
+  - Integration: Add to existing `modules/shells/zsh.nix`
+  - Upstream docs: https://github.com/zsh-users/zsh-syntax-highlighting/blob/master/docs/highlighters.md
+
+- [ ] **Powerlevel10k** - Add p10k theme generation
+  - Directory colors, Git status colors, prompt segment colors
+  - Generate `.p10k.zsh` file (full config file)
+  - Format: Zsh script with typeset variables
+  - Challenge: 100+ color variables, need smart defaults
+  - Keep user's segment choices, only replace colors
+  - Upstream docs: https://github.com/romkatv/powerlevel10k#configuration
+
+- [ ] **Procs** - Add module with config.toml
+  - Header styling, percentage-based colors, state-based colors
+  - Format: TOML configuration with terminal color names
+  - Percentage gradient: Define colors for 0%, 25%, 50%, 75%, 100% thresholds
+  - Config location: `~/.config/procs/config.toml`
+  - Upstream docs: https://github.com/dalance/procs#configuration
+
+- [ ] **Niri** - Add module with config.kdl
+  - Border colors (active/inactive), focus ring colors, window opacity
+  - Wayland compositor with unique KDL configuration format
+  - Integration with existing Wayland theming
+
+- [ ] **Swayimg** - Add module with config file
+  - Background color, font color, shadow color
+  - Image viewer theming for better integration
+
+- [ ] **Satty** - Add module with config.toml
+  - Drawing colors, font configuration
+  - Screenshot annotation tool theming
+
+#### Lower Priority Applications (Complex/External)
+
+- [ ] **Chromium** - Add module for extensions/flags
+  - Dark Reader extension support
+  - Force dark mode flags
+  - Consider declarative extension management
+
+- [ ] **Discord (Vencord)** - Add Vesktop theme support
+  - CSS theme file generation
+  - Background colors, text colors, brand colors
+  - Requires BetterDiscord or Vencord
+
+- [ ] **Telegram Desktop** - Add theme file support
+  - Document .tdesktop-theme creation process
+  - Consider using theme generator API
+  - May need external tooling
+
+- [ ] **Thunar** - Document GTK theme dependency
+  - Ensure GTK3 extra CSS support
+  - Sidebar customization via GTK CSS
+
+- [ ] **Nautilus** - Document libadwaita integration
+  - Color scheme preference
+  - Adw-gtk3 theme support
+
+- [ ] **GIMP** - Add theme directory support
+  - Theme file structure and installation process
+
+- [ ] **Aseprite** - Add extension theme support
+  - Extension structure and theme installation
+
+- [ ] **Steam** - Add skin support
+  - Adwaita-for-Steam integration
+  - Skin directory management
+  - Fetchable skin sources
+
+- [ ] **OBS Studio** - Add Qt theme support
+  - QSS file generation
+  - Theme directory setup
+
+- [ ] **Obsidian** - Document CSS snippets approach
+  - Per-vault configuration challenges
+  - Snippet generation
+
+#### Environment Variables
+
+- [ ] **GitHub CLI** - Add glamour style
+  - GLAMOUR_STYLE environment variable
+  - Markdown rendering style
+
+#### Theme System Infrastructure
+
+- [ ] Create centralized color palette system
+  - Define semantic color roles (not just technical names)
+  - Map brand colors to functional roles (primary, secondary, accent, surface, text)
+  - Generate app-specific color formats (hex, RGB, HSL, terminal codes)
+  - Benefits: Consistent color meaning, single source of truth, better accessibility
+  - Semantic roles: Surfaces, Text, Actions, Borders, States
+  - Implementation: Extend existing `signalColors` system in `modules/common/default.nix`
+
+- [ ] Add color format converters
+  - Hex to RGB, RGB to terminal ANSI, Hex with alpha to separate alpha value
+  - Use cases: GTK needs `rgb()`, Terminal needs ANSI codes, QSS needs `rgba()`
+  - Implementation location: `lib/colors.nix` with pure functions
+
+- [ ] Create application category hierarchy
+  - Enable/disable entire categories at once (terminals, cli, gui, etc.)
+  - Shared color mappings for related apps
+  - Better organization for users
+  - Example: `theming.signal.categories.terminals.enable = true;`
+
+- [ ] Standardize module structure
+  - Consistent option naming across all modules
+  - Common color options (overrides, variants, custom mappings)
+  - Enable/disable per-app granularity
+  - Reference: Create `docs/MODULE_STRUCTURE.md` documenting standard
+
+#### GTK/Qt Integration Enhancements
+
+- [ ] **Qt Theming** - Add Qt color scheme support
+  - qt5ct/qt6ct configuration (Qt settings tools)
+  - Kvantum theme support (advanced Qt theme engine)
+  - Coordinate with GTK themes for consistency
+  - Color mapping: Use same semantic colors as GTK
+  - Qt palette roles: Window, WindowText, Base, Text, Button, Highlight, etc.
+  - Upstream docs: qt5ct (https://github.com/desktop-app/qt5ct), Kvantum (https://github.com/tsujan/Kvantum)
+
+- [ ] **GTK Extra CSS** - Enhance existing support
+  - Per-app CSS customization (app-specific overrides)
+  - Thunar sidebar styling
+  - File manager customizations (breadcrumbs, location bar)
+  - Component-specific styling (sidebars, header bars, popovers, tooltips)
+  - State styling (hover, active, focus)
+  - Implementation: Extend `modules/gtk/default.nix`
+
+#### Theme Design & Research
+
+- [ ] Define color role mapping
+  - Primary/secondary/accent roles and their usage
+  - Success/warning/error semantic colors for states
+  - Background hierarchy (base, elevated, overlay levels)
+  - Text contrast levels (primary, secondary, tertiary, disabled)
+  - Follow WCAG 2.1 AA guidelines (4.5:1 for normal text, 3:1 for large text)
+  - Output: Document in `docs/COLOR_SEMANTICS.md`
+
+- [ ] Create default color palettes
+  - Light theme palette (high-key, bright backgrounds)
+  - Dark theme palette (low-key, dark backgrounds) - current focus
+  - High contrast variants (enhanced contrast for accessibility)
+  - Colorblind-friendly options (adjusted hues for common color blindness types)
+  - Testing: Use contrast checkers and colorblind simulators
+
+- [ ] Application grouping strategy
+  - Which apps should share exact colors (terminals need consistency)
+  - Which need unique adaptations (media players may need different backgrounds)
+  - Consistency vs. optimization trade-offs
+  - Categories: Strict consistency (terminals), Semantic consistency (GUI), Contextual adaptation (media)
+  - Documentation: Create decision tree in `docs/COLOR_GROUPING.md`
+
+#### Documentation Updates
+
+- [ ] Update theming reference guide
+  - Document all supported applications with examples
+  - Show example configurations for each app
+  - Migration guide from manual configs to Signal theming
+  - Before/after comparisons
+  - Troubleshooting section
+  - Location: Expand `docs/theming-reference.md`
+
+- [ ] Create application compatibility matrix
+  - What works on NixOS vs Home Manager vs nix-darwin
+  - Platform-specific limitations (Linux-only, macOS-only, etc.)
+  - Required dependencies for each application
+  - Format: Table with apps × platforms, dependencies, notes
+  - Location: `docs/COMPATIBILITY.md`
+
+#### Testing for New Theme Modules
+
+- [ ] Add tests for new modules
+  - Color value validation (hex format, bounds checking)
+  - Config file generation (syntax, structure)
+  - Integration tests (full configuration builds)
+  - Test types: Unit tests, Module tests, Integration tests, Regression tests
+  - Test framework: nix-unit when migrated, or runCommand
+  - Test location: `tests/modules/` subdirectory
+
+- [ ] Create visual regression tests
+  - Screenshot comparison (detect visual changes)
+  - Theme consistency checks (colors match across apps)
+  - Priority: Low - complex to implement, high maintenance
+  - Alternative: Manual testing checklist with screenshots in docs
 
 ### Architecture Improvements
 
@@ -208,16 +429,20 @@ When creating a new release:
     - Clear documentation for contributors
     - CI passes consistently with both test types
 
-- [ ] **Enhance architecture documentation** - Add detailed guides for contributors on how to add new applications
+- [x] **Enhance architecture documentation** - Add detailed guides for contributors on how to add new applications
+  - **Status**: ✅ Completed (2026-01-18) - Created comprehensive CONTRIBUTING_APPLICATIONS.md
   - **Context**: Current module patterns work well but lack comprehensive contributor documentation
   - **Sub-tasks** (can be done incrementally):
-    1. **Create CONTRIBUTING_APPLICATIONS.md** (Priority: High)
-       - Step-by-step guide for adding new application modules
-       - Target audience: First-time contributors
-       - Include tier system explanation with examples
-       - Provide decision tree for choosing tier
-       - Add example PR checklist
-       - Effort: 1 day
+    1. **Create CONTRIBUTING_APPLICATIONS.md** (Priority: High) ✅
+       - ✅ Step-by-step guide for adding new application modules
+       - ✅ Target audience: First-time contributors
+       - ✅ Include tier system explanation with examples
+       - ✅ Provide decision tree for choosing tier
+       - ✅ Add example PR checklist
+       - ✅ Added common pitfalls section
+       - ✅ Included testing checklist
+       - ✅ Linked to existing documentation
+       - Effort: 1 day (completed)
     2. **Document module testing requirements** (Priority: Medium)
        - Create `docs/TESTING_GUIDE.md`
        - Explain when to use unit vs integration tests
@@ -245,11 +470,17 @@ When creating a new release:
 
 ### Potential Features
 
-- Additional application integrations (community-driven)
 - Enhanced brand governance policies
 - More ironbar widget customization options
 - Improved light mode refinements based on feedback
 - Performance optimizations for module evaluation
+- Dynamic theme switching (runtime theme changes without restart)
+- System theme detection (dark/light mode)
+- Time-based themes (light during day, dark at night)
+- Per-app theme overrides
+- Theme variants (seasonal, holiday, event, mood themes)
+- Community themes (sharing, gallery, rating system, import/export)
+- OKLCH color space support (better perceptual uniformity than RGB/HSL)
 
 ### Developer Experience
 
@@ -465,9 +696,27 @@ When creating a new release:
 ✅ GitHub Issues templates and workflows  
 ✅ Troubleshooting guide with diagnostics  
 ✅ Design principles documentation  
+✅ **Comprehensive Theming System** - 58+ applications with theming support:
+  - ✅ Terminals (5): Alacritty, Foot, Ghostty, Kitty, WezTerm
+  - ✅ CLI Tools (12): Bat, Delta, Eza, Fzf, Glow, Lazydocker, Lazygit, Less, Ripgrep, Tealdeer, Tig, Yazi
+  - ✅ Monitors (4): Bottom, Btop++, Htop, MangoHud
+  - ✅ File Managers (3): Lf, Nnn, Ranger
+  - ✅ Desktop Bars (3): Ironbar, Polybar, Waybar
+  - ✅ Launchers (5): Dmenu, Fuzzel, Rofi, Tofi, Wofi
+  - ✅ Notifications (3): Dunst, Mako, SwayNC
+  - ✅ Compositors (2): Hyprland, Sway
+  - ✅ Window Managers (3): Awesome, Bspwm, i3
+  - ✅ Editors (5): Emacs, Helix, Neovim, Vim, VSCode
+  - ✅ Multiplexers (2): Tmux, Zellij
+  - ✅ Shells (4): Bash, Fish, Nushell, Zsh
+  - ✅ Prompts (1): Starship
+  - ✅ Browsers (2): Firefox, Qutebrowser
+  - ✅ NixOS Boot (3): Console, GRUB, Plymouth
+  - ✅ NixOS Login (3): GDM, LightDM, SDDM
+  - ✅ System Theming (2): GTK, Qt
 
 ---
 
 **Note**: This file replaces the temporary launch tracking files which have been removed after successful launch.
 
-Last updated: 2026-01-18 (added test organization, performance monitoring, CI improvements, and automation tasks)
+Last updated: 2026-01-18 (consolidated theming tasks from COLOR_THEME_TODO.md)
