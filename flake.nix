@@ -198,6 +198,41 @@
               ;
             inherit (nixpkgs) lib;
           };
+
+          # Import activation package tests (Home Manager integration)
+          activationTests = import ./tests/activation {
+            inherit
+              pkgs
+              self
+              signal-palette
+              system
+              nix-colorizer
+              ;
+            inherit (nixpkgs) lib;
+            home-manager = home-manager.packages.${system}.default;
+          };
+
+          # Import module structure tests (validation)
+          structureTests = import ./tests/module-structure-test.nix {
+            inherit
+              pkgs
+              self
+              system
+              ;
+            inherit (nixpkgs) lib;
+          };
+
+          # Import NixOS VM tests (integration testing in actual VMs)
+          nixosVmTests = nixpkgs.lib.optionalAttrs pkgs.stdenv.isLinux (
+            import ./tests/nixos-vm {
+              inherit
+                pkgs
+                self
+                system
+                ;
+              inherit (nixpkgs) lib;
+            }
+          );
         in
         {
           # ============================================================================
@@ -525,11 +560,53 @@
             ;
 
           # ============================================================================
+          # Activation Package Tests - Home Manager Integration
+          # ============================================================================
+          # These tests build actual Home Manager configurations and verify
+          # that generated files have correct content (not just that evaluation succeeds)
+
+          inherit (activationTests)
+            activation-helix-dark
+            activation-helix-light
+            activation-alacritty-dark
+            activation-ghostty-dark
+            activation-multi-module
+            activation-auto-enable
+            ;
+
+          # ============================================================================
+          # Module Structure Tests - Validation
+          # ============================================================================
+          # These tests verify that module structure is correct and that common
+          # pitfalls (like incorrect _module.args placement) are caught
+
+          inherit (structureTests)
+            structure-hm-basic
+            structure-hm-gtk
+            structure-hm-multiple
+            structure-nixos-basic
+            structure-nixos-login
+            structure-module-args
+            structure-config-merge
+            ;
+
+          # ============================================================================
           # NixOS Module Tests
           # ============================================================================
 
-          # Disabled: These tests have structural issues with module interpolation
-          # See tests/nixos.nix for test definitions that need refactoring
+          # Re-enabled with proper VM testing framework
+          # These tests use pkgs.nixosTest to verify system-level configuration
+        }
+        // nixpkgs.lib.optionalAttrs pkgs.stdenv.isLinux {
+          # NixOS VM tests (Linux only)
+          inherit (nixosVmTests)
+            nixos-vm-console-colors
+            nixos-vm-sddm
+            nixos-vm-plymouth
+            nixos-vm-grub
+            nixos-vm-integration
+            nixos-vm-light-mode
+            ;
         }
       );
     };

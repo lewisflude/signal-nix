@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
-# Pre-commit hook to validate Nix syntax
-# Catches syntax errors before they're committed
+# Pre-commit hook to validate Nix syntax and module structure
+# Catches syntax errors and common module issues before they're committed
 
 set -e
 
@@ -37,6 +37,56 @@ if [ $errors -gt 0 ]; then
 fi
 
 echo "✅ All Nix files have valid syntax"
+
+# Check for common module structure issues
+echo "🏗️  Checking module structure..."
+module_files=$(echo "$staged_files" | grep -E "modules/.*\.nix$" || true)
+
+if [ -n "$module_files" ]; then
+    for file in $module_files; do
+        if [ -f "$file" ]; then
+            # Check for _module.args at top level (wrong)
+            if grep -q "^  _module\.args = {" "$file" 2>/dev/null; then
+                echo "⚠️  WARNING: $file has _module.args at top level"
+                echo "   This will cause 'unsupported attribute' error"
+                echo "   _module.args must be inside 'config', not at top level"
+                echo ""
+                echo "   Correct pattern:"
+                echo "   config = lib.mkMerge ["
+                echo "     { _module.args = {...}; }"
+                echo "     (lib.mkIf cfg.enable {...})"
+                echo "   ];"
+                echo ""
+                errors=$((errors + 1))
+            fi
+            
+            # Check for _module.args inside mkIf (wrong - causes infinite recursion)
+            if grep -A 3 "lib.mkIf.*enable" "$file" | grep -q "_module\.args" 2>/dev/null; then
+                echo "⚠️  WARNING: $file may have _module.args inside conditional block"
+                echo "   This can cause infinite recursion"
+                echo "   _module.args should be in unconditional config section"
+                echo ""
+                errors=$((errors + 1))
+            fi
+            
+            # Check that modules use proper structure
+            if grep -q "options\." "$file" && ! grep -q "config =" "$file" 2>/dev/null; then
+                echo "⚠️  WARNING: $file has options but no config section"
+                echo "   NixOS modules should have both 'options' and 'config'"
+                echo ""
+            fi
+        fi
+    done
+fi
+
+if [ $errors -gt 0 ]; then
+    echo ""
+    echo "❌ Found $errors module structure issue(s)"
+    echo "   Review the warnings above and fix before committing"
+    echo ""
+    echo "   See: docs/MODULE_ARGS_INFINITE_RECURSION.md"
+    exit 1
+fi
 
 # Optional: Run formatter check
 echo "🎨 Checking formatting..."

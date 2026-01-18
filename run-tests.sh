@@ -45,6 +45,8 @@ CATEGORIES:
     validation     Validation tests
     documentation  Documentation tests
     color          Color conversion tests (nix-colorizer)
+    activation     Home Manager activation package tests
+    nixos-vm       NixOS VM integration tests (Linux only)
 
 EXAMPLES:
     # Run all tests
@@ -196,6 +198,18 @@ get_tests_by_category() {
             ;;
         color)
             echo "color-conversion-hex-to-rgb color-conversion-hex-with-alpha color-conversion-validation"
+            ;;
+        activation)
+            echo "activation-helix-dark activation-helix-light activation-alacritty-dark activation-ghostty-dark activation-multi-module activation-auto-enable"
+            ;;
+        nixos-vm)
+            # NixOS VM tests (Linux only)
+            if [[ "$SYSTEM" != *"linux"* ]]; then
+                echo -e "${YELLOW}Warning: NixOS VM tests only run on Linux${NC}" >&2
+                echo ""
+            else
+                echo "nixos-vm-console-colors nixos-vm-sddm nixos-vm-plymouth nixos-vm-grub nixos-vm-integration nixos-vm-light-mode"
+            fi
             ;;
         *)
             echo -e "${RED}Unknown category: $category${NC}" >&2

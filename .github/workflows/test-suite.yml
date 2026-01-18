@@ -109,6 +109,17 @@ jobs:
           - system: x86_64-linux
             os: ubuntu-latest
             category: documentation
+          - system: x86_64-linux
+            os: ubuntu-latest
+            category: activation
+          - system: x86_64-linux
+            os: ubuntu-latest
+            category: nixos-vm
+
+          # Module structure validation (catches _module.args issues)
+          - system: x86_64-linux
+            os: ubuntu-latest
+            category: structure
 
           # macOS - Run subset of important tests
           - system: aarch64-darwin
