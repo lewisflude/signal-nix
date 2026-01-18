@@ -253,6 +253,57 @@ in
     touch $out
   '';
 
+  module-satty-structure = pkgs.runCommand "test-module-satty-structure" { } ''
+    echo "Testing Satty module structure..."
+
+    ${assertFileExists ../../modules/apps/satty.nix "satty module"}
+
+    # Check for TOML configuration generation
+    ${assertFileContains ../../modules/apps/satty.nix "xdg.configFile"
+      "satty module missing xdg.configFile"
+    }
+    ${assertFileContains ../../modules/apps/satty.nix "satty/config.toml"
+      "satty module missing config path"
+    }
+
+    # Check for color palette
+    ${assertFileContains ../../modules/apps/satty.nix "color-palette"
+      "satty module missing color-palette section"
+    }
+
+    echo "✓ satty module has correct structure"
+    touch $out
+  '';
+
+  module-satty-colors = pkgs.runCommand "test-module-satty-colors" { } ''
+    echo "Testing Satty module color configuration..."
+
+    ${assertFileExists ../../modules/apps/satty.nix "satty module"}
+
+    # Check for color palette configuration
+    ${assertFileContains ../../modules/apps/satty.nix "colorPalette =" "satty module missing colorPalette"}
+    ${assertFileContains ../../modules/apps/satty.nix "customColors =" "satty module missing customColors"}
+
+    # Check for Signal color usage
+    ${assertFileContains ../../modules/apps/satty.nix "accent.secondary"
+      "satty module missing accent colors"
+    }
+    ${assertFileContains ../../modules/apps/satty.nix "accent.danger"
+      "satty module missing danger colors"
+    }
+    ${assertFileContains ../../modules/apps/satty.nix "accent.warning"
+      "satty module missing warning colors"
+    }
+
+    # Check for TOML generator
+    ${assertFileContains ../../modules/apps/satty.nix "generators.toTOML"
+      "satty module missing TOML generator"
+    }
+
+    echo "✓ satty module has correct color configuration"
+    touch $out
+  '';
+
   # ============================================================================
   # Edge Case Tests - Option Combinations
   # ============================================================================

@@ -10,6 +10,15 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Added
 
 #### New Application Support
+- **Satty**: Screenshot annotation tool for Wayland
+  - TOML configuration with color palette for drawing tools
+  - Signal colors mapped to annotation tools (brush, shapes, text, markers)
+  - Color palette includes primary (blue), danger (red), warning (yellow), success (green), tertiary (purple), and info (cyan)
+  - Configurable general settings (fullscreen, keybinds, font, etc.)
+  - Config placed at `~/.config/satty/config.toml`
+  - Perfect integration with Wayland screenshot workflows (grim + slurp)
+  - Signal now supports 63 applications total
+
 - **Procs**: Modern replacement for `ps` written in Rust
   - TOML configuration with terminal color names (BrightBlue, BrightGreen, etc.)
   - Percentage-based coloring for CPU/memory usage (0-25%, 25-50%, 50-75%, 75-100%, 100%+)

@@ -94,6 +94,9 @@ in
     # Media Players
     ../../modules/media/mpv.nix
 
+    # Apps
+    ../../modules/apps/satty.nix
+
     # Browsers
     ../../modules/browsers/firefox.nix
     ../../modules/browsers/qutebrowser.nix
@@ -282,6 +285,10 @@ in
       qutebrowser.enable = mkEnableOption "Signal theme for Qutebrowser";
     };
 
+    apps = {
+      satty.enable = mkEnableOption "Signal theme for Satty screenshot annotation";
+    };
+
     prompts = {
       starship.enable = mkEnableOption "Signal theme for starship prompt";
     };
@@ -422,6 +429,7 @@ in
           || cfg.monitors.htop.enable
           || cfg.monitors.mangohud.enable
           || cfg.monitors.procs.enable
+          || cfg.apps.satty.enable
           || cfg.prompts.starship.enable
           || cfg.shells.zsh.enable
           || cfg.shells.fish.enable

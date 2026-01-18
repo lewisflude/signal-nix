@@ -102,6 +102,8 @@ in
     module-gtk-evaluates
     module-ironbar-evaluates
     module-procs-evaluates
+    module-satty-structure
+    module-satty-colors
 
     # Edge cases
     edge-case-all-disabled

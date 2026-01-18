@@ -99,6 +99,15 @@ When creating a new release:
   - Integration: Added to existing `modules/shells/zsh.nix`
   - Upstream docs: https://github.com/zsh-users/zsh-syntax-highlighting/blob/master/docs/highlighters.md
 
+- [x] **Satty** - Add module with config.toml (Completed 2026-01-18)
+  - Drawing colors, font configuration
+  - Screenshot annotation tool theming
+  - Color palette for annotation tools
+  - Format: TOML configuration with hex colors
+  - Config location: `~/.config/satty/config.toml`
+  - Integration with Wayland screenshot workflows
+  - Upstream docs: https://github.com/gabm/Satty#configuration-file
+
 - [ ] **Powerlevel10k** - Add p10k theme generation
   - Directory colors, Git status colors, prompt segment colors
   - Generate `.p10k.zsh` file (full config file)
