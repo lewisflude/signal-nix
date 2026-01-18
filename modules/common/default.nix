@@ -39,6 +39,9 @@ in
     ../../modules/desktop/notifications/mako.nix
     ../../modules/desktop/notifications/swaync.nix
 
+    # Desktop - Lock Screens
+    ../../modules/desktop/swaylock.nix
+
     # Desktop - Themes
     ../../modules/gtk
     ../../modules/qt
@@ -213,6 +216,8 @@ in
         mako.enable = mkEnableOption "Signal theme for mako notification daemon";
         swaync.enable = mkEnableOption "Signal theme for SwayNC notification daemon";
       };
+
+      swaylock.enable = mkEnableOption "Signal theme for swaylock screen locker";
     };
 
     fuzzel.enable = mkEnableOption "Signal theme for Fuzzel launcher";
@@ -385,6 +390,7 @@ in
           || cfg.desktop.notifications.dunst.enable
           || cfg.desktop.notifications.mako.enable
           || cfg.desktop.notifications.swaync.enable
+          || cfg.desktop.swaylock.enable
           || cfg.editors.helix.enable
           || cfg.editors.neovim.enable
           || cfg.editors.vim.enable

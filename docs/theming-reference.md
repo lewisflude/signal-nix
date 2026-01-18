@@ -557,6 +557,32 @@ This reference organizes theming documentation by application category, making i
 
 ## Lock & Idle
 
+### 🟢 Swaylock
+**Status:** ✅ Implemented  
+**Category:** Wayland screen locker  
+**Documentation:** [Swaylock Manual](https://github.com/swaywm/swaylock/blob/master/swaylock.1.scd)  
+**Format:** Swaylock config  
+**Notes:**
+- Screen locker for Wayland compositors
+- Supports ext-session-lock-v1 protocol
+- Multiple color states: normal, clear, verify, wrong, caps-lock
+- Ring, inside, line, and text colors for each state
+- Hex color format WITHOUT # prefix (e.g., "808080")
+- Visual feedback for authentication states
+- Compatible with Sway, Hyprland, and other Wayland compositors
+
+**Signal Implementation:**
+```nix
+theming.signal.desktop.swaylock.enable = true;
+```
+
+**Color Mapping:**
+- Normal: Neutral blue (idle/typing)
+- Clear: Subtle divider (input cleared)
+- Verify: Primary green (checking password)
+- Wrong: Danger red (authentication failed)
+- Caps Lock: Warning yellow (caps lock active)
+
 ### 🔴 Hyprlock
 **Status:** ❌ Not implemented  
 **Category:** Screen locker  

@@ -11,7 +11,6 @@ This file tracks ongoing tasks and future improvements for Signal Design System.
 - [ ] Monitor and respond to user feedback in Discussions and Issues
 - [ ] Review and merge community contributions
 - [ ] Keep dependencies up to date (run `nix flake update` periodically)
-- [ ] **Swaylock theming** - High-value security/lock screen application (Wayland-only)
 - [ ] **MPV theming** - Widely used media player with OSD/subtitle theming
 
 ### Medium Priority
@@ -696,7 +695,7 @@ When creating a new release:
 ✅ GitHub Issues templates and workflows  
 ✅ Troubleshooting guide with diagnostics  
 ✅ Design principles documentation  
-✅ **Comprehensive Theming System** - 58+ applications with theming support:
+✅ **Comprehensive Theming System** - 59+ applications with theming support:
   - ✅ Terminals (5): Alacritty, Foot, Ghostty, Kitty, WezTerm
   - ✅ CLI Tools (12): Bat, Delta, Eza, Fzf, Glow, Lazydocker, Lazygit, Less, Ripgrep, Tealdeer, Tig, Yazi
   - ✅ Monitors (4): Bottom, Btop++, Htop, MangoHud
@@ -711,6 +710,7 @@ When creating a new release:
   - ✅ Shells (4): Bash, Fish, Nushell, Zsh
   - ✅ Prompts (1): Starship
   - ✅ Browsers (2): Firefox, Qutebrowser
+  - ✅ Lock Screens (1): Swaylock
   - ✅ NixOS Boot (3): Console, GRUB, Plymouth
   - ✅ NixOS Login (3): GDM, LightDM, SDDM
   - ✅ System Theming (2): GTK, Qt
@@ -719,4 +719,4 @@ When creating a new release:
 
 **Note**: This file replaces the temporary launch tracking files which have been removed after successful launch.
 
-Last updated: 2026-01-18 (consolidated theming tasks from COLOR_THEME_TODO.md)
+Last updated: 2026-01-18 (added Swaylock theming)

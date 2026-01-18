@@ -170,6 +170,7 @@ Signal provides color themes for 60+ applications across all categories:
 - **dunst** - Notification daemon ✨
 - **mako** - Wayland notifications ✨
 - **SwayNC** - Sway Notification Center ✨
+- **Swaylock** - Wayland screen locker (authentication states)
 - **GTK 3/4** - GTK application theming
 
 ### Editors & IDEs
